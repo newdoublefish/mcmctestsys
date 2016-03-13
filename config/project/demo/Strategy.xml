@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Strategy>
+	<StrategyName>策略1</StrategyName>
+	<StrategyTestType>Serial</StrategyTestType>
+	<Collects>
+		<Collect><CollectName>1</CollectName><ResultFrom>0</ResultFrom><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>1</GroupId></Groups></Collect><Collect><CollectName>2</CollectName><ResultFrom>0</ResultFrom><TestType>0</TestType><MaxTestDevice>2</MaxTestDevice><RetryCount>2</RetryCount><Groups><GroupId>1</GroupId></Groups></Collect><Collect><CollectName>3</CollectName><ResultFrom>0</ResultFrom><TestType>0</TestType><MaxTestDevice>3</MaxTestDevice><RetryCount>3</RetryCount><Groups><GroupId>1</GroupId></Groups></Collect><Collect><CollectName>4</CollectName><ResultFrom>0</ResultFrom><TestType>0</TestType><MaxTestDevice>4</MaxTestDevice><RetryCount>4</RetryCount><Groups><GroupId>1</GroupId></Groups></Collect></Collects>
+</Strategy>

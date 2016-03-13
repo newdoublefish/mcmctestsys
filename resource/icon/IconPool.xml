@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!DOCTYPE groups SYSTEM "../../../language/english/icons.dtd">
+<groups>
+  <icongroup id="priority" name="&grouppriority;" exclusivegroup="1">
+    <icon id="priority-1" name="&priority-1;" />
+    <icon id="priority-2" name="&priority-2;" />
+    <icon id="priority-3" name="&priority-3;" />
+    <icon id="priority-4" name="&priority-4;" />
+    <icon id="priority-5" name="&priority-5;" />
+    <icon id="priority-6" name="&priority-6;" />
+    <icon id="priority-7" name="&priority-7;" />
+    <icon id="priority-8" name="&priority-8;" />
+    <icon id="priority-9" name="&priority-9;" />
+  </icongroup>
+  <icongroup id="completion" name="&groupcompletion;" exclusivegroup="1">
+    <icon id="0" name="&completion_0;" />
+    <icon id="15" name="&completion_15;" />
+    <icon id="25" name="&completion_25;" />
+    <icon id="35" name="&completion_35;" />
+    <icon id="50" name="&completion_50;" />
+    <icon id="65" name="&completion_65;" />
+    <icon id="75" name="&completion_75;" />
+    <icon id="85" name="&completion_85;" />
+    <icon id="100" name="&completion_100;" />
+  </icongroup>
+  <icongroup id="smileys" name="&groupsmileys;" exclusivegroup="1">
+    <icon id="very_happy" name="&veryhappy;"/>
+    <icon id="happy" name="&happy;"/>
+    <icon id="sad" name="&sad;"/>
+    <icon id="wink" name="&wink;"/>
+    <icon id="confused" name="&confused;"/>
+    <icon id="angry" name="&angry;"/>
+    <icon id="surprised" name="&surprised;"/>
+  </icongroup>
+  <icongroup id="flags" name="&groupflags;" exclusivegroup="1">
+    <icon id="flag_black" name="&flag_black;"/>
+    <icon id="flag_blue" name="&flag_blue;"/>
+    <icon id="flag_green" name="&flag_green;"/>
+    <icon id="flag_orange" name="&flag_orange;"/>
+    <icon id="flag_purple" name="&flag_purple;"/>
+    <icon id="flag_red" name="&flag_red;"/>
+    <icon id="flag_yellow" name="&flag_yellow;"/>
+  </icongroup>
+  <icongroup id="pins" name="&grouppins;" exclusivegroup="1">
+    <icon id="pin_purple" name="&pin_purple;" />
+    <icon id="pin_blue" name="&pin_blue;" />
+    <icon id="pin_green" name="&pin_green;" />
+    <icon id="pin_red" name="&pin_red;" />
+    <icon id="pin_white" name="&pin_white;" />
+    <icon id="pin_black" name="&pin_black;" />
+    <icon id="pin_yellow" name="&pin_yellow;" />
+  </icongroup>
+  <icongroup id="arrowsgreen" name="&grouparrowsgreen;" exclusivegroup="1" maxwidth="8">
+    <icon id="arrow-green-up" name="&arrow-green-up;" />
+    <icon id="arrow-green-righttop" name="&arrow-green-righttop;" />
+    <icon id="arrow-green-right" name="&arrow-green-right;" />
+    <icon id="arrow-green-rightbot" name="&arrow-green-rightbot;" />
+    <icon id="arrow-green-down" name="&arrow-green-down;" />
+    <icon id="arrow-green-leftbot" name="&arrow-green-leftbot;" />
+    <icon id="arrow-green-left" name="&arrow-green-left;" />
+    <icon id="arrow-green-lefttop" name="&arrow-green-lefttop;" />
+  </icongroup>
+  <icongroup id="arrowsred" name="&grouparrowsred;" exclusivegroup="1" maxwidth="8">
+    <icon id="arrow-red-up" name="&arrow-red-up;" />
+    <icon id="arrow-red-righttop" name="&arrow-red-righttop;" />
+    <icon id="arrow-red-right" name="&arrow-red-right;" />
+    <icon id="arrow-red-rightbot" name="&arrow-red-rightbot;" />
+    <icon id="arrow-red-down" name="&arrow-red-down;" />
+    <icon id="arrow-red-leftbot" name="&arrow-red-leftbot;" />
+    <icon id="arrow-red-left" name="&arrow-red-left;" />
+    <icon id="arrow-red-lefttop" name="&arrow-red-lefttop;" />
+  </icongroup>
+  <icongroup id="arrowsyellow" name="&grouparrowsyellow;" exclusivegroup="1" maxwidth="8">
+    <icon id="arrow-yellow-top" name="&arrow-yellow-up;" />
+    <icon id="arrow-yellow-righttop" name="&arrow-yellow-righttop;" />
+    <icon id="arrow-yellow-right" name="&arrow-yellow-right;" />
+    <icon id="arrow-yellow-rightbot" name="&arrow-yellow-rightbot;" />
+    <icon id="arrow-yellow-down" name="&arrow-yellow-down;" />
+    <icon id="arrow-yellow-leftbot" name="&arrow-yellow-leftbot;" />
+    <icon id="arrow-yellow-left" name="&arrow-yellow-left;" />
+    <icon id="arrow-yellow-lefttop" name="&arrow-yellow-lefttop;" />
+  </icongroup>
+  <icongroup id="arrowsblue" name="&grouparrowsblue;" exclusivegroup="1" maxwidth="8">
+    <icon id="arrow-blue-up" name="&arrow-blue-up;" />
+    <icon id="arrow-blue-righttop" name="&arrow-blue-righttop;" />
+    <icon id="arrow-blue-right" name="&arrow-blue-right;" />
+    <icon id="arrow-blue-rightbot" name="&arrow-blue-rightbot;" />
+    <icon id="arrow-blue-down" name="&arrow-blue-down;" />
+    <icon id="arrow-blue-leftbot" name="&arrow-blue-leftbot;" />
+    <icon id="arrow-blue-left" name="&arrow-blue-left;" />
+    <icon id="arrow-blue-lefttop" name="&arrow-blue-lefttop;" />
+  </icongroup>
+  <icongroup id="stars" name="&groupstars;" exclusivegroup="1">
+    <icon id="star-blue" name="&star-blue;" />
+    <icon id="star-green" name="&star-green;" />
+    <icon id="star-purple" name="&star-purple;" />
+    <icon id="star-red" name="&star-red;" />
+    <icon id="star-yellow" name="&star-yellow;" />
+  </icongroup>
+  <icongroup id="other" name="&groupstandard;" exclusivegroup="0" maxwidth="8">
+    <icon id="users" name="&users1;"/>
+    <!--<icon id="Users2" name="&users2;"/>-->
+    <icon id="single_user" name="&single_user;"/>
+    <icon id="dollar" name="&dollar;"/>
+    <icon id="pound" name="&pound;"/>
+    <icon id="euro" name="&euro;"/>
+    <icon id="preferences" name="&preferences;"/>
+    <icon id="help" name="&help;"/>
+    <icon id="info" name="&info;"/>
+    <icon id="search" name="&search;"/>
+    <icon id="idea" name="&idea;"/>
+    <icon id="edit" name="&edit;"/>
+    <icon id="error" name="&error;"/>
+    <icon id="delete" name="&delete;"/>
+    <icon id="warning" name="&warning;"/>
+    <icon id="none" name="&none;"/>
+    <icon id="protect" name="&protect;"/>
+    <icon id="protected" name="&protected;"/>    
+    <icon id="attachment" name="&attachment;"/>
+    <icon id="sound" name="&sound;"/>
+    <icon id="thumbsdown" name="&thumbs_down;"/>
+    <icon id="thumbsup" name="&thumbs_up;"/>
+    <icon id="event" name="&event;"/>
+    <icon id="graph" name="&graph;"/>
+    <icon id="piegraph" name="&piegraph;"/>
+    <icon id="home" name="&home;"/>
+    <icon id="mail" name="&mail;"/>
+    <icon id="notebook" name="&notebook;"/>
+    <icon id="notepad" name="&notepad;"/>
+    <icon id="clock" name="&clock;"/>
+    <icon id="cogs" name="&cogs1;"/>
+    <icon id="font" name="&font;"/>
+    <icon id="Globe" name="&globe;"/>
+    <icon id="heart" name="&heart;"/>
+    <icon id="hourglass" name="&hourglass;"/>
+    <icon id="hyperlink" name="&hyperlink;"/>
+    <icon id="image" name="&image;"/>
+    <icon id="Laptop" name="&laptop;"/>
+    <icon id="Monitor" name="&monitor;"/>
+    <icon id="printer" name="&printer;"/>
+    <icon id="calculator" name="&calculator;"/>
+    <icon id="Camera" name="&camera;"/>
+    <icon id="phone" name="&phone;"/>
+    <icon id="calendar" name="&calendar;"/>
+    <icon id="paste" name="&paste;"/>
+    <icon id="presentation" name="&presentation;"/>
+    <icon id="arrow" name="&arrow;"/>
+    <icon id="clip" name="&clip;"/>
+    <icon id="cloud" name="&cloud;"/>
+    <icon id="star" name="&star;"/>
+    <icon id="exclaim" name="&exclaim;"/>
+    <icon id="eye" name="&eye;"/>
+    <icon id="leaf" name="&leaf;"/>
+    <icon id="trash" name="&trash;"/>
+    <icon id="wifi" name="&wifi;"/>
+  </icongroup>
+</groups>

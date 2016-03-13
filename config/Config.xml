@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Projects>
+  <Version>0.2</Version>
+  <Project>
+    <ProjectName>demo</ProjectName>
+    <ConfigPath>demo\demo配置表.xls</ConfigPath>
+    <StrategyPath>demo\Strategy.xml</StrategyPath>	
+    <ReportPath>demo\报表模板.xls</ReportPath>	
+  </Project>   
+</Projects>

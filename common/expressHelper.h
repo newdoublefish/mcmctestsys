@@ -1,0 +1,1 @@
+double expressCalc(char *string);

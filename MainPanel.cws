@@ -1,0 +1,1368 @@
+[Workspace Header]
+Version = 900
+Pathname = "/e/project/project1431/workspace/1431/platDemo/MainPanel.cws"
+CVI Dir = "/d/program files/national instruments/cvi90"
+CVI Shared Dir = "/D/Program Files/National Instruments/Shared/CVI"
+CVI Pub Local Dir = "/C/ProgramData/National Instruments/CVI90"
+CVI Pub Global Dir = "/C/ProgramData/National Instruments/CVI"
+IVI Standard Root Dir = "/C/Program Files/IVI"
+VXIplug&play Framework Dir = "/c/vxipnp/winnt"
+Number of Projects = 1
+Active Project = 1
+Project 0001 = "MainPanel.prj"
+Drag Bar Left = 266
+Window Top = 37
+Window Left = 618
+Window Bottom = 1039
+Window Right = 1562
+Maximized = False
+Maximized Children = True
+Max Number Of Errors = 20
+Track Include File Dependencies = True
+Prompt For Missing Includes = True
+Stop On First Error File = False
+Bring Up Err Win For Warnings = True
+Show Build Dialog = False
+Save Changes Before Running = "Always"
+Hide Windows = False
+Break At First Statement = False
+Sort Type = "File Name"
+Number of Opened Files = 2
+Window Confinement Region Enabled = True
+MainColumnWidth = 247
+FileDateColumnWidth = 70
+FileSizeColumnWidth = 70
+StatusColumnWidth = 70
+
+[Project Header 0001]
+Version = 900
+Don't Update DistKit = False
+Platform Code = 4
+Build Configuration = "Debug"
+Warn User If Debugging Release = 0
+Batch Build Release = False
+Batch Build Debug = False
+Force Rebuild = False
+
+[File 0001]
+Path = "/e/project/project1431/workspace/1431/platDemo/xmltool/cvixml.fp"
+File Type = "Function Panel"
+Disk Date = 3522103256
+In Projects = "1,"
+
+[File 0002]
+Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excel2000.fp"
+File Type = "Function Panel"
+Disk Date = 3522103228
+In Projects = "1,"
+
+[File 0003]
+Path = "/e/project/project1431/workspace/1431/platDemo/iniHelper/inifile.fp"
+File Type = "Function Panel"
+Disk Date = 3522103230
+In Projects = "1,"
+
+[File 0004]
+Path = "/d/Program Files/National Instruments/CVI90/toolslib/custctrl/pwctrl.fp"
+File Type = "Function Panel"
+Disk Date = 3306448800
+In Projects = "1,"
+
+[File 0005]
+Path = "/d/Program Files/National Instruments/CVI90/toolslib/custctrl/radioGroup.fp"
+File Type = "Function Panel"
+Disk Date = 3306448800
+In Projects = "1,"
+
+[File 0006]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/regexpr.fp"
+File Type = "Function Panel"
+Disk Date = 3306448800
+In Projects = "1,"
+
+[File 0007]
+Path = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/statusMonitor.c"
+File Type = "CSource"
+Disk Date = 3530496978
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,74,74,74,41,56,41,0,0,0,0,176,0,0,0,0,166,0,229,93,323,605,1,0,"
+Breakpoint 0001 = "46,0,disabled,"
+Breakpoint 0002 = "204,0,disabled,"
+
+[File 0008]
+Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excelHelper.c"
+File Type = "CSource"
+Disk Date = 3540689945
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Source Window State = "1,246,246,246,8,24,24,0,3,0,0,0,0,0,0,0,237,0,246,8,251,605,1,0,"
+Breakpoint 0001 = "147,0,disabled,"
+
+[File 0009]
+Path = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/statusMonitor2.c"
+File Type = "CSource"
+Disk Date = 3530496996
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,249,250,249,124,124,124,0,0,0,0,0,0,0,0,0,204,0,255,138,323,707,1,0,"
+Breakpoint 0001 = "156,0,disabled,"
+
+[File 0010]
+Path = "/e/project/project1431/workspace/1431/platDemo/setting/settingEntity.c"
+File Type = "CSource"
+Disk Date = 3535604191
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,181,181,181,38,43,43,0,0,0,0,0,0,0,0,0,172,0,181,38,251,605,1,0,"
+Breakpoint 0001 = "259,0,disabled,"
+
+[File 0011]
+Path = "/e/project/project1431/workspace/1431/platDemo/MainPanel.c"
+File Type = "CSource"
+Disk Date = 3540695400
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Window Z-Order = 1
+Source Window State = "1,14,14,14,0,25,25,0,0,107,0,190,0,0,0,58,0,0,13,26,323,605,1,12,"
+
+[File 0012]
+Path = "/e/project/project1431/workspace/1431/platDemo/resultSave/resultSave.c"
+File Type = "CSource"
+Disk Date = 3540679115
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,465,465,465,24,44,44,0,0,94,0,537,0,537,0,19,445,0,469,26,251,605,1,0,"
+
+[File 0013]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/testGroupInit.c"
+File Type = "CSource"
+Disk Date = 3540679113
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,461,461,461,9,24,24,0,0,111,0,0,0,0,0,25,449,0,461,37,323,707,1,0,"
+
+[File 0014]
+Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/tpsHelper.c"
+File Type = "CSource"
+Disk Date = 3540692980
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,23,23,23,4,8,8,0,0,107,0,0,0,0,0,60,0,0,23,23,323,665,1,0,"
+
+[File 0015]
+Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excel2000.c"
+File Type = "CSource"
+Disk Date = 3522103228
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,10927,10927,10927,16,34,34,0,0,94,0,0,0,0,0,25,2602,0,2614,4,323,605,1,0,"
+
+[File 0016]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/testGroupInit.h"
+File Type = "Include"
+Disk Date = 3528430858
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,58,58,58,9,20,20,0,3,111,0,0,0,0,0,25,30,0,58,9,323,707,1,0,"
+
+[File 0017]
+Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/tpsHelper.h"
+File Type = "Include"
+Disk Date = 3540693696
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Source Window State = "1,24,24,24,16,20,16,0,0,104,0,0,0,0,0,25,35,0,59,44,323,665,1,0,"
+
+[File 0018]
+Path = "/e/project/project1431/workspace/1431/platDemo/autotest/autoTest.c"
+File Type = "CSource"
+Disk Date = 3540690675
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,526,534,534,0,2,2,0,0,94,0,82,0,13,0,22,499,0,525,0,287,605,1,16,"
+
+[File 0019]
+Path = "/e/project/project1431/workspace/1431/platDemo/autotest/AutoTestPanel.h"
+File Type = "Include"
+Disk Date = 3540679114
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,35,35,35,9,29,29,0,3,80,0,0,0,0,0,24,9,0,35,9,311,521,1,0,"
+
+[File 0020]
+Path = "/e/project/project1431/workspace/1431/platDemo/autotest/AutoTestPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3540679115
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Window Height = 323
+Window Width = 605
+
+[File 0021]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/0.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0022]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/1.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0023]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/100.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0024]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/15.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0025]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/2.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0026]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/25.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0027]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/3.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0028]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/35.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0029]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/4.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0030]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/5.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0031]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/50.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0032]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/6.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0033]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/65.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0034]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/7.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0035]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/75.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0036]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/8.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0037]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/85.ico"
+File Type = "Unknown"
+Disk Date = 3506315152
+In Projects = "1,"
+
+[File 0038]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/appInit.c"
+File Type = "CSource"
+Disk Date = 3530323894
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,24,24,24,4,13,13,0,3,94,0,0,0,0,0,25,3,0,24,4,323,605,1,0,"
+
+[File 0039]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/appInit.h"
+File Type = "Include"
+Disk Date = 3522103230
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,13,13,13,8,27,27,0,3,0,0,0,0,0,0,0,0,0,13,8,323,605,1,11,"
+
+[File 0040]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/AppInitSplash.uir"
+File Type = "User Interface Resource"
+Disk Date = 3522103232
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Window Height = 323
+Window Width = 605
+
+[File 0041]
+Path = "/e/project/project1431/workspace/1431/platDemo/autotest/autoTest.h"
+File Type = "Include"
+Disk Date = 3522103186
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,0,12,12,0,79,79,0,3,0,0,13,0,13,0,0,0,0,0,0,299,605,1,21,"
+
+[File 0042]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/collectParamInit.c"
+File Type = "CSource"
+Disk Date = 3529869174
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,31,31,31,21,42,42,0,0,0,0,0,0,0,0,0,204,0,234,79,323,707,1,14,"
+
+[File 0043]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/collectParamInit.h"
+File Type = "Include"
+Disk Date = 3529864502
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,37,37,37,13,39,39,0,0,0,0,0,0,0,0,0,7,0,22,43,323,707,1,14,"
+
+[File 0044]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/common.c"
+File Type = "CSource"
+Disk Date = 3533872750
+In Projects = "1,"
+Window Top = 192
+Window Left = 106
+Source Window State = "1,223,223,223,5,33,33,0,3,0,0,56,0,0,0,0,212,0,223,5,323,605,1,39,"
+
+[File 0045]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/common.h"
+File Type = "Include"
+Disk Date = 3533869792
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Source Window State = "1,47,47,47,5,23,23,0,0,0,0,0,0,0,0,0,30,0,45,5,251,605,1,0,"
+
+[File 0046]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/configPath.h"
+File Type = "Include"
+Disk Date = 3522103186
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,11,13,13,0,8160,6,1,0,0,0,0,0,0,0,0,0,0,16,54,323,605,1,0,"
+
+[File 0047]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/convertTool.c"
+File Type = "CSource"
+Disk Date = 3251145396
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,199,199,199,5,24,24,0,3,0,0,0,0,0,0,0,177,0,199,5,251,605,1,0,"
+
+[File 0048]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/convertTool.h"
+File Type = "Include"
+Disk Date = 3251145214
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,32,32,32,4,12,12,0,0,0,0,0,0,0,0,0,15,0,32,4,287,605,1,0,"
+
+[File 0049]
+Path = "/e/project/project1431/workspace/1431/platDemo/xmltool/cvixml.c"
+File Type = "CSource"
+Disk Date = 3522103256
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,727,727,727,21,42,42,0,0,94,0,0,0,0,0,22,2097,0,2103,17,287,605,1,0,"
+
+[File 0050]
+Path = "/e/project/project1431/workspace/1431/platDemo/xmltool/cvixml.h"
+File Type = "Include"
+Disk Date = 3522103256
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,20,22,22,0,8160,7,1,3,0,0,0,0,0,0,0,0,0,20,0,323,605,1,0,"
+
+[File 0051]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/debug.h"
+File Type = "Include"
+Disk Date = 3250431490
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Source Window State = "1,31,31,31,8,13,13,0,0,0,0,0,0,0,0,0,0,0,24,149,287,605,1,0,"
+
+[File 0052]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/EMBC1000－PCI429－42－exampleDlg."
+Path Line0002 = "h"
+File Type = "Include"
+Disk Date = 3522103226
+In Projects = "1,"
+Window Top = 182
+Window Left = 90
+Source Window State = "1,0,0,0,0,0,0,0,0,114,0,0,0,0,0,25,15,0,32,58,323,725,1,0,"
+
+[File 0053]
+Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/eutConfig.c"
+File Type = "CSource"
+Disk Date = 3535607081
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,356,356,356,12,21,21,0,0,0,0,30,0,0,0,0,417,0,62,95,323,605,1,0,"
+
+[File 0054]
+Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/eutConfig.h"
+File Type = "Include"
+Disk Date = 3522288510
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,23,23,23,9,19,19,0,0,80,0,0,0,0,0,22,11,0,23,9,287,521,1,0,"
+
+[File 0055]
+Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/eutEntity.c"
+File Type = "CSource"
+Disk Date = 3533084286
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,360,360,360,34,48,48,0,3,0,0,0,0,0,0,0,330,0,360,34,323,605,1,0,"
+
+[File 0056]
+Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/eutEntity.h"
+File Type = "Include"
+Disk Date = 3533083924
+In Projects = "1,"
+Window Top = 242
+Window Left = 122
+Source Window State = "1,49,49,49,2,5,5,0,3,94,0,0,0,0,0,25,34,0,49,2,323,605,1,0,"
+
+[File 0057]
+Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/EutPanel.h"
+File Type = "Include"
+Disk Date = 3535606679
+In Projects = "1,"
+Window Top = 242
+Window Left = 122
+Source Window State = "1,29,29,29,9,29,29,0,0,94,0,0,0,0,0,25,0,0,29,9,323,605,1,0,"
+
+[File 0058]
+Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/EutPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3535606679
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Window Height = 323
+Window Width = 605
+
+[File 0059]
+Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excel2000.h"
+File Type = "Include"
+Disk Date = 3522103228
+In Projects = "1,"
+Window Top = 272
+Window Left = 138
+Source Window State = "1,3772,3772,3772,5,32,32,0,3,94,0,0,0,0,0,25,243,0,3772,5,323,605,1,0,"
+
+[File 0060]
+Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excelHelper.h"
+File Type = "Include"
+Disk Date = 3540689945
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,97,101,101,0,7,7,0,0,94,0,0,0,0,0,20,58,0,46,23,263,605,1,0,"
+
+[File 0061]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/expressHelper.c"
+File Type = "CSource"
+Disk Date = 3250533734
+In Projects = "1,"
+Window Top = 32
+Window Left = 6
+Source Window State = "1,194,194,194,7,18,18,0,3,0,0,0,0,0,0,0,171,0,194,7,323,521,1,0,"
+
+[File 0062]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/expressHelper.h"
+File Type = "Include"
+Disk Date = 3250532126
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,0,0,0,0,0,0,0,0,114,0,0,0,0,0,25,0,0,0,0,323,725,1,0,"
+
+[File 0063]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/flayParamAnalyse/FlyParamAnalyseP"
+Path Line0002 = "anel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3529964824
+In Projects = "1,"
+Window Top = 62
+Window Left = 22
+Window Height = 323
+Window Width = 521
+
+[File 0064]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/frameInit.c"
+File Type = "CSource"
+Disk Date = 3530508818
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,226,226,226,62,82,62,0,0,0,0,0,0,0,0,0,181,0,204,46,323,713,1,0,"
+
+[File 0065]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/frameInit.h"
+File Type = "Include"
+Disk Date = 3529638192
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,54,54,54,0,31,31,0,0,80,0,3,0,57,0,25,2,0,56,20,323,521,1,44,"
+
+[File 0066]
+Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/hardwareConfig.c"
+File Type = "CSource"
+Disk Date = 3530496940
+In Projects = "1,"
+Window Top = 212
+Window Left = 106
+Source Window State = "1,49,49,49,9,20,20,0,3,0,0,6,0,0,0,0,31,0,49,9,323,605,1,16,"
+
+[File 0067]
+Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/hardwareConfig.h"
+File Type = "Include"
+Disk Date = 3522103230
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,16,17,17,0,24,24,0,3,94,0,0,0,0,0,25,0,0,16,0,323,605,1,0,"
+
+[File 0068]
+Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/hardwareEntity.c"
+File Type = "CSource"
+Disk Date = 3522103230
+In Projects = "1,"
+Window Top = 242
+Window Left = 122
+Source Window State = "1,32,32,32,5,19,19,0,0,0,0,0,0,0,0,0,0,0,24,61,323,605,1,0,"
+
+[File 0069]
+Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/hardwareEntity.h"
+File Type = "Include"
+Disk Date = 3522103230
+In Projects = "1,"
+Window Top = 182
+Window Left = 90
+Source Window State = "1,30,30,30,0,7,7,0,0,94,0,0,0,0,0,25,15,0,39,57,323,605,1,0,"
+
+[File 0070]
+Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/HardwarePanel.h"
+File Type = "Include"
+Disk Date = 3522103230
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,0,0,0,0,0,0,0,0,80,0,0,0,0,0,24,0,0,0,0,311,521,1,0,"
+
+[File 0071]
+Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/HardwarePanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3522103230
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Window Height = 311
+Window Width = 521
+
+[File 0072]
+Path = "/e/project/project1431/workspace/1431/platDemo/iniHelper/inifile.c"
+File Type = "CSource"
+Disk Date = 3522103230
+In Projects = "1,"
+Window Top = 212
+Window Left = 106
+Source Window State = "1,2451,2451,2451,12,26,26,0,0,0,0,0,0,0,0,0,2272,0,2284,13,323,605,0,0,"
+
+[File 0073]
+Path = "/e/project/project1431/workspace/1431/platDemo/iniHelper/inifile.h"
+File Type = "Include"
+Disk Date = 3522103230
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,27,27,27,15,43,43,1,0,269,0,0,0,0,0,61,96,0,36,42,275,605,1,0,"
+
+[File 0074]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/log.c"
+File Type = "CSource"
+Disk Date = 3525752570
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,160,160,160,10,31,31,0,3,94,0,0,0,0,0,21,92,0,160,10,275,605,1,0,"
+
+[File 0075]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/log.h"
+File Type = "Include"
+Disk Date = 3525751550
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,62,62,62,8,24,24,0,3,94,0,0,0,0,0,25,14,0,62,8,323,605,1,0,"
+
+[File 0076]
+Path = "/e/project/project1431/workspace/1431/platDemo/MainPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3540695079
+In Projects = "1,"
+Window Top = 30
+Window Height = 878
+Window Width = 1444
+Window Z-Order = 2
+
+[File 0077]
+Path = "/e/project/project1431/workspace/1431/platDemo/flayParamAnalyse/paramAnalyse.h"
+File Type = "Include"
+Disk Date = 0
+In Projects = "1,"
+Window Top = 212
+Window Left = 106
+Source Window State = "1,0,0,0,0,33,33,0,0,112,0,0,0,0,0,25,0,0,1,23,323,713,1,0,"
+
+[File 0078]
+Path = "/e/project/project1431/workspace/1431/platDemo/flayParamAnalyse/paramValue.h"
+File Type = "Include"
+Disk Date = 0
+In Projects = "1,"
+Window Top = 242
+Window Left = 118
+Source Window State = "1,2,2,2,0,31,31,0,0,80,0,0,0,0,0,25,0,0,1,54,323,521,1,0,"
+
+[File 0079]
+Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyConfig.c"
+File Type = "CSource"
+Disk Date = 3534225394
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,522,522,522,12,29,29,0,0,94,0,113,0,0,0,25,244,0,256,56,323,605,1,22,"
+
+[File 0080]
+Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyConfig.h"
+File Type = "Include"
+Disk Date = 3522389096
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,26,26,26,36,50,50,0,0,0,0,0,0,0,0,0,13,0,37,22,323,521,1,0,"
+
+[File 0081]
+Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyEntity.c"
+File Type = "CSource"
+Disk Date = 3540279447
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,400,400,400,4,21,21,0,3,0,0,0,0,0,0,0,363,0,400,4,323,605,1,0,"
+
+[File 0082]
+Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyEntity.h"
+File Type = "Include"
+Disk Date = 3534224374
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,44,44,44,12,18,18,0,3,269,0,0,0,0,0,61,32,0,44,12,323,605,1,0,"
+
+[File 0083]
+Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyPanel.h"
+File Type = "Include"
+Disk Date = 3540280285
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,24,24,24,9,31,31,0,3,0,0,0,0,0,0,0,0,0,24,9,287,605,1,0,"
+
+[File 0084]
+Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3540280285
+In Projects = "1,"
+Window Top = 182
+Window Left = 90
+Window Height = 323
+Window Width = 605
+
+[File 0085]
+Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/protocolHelper.h"
+File Type = "Include"
+Disk Date = 3522892372
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,19,19,19,4,16,16,0,3,114,0,0,0,0,0,25,0,0,19,4,323,725,1,0,"
+
+[File 0086]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/quit.png"
+File Type = "Unknown"
+Disk Date = 3522103248
+In Projects = "1,"
+
+[File 0087]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/relay.png"
+File Type = "Unknown"
+Disk Date = 3532477826
+In Projects = "1,"
+
+[File 0088]
+Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayHelper.c"
+File Type = "CSource"
+Disk Date = 3534307425
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,194,194,194,5,23,23,0,0,0,0,0,0,0,0,0,163,0,204,54,323,707,1,0,"
+
+[File 0089]
+Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayHelper.h"
+File Type = "Include"
+Disk Date = 3529294574
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,13,21,21,0,20,20,0,3,111,0,0,0,0,0,25,0,0,13,0,323,707,1,0,"
+
+[File 0090]
+Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayInstructionSet.c"
+File Type = "CSource"
+Disk Date = 3250529162
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Source Window State = "1,243,243,243,12,30,30,0,0,0,0,173,0,173,0,0,70,0,149,95,323,707,1,21,"
+
+[File 0091]
+Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayInstructionSet.h"
+File Type = "Include"
+Disk Date = 3529277222
+In Projects = "1,"
+Window Top = 392
+Window Left = 202
+Source Window State = "1,0,0,0,5,28,28,0,3,111,0,0,0,0,0,25,0,0,0,5,323,707,1,0,"
+
+[File 0092]
+Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayPanel.h"
+File Type = "Include"
+Disk Date = 3250708348
+In Projects = "1,"
+Window Top = 212
+Window Left = 106
+Source Window State = "1,23,23,23,9,22,22,0,3,111,0,0,0,0,0,25,0,0,23,9,323,707,1,0,"
+
+[File 0093]
+Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3251135440
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Window Height = 323
+Window Width = 707
+
+[File 0094]
+Path = "/e/project/project1431/workspace/1431/platDemo/resultSave/resultSave.h"
+File Type = "Include"
+Disk Date = 3535426060
+In Projects = "1,"
+Window Top = 272
+Window Left = 138
+Source Window State = "1,15,15,15,0,8,8,0,0,94,0,0,0,0,0,25,0,0,16,20,323,605,1,0,"
+
+[File 0095]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/resultUtil.c"
+File Type = "CSource"
+Disk Date = 3522103186
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,11,11,11,8,29,29,0,3,94,0,0,0,0,0,19,0,0,11,8,251,605,1,0,"
+
+[File 0096]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/resultUtil.h"
+File Type = "Include"
+Disk Date = 3540693773
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,21,21,21,8,18,18,0,3,94,0,0,0,0,0,25,0,0,21,8,323,605,1,0,"
+
+[File 0097]
+Path = "/e/project/project1431/workspace/1431/platDemo/setting/settingConfig.c"
+File Type = "CSource"
+Disk Date = 3535604120
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,141,141,141,17,27,27,0,3,0,0,16,0,0,0,0,59,0,141,17,251,605,1,22,"
+
+[File 0098]
+Path = "/e/project/project1431/workspace/1431/platDemo/setting/settingConfig.h"
+File Type = "Include"
+Disk Date = 3522103250
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Source Window State = "1,22,22,22,8,18,18,0,3,94,0,0,0,0,0,25,0,0,22,8,323,605,1,0,"
+
+[File 0099]
+Path = "/e/project/project1431/workspace/1431/platDemo/setting/settingEntity.h"
+File Type = "Include"
+Disk Date = 3535604041
+In Projects = "1,"
+Window Top = 382
+Window Left = 218
+Source Window State = "1,34,34,34,8,16,16,0,0,94,0,0,0,0,0,25,15,0,34,8,323,605,1,0,"
+
+[File 0100]
+Path = "/e/project/project1431/workspace/1431/platDemo/setting/SettingPanel.h"
+File Type = "Include"
+Disk Date = 3535604006
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Source Window State = "1,32,32,32,9,29,29,0,3,94,0,0,0,0,0,25,15,0,32,9,323,605,1,0,"
+
+[File 0101]
+Path = "/e/project/project1431/workspace/1431/platDemo/setting/SettingPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3535604006
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Window Height = 323
+Window Width = 605
+
+[File 0102]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/startTest.png"
+File Type = "Unknown"
+Disk Date = 3522103248
+In Projects = "1,"
+
+[File 0103]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/statusCaseEntity.c"
+File Type = "CSource"
+Disk Date = 3522103252
+In Projects = "1,"
+Window Top = 182
+Window Left = 90
+Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,73,0,31,78,323,707,1,0,"
+
+[File 0104]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/statusCaseEntity.h"
+File Type = "Include"
+Disk Date = 3535586825
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Source Window State = "1,32,34,34,0,9,9,0,3,104,0,0,0,0,0,25,0,0,32,0,323,665,1,0,"
+
+[File 0105]
+Path = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/statusMonitor.h"
+File Type = "Include"
+Disk Date = 3522103252
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Source Window State = "1,8,8,8,0,6,6,1,0,0,0,0,0,0,0,0,0,0,12,6,323,605,1,0,"
+
+[File 0106]
+Path = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/statusMonitor2.h"
+File Type = "Include"
+Disk Date = 3524454988
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,0,0,0,0,0,0,0,0,111,0,0,0,0,0,25,0,0,7,34,323,707,1,0,"
+
+[File 0107]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/StatusMonitorPanel."
+Path Line0002 = "h"
+File Type = "Include"
+Disk Date = 3524454344
+In Projects = "1,"
+Window Top = 182
+Window Left = 90
+Source Window State = "1,18,18,18,9,30,30,0,3,94,0,0,0,0,0,25,6,0,18,9,323,605,1,0,"
+
+[File 0108]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/StatusMonitorPanel."
+Path Line0002 = "uir"
+File Type = "User Interface Resource"
+Disk Date = 3524454344
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Window Height = 323
+Window Width = 605
+
+[File 0109]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/StatusMonitorPanel2"
+Path Line0002 = ".h"
+File Type = "Include"
+Disk Date = 3250431774
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,22,22,22,9,24,24,0,3,111,0,0,0,0,0,25,0,0,22,9,323,707,1,0,"
+
+[File 0110]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/StatusMonitorPanel2"
+Path Line0002 = ".uir"
+File Type = "User Interface Resource"
+Disk Date = 3250431774
+In Projects = "1,"
+Window Top = 332
+Window Left = 170
+Window Height = 323
+Window Width = 707
+
+[File 0111]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/stop.png"
+File Type = "Unknown"
+Disk Date = 3522103248
+In Projects = "1,"
+
+[File 0112]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/suspend.png"
+File Type = "Unknown"
+Disk Date = 3522103248
+In Projects = "1,"
+
+[File 0113]
+Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/suspend_red.png"
+File Type = "Unknown"
+Disk Date = 3522103248
+In Projects = "1,"
+
+[File 0114]
+Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/sutCommon.h"
+File Type = "Include"
+Disk Date = 3522103252
+In Projects = "1,"
+Window Top = 182
+Window Left = 90
+Source Window State = "1,9,9,9,4,17,17,0,3,94,0,0,0,0,0,25,0,0,9,4,323,605,1,0,"
+
+[File 0115]
+Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/sutConfig.c"
+File Type = "CSource"
+Disk Date = 3540695163
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,29,29,29,0,31,31,0,0,94,0,0,0,0,0,19,23,0,28,29,251,605,1,0,"
+
+[File 0116]
+Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/sutEntity.c"
+File Type = "CSource"
+Disk Date = 3528935384
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,43,43,43,34,36,36,0,0,0,0,0,0,0,0,0,44,0,46,38,179,605,1,0,"
+
+[File 0117]
+Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/sutEntity.h"
+File Type = "Include"
+Disk Date = 3528935384
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,20,20,20,2,5,5,0,3,94,0,0,0,0,0,25,1,0,20,2,323,605,1,0,"
+
+[File 0118]
+Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/SutPanel.h"
+File Type = "Include"
+Disk Date = 3529027938
+In Projects = "1,"
+Window Top = 212
+Window Left = 106
+Source Window State = "1,26,26,26,9,27,27,0,3,94,0,0,0,0,0,25,13,0,26,9,323,605,1,0,"
+
+[File 0119]
+Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/SutPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3529027938
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Window Height = 323
+Window Width = 605
+
+[File 0120]
+Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/testFramework.c"
+File Type = "CSource"
+Disk Date = 3540691095
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,243,243,243,6,27,27,0,0,94,0,0,0,0,0,25,0,0,9,66,323,605,1,0,"
+
+[File 0121]
+Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/testFramework.h"
+File Type = "Include"
+Disk Date = 3407453070
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,31,31,31,4,14,14,0,0,269,0,13,0,13,0,61,10,0,20,9,275,605,1,0,"
+
+[File 0122]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/testInit.c"
+File Type = "CSource"
+Disk Date = 3540695190
+In Projects = "1,"
+Window Top = 182
+Window Left = 90
+Source Window State = "1,29,31,31,0,21,21,0,0,80,0,0,0,0,0,24,0,0,29,0,311,521,1,20,"
+
+[File 0123]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/testInit.h"
+File Type = "Include"
+Disk Date = 3522815520
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,12,12,12,8,28,28,0,0,80,0,0,0,0,0,24,0,0,19,169,311,521,1,0,"
+
+[File 0124]
+Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/threadFramework.c"
+File Type = "CSource"
+Disk Date = 3522103228
+In Projects = "1,"
+Window Top = 182
+Window Left = 90
+Source Window State = "1,127,128,128,0,66,66,0,3,0,0,0,0,0,0,0,98,0,127,0,323,605,1,0,"
+
+[File 0125]
+Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/threadFramework.h"
+File Type = "Include"
+Disk Date = 3522994722
+In Projects = "1,"
+Window Top = 152
+Window Left = 74
+Source Window State = "1,25,25,25,3,14,3,0,0,94,0,0,0,0,0,21,18,0,24,17,275,605,1,0,"
+
+[File 0126]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/contentVerification/verification."
+Path Line0002 = "h"
+File Type = "Include"
+Disk Date = 3527829064
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Source Window State = "1,0,0,0,10,24,24,0,0,111,0,0,0,0,0,25,0,0,3,58,323,707,1,0,"
+
+[File 0127]
+Path = "/e/project/project1431/workspace/1431/platDemo/common/WarnPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3536286335
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Window Height = 323
+Window Width = 605
+
+[File 0128]
+Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/protocolHelper.c"
+File Type = "CSource"
+Disk Date = 3535601627
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0129]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/arinc429dri"
+Path Line0002 = "ver.c"
+File Type = "CSource"
+Disk Date = 3251218230
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0130]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/arinc429dri"
+Path Line0002 = "ver.h"
+File Type = "Include"
+Disk Date = 3251064646
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0131]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/obtArin"
+Path Line0002 = "c429Drv.c"
+File Type = "CSource"
+Disk Date = 3251248538
+In Projects = "1,"
+Window Top = 122
+Window Left = 58
+Source Window State = "1,0,0,0,0,0,0,0,0,114,0,0,0,0,0,25,0,0,14,26,323,725,1,0,"
+
+[File 0132]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/obtArin"
+Path Line0002 = "c429Drv.h"
+File Type = "Include"
+Disk Date = 3533088532
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0133]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/ARINC42"
+Path Line0002 = "9DRV.h"
+File Type = "Include"
+Disk Date = 3522103224
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0134]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/PCI_LIN"
+Path Line0002 = "K3.dll"
+File Type = "DLL"
+Disk Date = 3522103226
+In Projects = "1,"
+
+[File 0135]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/PCI_LIN"
+Path Line0002 = "K3.lib"
+File Type = "Library"
+Disk Date = 3522103226
+In Projects = "1,"
+
+[File 0136]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/PCIlenk"
+Path Line0002 = ".lib"
+File Type = "Library"
+Disk Date = 3522103226
+In Projects = "1,"
+
+[File 0137]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/wdapi90"
+Path Line0002 = "1.dll"
+File Type = "DLL"
+Disk Date = 3522103226
+In Projects = "1,"
+
+[File 0138]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/wdapi90"
+Path Line0002 = "1.lib"
+File Type = "Library"
+Disk Date = 3522103226
+In Projects = "1,"
+
+[File 0139]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/wdapi90"
+Path Line0002 = "1_.lib"
+File Type = "Library"
+Disk Date = 3522103226
+In Projects = "1,"
+
+[File 0140]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/contentVerification/verification."
+Path Line0002 = "c"
+File Type = "CSource"
+Disk Date = 3527828636
+In Projects = "1,"
+Window Top = 212
+Window Left = 106
+Source Window State = "1,0,0,0,0,0,0,0,0,114,0,0,0,0,0,25,0,0,0,0,323,725,1,0,"
+
+[File 0141]
+Path = "/e/project/project1431/workspace/1431/platDemo/testCode/demoTestCode/demoTest.c"
+File Type = "CSource"
+Disk Date = 3540694039
+In Projects = "1,"
+Window Top = 242
+Window Left = 122
+Source Window State = "1,0,30,30,0,0,60,0,0,114,0,0,0,0,0,25,0,0,30,27,323,725,1,0,"
+
+[File 0142]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/DownLoadFil"
+Path Line0002 = "eHelperPanel.h"
+File Type = "Include"
+Disk Date = 3250520566
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0143]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/DownLoadFil"
+Path Line0002 = "eHelperPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3250520748
+In Projects = "1,"
+
+[File 0144]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/FileDownLoa"
+Path Line0002 = "dHelper.c"
+File Type = "CSource"
+Disk Date = 3535421202
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0145]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/FileDownLoa"
+Path Line0002 = "dHelper.h"
+File Type = "Include"
+Disk Date = 3535588575
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0146]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/idasMaintai"
+Path Line0002 = "nUARTInterface.h"
+File Type = "Include"
+Disk Date = 3250508100
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0147]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/idasMaintai"
+Path Line0002 = "nUART.c"
+File Type = "CSource"
+Disk Date = 3250687942
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0148]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/idasMaintai"
+Path Line0002 = "nUART.h"
+File Type = "Include"
+Disk Date = 3522103242
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0149]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/matainHelpe"
+Path Line0002 = "r.c"
+File Type = "CSource"
+Disk Date = 3250532598
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0150]
+Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/matainHelpe"
+Path Line0002 = "r.h"
+File Type = "Include"
+Disk Date = 3533165822
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0151]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/tipsParse.c"
+File Type = "CSource"
+Disk Date = 3539310124
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0152]
+Path = "/e/project/project1431/workspace/1431/platDemo/Init/tipsParse.h"
+File Type = "Include"
+Disk Date = 3529452312
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[Build Options 0001]
+Generate Browse Info = True
+Enable Uninitialized Locals Runtime Warning = True
+Execution Trace = "Disabled"
+Debugging Level = "Standard"
+Break On Library Errors = True
+Break On First Chance Exceptions = False
+Execution Target Address = "Local desktop computer"
+Execution Target Port = 0
+Execution Target Type = 0
+
+[SCC Options 0001]
+Use global settings = True
+SCC Provider = ""
+SCC Project = ""
+Local Path = ""
+Auxiliary Path = ""
+Perform Same Action For .h File As For .uir File = "Ask"
+Perform Same Action For .cds File As For .prj File = "Ask"
+Username = ""
+Comment = ""
+Use Default Username = False
+Use Default Comment = False
+Suppress CVI Error Messages = False
+Always show confirmation dialog = True
+
+[DLL Debugging Support 0001]
+External Process Path = ""
+
+[Command Line Args 0001]
+Command Line Args = ""
+Working Directory = ""
+
+[Watch Point 1]
+Watch Expression = "TPG_StopThread"
+Update Display Continuously = True
+Break When Value Changes = False
+Scope = "Global To Project"
+DllName = "e:\\project\\project1431\\workspace\\1431\\project\\MainPanel_dbg.exe"
+
+[Distributions]
+Active Index = 1
+AbsCDSPath 0001 = "/e/project/project1431/workspace/1431/platDemo/ZJS自动测试_1.cds"
+RelCDSPath 0001 = "ZJS自动测试_1.cds"
+

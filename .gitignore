@@ -1,0 +1,10 @@
+cvibuild.MainPanel/
+*.txt
+Report/
+tmpData/
+cvidistkit.ZJS-1/
+cvidistkit.ZJS/
+cvidistkit.*/
+*.cds
+*.zip
+.ZJS/
