@@ -17,6 +17,7 @@
 #include "sutCommon.h"
 #include "sutEntity.h"
 #include "matainHelper.h"
+#include "common.h"
 
 static int panelStateMonitor2;
 static EUT selectedEut;
@@ -38,6 +39,12 @@ HRESULT DisplayStatusMonitorPanel2()
    SUT project; //获取选择的被测系统
    project=GetSeletedSut();
    monitorItemNum=StatusItemInit(project.configPath,LRUstatus2); //分析状态监控项目
+   if(monitorItemNum<0)
+   {	
+	   WarnShow("无法定位到采集器状态表"); 
+	   DiscardPanel(panelStateMonitor2);
+	   return -1;
+   }
    
     ListType eutList=getEutList(); //获取uut链表   
 	char temp[30]={0};

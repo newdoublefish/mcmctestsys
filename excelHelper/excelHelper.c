@@ -445,3 +445,80 @@ ExcelObj_Range InitExcelRangeHandle(ExcelObj_Worksheet sheetHandle,char *Range)
 	return ExcelRangeHandle;
 }
 
+
+int readSingleExcelRow(char *fileName1,char *sheetName,char *range,VARIANT *array,int row,int columnNum)
+{
+	 char fileName[MAX_PATHNAME_LEN]; 
+	 GetProjectDir (fileName);
+	 strcat(fileName,"\\demo.xls");
+	 ExcelObj_Worksheet sheetHandle=GetWorkingSheet(fileName1,sheetName);  //step2 获取seetHandle句柄，fileName为绝对路径
+	 if(sheetHandle<0)
+	 {
+	 	 return -1;//wrong sheetName
+	 }
+	 
+	 ExcelObj_Range rangeHandler=InitExcelRangeHandle(sheetHandle,range);  //step3 初始化 ExcelRangeHandle，“A1：D1”为范围 
+	 if(rangeHandler<0)
+	 {
+	 	return -2;//initRange error
+	 }
+	 
+	 for(int i=1;i<=columnNum;i++)
+	 {	 
+		 VARIANT MyCellRangeV;  
+		 LPDISPATCH MyDispatch;
+		 ExcelObj_Range ExcelSingleCellRangeHandle = 0; 
+		 Excel_RangeGetItem (rangeHandler, NULL, CA_VariantInt (row), CA_VariantInt (i), &(array[i-1]));
+		 CA_VariantGetDispatch (&(array[i-1]), &MyDispatch);
+		 CA_CreateObjHandleFromIDispatch (MyDispatch, 0, &ExcelSingleCellRangeHandle); 
+		 Excel_GetProperty (ExcelSingleCellRangeHandle, NULL, Excel_RangeValue2, CAVT_VARIANT, &(array[i-1])); 
+		 ClearObjHandler(&ExcelSingleCellRangeHandle);
+	 }
+	 ClearObjHandler (&rangeHandler); 
+	 ClearWorkingSheet (&sheetHandle);//step6清除句柄，/
+	 return 0;
+	
+}
+
+VARIANT *readExcelRectangle(char *fileName1,char *sheetName,char *range,int columnNum,int rowNum)
+{
+	 int totoalRowNum;
+	 char fileName[MAX_PATHNAME_LEN]; 
+	 GetProjectDir (fileName);
+	 strcat(fileName,"\\demo.xls");
+
+	 VARIANT *array=(VARIANT *)malloc(sizeof(VARIANT)*columnNum*rowNum);
+
+	 
+	 ExcelObj_Worksheet sheetHandle=GetWorkingSheet(fileName1,sheetName);  //step2 获取seetHandle句柄，fileName为绝对路径
+	 if(sheetHandle<0)
+	 {
+	 	 return NULL;//wrong sheetName
+	 }
+	 
+	 ExcelObj_Range rangeHandler=InitExcelRangeHandle(sheetHandle,range);  //step3 初始化 ExcelRangeHandle，“A1：D1”为范围 
+	 if(rangeHandler<0)
+	 {
+	 	return NULL;//initRange error
+	 }
+	 
+	 for(int j=1;j<=rowNum;j++)
+	 {	 
+	 	for(int i=1;i<=columnNum;i++)
+	 	{	 
+			VARIANT MyCellRangeV;  
+		 	LPDISPATCH MyDispatch;
+		 	ExcelObj_Range ExcelSingleCellRangeHandle = 0; 
+		 	Excel_RangeGetItem (rangeHandler, NULL, CA_VariantInt (j), CA_VariantInt (i), &(array[(j-1)*columnNum+i-1]));
+		 	CA_VariantGetDispatch (&(array[(j-1)*columnNum+i-1]), &MyDispatch);
+		 	CA_CreateObjHandleFromIDispatch (MyDispatch, 0, &ExcelSingleCellRangeHandle); 
+		 	Excel_GetProperty (ExcelSingleCellRangeHandle, NULL, Excel_RangeValue2, CAVT_VARIANT, &(array[(j-1)*columnNum+i-1])); 
+		 	ClearObjHandler(&ExcelSingleCellRangeHandle);
+	 
+		}
+	 }
+	 ClearObjHandler (&rangeHandler); 
+	 ClearWorkingSheet (&sheetHandle);//step6清除句柄，/
+	 return array;
+}
+

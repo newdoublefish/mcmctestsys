@@ -138,6 +138,8 @@ int StatusItemInit(char *filePath,StatusLRU *LRU )
 		ListDispose(statusList);
 	statusList = ListCreate (sizeof(StatusItem));
 	ExcelWorksheetHandle = GetWorkingSheet (filePath,"采集器状态");		//step1 获取测试条例的sheet句柄
+	if(ExcelWorksheetHandle<0)
+		return -1;
 	num = StatusReadFromExcel (statusGroup,ExcelWorksheetHandle,LRU); //step2 读取所需信息
 	ClearWorkingSheet (&ExcelWorksheetHandle); 					   		//step3释放sheet资源 
     return num;

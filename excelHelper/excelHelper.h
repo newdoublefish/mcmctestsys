@@ -94,7 +94,11 @@ EXCELTask createExcelTask(char *fileName,char *sheetName,char *activeRange,int c
 
 HRESULT runExcelTask(EXCELTask task);
 
-ExcelObj_Range InitExcelRangeHandle(ExcelObj_Worksheet sheetHandle,char *Range) ;
+ExcelObj_Range InitExcelRangeHandle(ExcelObj_Worksheet sheetHandle,char *Range);
+
+int readSingleExcelRow(char *fileName1,char *sheetName,char *range,VARIANT *array,int row,int columnNum);
+
+VARIANT *readExcelRectangle(char *fileName1,char *sheetName,char *range,int columnNum,int rowNum);
 
 #ifdef __cplusplus
     }
