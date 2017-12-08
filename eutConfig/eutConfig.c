@@ -132,13 +132,7 @@ static void ShowEutDetail(int panel,int index)
 	 GetIndexFromValue(tempPanel,RS422_STOPB,&i,device.RS422Config.stopBit);
 	 SetCtrlIndex(tempPanel,RS422_STOPB,i);//停止位 
 
-	 
-	  //---------------------429--------------------------
-	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_ARINC429,&tempPanel);   //获取面板句柄  
-	 GetIndexFromValue(tempPanel,ARINC429_RING429CARD,&i,device.arinc429Config.card);
-	 SetCtrlIndex(tempPanel,ARINC429_RING429CARD,i); //通道号 
-	 GetIndexFromValue(tempPanel,ARINC429_RING429,&i,device.arinc429Config.ch);
-	 SetCtrlIndex(tempPanel,ARINC429_RING429,i); //通道号 
+
 	 
 	 
 
@@ -181,18 +175,6 @@ static void DimEutConfigPanelControl(int panel,int dim)
 	 SetCtrlAttribute(tempPanel,RS422_DATAB,ATTR_DIMMED,dim);  
      SetCtrlAttribute(tempPanel,RS422_STOPB,ATTR_DIMMED,dim);
 	 
-	  //---------------------429-------------------------- 
-	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_ARINC429,&tempPanel);
-	 SetCtrlAttribute(tempPanel,ARINC429_RING429CARD,ATTR_DIMMED,dim); 
-	 SetCtrlAttribute(tempPanel,ARINC429_RING429,ATTR_DIMMED,dim); 
-	 
-	 //---------------------Relay--------------------------   
-	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_RELAY,&tempPanel);
-	 SetCtrlAttribute(tempPanel,RELAY_PORTNUM,ATTR_DIMMED,dim);
-	 SetCtrlAttribute(tempPanel,RELAY_RATE,ATTR_DIMMED,dim);  
-	 SetCtrlAttribute(tempPanel,RELAY_PARITY,ATTR_DIMMED,dim);  
-	 SetCtrlAttribute(tempPanel,RELAY_DATAB,ATTR_DIMMED,dim);  
-     SetCtrlAttribute(tempPanel,RELAY_STOPB,ATTR_DIMMED,dim);
 	 
 }
 
@@ -310,12 +292,7 @@ static EUT GetEutInfo(int panelHandle)
 	GetCtrlIndex(tempPanel,RS422_STOPB,&selectedIndex);//停止位
 	GetValueFromIndex(tempPanel,RS422_STOPB,selectedIndex,&device.RS422Config.stopBit); 
 	//printf("%d,%d,%d,%d,%d\n",device.RS422Config.portNum,device.RS422Config.baudRate,device.RS422Config.parity,device.RS422Config.dataBit,device.RS422Config.stopBit); 
-	//---------------------429--------------------------------
-	GetPanelHandleFromTabPage(panelHandle,EUTCONFIG_TAB,EUT_SETTING_TAB_ARINC429,&tempPanel);
-	GetCtrlIndex(tempPanel,ARINC429_RING429CARD,&selectedIndex); //板卡号
-	GetValueFromIndex(tempPanel,ARINC429_RING429CARD,selectedIndex,&device.arinc429Config.card);
-	GetCtrlIndex(tempPanel,ARINC429_RING429,&selectedIndex); //通道号
-	GetValueFromIndex(tempPanel,ARINC429_RING429,selectedIndex,&device.arinc429Config.ch);
+
 	
 #ifdef EUT_CONFIG_DEBUG
 	  PRINT("BASIC ID:%d,name:%s\n",device.index,device.eutName);

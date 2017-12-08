@@ -1,3 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Devices>
-	<Device><Enable>1</Enable><RS422Com><RSR422ComPortNum>1</RSR422ComPortNum><RS422ComBandRate>38400</RS422ComBandRate><RS422ComParity>0</RS422ComParity><RS422ComDataBit>8</RS422ComDataBit><RS422ComtopBit>1</RS422ComtopBit></RS422Com><ARINC429Port>1</ARINC429Port><ARINC429Card>0</ARINC429Card><MatainCom><PortNum>1</PortNum><BandRate>38400</BandRate><Parity>0</Parity><DataBit>8</DataBit><StopBit>1</StopBit></MatainCom><DeviceName>11</DeviceName><DeviceId>11</DeviceId></Device></Devices>
+	<Device><Enable>0</Enable><RS422Com><RSR422ComPortNum>1</RSR422ComPortNum><RS422ComBandRate>38400</RS422ComBandRate><RS422ComParity>0</RS422ComParity><RS422ComDataBit>8</RS422ComDataBit><RS422ComtopBit>1</RS422ComtopBit></RS422Com><MatainCom><PortNum>1</PortNum><BandRate>38400</BandRate><Parity>0</Parity><DataBit>8</DataBit><StopBit>1</StopBit></MatainCom><DeviceName>22</DeviceName><DeviceId>11</DeviceId></Device></Devices>

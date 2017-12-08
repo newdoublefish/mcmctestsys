@@ -44,7 +44,7 @@ typedef struct
 	RSCONFIG matainConfig;
 	RSCONFIG RS422Config; 
 	//RSCONFIG relayConfig;
-	ARINC429CONFIG arinc429Config;
+	//ARINC429CONFIG arinc429Config;
 	//int arinc429Port;
 	int enable;
 } EUT;//Device under test	

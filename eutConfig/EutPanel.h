@@ -26,13 +26,6 @@
 #define  EUTPANEL_EUT_ADD                 5       /* control type: command, callback function: OnAddEut */
 
      /* tab page panel controls */
-#define  ARINC429_RING429CARD             2       /* control type: ring, callback function: (none) */
-#define  ARINC429_RING429                 3       /* control type: ring, callback function: (none) */
-#define  ARINC429_TEXTMSG                 4       /* control type: textMsg, callback function: (none) */
-#define  ARINC429_TEXTMSG_2               5       /* control type: textMsg, callback function: (none) */
-#define  ARINC429_TEXTMSG_3               6       /* control type: textMsg, callback function: (none) */
-
-     /* tab page panel controls */
 #define  BASIC_EUTNAME                    2       /* control type: string, callback function: (none) */
 #define  BASIC_EUTID                      3       /* control type: string, callback function: (none) */
 #define  BASIC_ENABLECHECKBOX             4       /* control type: radioButton, callback function: (none) */
@@ -43,13 +36,6 @@
 #define  MATAIN_PARITY                    4       /* control type: ring, callback function: (none) */
 #define  MATAIN_RATE                      5       /* control type: ring, callback function: (none) */
 #define  MATAIN_PORTNUM                   6       /* control type: ring, callback function: (none) */
-
-     /* tab page panel controls */
-#define  RELAY_STOPB                      2       /* control type: ring, callback function: (none) */
-#define  RELAY_DATAB                      3       /* control type: ring, callback function: (none) */
-#define  RELAY_PARITY                     4       /* control type: ring, callback function: (none) */
-#define  RELAY_RATE                       5       /* control type: ring, callback function: (none) */
-#define  RELAY_PORTNUM                    6       /* control type: ring, callback function: (none) */
 
      /* tab page panel controls */
 #define  RS422_STOPB                      2       /* control type: ring, callback function: (none) */

@@ -96,10 +96,6 @@ static EUT xmlToEut(CVIXMLElement currElem)
 	   }else if(strcmp(elemName,"RS422ComtopBit")==0)
 	   {
 	       tempDevice.RS422Config.stopBit=atoi(elemValue);
-	   }else if(strcmp(elemName,"ARINC429Port")==0) {
-	       tempDevice.arinc429Config.ch=atoi(elemValue);
-       }else if(strcmp(elemName,"ARINC429Card")==0) {
-	       tempDevice.arinc429Config.card=atoi(elemValue);
 	   }
 	   
         free (elemName);
@@ -334,16 +330,7 @@ static void eutToXml(ListType eutList,CVIXMLElement element)
 		 sprintf(temp,"%d",device.enable); 
 	     CVIXMLSetElementValue (currChildElem, temp);*/
 	    //д 429Card
-	     CVIXMLNewElement(currElem,2,"ARINC429Card",&currChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.arinc429Config.card); 
-	     CVIXMLSetElementValue (currChildElem, temp);		 
 		 
-	    //д 429Port
-	     CVIXMLNewElement(currElem,2,"ARINC429Port",&currChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.arinc429Config.ch); 
-	     CVIXMLSetElementValue (currChildElem, temp);
 	}
 }
 
