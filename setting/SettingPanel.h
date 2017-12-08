@@ -1,6 +1,5 @@
 /**************************************************************************/
 /* LabWindows/CVI User Interface Resource (UIR) Include File              */
-/* Copyright (c) National Instruments 2016. All Rights Reserved.          */
 /*                                                                        */
 /* WARNING: Do not add to, delete from, or otherwise modify the contents  */
 /*          of this include file.                                         */
@@ -15,22 +14,27 @@
      /* Panels and Controls: */
 
 #define  SET_PANEL                        1
-#define  SET_PANEL_CBVOICE                2
-#define  SET_PANEL_SETTINGSAVE            3       /* callback function: SETTINGSAVECALLBACK */
-#define  SET_PANEL_CBTIPS                 4
-#define  SET_PANEL_SAVEDIR                5
-#define  SET_PANEL_COMMANDBUTTON          6       /* callback function: DIRSELECTED */
-#define  SET_PANEL_CBLOG                  7
-#define  SET_PANEL_RETESTNUM              8
-#define  SET_PANEL_NUMERIC                9
-#define  SET_PANEL_RING                   10
-#define  SET_PANEL_Operater               11
-#define  SET_PANEL_RELAY_ENABLE           12
-#define  SET_PANEL_AUTOSAVE               13
-#define  SET_PANEL_CBCOLLECTMENTION       14
-#define  SET_PANEL_RING_CLOSETIME         15
-#define  SET_PANEL_RPINFOCB               16
-#define  SET_PANEL_SIMUTESTCB             17
+#define  SET_PANEL_CBVOICE                2       /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_SETTINGSAVE            3       /* control type: command, callback function: SETTINGSAVECALLBACK */
+#define  SET_PANEL_CBTIPS                 4       /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_SAVEDIR                5       /* control type: string, callback function: (none) */
+#define  SET_PANEL_COMMANDBUTTON          6       /* control type: command, callback function: DIRSELECTED */
+#define  SET_PANEL_CBLOG                  7       /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_RETESTNUM              8       /* control type: numeric, callback function: (none) */
+#define  SET_PANEL_NUMERIC                9       /* control type: numeric, callback function: (none) */
+#define  SET_PANEL_RING                   10      /* control type: ring, callback function: (none) */
+#define  SET_PANEL_Operater               11      /* control type: string, callback function: (none) */
+#define  SET_PANEL_RELAY_ENABLE           12      /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_AUTOSAVE               13      /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_CBCOLLECTMENTION       14      /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_RING_CLOSETIME         15      /* control type: ring, callback function: (none) */
+#define  SET_PANEL_RPINFOCB               16      /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_SIMUTESTCB             17      /* control type: radioButton, callback function: (none) */
+
+
+     /* Control Arrays: */
+
+          /* (no control arrays in the resource file) */
 
 
      /* Menu Bars, Menus, and Menu Items: */

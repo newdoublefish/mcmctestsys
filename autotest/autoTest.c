@@ -523,6 +523,82 @@ TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj)
 		return ret;
 }
 
+#define  AUTOTEST_PANEL_PADDING_TOP 25
+#define  AUTOTEST_PANEL_PADDING_LEFT 150
+#define  AUTOTEST_BUTTON_PADDING_SIZE 30
+static int autoPanelWidth=0;
+static int autoPanelHeight=0;
+static int headerHeight=0; 
+
+static void adjustHeader(int panel)
+{
+	int buttonSize=0;
+	GetCtrlAttribute(panel,PANEL_AUTO_TEST,ATTR_WIDTH,&buttonSize);
+	//第一个图标
+	SetCtrlAttribute(panel,PANEL_AUTO_TEST,ATTR_TOP,AUTOTEST_BUTTON_PADDING_SIZE);
+	SetCtrlAttribute(panel,PANEL_AUTO_TEST,ATTR_LEFT,autoPanelWidth-(3*AUTOTEST_BUTTON_PADDING_SIZE+3*buttonSize));
+	//第二个图标
+	SetCtrlAttribute(panel,PANEL_AUTO_RESTBUTTON,ATTR_TOP,AUTOTEST_BUTTON_PADDING_SIZE);
+	SetCtrlAttribute(panel,PANEL_AUTO_RESTBUTTON,ATTR_LEFT,autoPanelWidth-(2*AUTOTEST_BUTTON_PADDING_SIZE+2*buttonSize));	
+	//第三个图标
+	SetCtrlAttribute(panel,PANEL_AUTO_BACK,ATTR_TOP,AUTOTEST_BUTTON_PADDING_SIZE);
+	SetCtrlAttribute(panel,PANEL_AUTO_BACK,ATTR_LEFT,autoPanelWidth-(AUTOTEST_BUTTON_PADDING_SIZE+buttonSize));	
+	//设置测试时间LABEL
+	int width=0,height=0; 
+	SetCtrlAttribute(panel,PANEL_AUTO_TEXTMSG,ATTR_LEFT,AUTOTEST_BUTTON_PADDING_SIZE);
+	GetCtrlAttribute(panel,PANEL_AUTO_TEXTMSG,ATTR_WIDTH,&width);
+	GetCtrlAttribute(panel,PANEL_AUTO_TEXTMSG,ATTR_HEIGHT,&height);
+	SetCtrlAttribute(panel,PANEL_AUTO_TEXTMSG,ATTR_TOP,buttonSize+AUTOTEST_BUTTON_PADDING_SIZE-height);
+	headerHeight=AUTOTEST_BUTTON_PADDING_SIZE+buttonSize;
+	
+	int tickWidth=0,tickHeight=0;
+	SetCtrlAttribute(panel,PANEL_AUTO_TIMER,ATTR_LEFT,2*AUTOTEST_BUTTON_PADDING_SIZE+width);
+	GetCtrlAttribute(panel,PANEL_AUTO_TIMER,ATTR_WIDTH,&tickWidth);
+	GetCtrlAttribute(panel,PANEL_AUTO_TIMER,ATTR_HEIGHT,&tickHeight);
+	SetCtrlAttribute(panel,PANEL_AUTO_TIMER,ATTR_TOP,buttonSize+AUTOTEST_BUTTON_PADDING_SIZE-tickHeight);	
+	
+	
+	
+}
+
+
+static void adjustBody(int panel)
+{
+	int bodyHeight=autoPanelHeight-headerHeight;
+	int bodyWidth = autoPanelWidth;
+	SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_TOP,headerHeight);
+	SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_LEFT,0);
+	SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_WIDTH,bodyWidth);
+	SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_HEIGHT,bodyHeight);	//正方形	
+
+}
+
+static void adjustPanelSize(int panel)
+{
+	int monitor=0,height=0,width=0;
+	//主面板
+	GetMonitorFromPanel (panel, &monitor);
+	GetMonitorAttribute (monitor, ATTR_HEIGHT, &height);
+	GetMonitorAttribute (monitor, ATTR_WIDTH, &width);
+	autoPanelWidth=width-2*AUTOTEST_PANEL_PADDING_LEFT;//两边一样长
+	autoPanelHeight=height-2*AUTOTEST_PANEL_PADDING_TOP;
+	//设置主面板大小
+	SetPanelAttribute(panel,ATTR_WIDTH,autoPanelWidth);
+	SetPanelAttribute(panel,ATTR_HEIGHT,autoPanelHeight);
+	SetPanelAttribute(panel,ATTR_TOP,VAL_AUTO_CENTER);//自动居中
+	SetPanelAttribute(panel,ATTR_LEFT,VAL_AUTO_CENTER);
+	//设置背景色大小
+	SetCtrlAttribute(panel,PANEL_AUTO_BACKGROUD,ATTR_TOP,0);
+	SetCtrlAttribute(panel,PANEL_AUTO_BACKGROUD,ATTR_LEFT,0);
+	SetCtrlAttribute(panel,PANEL_AUTO_BACKGROUD,ATTR_WIDTH,autoPanelWidth);
+	SetCtrlAttribute(panel,PANEL_AUTO_BACKGROUD,ATTR_HEIGHT,autoPanelHeight);
+	SetCtrlAttribute(panel,PANEL_AUTO_BACKGROUD,ATTR_CTRL_VAL,"");
+	
+	//设置header
+	adjustHeader(panel);
+	adjustBody(panel);
+}
+
 
 void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collectList)
 {
@@ -530,11 +606,14 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 	int tempPanel=0;
 	if ((autoPanelHandle = LoadPanel (0, "AutoTestPanel.uir", PANEL_AUTO)) < 0)
 		return;
-	DisplayPanel(autoPanelHandle);
+
    	if(GetPanelHandleFromTabPage(autoPanelHandle,PANEL_AUTO_TAB_AUTO,0,&tempPanel) < 0)
   	{
 	        return;
-   	}	
+   	}
+	
+	adjustPanelSize(autoPanelHandle);
+	DisplayPanel(autoPanelHandle);	
 	
 	s=GetSetting();
 	
@@ -663,10 +742,10 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
  
 
 */
-
+#if 1
 static void reFreshAutoTestPanel(int panel)
 {
-			int monitorWidth,monitorHight,monitorTop,moinitorLeft;
+			/*int monitorWidth,monitorHight,monitorTop,moinitorLeft;
 			
 			GetPanelAttribute (panel, ATTR_WIDTH, &monitorWidth);
             GetPanelAttribute (panel, ATTR_HEIGHT, &monitorHight);
@@ -690,11 +769,13 @@ static void reFreshAutoTestPanel(int panel)
 			//设置TAB位置
 			SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_HEIGHT,monitorHight-122-30);
 			SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_WIDTH,monitorWidth);
-			SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_LEFT,0);
+			SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_LEFT,0);*/
+			adjustPanelSize(autoPanelHandle);
 			//各个子面板充值
 			reSetEngine(engine);
 			//reSizeTestPanel(engine);
 }
+#endif
 
 
 int  CVICALLBACK onPanelAutoCall(int panel, int event, void *callbackData, int eventData1, int eventData2)

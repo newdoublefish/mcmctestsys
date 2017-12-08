@@ -1,6 +1,5 @@
 /**************************************************************************/
 /* LabWindows/CVI User Interface Resource (UIR) Include File              */
-/* Copyright (c) National Instruments 2016. All Rights Reserved.          */
 /*                                                                        */
 /* WARNING: Do not add to, delete from, or otherwise modify the contents  */
 /*          of this include file.                                         */
@@ -15,30 +14,35 @@
      /* Panels and Controls: */
 
 #define  P_ITEMSHOW                       1
-#define  P_ITEMSHOW_TREE                  2
-#define  P_ITEMSHOW_TEXTMSG               3
-#define  P_ITEMSHOW_PERCSTR               4
+#define  P_ITEMSHOW_TREE                  2       /* control type: tree, callback function: (none) */
+#define  P_ITEMSHOW_TEXTMSG               3       /* control type: textMsg, callback function: (none) */
+#define  P_ITEMSHOW_PERCSTR               4       /* control type: textMsg, callback function: (none) */
 
 #define  PANEL_AUTO                       2       /* callback function: onPanelAutoCall */
-#define  PANEL_AUTO_PICTURE_5             2
-#define  PANEL_AUTO_PICTURE_3             3
-#define  PANEL_AUTO_TEXTMSG_3             4
-#define  PANEL_AUTO_TEST                  5       /* callback function: STARTTEST */
-#define  PANEL_AUTO_RESTBUTTON            6       /* callback function: RESET */
-#define  PANEL_AUTO_BACK                  7       /* callback function: QUITAUTOTEST */
-#define  PANEL_AUTO_TEXTMSG               8
-#define  PANEL_AUTO_TIMER                 9       /* callback function: TESTTIMECALLBACK */
-#define  PANEL_AUTO_TAB_AUTO              10
+#define  PANEL_AUTO_PICTURE_5             2       /* control type: picture, callback function: (none) */
+#define  PANEL_AUTO_TEXTMSG_3             3       /* control type: textMsg, callback function: (none) */
+#define  PANEL_AUTO_TEST                  4       /* control type: pictButton, callback function: STARTTEST */
+#define  PANEL_AUTO_RESTBUTTON            5       /* control type: pictButton, callback function: RESET */
+#define  PANEL_AUTO_BACK                  6       /* control type: pictButton, callback function: QUITAUTOTEST */
+#define  PANEL_AUTO_TEXTMSG               7       /* control type: textMsg, callback function: (none) */
+#define  PANEL_AUTO_TIMER                 8       /* control type: timer, callback function: TESTTIMECALLBACK */
+#define  PANEL_AUTO_TAB_AUTO              9       /* control type: tab, callback function: (none) */
+#define  PANEL_AUTO_BACKGROUD             10      /* control type: textMsg, callback function: (none) */
 
 #define  PANEL_WA_2                       3
-#define  PANEL_WA_2_PICTURE               2
-#define  PANEL_WA_2_TEXTMSG               3
-#define  PANEL_WA_2_TEXTMSG_2             4
+#define  PANEL_WA_2_TEXTMSG               2       /* control type: textMsg, callback function: (none) */
+#define  PANEL_WA_2_TEXTMSG_2             3       /* control type: textMsg, callback function: (none) */
+#define  PANEL_WA_2_TEXTMSG_3             4       /* control type: textMsg, callback function: (none) */
 
 #define  PANEL_WARN                       4
-#define  PANEL_WARN_PICTURE               2
-#define  PANEL_WARN_COMMANDBUTTON         3
-#define  PANEL_WARN_TEXTMSG               4
+#define  PANEL_WARN_COMMANDBUTTON         2       /* control type: command, callback function: (none) */
+#define  PANEL_WARN_TEXTMSG               3       /* control type: textMsg, callback function: (none) */
+#define  PANEL_WARN_TEXTMSG_2             4       /* control type: textMsg, callback function: (none) */
+
+
+     /* Control Arrays: */
+
+          /* (no control arrays in the resource file) */
 
 
      /* Menu Bars, Menus, and Menu Items: */
