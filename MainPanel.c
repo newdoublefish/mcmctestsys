@@ -11,7 +11,6 @@
  // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
-#include "relayPanel.h"
 #include <ansi_c.h>
 #include "pwctrl.h"   //密码控件
 #include <cvirte.h>		
@@ -25,7 +24,6 @@
 #include "appInit.h"
 #include "testGroupInit.h"
 #include "settingConfig.h"
-#include "statusMonitor2.h"
 #include "hardwareConfig.h"
 #include "testInit.h"
 #include "log.h"
@@ -216,7 +214,7 @@ int CVICALLBACK PICTUREBUTTON_STATE (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			DisplayStatusMonitorPanel2();
+			//DisplayStatusMonitorPanel2();
 			break;
 	}
 	return 0;

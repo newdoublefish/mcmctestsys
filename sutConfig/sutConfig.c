@@ -24,7 +24,6 @@
 #include "SutPanel.h"  
 #include "convertTool.h"
 #include "testGroupInit.h"
-#include "statusCaseEntity.h"
 #include "sutCommon.h"
 #include "protocolHelper.h"
 #include "testInit.h"

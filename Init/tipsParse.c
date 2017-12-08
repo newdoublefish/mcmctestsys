@@ -15,7 +15,6 @@
 #include "excelHelper.h" 
 #include "sutCommon.h"
 #include "convertTool.h"
-#include "relayPanel.h"
 #include "eutConfig.h"
 
 static HashTableType tipsHashTable=0;

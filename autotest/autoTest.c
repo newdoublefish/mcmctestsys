@@ -28,7 +28,6 @@
 #include "policyConfig.h"
 #include "resultUtil.h"
 #include "settingConfig.h"
-#include "arinc429driver.h"
 #include "debug.h"
 #include "tipsParse.h"
 #include "log.h"
@@ -114,19 +113,8 @@ static void saveAutoTestResult(TESTengine *t)
 
 static BOOL ontestBeginListener(TESTengine *t)
 {
-	BOOL ret=FALSE;
-	if(load429driver()==FALSE)
-	{
-		 //WarnShow1(t->panelHandle,"429驱动加载出错");
-	   if(GetConfigWarnPanelRet(0,"提示","429驱动加载错误是否继续测试","否","是")==TRUE)
-	   {
-		   ret=TRUE;
-	   }   
-	}else
-	{
-	    ret=TRUE;
-	}
-	
+	BOOL ret=TRUE;
+
 	//各个TPS测试预先准备的工作
 	TpsPrepareTest(); 
 	return ret;
@@ -134,7 +122,6 @@ static BOOL ontestBeginListener(TESTengine *t)
 
 static void ontestFinishListener(TESTengine *t)
 {
-	unLoad429driver();
 	if(t->testState==TEST_STOP)
 	{
 	   operateTimer(0);	
