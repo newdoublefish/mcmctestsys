@@ -28,6 +28,8 @@
 #include "testInit.h"
 #include "log.h"
 
+#define COPY_RIGHT "CopyRight 2017  GuangDong Thousands of Cities & Charging Stations E-Vehicles Operating Co., Ltd."
+
 
 static int panelMain = 0;	//主面板
 
@@ -101,7 +103,10 @@ static void adustFooter(int panel)
 	int width=0;
 	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_TOP,mainPanelHeight-MAINPANLE_FOOTER_HEIGHT+10);
 	GetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_WIDTH,&width);
-	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_LEFT,mainPanelWidth-width);	
+	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_LEFT,mainPanelWidth-width);
+	
+	SetCtrlAttribute(panel,PANEL_MAIN_COPYRIGHT,ATTR_TOP,mainPanelHeight-MAINPANLE_FOOTER_HEIGHT+10);
+	SetCtrlAttribute(panel,PANEL_MAIN_COPYRIGHT,ATTR_LEFT,10);
 }
 
 void adjustPanelSize(int panel)
@@ -258,6 +263,7 @@ int CVICALLBACK MainPnlMsgCallback (int panelHandle, int message,
 		   char version[50]={0};
 		   sprintf(version,"版本号:%s",getVersion());
 		   SetCtrlVal(panelMain,PANEL_MAIN_VERSION_VALUE,version);
+		   SetCtrlVal(panelMain,PANEL_MAIN_COPYRIGHT,COPY_RIGHT);
 	       //显示主面板
 		   DisplayPanel(panelMain);
 		   //显示设备配置面板

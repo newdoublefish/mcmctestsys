@@ -23,6 +23,7 @@
 #define  PANEL_MAIN_VERSION_VALUE         8       /* control type: textMsg, callback function: (none) */
 #define  PANEL_MAIN_DECROTE_HEADER        9       /* control type: textMsg, callback function: (none) */
 #define  PANEL_MAIN_TEXTMSG_2             10      /* control type: textMsg, callback function: (none) */
+#define  PANEL_MAIN_COPYRIGHT             11      /* control type: textMsg, callback function: (none) */
 
      /* tab page panel controls */
 #define  TABPANEL_PICTUREBUTTON_MANUAL    2       /* control type: pictButton, callback function: (none) */
