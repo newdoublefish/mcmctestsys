@@ -29,7 +29,7 @@
 #include "hardwareConfig.h"
 #include "testInit.h"
 #include "log.h"
-#include "relayInstructionSet.h"
+
 
 static int panelMain = 0;	//Ö÷Ãæ°å
 
@@ -369,7 +369,7 @@ int CVICALLBACK PICTUREBUTTON_INSTRUCTIONCALLBACK (int panel, int control, int e
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			DisplayInstructionPanel();
+			//DisplayInstructionPanel();
 			break;
 	}
 	return 0;

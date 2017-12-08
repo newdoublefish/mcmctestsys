@@ -20,7 +20,6 @@
 #include "testGroupInit.h" 
 #include "debug.h"
 #include "log.h"
-#include "relayHelper.h"
 #include "convertTool.h"
 #include "resultUtil.h"
 

@@ -141,22 +141,7 @@ static void ShowEutDetail(int panel,int index)
 	 SetCtrlIndex(tempPanel,ARINC429_RING429,i); //通道号 
 	 
 	 
-	 //---------------------Relay--------------------------  
-	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_RELAY,&tempPanel); //获取面板句柄  
-	 GetIndexFromValue(tempPanel,RELAY_PORTNUM,&i,device.relayConfig.portNum);
-	 SetCtrlIndex(tempPanel,RELAY_PORTNUM,i);//串口号  
- 	 
-	 GetIndexFromValue(tempPanel,RELAY_RATE,&i,device.relayConfig.baudRate);
-	 SetCtrlIndex(tempPanel,RELAY_RATE,i);//波特率  
- 	 
-	 GetIndexFromValue(tempPanel,RELAY_PARITY,&i,device.relayConfig.parity);
-	 SetCtrlIndex(tempPanel,RELAY_PARITY,i); //奇偶校验 
- 	 
-	 GetIndexFromValue(tempPanel,RELAY_DATAB,&i,device.relayConfig.dataBit);
-	 SetCtrlIndex(tempPanel,RELAY_DATAB,i); //数据位
- 	 
-	 GetIndexFromValue(tempPanel,RELAY_STOPB,&i,device.relayConfig.stopBit);
-	 SetCtrlIndex(tempPanel,RELAY_STOPB,i);//停止位
+
 	 
 }
 
@@ -332,19 +317,6 @@ static EUT GetEutInfo(int panelHandle)
 	GetCtrlIndex(tempPanel,ARINC429_RING429,&selectedIndex); //通道号
 	GetValueFromIndex(tempPanel,ARINC429_RING429,selectedIndex,&device.arinc429Config.ch);
 	
-	//---------------------RELAY------------------------------- 
-	GetPanelHandleFromTabPage(panelHandle,EUTCONFIG_TAB,EUT_SETTING_TAB_RELAY,&tempPanel);
-	GetCtrlIndex(tempPanel,RELAY_PORTNUM,&selectedIndex);//串口号
-	GetValueFromIndex(tempPanel,RELAY_PORTNUM,selectedIndex,&device.relayConfig.portNum);
-	GetCtrlIndex(tempPanel,RELAY_RATE,&selectedIndex);//波特率 
-	GetValueFromIndex(tempPanel,RELAY_RATE,selectedIndex,&device.relayConfig.baudRate);   
-	GetCtrlIndex(tempPanel,RELAY_PARITY,&selectedIndex); //校验 
-	GetValueFromIndex(tempPanel,RELAY_PARITY,selectedIndex,&device.relayConfig.parity);   
-	GetCtrlIndex(tempPanel,RELAY_DATAB,&selectedIndex);//数据位  
-	GetValueFromIndex(tempPanel,RELAY_DATAB,selectedIndex,&device.relayConfig.dataBit);   
-	GetCtrlIndex(tempPanel,RELAY_STOPB,&selectedIndex);//停止位
-	GetValueFromIndex(tempPanel,RELAY_STOPB,selectedIndex,&device.relayConfig.stopBit); 
-	//printf("%d,%d,%d,%d,%d\n",device.RS422Config.portNum,device.RS422Config.baudRate,device.RS422Config.parity,device.RS422Config.dataBit,device.RS422Config.stopBit); 	
 #ifdef EUT_CONFIG_DEBUG
 	  PRINT("BASIC ID:%d,name:%s\n",device.index,device.eutName);
 	  PRINT("MATAIN CONFIG port:%d,baudRate:%d,parity:%d,dataBit:%d,stopBit:%d\n",device.matainConfig.portNum,device.matainConfig.baudRate,device.matainConfig.parity,device.matainConfig.dataBit,device.matainConfig.stopBit);

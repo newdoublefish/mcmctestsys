@@ -100,22 +100,7 @@ static EUT xmlToEut(CVIXMLElement currElem)
 	       tempDevice.arinc429Config.ch=atoi(elemValue);
        }else if(strcmp(elemName,"ARINC429Card")==0) {
 	       tempDevice.arinc429Config.card=atoi(elemValue);
-	   }else if(strcmp(elemName,"RelayComPortNum")==0)
-	   {
-	       tempDevice.relayConfig.portNum=atoi(elemValue);
-	   }else if(strcmp(elemName,"RelayComBandRate")==0)
-	   {
-	        tempDevice.relayConfig.baudRate=atoi(elemValue);  
-	   }else if(strcmp(elemName,"RelayComParity")==0)
-	   {
-	       tempDevice.relayConfig.parity=atoi(elemValue);
-	   }else if(strcmp(elemName,"RelayComDataBit")==0)
-	   {
-	       tempDevice.relayConfig.dataBit=atoi(elemValue);
-	   }else if(strcmp(elemName,"RelayComtopBit")==0)
-	   {
-	       tempDevice.relayConfig.stopBit=atoi(elemValue);
-	   }	   
+	   }
 	   
         free (elemName);
         free (elemValue);
@@ -359,35 +344,6 @@ static void eutToXml(ListType eutList,CVIXMLElement element)
 		 memset(temp,100,0); 
 		 sprintf(temp,"%d",device.arinc429Config.ch); 
 	     CVIXMLSetElementValue (currChildElem, temp);
-		 
-		 //写 RELAYCONFIGPORT
-		 
-	     CVIXMLNewElement(currElem,1,"RelayCom",&currChildElem);
-		 CVIXMLNewElement(currChildElem,0,"RelayComPortNum",&currSuperChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.relayConfig.portNum); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);
-		 //波特率
-		 CVIXMLNewElement(currChildElem,1,"RelayComBandRate",&currSuperChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.relayConfig.baudRate); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);
-		//校验码  
-		 CVIXMLNewElement(currChildElem,2,"RelayComParity",&currSuperChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.relayConfig.parity); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);
-		 
-		 //数据位 
-		 CVIXMLNewElement(currChildElem,3,"RelayComDataBit",&currSuperChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.relayConfig.dataBit); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);
-		 //停止位
-		 CVIXMLNewElement(currChildElem,4,"RelayComtopBit",&currSuperChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.relayConfig.stopBit); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);		 
 	}
 }
 

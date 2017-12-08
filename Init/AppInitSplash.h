@@ -20,7 +20,7 @@
 #define  LOAD_P_TEXTMSG_6                 5       /* control type: textMsg, callback function: (none) */
 #define  LOAD_P_TEXTMSG_3                 6       /* control type: textMsg, callback function: (none) */
 #define  LOAD_P_TEXTMSG                   7       /* control type: textMsg, callback function: (none) */
-#define  LOAD_P_TEXTMSG_4                 8       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_TEXTMSG_2                 8       /* control type: textMsg, callback function: (none) */
 
 
      /* Control Arrays: */

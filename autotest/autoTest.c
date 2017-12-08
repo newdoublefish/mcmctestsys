@@ -32,7 +32,6 @@
 #include "debug.h"
 #include "tipsParse.h"
 #include "log.h"
-#include "relayHelper.h"
 #include "tpsHelper.h"
 
 static int autoPanelHandle=0;
@@ -130,20 +129,6 @@ static BOOL ontestBeginListener(TESTengine *t)
 	
 	//各个TPS测试预先准备的工作
 	TpsPrepareTest(); 
-	
-	//方位角变为1KHZ
-	EUT eut=t->objectArray[0].device;
-	/*RELAY_OPERATION operation;
-	operation.testType = 0x0A;
-	operation.testValue=0x01;
-	operation.data=0x0;
-	SendRelayOperation(eut,operation,TRUE);*/
-	//清空继电器
-	RELAY_OPERATION clear;
-	clear.testType = 0x0E;
-	clear.testValue=0x0;
-	clear.data=0x0;
-	SendRelayOperation(eut,clear,TRUE);
 	return ret;
 }	
 
@@ -181,20 +166,6 @@ static void ontestFinishListener(TESTengine *t)
        WarnShow1(t->panelHandle,"正在测试中");
 	}  
 	
-	//方位角变为50KHZ
-	EUT eut=t->objectArray[0].device;
-	/*RELAY_OPERATION operation;
-	operation.testType = 0x0A;
-	operation.testValue=0x02;
-	operation.data=0x0;
-	SendRelayOperation(eut,operation,TRUE);*/	
-	//清空继电器
-	RELAY_OPERATION clear;
-	clear.testType = 0x0E;
-	clear.testValue=0x0;
-	clear.data=0x0;
-	SendRelayOperation(eut,clear,TRUE);	
-   
 }
 
 static void objectPanelCreate(int *panel)

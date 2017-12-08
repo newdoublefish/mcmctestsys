@@ -43,7 +43,7 @@ typedef struct
 	char eutName[MAX_EUTNAME_LEN];
 	RSCONFIG matainConfig;
 	RSCONFIG RS422Config; 
-	RSCONFIG relayConfig;
+	//RSCONFIG relayConfig;
 	ARINC429CONFIG arinc429Config;
 	//int arinc429Port;
 	int enable;

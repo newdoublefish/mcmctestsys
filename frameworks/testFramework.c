@@ -82,8 +82,8 @@ void reSizeTestPanel(TESTengine *t)
 	for(int deviceNum=1;deviceNum<=deviceCount;deviceNum++)
 	{
 		char temp[30];
-		int width;
-		int hight;
+		int width=0;
+		int hight=0;
 		panelCurrentRows=deviceNum/maxCountsPerRow;
 		if(panelCurrentRows*maxCountsPerRow<deviceNum)
 		{
@@ -171,8 +171,8 @@ void disPlayTestPanel(TESTengine *t)
 	for(int deviceNum=1;deviceNum<=deviceCount;deviceNum++)
 	{
 		char temp[30];
-		int width;
-		int hight;
+		int width=0;
+		int hight=0;
 		panelCurrentRows=deviceNum/maxCountsPerRow;
 		if(panelCurrentRows*maxCountsPerRow<deviceNum)
 		{

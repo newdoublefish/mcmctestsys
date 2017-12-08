@@ -21,6 +21,7 @@
 #define  PANEL_PART_RING                  6       /* control type: ring, callback function: (none) */
 #define  PANEL_PART_TEXTMSG               7       /* control type: textMsg, callback function: (none) */
 #define  PANEL_PART_TEXTMSG_2             8       /* control type: textMsg, callback function: (none) */
+#define  PANEL_PART_TEXTMSG_3             9       /* control type: textMsg, callback function: (none) */
 
 #define  PROGRESS                         2
 #define  PROGRESS_RINGSLIDE               2       /* control type: slide, callback function: (none) */

@@ -14,7 +14,6 @@
 #include <userint.h>
 #include "excelHelper.h" 
 #include "sutCommon.h"
-#include "relayHelper.h"
 #include "convertTool.h"
 #include "relayPanel.h"
 #include "eutConfig.h"
