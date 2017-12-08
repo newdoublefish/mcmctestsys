@@ -38,7 +38,7 @@ static char *xmlStrategyTestType="StrategyTestType";
 static char *xmlCollects="Collects";
 static char *xmlCollect="Collect";
 static char *xmlCollectName="CollectName";
-static char *xmlResultFrom="ResultFrom";
+static char *xmlType="Type";
 static char *xmlTestType="TestType";
 static char *xmlMaxTestDevice="MaxTestDevice";
 static char *xmlRetryCount="RetryCount";
@@ -89,9 +89,9 @@ static int ProcessXMLElement (CVIXMLElement element,ListType collectList)
 			memset(tempCollect.name_,0,COLLECT_NAME_LEN);
 			memcpy(tempCollect.name_,elemValue,len+1);
 			
-		}else if(strcmp(elemName,xmlResultFrom)==0) 
+		}else if(strcmp(elemName,xmlType)==0) 
 		{
-			 tempCollect.resultDerive=atoi(elemValue);
+			 tempCollect.tType=atoi(elemValue);
 		}else if(strcmp(elemName,xmlTestType)==0) 
 		{
 			 tempCollect.testType=atoi(elemValue);
@@ -260,7 +260,7 @@ static void strategyToXmlElement(CVIXMLElement element,ListType collectList)
 	    	CVIXMLNewElement(currElem,0,"CollectName",&currChildElem);
 	    	CVIXMLSetElementValue (currChildElem, tempInfo.name_);
 	    	//д   ResultFrom
-	    	sprintf(temp,"%d",tempInfo.resultDerive);
+	    	sprintf(temp,"%d",tempInfo.tType);
 	    	CVIXMLNewElement(currElem,1,"ResultFrom",&currChildElem);
 	    	CVIXMLSetElementValue (currChildElem, temp);
 	    	memset(temp,100,0);
@@ -386,7 +386,7 @@ void printfCollectList(ListType collectList)
 	{	
 	   Collect collect;
 	   ListGetItem(collectList,&collect,i);
-	   printf("name=%s,type=%d,resultDerive=%d,maxDevice=%d\n",collect.name_,collect.testType,collect.resultDerive,collect.maxParallelDevice);
+	   printf("name=%s,type=%d,resultDerive=%d,maxDevice=%d\n",collect.name_,collect.testType,collect.tType,collect.maxParallelDevice);
 	   for(int index=1;index<=ListNumItems(collect.groups);index++)
 	   {
 		   int id=0;

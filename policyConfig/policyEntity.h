@@ -31,15 +31,15 @@ typedef enum
 typedef enum
 {
 
-    MAINTAINPORT=0,
-	FILEONDISK=1,
-} RESULTDERIVE;	
+    AUTO=0,
+	MANUAL=1,
+} ENUM_TEST_TYPE;	
 
 typedef struct
 {
    char name_[COLLECT_NAME_LEN];  //集合名称
    TESTTYPE testType; //测试类型
-   RESULTDERIVE resultDerive; //测试方式
+   ENUM_TEST_TYPE tType; //测试方式(手动，自动)
    int maxParallelDevice; //最大并行测试设备数
    int retryCount;//重测次数
    ListType groups; //条例组链表

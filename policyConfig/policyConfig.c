@@ -199,7 +199,7 @@ static ListType refreshCollectList()
 		   memset(newCollect.name_,0,COLLECT_NAME_LEN);
 		   memcpy(newCollect.name_,tempCollect.name_,strlen(tempCollect.name_)+1);  
 
-		   newCollect.resultDerive=tempCollect.resultDerive;
+		   newCollect.tType=tempCollect.tType;
 		   newCollect.testType=tempCollect.testType;
 		   newCollect.maxParallelDevice=tempCollect.maxParallelDevice;
 		   newCollect.retryCount=tempCollect.retryCount;
@@ -245,7 +245,7 @@ static void AddCollect(int panel)
 	char tag[MAX_TREE_ITEM_TAG_LEN]={0}; 
 	Collect collect;
 	TESTTYPE selectedType;
-	RESULTDERIVE selectedDrive;
+	ENUM_TEST_TYPE testType;
 	int itemCount;
 	int count;																		    
 	//名称
@@ -258,8 +258,8 @@ static void AddCollect(int panel)
 	GetCtrlIndex(panel,COL_DETAIL_TESTTYPE,&selectedType);
 	collect.testType=selectedType;
 	//数据源
-	GetCtrlIndex(panel,COL_DETAIL_DERIVETYPE,&selectedDrive);
-	collect.resultDerive=selectedDrive;
+	GetCtrlIndex(panel,COL_DETAIL_DERIVETYPE,&testType);
+	collect.tType=testType;
 	//最大支持设备数
    	GetCtrlVal(panel,COL_DETAIL_MAXRUNDEVICE,temp);																													  
 	collect.maxParallelDevice=atoi(temp);
@@ -383,7 +383,7 @@ static void SaveCollectInfo(int panel)
 	Collect collect; 
 	char temp[100]={0}; 
 	TESTTYPE selectedType;
-	RESULTDERIVE selectedDrive;
+	ENUM_TEST_TYPE testType;
 	GetActiveTreeItem (stategyPanel, PLCYPANEL_COLLECTTREE, &selectedIndex);  
 	GetTreeItemParent(stategyPanel,PLCYPANEL_COLLECTTREE,selectedIndex,&parent);
 	if(parent!=-1)
@@ -416,8 +416,8 @@ static void SaveCollectInfo(int panel)
 	GetCtrlIndex(panel,COL_DETAIL_TESTTYPE,&selectedType);
 	collect.testType=selectedType;
 	//获取数据源
-	GetCtrlIndex(panel,COL_DETAIL_DERIVETYPE,&selectedDrive);
-	collect.resultDerive=selectedDrive;
+	GetCtrlIndex(panel,COL_DETAIL_DERIVETYPE,&testType);
+	collect.tType=testType;
 	//获取最大支持设备数
 	memset(temp,100,0); 
    	GetCtrlVal(panel,COL_DETAIL_MAXRUNDEVICE,temp);
@@ -449,7 +449,7 @@ static void ShowCollectInfo(Collect collect)
 	
 	 SetCtrlVal(testPanel,COL_DETAIL_NAME,collect.name_);
 	 SetCtrlIndex(testPanel,COL_DETAIL_TESTTYPE,collect.testType);
-     SetCtrlIndex(testPanel,COL_DETAIL_DERIVETYPE,collect.resultDerive);
+     SetCtrlIndex(testPanel,COL_DETAIL_DERIVETYPE,collect.tType);
 	 sprintf(temp,"%d",collect.maxParallelDevice);
 	 SetCtrlVal(testPanel,COL_DETAIL_MAXRUNDEVICE,temp);
 	 memset(temp,0,100);
