@@ -128,23 +128,14 @@ Breakpoint 0001 = "259,0,disabled,"
 [File 0011]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
 File Type = "CSource"
-Disk Date = 3595493060
+Disk Date = 3595545449
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
 Window Z-Order = 1
-Source Window State = "1,115,115,115,77,78,77,0,0,163,0,190,0,0,0,37,303,0,116,89,323,605,1,12,"
+Source Window State = "1,177,177,177,106,107,107,0,3,163,0,190,0,0,0,31,159,0,177,106,323,605,1,12,"
 
 [File 0012]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.uir"
-File Type = "User Interface Resource"
-Disk Date = 3595493109
-In Projects = "1,"
-Window Top = 31
-Window Height = 695
-Window Width = 1278
-
-[File 0013]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/statusCaseEntity.c"
 File Type = "CSource"
 Disk Date = 3595478655
@@ -154,7 +145,26 @@ Window Left = 90
 Source Window State = "1,140,140,140,7,12,12,0,0,0,0,0,0,0,0,0,0,0,12,78,323,707,1,0,"
 Breakpoint 0001 = "156,0,enabled,"
 
+[File 0013]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyPanel.uir"
+File Type = "User Interface Resource"
+Disk Date = 3540280285
+In Projects = "1,"
+Window Top = 182
+Window Left = 90
+Window Height = 323
+Window Width = 605
+
 [File 0014]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/autoTest.c"
+File Type = "CSource"
+Disk Date = 3595478379
+In Projects = "1,"
+Window Top = 92
+Window Left = 42
+Source Window State = "1,50,50,50,13,29,29,0,3,95,0,82,0,13,0,22,39,0,50,13,287,605,1,16,"
+
+[File 0015]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/AppInitSplash.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595476738
@@ -164,7 +174,7 @@ Window Left = 26
 Window Height = 323
 Window Width = 605
 
-[File 0015]
+[File 0016]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/AutoTestPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3540679115
@@ -174,7 +184,7 @@ Window Left = 10
 Window Height = 323
 Window Width = 605
 
-[File 0016]
+[File 0017]
 Path Line0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/DownLoadFileHelperPane"
 Path Line0002 = "l.uir"
 File Type = "User Interface Resource"
@@ -185,7 +195,7 @@ Window Left = 10
 Window Height = 323
 Window Width = 487
 
-[File 0017]
+[File 0018]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/EutPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3535606679
@@ -195,7 +205,7 @@ Window Left = 74
 Window Height = 323
 Window Width = 605
 
-[File 0018]
+[File 0019]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/HardwarePanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3522103230
@@ -205,18 +215,17 @@ Window Left = 26
 Window Height = 311
 Window Width = 521
 
-[File 0019]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyPanel.uir"
+[File 0020]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3540280285
+Disk Date = 3595544850
 In Projects = "1,"
-Window Top = 182
-Window Left = 90
-Window Height = 323
-Window Width = 605
+Window Top = 31
+Window Height = 695
+Window Width = 1278
 Window Z-Order = 3
 
-[File 0020]
+[File 0021]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/relayHelper/relayPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3251135440
@@ -226,7 +235,7 @@ Window Left = 42
 Window Height = 323
 Window Width = 707
 
-[File 0021]
+[File 0022]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/SettingPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3535604006
@@ -236,7 +245,7 @@ Window Left = 58
 Window Height = 323
 Window Width = 605
 
-[File 0022]
+[File 0023]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/StatusMonitorPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3524454344
@@ -246,7 +255,7 @@ Window Left = 10
 Window Height = 323
 Window Width = 605
 
-[File 0023]
+[File 0024]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/StatusMonitorPanel2.uir"
 File Type = "User Interface Resource"
 Disk Date = 3250431774
@@ -256,7 +265,7 @@ Window Left = 170
 Window Height = 323
 Window Width = 707
 
-[File 0024]
+[File 0025]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/sutConfig/SutPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595477190
@@ -266,7 +275,7 @@ Window Left = 74
 Window Height = 323
 Window Width = 605
 
-[File 0025]
+[File 0026]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/WarnPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595477512
@@ -276,7 +285,7 @@ Window Left = 10
 Window Height = 323
 Window Width = 605
 
-[File 0026]
+[File 0027]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/appInit.c"
 File Type = "CSource"
 Disk Date = 3595478365
@@ -285,7 +294,7 @@ Window Top = 62
 Window Left = 26
 Source Window State = "1,53,53,53,4,17,17,0,3,0,0,0,0,0,0,0,45,0,53,4,323,605,1,0,"
 
-[File 0027]
+[File 0028]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/arinc429driver.c"
 File Type = "CSource"
 Disk Date = 3251218230
@@ -294,16 +303,6 @@ Window Top = 33
 Window Left = 10
 Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,275,517,1,0,"
 
-[File 0028]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/autoTest.c"
-File Type = "CSource"
-Disk Date = 3595478379
-In Projects = "1,"
-Window Top = 92
-Window Left = 42
-Window Z-Order = 2
-Source Window State = "1,50,50,50,13,29,29,0,3,95,0,82,0,13,0,22,39,0,50,13,287,605,1,16,"
-
 [File 0029]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/collectParamInit.c"
 File Type = "CSource"
@@ -311,7 +310,7 @@ Disk Date = 3595478391
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Source Window State = "1,0,12,12,0,83,83,0,0,112,0,0,0,0,0,25,21,0,12,78,323,707,1,14,"
+Source Window State = "1,0,12,12,0,83,83,0,0,0,0,0,0,0,0,0,21,0,12,78,323,707,1,14,"
 
 [File 0030]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/common.c"
@@ -1308,10 +1307,20 @@ File Type = "Library"
 Disk Date = 3522103226
 In Projects = "1,"
 
+[File 0152]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.h"
+File Type = "Include"
+Disk Date = 3595544593
+In Projects = ""
+Window Top = 126
+Window Left = 58
+Window Z-Order = 2
+Source Window State = "1,28,28,28,9,37,37,0,3,80,0,0,0,0,0,19,21,0,28,9,251,517,1,0,"
+
 [Tab Order]
-Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyPanel.uir"
-Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/autoTest.c"
-Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
+Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
+Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.uir"
+Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.h"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

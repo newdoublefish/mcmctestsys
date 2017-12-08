@@ -53,17 +53,68 @@ int CVICALLBACK MainPnlMsgCallback(int panelHandle, int message,
 
 static int mainPanelWidth=0;
 static int mainPanelHeight=0;
-static int paddingTops=25;
-static int paddingLeft=100;
+static int headerHeight=0;
+#define  MAINPANEL_HEADER_BUTTON_PADDINGSIZE 30
+#define  MAINPANEL_PADDING_TOP 25
+#define  MAINPANEL_PADDING_LEFT 150
+#define  MAINPANLE_FOOTER_HEIGHT 40
+static void adjustHeader(int panel)
+{
+	int buttonSize = 0;
+	GetCtrlAttribute(panel,PANEL_MAIN_TST,ATTR_WIDTH,&buttonSize);
+	//设置tst图标 左边第一个
+	SetCtrlAttribute(panel,PANEL_MAIN_TST,ATTR_TOP,MAINPANEL_HEADER_BUTTON_PADDINGSIZE);
+	SetCtrlAttribute(panel,PANEL_MAIN_TST,ATTR_LEFT,MAINPANEL_HEADER_BUTTON_PADDINGSIZE);
+	//SetCtrlAttribute(panel,PANEL_MAIN_TST,ATTR_WIDTH,imageHeight);
+	//SetCtrlAttribute(panel,PANEL_MAIN_TST,ATTR_HEIGHT,imageHeight);	//正方形
+	
+	//设置config图标 左边第二个
+	SetCtrlAttribute(panel,PANEL_MAIN_CONF,ATTR_TOP,MAINPANEL_HEADER_BUTTON_PADDINGSIZE);
+	SetCtrlAttribute(panel,PANEL_MAIN_CONF,ATTR_LEFT,MAINPANEL_HEADER_BUTTON_PADDINGSIZE+buttonSize+MAINPANEL_HEADER_BUTTON_PADDINGSIZE);
+	//SetCtrlAttribute(panel,PANEL_MAIN_CONF,ATTR_WIDTH,imageHeight);
+	//SetCtrlAttribute(panel,PANEL_MAIN_CONF,ATTR_HEIGHT,imageHeight);	//正方形
+	
+	//设置PANEL_MAIN_QUIT  右起第一个
+	SetCtrlAttribute(panel,PANEL_MAIN_BACK,ATTR_TOP,MAINPANEL_HEADER_BUTTON_PADDINGSIZE);
+	SetCtrlAttribute(panel,PANEL_MAIN_BACK,ATTR_LEFT,mainPanelWidth-2*buttonSize-2*MAINPANEL_HEADER_BUTTON_PADDINGSIZE);
+	//SetCtrlAttribute(panel,PANEL_MAIN_BACK,ATTR_WIDTH,imageHeight);
+	//SetCtrlAttribute(panel,PANEL_MAIN_BACK,ATTR_HEIGHT,imageHeight);	//正方形		
+	
+	//设置PANEL_MAIN_QUIT 右起第二个
+	SetCtrlAttribute(panel,PANEL_MAIN_QUIT,ATTR_TOP,MAINPANEL_HEADER_BUTTON_PADDINGSIZE);
+	SetCtrlAttribute(panel,PANEL_MAIN_QUIT,ATTR_LEFT,mainPanelWidth-buttonSize-MAINPANEL_HEADER_BUTTON_PADDINGSIZE);
+	//SetCtrlAttribute(panel,PANEL_MAIN_QUIT,ATTR_WIDTH,imageHeight);
+	//SetCtrlAttribute(panel,PANEL_MAIN_QUIT,ATTR_HEIGHT,imageHeight);	//正方形
+	headerHeight=MAINPANEL_HEADER_BUTTON_PADDINGSIZE+buttonSize;
+}
+
+static void adjustBody(int panel)
+{
+	int bodyHeight=mainPanelHeight-headerHeight-MAINPANLE_FOOTER_HEIGHT;
+	int bodyWidth = mainPanelWidth;
+	SetCtrlAttribute(panel,PANEL_MAIN_TAB_MAIN,ATTR_TOP,headerHeight);
+	SetCtrlAttribute(panel,PANEL_MAIN_TAB_MAIN,ATTR_LEFT,0);
+	SetCtrlAttribute(panel,PANEL_MAIN_TAB_MAIN,ATTR_WIDTH,bodyWidth);
+	SetCtrlAttribute(panel,PANEL_MAIN_TAB_MAIN,ATTR_HEIGHT,bodyHeight);	//正方形
+}
+
+static void adustFooter(int panel)
+{
+	int width=0;
+	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_TOP,mainPanelHeight-MAINPANLE_FOOTER_HEIGHT+10);
+	GetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_WIDTH,&width);
+	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_LEFT,mainPanelWidth-width);	
+}
+
 void adjustPanelSize(int panel)
 {
-	int monitor=0,height=0,width=0;	
-	int footHeight=40;
+	int monitor=0,height=0,width=0;
+	//主面板
 	GetMonitorFromPanel (panel, &monitor);
 	GetMonitorAttribute (monitor, ATTR_HEIGHT, &height);
 	GetMonitorAttribute (monitor, ATTR_WIDTH, &width);
-	mainPanelWidth=width-2*paddingLeft;//两边一样长
-	mainPanelHeight=height-2*paddingTops;
+	mainPanelWidth=width-2*MAINPANEL_PADDING_LEFT;//两边一样长
+	mainPanelHeight=height-2*MAINPANEL_PADDING_TOP;
 	//设置主面板大小
 	SetPanelAttribute(panel,ATTR_WIDTH,mainPanelWidth);
 	SetPanelAttribute(panel,ATTR_HEIGHT,mainPanelHeight);
@@ -74,55 +125,34 @@ void adjustPanelSize(int panel)
 	SetCtrlAttribute(panel,PANEL_MAIN_DECROTE_HEADER,ATTR_LEFT,0);
 	SetCtrlAttribute(panel,PANEL_MAIN_DECROTE_HEADER,ATTR_WIDTH,mainPanelWidth);
 	SetCtrlAttribute(panel,PANEL_MAIN_DECROTE_HEADER,ATTR_HEIGHT,mainPanelHeight);
-	//设置TAB的显示区域
-	//header和body的关系是1比2
-	//设置tst图标
-	int imagePaddingSize=30;
-	int headerHeight = mainPanelHeight/4;
-	int headerWidth=mainPanelWidth;
-	int imageHeight=headerHeight-2*imagePaddingSize;			 
-	SetCtrlAttribute(panel,PANEL_MAIN_TST,ATTR_TOP,imagePaddingSize);
-	SetCtrlAttribute(panel,PANEL_MAIN_TST,ATTR_LEFT,imagePaddingSize);
-	SetCtrlAttribute(panel,PANEL_MAIN_TST,ATTR_WIDTH,imageHeight);
-	SetCtrlAttribute(panel,PANEL_MAIN_TST,ATTR_HEIGHT,imageHeight);	//正方形
+
+	adjustHeader(panel);
 	
-	//设置config图标
-	SetCtrlAttribute(panel,PANEL_MAIN_CONF,ATTR_TOP,imagePaddingSize);
-	SetCtrlAttribute(panel,PANEL_MAIN_CONF,ATTR_LEFT,imagePaddingSize+imageHeight+imagePaddingSize);
-	SetCtrlAttribute(panel,PANEL_MAIN_CONF,ATTR_WIDTH,imageHeight);
-	SetCtrlAttribute(panel,PANEL_MAIN_CONF,ATTR_HEIGHT,imageHeight);	//正方形
+	adjustBody(panel);
+
+	adustFooter(panel);
+}
+
+static void  adjustTstTab(int tabPanel)
+{
+	int buttonSize=0;
+	int panelWidth=0,panelHeight=0;
+	int paddingLeft=0,paddingTop=0;
+	GetPanelAttribute(tabPanel,ATTR_WIDTH,&panelWidth);
+	GetPanelAttribute(tabPanel,ATTR_HEIGHT,&panelHeight);
+	GetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_STATE,ATTR_WIDTH,&buttonSize);
+	paddingLeft = (panelWidth - 3*buttonSize)/4;
+	paddingTop = (panelHeight-buttonSize)/2;
 	
-	//设置PANEL_MAIN_QUIT
-	SetCtrlAttribute(panel,PANEL_MAIN_BACK,ATTR_TOP,imagePaddingSize);
-	SetCtrlAttribute(panel,PANEL_MAIN_BACK,ATTR_LEFT,mainPanelWidth-2*imageHeight-2*imagePaddingSize);
-	SetCtrlAttribute(panel,PANEL_MAIN_BACK,ATTR_WIDTH,imageHeight);
-	SetCtrlAttribute(panel,PANEL_MAIN_BACK,ATTR_HEIGHT,imageHeight);	//正方形		
-	
-	//设置PANEL_MAIN_QUIT
-	SetCtrlAttribute(panel,PANEL_MAIN_QUIT,ATTR_TOP,imagePaddingSize);
-	SetCtrlAttribute(panel,PANEL_MAIN_QUIT,ATTR_LEFT,mainPanelWidth-imageHeight-imagePaddingSize);
-	SetCtrlAttribute(panel,PANEL_MAIN_QUIT,ATTR_WIDTH,imageHeight);
-	SetCtrlAttribute(panel,PANEL_MAIN_QUIT,ATTR_HEIGHT,imageHeight);	//正方形
-	
-	//设置body tab
-	int bodyHeight=mainPanelHeight*3/4;
-	int bodyWidth = mainPanelWidth;
-	SetCtrlAttribute(panel,PANEL_MAIN_TAB_MAIN,ATTR_TOP,headerHeight-footHeight);
-	SetCtrlAttribute(panel,PANEL_MAIN_TAB_MAIN,ATTR_LEFT,0);
-	SetCtrlAttribute(panel,PANEL_MAIN_TAB_MAIN,ATTR_WIDTH,bodyWidth);
-	SetCtrlAttribute(panel,PANEL_MAIN_TAB_MAIN,ATTR_HEIGHT,bodyHeight);	//正方形
-	
-	//设置footer
-	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_TOP,mainPanelHeight-40);
-	GetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_WIDTH,&width);
-	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_LEFT,mainPanelWidth-width-5);
-	
-	
-	
-	
-	
-	
-	//printf("%d,%d,%d\n",monitor,height,width);
+	//第一个按钮
+	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_STATE,ATTR_TOP,paddingTop);
+	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_STATE,ATTR_LEFT,paddingLeft);
+	//第二个按钮
+	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_AUTO,ATTR_TOP,paddingTop);
+	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_AUTO,ATTR_LEFT,2*paddingLeft+buttonSize);	
+	//第三个按钮
+	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_INSTR,ATTR_TOP,paddingTop);
+	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_INSTR,ATTR_LEFT,3*paddingLeft+2*buttonSize);		
 }
 
 int main (int argc, char *argv[])
@@ -132,10 +162,10 @@ int main (int argc, char *argv[])
 	
 	if ((panelMain = LoadPanel (0, "MainPanel.uir", PANEL_MAIN)) >= 0)		   //测试主面板
 	{
-		adjustPanelSize(panelMain);
+		
 		if(GetPanelHandleFromTabPage(panelMain,PANEL_MAIN_TAB_MAIN,1,&tabconfig) == 0)
 		{
-			alignToParentPanel(tabconfig,TABPANEL_2_TAB);    		
+			    		
 			if(GetPanelHandleFromTabPage(tabconfig,TABPANEL_2_TAB,2,&tabEutConfig) < 0)
 				return -1;
 			if(GetPanelHandleFromTabPage(tabconfig,TABPANEL_2_TAB,1,&tabStrategyConfig) < 0)
@@ -153,6 +183,9 @@ int main (int argc, char *argv[])
 		
 		SetCtrlAttribute(panelMain,PANEL_MAIN_TAB_MAIN,ATTR_TABS_VISIBLE,0);
 		//SetCtrlAttribute(panelMain,ATTR_WIDTH,100);
+		adjustPanelSize(panelMain); 
+		alignToParentPanel(tabconfig,TABPANEL_2_TAB);
+		adjustTstTab(tabAuto);
 		
 
 		
