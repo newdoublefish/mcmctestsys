@@ -1,13 +1,15 @@
 [Project Header]
-Version = 900
-Pathname = "/e/project/project1431/workspace/1431/platDemo/MainPanel.prj"
-CVI Dir = "/d/program files/national instruments/cvi90"
-CVI Shared Dir = "/D/Program Files/National Instruments/Shared/CVI"
-CVI Pub Local Dir = "/C/ProgramData/National Instruments/CVI90"
+Version = 1700
+Pathname = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.prj"
+CVI Dir = "/c/program files (x86)/national instruments/cvi2017"
+CVI Shared Dir = "/C/Program Files (x86)/National Instruments/Shared/CVI"
+CVI Pub Local Dir = "/C/ProgramData/National Instruments/CVI2017"
 CVI Pub Global Dir = "/C/ProgramData/National Instruments/CVI"
-IVI Standard Root Dir = "/C/Program Files/IVI"
-VXIplug&play Framework Dir = "/c/vxipnp/winnt"
-Number of Files = 152
+IVI Standard Root Dir = "/C/Program Files (x86)/IVI Foundation/IVI"
+VXIplug&play Framework Dir = "/C/Program Files (x86)/IVI Foundation/VISA/winnt"
+IVI Standard Root 64-bit Dir = "/C/Program Files/IVI Foundation/IVI"
+VXIplug&play Framework 64-bit Dir = "/C/Program Files/IVI Foundation/VISA/win64"
+Number of Files = 151
 Target Type = "Executable"
 Flags = 16
 Copied From Locked InstrDrv Directory = False
@@ -15,226 +17,261 @@ Copied from VXIPNP Directory = False
 Locked InstrDrv Name = ""
 Don't Display Deploy InstrDrv Dialog = False
 
+[Folders]
+Library Files Folder Not Added Yet = True
+Folder 0 = "User Interface Files"
+FolderEx 0 = "User Interface Files"
+Folder 1 = "Instrument Files"
+FolderEx 1 = "Instrument Files"
+Folder 2 = "Source Files"
+FolderEx 2 = "Source Files"
+Folder 3 = "Include Files"
+FolderEx 3 = "Include Files"
+
 [File 0001]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 1
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/0.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/0.ico"
+Path Rel Path = "Init/AppInitSplash.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/AppInitSplash.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0002]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 2
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/1.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/1.ico"
+Path Rel Path = "autotest/AutoTestPanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/AutoTestPanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0003]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 3
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/100.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/100.ico"
+Path Rel Path = "maintain/idasMaintain/DownLoadFileHelperPanel.uir"
+Path Line0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/DownLoadFileHelperPane"
+Path Line0002 = "l.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0004]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 4
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/15.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/15.ico"
+Path Rel Path = "eutConfig/EutPanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/EutPanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0005]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 5
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/2.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/2.ico"
+Path Rel Path = "hardwareSelect/HardwarePanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/HardwarePanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0006]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 6
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/25.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/25.ico"
+Path Rel Path = "MainPanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0007]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 7
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/3.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/3.ico"
+Path Rel Path = "policyConfig/policyPanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyPanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0008]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 8
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/35.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/35.ico"
+Path Rel Path = "relayHelper/relayPanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/relayHelper/relayPanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0009]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 9
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/4.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/4.ico"
+Path Rel Path = "setting/SettingPanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/SettingPanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0010]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 10
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/5.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/5.ico"
+Path Rel Path = "statusMonitor/StatusMonitorPanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/StatusMonitorPanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0011]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 11
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/50.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/50.ico"
+Path Rel Path = "statusMonitor/StatusMonitorPanel2.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/StatusMonitorPanel2.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0012]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 12
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/6.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/6.ico"
+Path Rel Path = "sutConfig/SutPanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/sutConfig/SutPanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0013]
-File Type = "Unknown"
+File Type = "User Interface Resource"
 Res Id = 13
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/65.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/65.ico"
+Path Rel Path = "common/WarnPanel.uir"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/WarnPanel.uir"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "User Interface Files"
+Folder Id = 0
 
 [File 0014]
-File Type = "Unknown"
+File Type = "Function Panel"
 Res Id = 14
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/7.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/7.ico"
+Path Rel Path = "xmltool/cvixml.fp"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/xmltool/cvixml.fp"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Instrument Files"
+Folder Id = 1
 
 [File 0015]
-File Type = "Unknown"
+File Type = "Function Panel"
 Res Id = 15
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/75.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/75.ico"
+Path Rel Path = "excelHelper/excel2000.fp"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/excelHelper/excel2000.fp"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Instrument Files"
+Folder Id = 1
 
 [File 0016]
-File Type = "Unknown"
+File Type = "Function Panel"
 Res Id = 16
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/icon/8.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/8.ico"
+Path Rel Path = "iniHelper/inifile.fp"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/iniHelper/inifile.fp"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Instrument Files"
+Folder Id = 1
 
 [File 0017]
-File Type = "Unknown"
+File Type = "Function Panel"
 Res Id = 17
 Path Is Rel = True
-Path Rel To = "Project"
-Path Rel Path = "resource/icon/85.ico"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/icon/85.ico"
+Path Rel To = "CVI"
+Path Rel To Override = "CVI"
+Path Rel Path = "toolslib/custctrl/pwctrl.fp"
+Path = "/c/Program Files (x86)/National Instruments/CVI2017/toolslib/custctrl/pwctrl.fp"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Instrument Files"
+Folder Id = 1
 
 [File 0018]
-File Type = "CSource"
+File Type = "Function Panel"
 Res Id = 18
+Path Is Rel = True
+Path Rel To = "CVI"
+Path Rel To Override = "CVI"
+Path Rel Path = "toolslib/custctrl/radioGroup.fp"
+Path Line0001 = "/c/Program Files (x86)/National Instruments/CVI2017/toolslib/custctrl/radioGroup"
+Path Line0002 = ".fp"
+Exclude = False
+Project Flags = 0
+Folder = "Instrument Files"
+Folder Id = 1
+
+[File 0019]
+File Type = "Function Panel"
+Res Id = 19
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "common/regexpr.fp"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/regexpr.fp"
+Exclude = False
+Project Flags = 0
+Folder = "Instrument Files"
+Folder Id = 1
+
+[File 0020]
+File Type = "CSource"
+Res Id = 20
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "Init/appInit.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/appInit.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/appInit.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
-
-[File 0019]
-File Type = "Include"
-Res Id = 19
-Path Is Rel = True
-Path Rel To = "Project"
-Path Rel Path = "Init/appInit.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/appInit.h"
-Exclude = False
-Project Flags = 0
-Folder = "Include Files"
-
-[File 0020]
-File Type = "User Interface Resource"
-Res Id = 20
-Path Is Rel = True
-Path Rel To = "Project"
-Path Rel Path = "Init/AppInitSplash.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/AppInitSplash.uir"
-Exclude = False
-Project Flags = 0
-Folder = "User Interface Files"
+Folder Id = 2
 
 [File 0021]
 File Type = "CSource"
@@ -242,915 +279,992 @@ Res Id = 21
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "driver/arinc429driver/arinc429driver.c"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/arinc429dri"
-Path Line0002 = "ver.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/arinc429driver.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0022]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 22
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "driver/arinc429driver/arinc429driver.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/arinc429dri"
-Path Line0002 = "ver.h"
+Path Rel Path = "autotest/autoTest.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/autoTest.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0023]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 23
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "driver/arinc429driver/obt/ARINC429DRV.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/ARINC42"
-Path Line0002 = "9DRV.h"
+Path Rel Path = "Init/collectParamInit.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/collectParamInit.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0024]
 File Type = "CSource"
 Res Id = 24
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "autotest/autoTest.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/autotest/autoTest.c"
+Path Rel Path = "common/common.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/common.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0025]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 25
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "autotest/autoTest.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/autotest/autoTest.h"
+Path Rel Path = "common/convertTool.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/convertTool.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0026]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 26
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "autotest/AutoTestPanel.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/autotest/AutoTestPanel.h"
+Path Rel Path = "xmltool/cvixml.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/xmltool/cvixml.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0027]
-File Type = "User Interface Resource"
+File Type = "CSource"
 Res Id = 27
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "autotest/AutoTestPanel.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/autotest/AutoTestPanel.uir"
+Path Rel Path = "testCode/demoTestCode/demoTest.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/testCode/demoTestCode/demoTest.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0028]
 File Type = "CSource"
 Res Id = 28
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/collectParamInit.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/collectParamInit.c"
+Path Rel Path = "eutConfig/eutConfig.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutConfig.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0029]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 29
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/collectParamInit.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/collectParamInit.h"
+Path Rel Path = "eutConfig/eutEntity.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutEntity.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0030]
 File Type = "CSource"
 Res Id = 30
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/common.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/common.c"
+Path Rel Path = "excelHelper/excel2000.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/excelHelper/excel2000.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0031]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 31
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/common.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/common.h"
+Path Rel Path = "excelHelper/excelHelper.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/excelHelper/excelHelper.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0032]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 32
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/configPath.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/configPath.h"
+Path Rel Path = "common/expressHelper.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/expressHelper.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0033]
 File Type = "CSource"
 Res Id = 33
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/convertTool.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/convertTool.c"
+Path Rel Path = "maintain/idasMaintain/FileDownLoadHelper.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/FileDownLoadHelper.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0034]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 34
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/convertTool.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/convertTool.h"
+Path Rel Path = "Init/frameInit.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/frameInit.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0035]
 File Type = "CSource"
 Res Id = 35
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "xmltool/cvixml.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/xmltool/cvixml.c"
+Path Rel Path = "hardwareSelect/hardwareConfig.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/hardwareConfig.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0036]
-File Type = "Function Panel"
+File Type = "CSource"
 Res Id = 36
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "xmltool/cvixml.fp"
-Path = "/e/project/project1431/workspace/1431/platDemo/xmltool/cvixml.fp"
+Path Rel Path = "hardwareSelect/hardwareEntity.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/hardwareEntity.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Instrument Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0037]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 37
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "xmltool/cvixml.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/xmltool/cvixml.h"
+Path Rel Path = "maintain/idasMaintain/idasMaintainUART.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/idasMaintainUART.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0038]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 38
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/debug.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/debug.h"
+Path Rel Path = "iniHelper/inifile.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/iniHelper/inifile.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0039]
 File Type = "CSource"
 Res Id = 39
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "testCode/demoTestCode/demoTest.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/testCode/demoTestCode/demoTest.c"
+Path Rel Path = "common/log.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/log.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0040]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 40
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "maintain/idasMaintain/DownLoadFileHelperPanel.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/DownLoadFil"
-Path Line0002 = "eHelperPanel.h"
+Path Rel Path = "MainPanel.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0041]
-File Type = "User Interface Resource"
+File Type = "CSource"
 Res Id = 41
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "maintain/idasMaintain/DownLoadFileHelperPanel.uir"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/DownLoadFil"
-Path Line0002 = "eHelperPanel.uir"
+Path Rel Path = "maintain/idasMaintain/matainHelper.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/matainHelper.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0042]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 42
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "EMBC1000£≠PCI429£≠42£≠exampleDlg.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/EMBC1000£≠PCI429£≠42£≠exampleDlg."
-Path Line0002 = "h"
+Path Rel Path = "driver/arinc429driver/obt/obtArinc429Drv.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/obt/obtArinc429Drv.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0043]
 File Type = "CSource"
 Res Id = 43
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "eutConfig/eutConfig.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/eutConfig.c"
+Path Rel Path = "policyConfig/policyConfig.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyConfig.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0044]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 44
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "eutConfig/eutConfig.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/eutConfig.h"
+Path Rel Path = "policyConfig/policyEntity.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyEntity.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0045]
 File Type = "CSource"
 Res Id = 45
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "eutConfig/eutEntity.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/eutEntity.c"
+Path Rel Path = "frameworks/protocolHelper.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/protocolHelper.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0046]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 46
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "eutConfig/eutEntity.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/eutEntity.h"
+Path Rel Path = "relayHelper/relayHelper.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/relayHelper/relayHelper.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0047]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 47
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "eutConfig/EutPanel.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/EutPanel.h"
+Path Rel Path = "relayHelper/relayInstructionSet.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/relayHelper/relayInstructionSet.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0048]
-File Type = "User Interface Resource"
+File Type = "CSource"
 Res Id = 48
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "eutConfig/EutPanel.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/eutConfig/EutPanel.uir"
+Path Rel Path = "resultSave/resultSave.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resultSave/resultSave.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0049]
 File Type = "CSource"
 Res Id = 49
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "excelHelper/excel2000.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excel2000.c"
+Path Rel Path = "common/resultUtil.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/resultUtil.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0050]
-File Type = "Function Panel"
+File Type = "CSource"
 Res Id = 50
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "excelHelper/excel2000.fp"
-Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excel2000.fp"
+Path Rel Path = "setting/settingConfig.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/settingConfig.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Instrument Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0051]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 51
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "excelHelper/excel2000.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excel2000.h"
+Path Rel Path = "setting/settingEntity.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/settingEntity.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0052]
 File Type = "CSource"
 Res Id = 52
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "excelHelper/excelHelper.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excelHelper.c"
+Path Rel Path = "Init/statusCaseEntity.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/statusCaseEntity.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0053]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 53
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "excelHelper/excelHelper.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/excelHelper/excelHelper.h"
+Path Rel Path = "statusMonitor/statusMonitor.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/statusMonitor.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0054]
 File Type = "CSource"
 Res Id = 54
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/expressHelper.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/expressHelper.c"
+Path Rel Path = "statusMonitor/statusMonitor2.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/statusMonitor2.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0055]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 55
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/expressHelper.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/expressHelper.h"
+Path Rel Path = "sutConfig/sutConfig.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/sutConfig/sutConfig.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0056]
 File Type = "CSource"
 Res Id = 56
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "maintain/idasMaintain/FileDownLoadHelper.c"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/FileDownLoa"
-Path Line0002 = "dHelper.c"
+Path Rel Path = "sutConfig/sutEntity.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/sutConfig/sutEntity.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0057]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 57
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "maintain/idasMaintain/FileDownLoadHelper.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/FileDownLoa"
-Path Line0002 = "dHelper.h"
+Path Rel Path = "frameworks/testFramework.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/testFramework.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0058]
-File Type = "User Interface Resource"
+File Type = "CSource"
 Res Id = 58
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "flayParamAnalyse/FlyParamAnalysePanel.uir"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/flayParamAnalyse/FlyParamAnalyseP"
-Path Line0002 = "anel.uir"
+Path Rel Path = "Init/testGroupInit.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/testGroupInit.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0059]
 File Type = "CSource"
 Res Id = 59
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/frameInit.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/frameInit.c"
+Path Rel Path = "Init/testInit.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/testInit.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0060]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 60
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/frameInit.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/frameInit.h"
+Path Rel Path = "frameworks/threadFramework.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/threadFramework.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0061]
 File Type = "CSource"
 Res Id = 61
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "hardwareSelect/hardwareConfig.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/hardwareConfig.c"
+Path Rel Path = "Init/tipsParse.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/tipsParse.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0062]
-File Type = "Include"
+File Type = "CSource"
 Res Id = 62
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "hardwareSelect/hardwareConfig.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/hardwareConfig.h"
+Path Rel Path = "frameworks/tpsHelper.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/tpsHelper.c"
 Exclude = False
+Compile Into Object File = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Source Files"
+Folder Id = 2
 
 [File 0063]
 File Type = "CSource"
 Res Id = 63
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "hardwareSelect/hardwareEntity.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/hardwareEntity.c"
+Path Rel Path = "contentVerification/verification.c"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/contentVerification/verification.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files"
+Folder Id = 2
 
 [File 0064]
 File Type = "Include"
 Res Id = 64
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "hardwareSelect/hardwareEntity.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/hardwareEntity.h"
+Path Rel Path = "Init/appInit.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/appInit.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0065]
 File Type = "Include"
 Res Id = 65
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "hardwareSelect/HardwarePanel.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/HardwarePanel.h"
+Path Rel Path = "driver/arinc429driver/arinc429driver.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/arinc429driver.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0066]
-File Type = "User Interface Resource"
+File Type = "Include"
 Res Id = 66
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "hardwareSelect/HardwarePanel.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/hardwareSelect/HardwarePanel.uir"
+Path Rel Path = "driver/arinc429driver/obt/ARINC429DRV.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/obt/ARINC429DRV.h"
 Exclude = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0067]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 67
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "maintain/idasMaintain/idasMaintainUART.c"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/idasMaintai"
-Path Line0002 = "nUART.c"
+Path Rel Path = "autotest/autoTest.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/autoTest.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0068]
 File Type = "Include"
 Res Id = 68
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "maintain/idasMaintain/idasMaintainUART.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/idasMaintai"
-Path Line0002 = "nUART.h"
+Path Rel Path = "autotest/AutoTestPanel.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/AutoTestPanel.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0069]
 File Type = "Include"
 Res Id = 69
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "maintain/idasMaintain/idasMaintainUARTInterface.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/idasMaintai"
-Path Line0002 = "nUARTInterface.h"
+Path Rel Path = "Init/collectParamInit.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/collectParamInit.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0070]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 70
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "iniHelper/inifile.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/iniHelper/inifile.c"
+Path Rel Path = "common/common.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/common.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0071]
-File Type = "Function Panel"
+File Type = "Include"
 Res Id = 71
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "iniHelper/inifile.fp"
-Path = "/e/project/project1431/workspace/1431/platDemo/iniHelper/inifile.fp"
+Path Rel Path = "common/configPath.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/configPath.h"
 Exclude = False
 Project Flags = 0
-Folder = "Instrument Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0072]
 File Type = "Include"
 Res Id = 72
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "iniHelper/inifile.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/iniHelper/inifile.h"
+Path Rel Path = "common/convertTool.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/convertTool.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0073]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 73
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/log.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/log.c"
+Path Rel Path = "xmltool/cvixml.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/xmltool/cvixml.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0074]
 File Type = "Include"
 Res Id = 74
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/log.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/log.h"
+Path Rel Path = "common/debug.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/debug.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0075]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 75
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "MainPanel.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/MainPanel.c"
+Path Rel Path = "maintain/idasMaintain/DownLoadFileHelperPanel.h"
+Path Line0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/DownLoadFileHelperPane"
+Path Line0002 = "l.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0076]
-File Type = "User Interface Resource"
+File Type = "Include"
 Res Id = 76
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "MainPanel.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/MainPanel.uir"
+Path Rel Path = "EMBC1000£≠PCI429£≠42£≠exampleDlg.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/EMBC1000£≠PCI429£≠42£≠exampleDlg.h"
 Exclude = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0077]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 77
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "maintain/idasMaintain/matainHelper.c"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/matainHelpe"
-Path Line0002 = "r.c"
+Path Rel Path = "eutConfig/eutConfig.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutConfig.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0078]
 File Type = "Include"
 Res Id = 78
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "maintain/idasMaintain/matainHelper.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/maintain/idasMaintain/matainHelpe"
-Path Line0002 = "r.h"
+Path Rel Path = "eutConfig/eutEntity.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutEntity.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0079]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 79
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "driver/arinc429driver/obt/obtArinc429Drv.c"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/obtArin"
-Path Line0002 = "c429Drv.c"
+Path Rel Path = "eutConfig/EutPanel.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/EutPanel.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0080]
 File Type = "Include"
 Res Id = 80
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "driver/arinc429driver/obt/obtArinc429Drv.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/obtArin"
-Path Line0002 = "c429Drv.h"
+Path Rel Path = "excelHelper/excel2000.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/excelHelper/excel2000.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0081]
 File Type = "Include"
 Res Id = 81
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "flayParamAnalyse/paramAnalyse.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/flayParamAnalyse/paramAnalyse.h"
+Path Rel Path = "excelHelper/excelHelper.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/excelHelper/excelHelper.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0082]
 File Type = "Include"
 Res Id = 82
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "flayParamAnalyse/paramValue.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/flayParamAnalyse/paramValue.h"
+Path Rel Path = "common/expressHelper.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/expressHelper.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0083]
-File Type = "DLL"
+File Type = "Include"
 Res Id = 83
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "driver/arinc429driver/obt/PCI_LINK3.dll"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/PCI_LIN"
-Path Line0002 = "K3.dll"
+Path Rel Path = "maintain/idasMaintain/FileDownLoadHelper.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/FileDownLoadHelper.h"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0084]
-File Type = "Library"
+File Type = "Include"
 Res Id = 84
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "driver/arinc429driver/obt/PCI_LINK3.lib"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/PCI_LIN"
-Path Line0002 = "K3.lib"
+Path Rel Path = "Init/frameInit.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/frameInit.h"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0085]
-File Type = "Library"
+File Type = "Include"
 Res Id = 85
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "driver/arinc429driver/obt/PCIlenk.lib"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/PCIlenk"
-Path Line0002 = ".lib"
+Path Rel Path = "hardwareSelect/hardwareConfig.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/hardwareConfig.h"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0086]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 86
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "policyConfig/policyConfig.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyConfig.c"
+Path Rel Path = "hardwareSelect/hardwareEntity.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/hardwareEntity.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0087]
 File Type = "Include"
 Res Id = 87
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "policyConfig/policyConfig.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyConfig.h"
+Path Rel Path = "hardwareSelect/HardwarePanel.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/HardwarePanel.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0088]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 88
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "policyConfig/policyEntity.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyEntity.c"
+Path Rel Path = "maintain/idasMaintain/idasMaintainUART.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/idasMaintainUART.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0089]
 File Type = "Include"
 Res Id = 89
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "policyConfig/policyEntity.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyEntity.h"
+Path Rel Path = "maintain/idasMaintain/idasMaintainUARTInterface.h"
+Path Line0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/idasMaintainUARTInterf"
+Path Line0002 = "ace.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0090]
 File Type = "Include"
 Res Id = 90
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "policyConfig/policyPanel.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyPanel.h"
+Path Rel Path = "iniHelper/inifile.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/iniHelper/inifile.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0091]
-File Type = "User Interface Resource"
+File Type = "Include"
 Res Id = 91
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "policyConfig/policyPanel.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/policyConfig/policyPanel.uir"
+Path Rel Path = "common/log.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/log.h"
 Exclude = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0092]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 92
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "frameworks/protocolHelper.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/protocolHelper.c"
+Path Rel Path = "maintain/idasMaintain/matainHelper.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/matainHelper.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0093]
 File Type = "Include"
 Res Id = 93
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "frameworks/protocolHelper.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/protocolHelper.h"
+Path Rel Path = "driver/arinc429driver/obt/obtArinc429Drv.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/obt/obtArinc429Drv.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0094]
-File Type = "Function Panel"
+File Type = "Include"
 Res Id = 94
 Path Is Rel = True
-Path Rel To = "CVI"
-Path Rel To Override = "CVI"
-Path Rel Path = "toolslib/custctrl/pwctrl.fp"
-Path = "/d/Program Files/National Instruments/CVI90/toolslib/custctrl/pwctrl.fp"
+Path Rel To = "Project"
+Path Rel Path = "flayParamAnalyse/paramAnalyse.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/flayParamAnalyse/paramAnalyse.h"
 Exclude = False
 Project Flags = 0
-Folder = "Instrument Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0095]
-File Type = "Unknown"
+File Type = "Include"
 Res Id = 95
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/image/quit.png"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/quit.png"
+Path Rel Path = "flayParamAnalyse/paramValue.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/flayParamAnalyse/paramValue.h"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0096]
-File Type = "Function Panel"
+File Type = "Include"
 Res Id = 96
 Path Is Rel = True
-Path Rel To = "CVI"
-Path Rel To Override = "CVI"
-Path Rel Path = "toolslib/custctrl/radioGroup.fp"
-Path = "/d/Program Files/National Instruments/CVI90/toolslib/custctrl/radioGroup.fp"
+Path Rel To = "Project"
+Path Rel Path = "policyConfig/policyConfig.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyConfig.h"
 Exclude = False
 Project Flags = 0
-Folder = "Instrument Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0097]
-File Type = "Function Panel"
+File Type = "Include"
 Res Id = 97
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/regexpr.fp"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/regexpr.fp"
+Path Rel Path = "policyConfig/policyEntity.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyEntity.h"
 Exclude = False
 Project Flags = 0
-Folder = "Instrument Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0098]
-File Type = "Unknown"
+File Type = "Include"
 Res Id = 98
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/image/relay.png"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/relay.png"
+Path Rel Path = "policyConfig/policyPanel.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyPanel.h"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0099]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 99
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "relayHelper/relayHelper.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayHelper.c"
+Path Rel Path = "frameworks/protocolHelper.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/protocolHelper.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0100]
 File Type = "Include"
@@ -1158,305 +1272,316 @@ Res Id = 100
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "relayHelper/relayHelper.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayHelper.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/relayHelper/relayHelper.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0101]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 101
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "relayHelper/relayInstructionSet.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayInstructionSet.c"
+Path Rel Path = "relayHelper/relayInstructionSet.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/relayHelper/relayInstructionSet.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0102]
 File Type = "Include"
 Res Id = 102
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "relayHelper/relayInstructionSet.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayInstructionSet.h"
+Path Rel Path = "relayHelper/relayPanel.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/relayHelper/relayPanel.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0103]
 File Type = "Include"
 Res Id = 103
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "relayHelper/relayPanel.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayPanel.h"
+Path Rel Path = "resultSave/resultSave.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resultSave/resultSave.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0104]
-File Type = "User Interface Resource"
+File Type = "Include"
 Res Id = 104
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "relayHelper/relayPanel.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/relayHelper/relayPanel.uir"
+Path Rel Path = "common/resultUtil.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/resultUtil.h"
 Exclude = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0105]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 105
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resultSave/resultSave.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/resultSave/resultSave.c"
+Path Rel Path = "setting/settingConfig.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/settingConfig.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0106]
 File Type = "Include"
 Res Id = 106
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resultSave/resultSave.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/resultSave/resultSave.h"
+Path Rel Path = "setting/settingEntity.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/settingEntity.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0107]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 107
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/resultUtil.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/resultUtil.c"
+Path Rel Path = "setting/SettingPanel.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/SettingPanel.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0108]
 File Type = "Include"
 Res Id = 108
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/resultUtil.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/resultUtil.h"
+Path Rel Path = "Init/statusCaseEntity.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/statusCaseEntity.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0109]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 109
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "setting/settingConfig.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/setting/settingConfig.c"
+Path Rel Path = "statusMonitor/statusMonitor.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/statusMonitor.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0110]
 File Type = "Include"
 Res Id = 110
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "setting/settingConfig.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/setting/settingConfig.h"
+Path Rel Path = "statusMonitor/statusMonitor2.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/statusMonitor2.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0111]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 111
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "setting/settingEntity.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/setting/settingEntity.c"
+Path Rel Path = "statusMonitor/StatusMonitorPanel.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/StatusMonitorPanel.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0112]
 File Type = "Include"
 Res Id = 112
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "setting/settingEntity.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/setting/settingEntity.h"
+Path Rel Path = "statusMonitor/StatusMonitorPanel2.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/statusMonitor/StatusMonitorPanel2.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0113]
 File Type = "Include"
 Res Id = 113
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "setting/SettingPanel.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/setting/SettingPanel.h"
+Path Rel Path = "sutConfig/sutCommon.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/sutConfig/sutCommon.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0114]
-File Type = "User Interface Resource"
+File Type = "Include"
 Res Id = 114
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "setting/SettingPanel.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/setting/SettingPanel.uir"
+Path Rel Path = "sutConfig/sutEntity.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/sutConfig/sutEntity.h"
 Exclude = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0115]
-File Type = "Unknown"
+File Type = "Include"
 Res Id = 115
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/image/startTest.png"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/startTest.png"
+Path Rel Path = "sutConfig/SutPanel.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/sutConfig/SutPanel.h"
 Exclude = False
 Project Flags = 0
-Folder = "Not In A Folder"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0116]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 116
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/statusCaseEntity.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/statusCaseEntity.c"
+Path Rel Path = "frameworks/testFramework.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/testFramework.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0117]
 File Type = "Include"
 Res Id = 117
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/statusCaseEntity.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/statusCaseEntity.h"
+Path Rel Path = "Init/testGroupInit.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/testGroupInit.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0118]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 118
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "statusMonitor/statusMonitor.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/statusMonitor.c"
+Path Rel Path = "Init/testInit.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/testInit.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0119]
 File Type = "Include"
 Res Id = 119
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "statusMonitor/statusMonitor.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/statusMonitor.h"
+Path Rel Path = "frameworks/threadFramework.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/threadFramework.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0120]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 120
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "statusMonitor/statusMonitor2.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/statusMonitor2.c"
+Path Rel Path = "Init/tipsParse.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/tipsParse.h"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Include Files"
+Folder Id = 3
 
 [File 0121]
 File Type = "Include"
 Res Id = 121
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "statusMonitor/statusMonitor2.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/statusMonitor2.h"
+Path Rel Path = "frameworks/tpsHelper.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/tpsHelper.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0122]
 File Type = "Include"
 Res Id = 122
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "statusMonitor/StatusMonitorPanel.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/StatusMonitorPanel."
-Path Line0002 = "h"
+Path Rel Path = "contentVerification/verification.h"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/contentVerification/verification.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
+Folder Id = 3
 
 [File 0123]
-File Type = "User Interface Resource"
+File Type = "Unknown"
 Res Id = 123
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "statusMonitor/StatusMonitorPanel.uir"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/StatusMonitorPanel."
-Path Line0002 = "uir"
+Path Rel Path = "resource/icon/0.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/0.ico"
 Exclude = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Not In A Folder"
 
 [File 0124]
-File Type = "Include"
+File Type = "Unknown"
 Res Id = 124
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "statusMonitor/StatusMonitorPanel2.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/StatusMonitorPanel2"
-Path Line0002 = ".h"
+Path Rel Path = "resource/icon/1.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/1.ico"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0125]
-File Type = "User Interface Resource"
+File Type = "Unknown"
 Res Id = 125
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "statusMonitor/StatusMonitorPanel2.uir"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/statusMonitor/StatusMonitorPanel2"
-Path Line0002 = ".uir"
+Path Rel Path = "resource/icon/100.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/100.ico"
 Exclude = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Not In A Folder"
 
 [File 0126]
 File Type = "Unknown"
 Res Id = 126
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/image/stop.png"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/stop.png"
+Path Rel Path = "resource/icon/15.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/15.ico"
 Exclude = False
 Project Flags = 0
 Folder = "Not In A Folder"
@@ -1466,8 +1591,8 @@ File Type = "Unknown"
 Res Id = 127
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/image/suspend.png"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/suspend.png"
+Path Rel Path = "resource/icon/2.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/2.ico"
 Exclude = False
 Project Flags = 0
 Folder = "Not In A Folder"
@@ -1477,262 +1602,250 @@ File Type = "Unknown"
 Res Id = 128
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "resource/image/suspend_red.png"
-Path = "/e/project/project1431/workspace/1431/platDemo/resource/image/suspend_red.png"
+Path Rel Path = "resource/icon/25.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/25.ico"
 Exclude = False
 Project Flags = 0
 Folder = "Not In A Folder"
 
 [File 0129]
-File Type = "Include"
+File Type = "Unknown"
 Res Id = 129
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "sutConfig/sutCommon.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/sutCommon.h"
+Path Rel Path = "resource/icon/3.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/3.ico"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0130]
-File Type = "CSource"
+File Type = "Unknown"
 Res Id = 130
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "sutConfig/sutConfig.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/sutConfig.c"
+Path Rel Path = "resource/icon/35.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/35.ico"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Not In A Folder"
 
 [File 0131]
-File Type = "CSource"
+File Type = "Unknown"
 Res Id = 131
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "sutConfig/sutEntity.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/sutEntity.c"
+Path Rel Path = "resource/icon/4.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/4.ico"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Not In A Folder"
 
 [File 0132]
-File Type = "Include"
+File Type = "Unknown"
 Res Id = 132
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "sutConfig/sutEntity.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/sutEntity.h"
+Path Rel Path = "resource/icon/5.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/5.ico"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0133]
-File Type = "Include"
+File Type = "Unknown"
 Res Id = 133
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "sutConfig/SutPanel.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/SutPanel.h"
+Path Rel Path = "resource/icon/50.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/50.ico"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0134]
-File Type = "User Interface Resource"
+File Type = "Unknown"
 Res Id = 134
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "sutConfig/SutPanel.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/sutConfig/SutPanel.uir"
+Path Rel Path = "resource/icon/6.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/6.ico"
 Exclude = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Not In A Folder"
 
 [File 0135]
-File Type = "CSource"
+File Type = "Unknown"
 Res Id = 135
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "frameworks/testFramework.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/testFramework.c"
+Path Rel Path = "resource/icon/65.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/65.ico"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Not In A Folder"
 
 [File 0136]
-File Type = "Include"
+File Type = "Unknown"
 Res Id = 136
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "frameworks/testFramework.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/testFramework.h"
+Path Rel Path = "resource/icon/7.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/7.ico"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0137]
-File Type = "CSource"
+File Type = "Unknown"
 Res Id = 137
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/testGroupInit.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/testGroupInit.c"
+Path Rel Path = "resource/icon/75.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/75.ico"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Not In A Folder"
 
 [File 0138]
-File Type = "Include"
+File Type = "Unknown"
 Res Id = 138
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/testGroupInit.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/testGroupInit.h"
+Path Rel Path = "resource/icon/8.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/8.ico"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0139]
-File Type = "CSource"
+File Type = "Unknown"
 Res Id = 139
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/testInit.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/testInit.c"
+Path Rel Path = "resource/icon/85.ico"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/85.ico"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Not In A Folder"
 
 [File 0140]
-File Type = "Include"
+File Type = "DLL"
 Res Id = 140
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/testInit.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/testInit.h"
+Path Rel Path = "driver/arinc429driver/obt/PCI_LINK3.dll"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/obt/PCI_LINK3.dll"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0141]
-File Type = "CSource"
+File Type = "Library"
 Res Id = 141
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "frameworks/threadFramework.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/threadFramework.c"
+Path Rel Path = "driver/arinc429driver/obt/PCI_LINK3.lib"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/obt/PCI_LINK3.lib"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Not In A Folder"
 
 [File 0142]
-File Type = "Include"
+File Type = "Library"
 Res Id = 142
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "frameworks/threadFramework.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/threadFramework.h"
+Path Rel Path = "driver/arinc429driver/obt/PCIlenk.lib"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/obt/PCIlenk.lib"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0143]
-File Type = "CSource"
+File Type = "Unknown"
 Res Id = 143
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/tipsParse.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/tipsParse.c"
+Path Rel Path = "resource/image/quit.png"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/image/quit.png"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Not In A Folder"
 
 [File 0144]
-File Type = "Include"
+File Type = "Unknown"
 Res Id = 144
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "Init/tipsParse.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/Init/tipsParse.h"
+Path Rel Path = "resource/image/relay.png"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/image/relay.png"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0145]
-File Type = "CSource"
+File Type = "Unknown"
 Res Id = 145
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "frameworks/tpsHelper.c"
-Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/tpsHelper.c"
+Path Rel Path = "resource/image/startTest.png"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/image/startTest.png"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Not In A Folder"
 
 [File 0146]
-File Type = "Include"
+File Type = "Unknown"
 Res Id = 146
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "frameworks/tpsHelper.h"
-Path = "/e/project/project1431/workspace/1431/platDemo/frameworks/tpsHelper.h"
+Path Rel Path = "resource/image/stop.png"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/image/stop.png"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0147]
-File Type = "CSource"
+File Type = "Unknown"
 Res Id = 147
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "contentVerification/verification.c"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/contentVerification/verification."
-Path Line0002 = "c"
+Path Rel Path = "resource/image/suspend.png"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/image/suspend.png"
 Exclude = False
-Compile Into Object File = False
 Project Flags = 0
-Folder = "Source Files"
+Folder = "Not In A Folder"
 
 [File 0148]
-File Type = "Include"
+File Type = "Unknown"
 Res Id = 148
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "contentVerification/verification.h"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/contentVerification/verification."
-Path Line0002 = "h"
+Path Rel Path = "resource/image/suspend_red.png"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/image/suspend_red.png"
 Exclude = False
 Project Flags = 0
-Folder = "Include Files"
+Folder = "Not In A Folder"
 
 [File 0149]
-File Type = "User Interface Resource"
+File Type = "DLL"
 Res Id = 149
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "common/WarnPanel.uir"
-Path = "/e/project/project1431/workspace/1431/platDemo/common/WarnPanel.uir"
+Path Rel Path = "driver/arinc429driver/obt/wdapi901.dll"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/obt/wdapi901.dll"
 Exclude = False
 Project Flags = 0
-Folder = "User Interface Files"
+Folder = "Not In A Folder"
 
 [File 0150]
-File Type = "DLL"
+File Type = "Library"
 Res Id = 150
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "driver/arinc429driver/obt/wdapi901.dll"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/wdapi90"
-Path Line0002 = "1.dll"
+Path Rel Path = "driver/arinc429driver/obt/wdapi901.lib"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/obt/wdapi901.lib"
 Exclude = False
 Project Flags = 0
 Folder = "Not In A Folder"
@@ -1742,30 +1855,284 @@ File Type = "Library"
 Res Id = 151
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "driver/arinc429driver/obt/wdapi901.lib"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/wdapi90"
-Path Line0002 = "1.lib"
-Exclude = False
-Project Flags = 0
-Folder = "Not In A Folder"
-
-[File 0152]
-File Type = "Library"
-Res Id = 152
-Path Is Rel = True
-Path Rel To = "Project"
 Path Rel Path = "driver/arinc429driver/obt/wdapi901_.lib"
-Path Line0001 = "/e/project/project1431/workspace/1431/platDemo/driver/arinc429driver/obt/wdapi90"
-Path Line0002 = "1_.lib"
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/driver/arinc429driver/obt/wdapi901_.lib"
 Exclude = False
 Project Flags = 0
 Folder = "Not In A Folder"
 
-[Folders]
-Folder 0 = "User Interface Files"
-Folder 1 = "Instrument Files"
-Folder 2 = "Source Files"
-Folder 3 = "Include Files"
+[Custom Build Configs]
+Num Custom Build Configs = 0
+
+[Default Build Config Debug]
+Config Name = "Debug"
+Is 64-Bit = False
+Is Release = False
+Default Calling Convention = "cdecl"
+Optimization Level = "No optimizations"
+Require Prototypes = True
+Show Warning IDs in Build Output = False
+Selected Warning Level = "None"
+Warning List None = "4,9,84,105,106,107,108,109,110,111"
+Warning List Common = ""
+Warning List Extended = ""
+Warning List All = ""
+Warning Mode = 0
+Enable Unreferenced Identifiers Warning = False
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Assignment In Conditional Warning = False
+Uninitialized Locals Compile Warning = "Aggressive"
+Require Return Values = True
+Enable C99 Extensions = True
+Enable OpenMP Extensions = False
+Stack Size = 250000
+Stack Reserve = 1048576
+Stack Commit = 4096
+Image Base Address = 4194304
+Image Base Address x64 = 4194304
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+Sign = False
+Sign Store = ""
+Sign Certificate = ""
+Sign Timestamp URL = ""
+Sign URL = ""
+Manifest Embed = False
+Icon File Is Rel = True
+Icon File Rel To = "Project"
+Icon File Rel Path = "resource/icon/Monitor.ico"
+Icon File = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/Monitor.ico"
+Application Title = "ZJS◊‘∂Ø≤‚ ‘"
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Runtime Support = "Full Runtime Support"
+Runtime Binding = "Shared"
+Embed Project .UIRs = False
+Generate Map File = False
+Embed Timestamp = True
+Create Console Application = False
+Using LoadExternalModule = True
+DLL Exports = "Include File Symbols"
+Register ActiveX Server = False
+Numeric File Version = "1,0,0,0"
+Numeric Prod Version = "1,0,0,0"
+Comments = ""
+Comments Ex = ""
+Company Name = ""
+Company Name Ex = "%company"
+File Description = "ZJS◊‘∂Ø≤‚ ‘ (Debug x86)"
+File Description Ex = "%application (%rel_dbg %arch)"
+File Version = "1.0"
+File Version Ex = "%f1.%f2"
+Internal Name = "MainPanel_dbg"
+Internal Name Ex = "%basename"
+Legal Copyright = "Copyright   2017"
+Legal Copyright Ex = "Copyright  %company %Y"
+Legal Trademarks = ""
+Legal Trademarks Ex = ""
+Original Filename = "MainPanel_dbg.exe"
+Original Filename Ex = "%filename"
+Private Build = ""
+Private Build Ex = ""
+Product Name = " ZJS◊‘∂Ø≤‚ ‘"
+Product Name Ex = "%company %application"
+Product Version = "1.0"
+Product Version Ex = "%p1.%p2"
+Special Build = ""
+Special Build Ex = ""
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
+
+[Default Build Config Release]
+Config Name = "Release"
+Is 64-Bit = False
+Is Release = True
+Default Calling Convention = "cdecl"
+Optimization Level = "No optimizations"
+Require Prototypes = True
+Show Warning IDs in Build Output = False
+Selected Warning Level = "None"
+Warning List None = "4,9,84,105,106,107,108,109,110,111"
+Warning List Common = ""
+Warning List Extended = ""
+Warning List All = ""
+Warning Mode = 0
+Enable Unreferenced Identifiers Warning = False
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Assignment In Conditional Warning = False
+Uninitialized Locals Compile Warning = "Aggressive"
+Require Return Values = True
+Enable C99 Extensions = True
+Enable OpenMP Extensions = False
+Stack Size = 250000
+Stack Reserve = 1048576
+Stack Commit = 4096
+Image Base Address = 4194304
+Image Base Address x64 = 4194304
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+Sign = False
+Sign Store = ""
+Sign Certificate = ""
+Sign Timestamp URL = ""
+Sign URL = ""
+Manifest Embed = False
+Icon File Is Rel = True
+Icon File Rel To = "Project"
+Icon File Rel Path = "resource/icon/Monitor.ico"
+Icon File = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/Monitor.ico"
+Application Title = "ZJS◊‘∂Ø≤‚ ‘"
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Runtime Support = "Full Runtime Support"
+Runtime Binding = "Shared"
+Embed Project .UIRs = False
+Generate Map File = False
+Embed Timestamp = True
+Create Console Application = False
+Using LoadExternalModule = True
+DLL Exports = "Include File Symbols"
+Register ActiveX Server = False
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
+
+[Default Build Config Debug64]
+Config Name = "Debug64"
+Is 64-Bit = True
+Is Release = False
+Default Calling Convention = "cdecl"
+Optimization Level = "No optimizations"
+Require Prototypes = True
+Show Warning IDs in Build Output = False
+Selected Warning Level = "None"
+Warning List None = "4,9,84,105,106,107,108,109,110,111"
+Warning List Common = ""
+Warning List Extended = ""
+Warning List All = ""
+Warning Mode = 0
+Enable Unreferenced Identifiers Warning = False
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Assignment In Conditional Warning = False
+Uninitialized Locals Compile Warning = "Aggressive"
+Require Return Values = True
+Enable C99 Extensions = True
+Enable OpenMP Extensions = False
+Stack Size = 250000
+Stack Reserve = 1048576
+Stack Commit = 4096
+Image Base Address = 4194304
+Image Base Address x64 = 4194304
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+Sign = False
+Sign Store = ""
+Sign Certificate = ""
+Sign Timestamp URL = ""
+Sign URL = ""
+Manifest Embed = False
+Icon File Is Rel = True
+Icon File Rel To = "Project"
+Icon File Rel Path = "resource/icon/Monitor.ico"
+Icon File = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/Monitor.ico"
+Application Title = "ZJS◊‘∂Ø≤‚ ‘"
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Runtime Support = "Full Runtime Support"
+Runtime Binding = "Shared"
+Embed Project .UIRs = False
+Generate Map File = False
+Embed Timestamp = True
+Create Console Application = False
+Using LoadExternalModule = True
+DLL Exports = "Include File Symbols"
+Register ActiveX Server = False
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
+
+[Default Build Config Release64]
+Config Name = "Release64"
+Is 64-Bit = True
+Is Release = True
+Default Calling Convention = "cdecl"
+Optimization Level = "No optimizations"
+Require Prototypes = True
+Show Warning IDs in Build Output = False
+Selected Warning Level = "None"
+Warning List None = "4,9,84,105,106,107,108,109,110,111"
+Warning List Common = ""
+Warning List Extended = ""
+Warning List All = ""
+Warning Mode = 0
+Enable Unreferenced Identifiers Warning = False
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Assignment In Conditional Warning = False
+Uninitialized Locals Compile Warning = "Aggressive"
+Require Return Values = True
+Enable C99 Extensions = True
+Enable OpenMP Extensions = False
+Stack Size = 250000
+Stack Reserve = 1048576
+Stack Commit = 4096
+Image Base Address = 4194304
+Image Base Address x64 = 4194304
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+Sign = False
+Sign Store = ""
+Sign Certificate = ""
+Sign Timestamp URL = ""
+Sign URL = ""
+Manifest Embed = False
+Icon File Is Rel = True
+Icon File Rel To = "Project"
+Icon File Rel Path = "resource/icon/Monitor.ico"
+Icon File = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/Monitor.ico"
+Application Title = "ZJS◊‘∂Ø≤‚ ‘"
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Runtime Support = "Full Runtime Support"
+Runtime Binding = "Shared"
+Embed Project .UIRs = False
+Generate Map File = False
+Embed Timestamp = True
+Create Console Application = False
+Using LoadExternalModule = True
+DLL Exports = "Include File Symbols"
+Register ActiveX Server = False
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
 
 [Compiler Options]
 Default Calling Convention = "cdecl"
@@ -1775,7 +2142,6 @@ Enable Pointer Mismatch Warning = False
 Enable Unreachable Code Warning = False
 Enable Unreferenced Identifiers Warning = False
 Enable Assignment In Conditional Warning = False
-O Option Compatible With 5.0 = False
 Enable C99 Extensions = True
 Uninitialized Locals Compile Warning = "Conservative"
 Precompile Prefix Header = False
@@ -1783,7 +2149,9 @@ Prefix Header File = ""
 
 [Run Options]
 Stack Size = 250000
+Stack Commit = 4096
 Image Base Address = 4194304
+Image Base Address x64 = 4194304
 
 [Compiler Defines]
 Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
@@ -1792,48 +2160,49 @@ Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
 Include Path 1 Is Rel = True
 Include Path 1 Rel To = "Project"
 Include Path 1 Rel Path = ""
-Include Path 1 = "/e/project/project1431/workspace/1431/platDemo"
+Include Path 1 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo"
 Include Path 2 Is Rel = True
 Include Path 2 Rel To = "Project"
 Include Path 2 Rel Path = "common"
-Include Path 2 = "/e/project/project1431/workspace/1431/platDemo/common"
+Include Path 2 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common"
 Include Path 3 Is Rel = True
 Include Path 3 Rel To = "Project"
 Include Path 3 Rel Path = "policyConfig"
-Include Path 3 = "/e/project/project1431/workspace/1431/platDemo/policyConfig"
+Include Path 3 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig"
 
 [Create Executable]
 Executable File_Debug Is Rel = True
 Executable File_Debug Rel To = "Project"
 Executable File_Debug Rel Path = "MainPanel_dbg.exe"
-Executable File_Debug = "/e/project/project1431/workspace/1431/platDemo/MainPanel_dbg.exe"
+Executable File_Debug = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel_dbg.exe"
 Executable File_Release Is Rel = True
 Executable File_Release Rel To = "Project"
 Executable File_Release Rel Path = "MainPanel.exe"
-Executable File_Release = "/e/project/project1431/workspace/1431/platDemo/MainPanel.exe"
+Executable File_Release = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.exe"
 Executable File_Debug64 Is Rel = True
 Executable File_Debug64 Rel To = "Project"
 Executable File_Debug64 Rel Path = "MainPanel.exe"
-Executable File_Debug64 = "/e/project/project1431/workspace/1431/platDemo/MainPanel.exe"
+Executable File_Debug64 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.exe"
 Executable File_Release64 Is Rel = True
 Executable File_Release64 Rel To = "Project"
 Executable File_Release64 Rel Path = "MainPanel.exe"
-Executable File_Release64 = "/e/project/project1431/workspace/1431/platDemo/MainPanel.exe"
+Executable File_Release64 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.exe"
 Icon File Is Rel = True
 Icon File Rel To = "Project"
 Icon File Rel Path = "resource/icon/Monitor.ico"
-Icon File = "/e/project/project1431/workspace/1431/platDemo/resource/icon/Monitor.ico"
+Icon File = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resource/icon/Monitor.ico"
 Application Title = "ZJS◊‘∂Ø≤‚ ‘"
 DLL Exports = "Include File Symbols"
-DLL Import Library Choice = "Gen Lib For Current Mode"
 Use IVI Subdirectories for Import Libraries = False
 Use VXIPNP Subdirectories for Import Libraries = False
 Use Dflt Import Lib Base Name = True
 Where to Copy DLL = "Do not copy"
 Custom Directory to Copy DLL Is Rel = False
 Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
 Add Type Lib To DLL = False
 Include Type Lib Help Links = False
+TLB Help Style = "HLP"
 Type Lib FP File Is Rel = False
 Type Lib FP File = ""
 Type Lib Guid = ""
@@ -1878,4 +2247,6 @@ Embed = False
 [tpcSection]
 tpcEnabled = 0
 tpcOverrideEnvironment = 0
+tpcEnabled x64 = 0
+tpcOverrideEnvironment x64 = 0
 

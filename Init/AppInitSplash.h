@@ -1,6 +1,5 @@
 /**************************************************************************/
 /* LabWindows/CVI User Interface Resource (UIR) Include File              */
-/* Copyright (c) National Instruments 2015. All Rights Reserved.          */
 /*                                                                        */
 /* WARNING: Do not add to, delete from, or otherwise modify the contents  */
 /*          of this include file.                                         */
@@ -15,15 +14,18 @@
      /* Panels and Controls: */
 
 #define  LOAD_P                           1
-#define  LOAD_P_TEXTMSG_3                 2
-#define  LOAD_P_TEXTMSG_2                 3
-#define  LOAD_P_TEXTMSG_5                 4
-#define  LOAD_P_TEXTMSG_4                 5
-#define  LOAD_P_TEXTMSG_V                 6
-#define  LOAD_P_PICTURE                   7
-#define  LOAD_P_TEXTMSG_429               8
-#define  LOAD_P_TEXTMSG_422               9
-#define  LOAD_P_TEXTMSG                   10
+#define  LOAD_P_TEXTMSG_V                 2       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_TEXTMSG_429               3       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_TEXTMSG_422               4       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_TEXTMSG_6                 5       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_TEXTMSG_3                 6       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_TEXTMSG                   7       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_TEXTMSG_4                 8       /* control type: textMsg, callback function: (none) */
+
+
+     /* Control Arrays: */
+
+          /* (no control arrays in the resource file) */
 
 
      /* Menu Bars, Menus, and Menu Items: */

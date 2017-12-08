@@ -1,14 +1,14 @@
 /*---------------------------------------------------------------------------
- // 版权声明：本文件由广州航新航空科技股份有限公司版权所有，未经授权，禁止第三
- // 方进行拷贝和使用。
+ // 版权声明：本文件由广东万城万充电动车运营股份有限公司版权所有，未经授权，
+ // 禁止第三方进行拷贝和使用。
  //
- // 文件名：common.c
- // 文件功能描述:可以共用的面板 
+ // 文件名：
+ // 文件功能描述: 
  //
  // 
- // 创建标识：曾衍仁 20141114
+ // 创建标识：曾衍仁 
  //
- // 修改标识：曾衍仁  20150814
+ // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
 #include "toolbox.h"
@@ -18,6 +18,15 @@
 #include <userint.h>
 #include "WarnPanel.h"
 #include "settingConfig.h"
+
+void alignToParentPanel(int parent,int ctrl)
+{
+	int parentTabWidth,parentTabHeight,width,height;
+	GetPanelAttribute(parent,ATTR_WIDTH,&parentTabWidth);
+	GetPanelAttribute(parent,ATTR_HEIGHT,&parentTabHeight); 
+	SetCtrlAttribute(parent,ctrl,ATTR_WIDTH,parentTabWidth);
+	SetCtrlAttribute(parent,ctrl,ATTR_HEIGHT,parentTabHeight);	
+}
 
 void WarnShow(char *meesage)
 {

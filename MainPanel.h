@@ -1,6 +1,5 @@
 /**************************************************************************/
 /* LabWindows/CVI User Interface Resource (UIR) Include File              */
-/* Copyright (c) National Instruments 2016. All Rights Reserved.          */
 /*                                                                        */
 /* WARNING: Do not add to, delete from, or otherwise modify the contents  */
 /*          of this include file.                                         */
@@ -15,24 +14,29 @@
      /* Panels and Controls: */
 
 #define  PANEL_MAIN                       1
-#define  PANEL_MAIN_PICTURE_2             2
-#define  PANEL_MAIN_PICTURE               3
-#define  PANEL_MAIN_TAB_MAIN              4       /* callback function: CLICKTAB */
-#define  PANEL_MAIN_QUIT                  5       /* callback function: QUITAPP */
-#define  PANEL_MAIN_BACK                  6       /* callback function: BackMain */
-#define  PANEL_MAIN_CONF                  7       /* callback function: EnableConf */
-#define  PANEL_MAIN_TST                   8       /* callback function: EnableTst */
-#define  PANEL_MAIN_VERSION_VALUE         9
-#define  PANEL_MAIN_VERSION               10
+#define  PANEL_MAIN_PICTURE               2       /* control type: picture, callback function: (none) */
+#define  PANEL_MAIN_TAB_MAIN              3       /* control type: tab, callback function: CLICKTAB */
+#define  PANEL_MAIN_QUIT                  4       /* control type: pictButton, callback function: QUITAPP */
+#define  PANEL_MAIN_BACK                  5       /* control type: pictButton, callback function: BackMain */
+#define  PANEL_MAIN_CONF                  6       /* control type: pictButton, callback function: EnableConf */
+#define  PANEL_MAIN_TST                   7       /* control type: pictButton, callback function: EnableTst */
+#define  PANEL_MAIN_VERSION_VALUE         8       /* control type: textMsg, callback function: (none) */
+#define  PANEL_MAIN_DECROTE_HEADER        9       /* control type: textMsg, callback function: (none) */
+#define  PANEL_MAIN_TEXTMSG_2             10      /* control type: textMsg, callback function: (none) */
 
      /* tab page panel controls */
-#define  TABPANEL_PICTUREBUTTON_MANUAL    2
-#define  TABPANEL_PICTUREBUTTON_INSTR     3       /* callback function: PICTUREBUTTON_INSTRUCTIONCALLBACK */
-#define  TABPANEL_PICTUREBUTTON_AUTO      4       /* callback function: PICTUREBUTTON_AUTO */
-#define  TABPANEL_PICTUREBUTTON_STATE     5       /* callback function: PICTUREBUTTON_STATE */
+#define  TABPANEL_PICTUREBUTTON_MANUAL    2       /* control type: pictButton, callback function: (none) */
+#define  TABPANEL_PICTUREBUTTON_INSTR     3       /* control type: pictButton, callback function: PICTUREBUTTON_INSTRUCTIONCALLBACK */
+#define  TABPANEL_PICTUREBUTTON_AUTO      4       /* control type: pictButton, callback function: PICTUREBUTTON_AUTO */
+#define  TABPANEL_PICTUREBUTTON_STATE     5       /* control type: pictButton, callback function: PICTUREBUTTON_STATE */
 
      /* tab page panel controls */
-#define  TABPANEL_2_TAB                   2       /* callback function: CLICKTAB */
+#define  TABPANEL_2_TAB                   2       /* control type: tab, callback function: CLICKTAB */
+
+
+     /* Control Arrays: */
+
+          /* (no control arrays in the resource file) */
 
 
      /* Menu Bars, Menus, and Menu Items: */

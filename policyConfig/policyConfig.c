@@ -1,14 +1,14 @@
 /*---------------------------------------------------------------------------
- // 版权声明：本文件由广州航新航空科技股份有限公司版权所有，未经授权，禁止第三
- // 方进行拷贝和使用。
+ // 版权声明：本文件由广东万城万充电动车运营股份有限公司版权所有，未经授权，
+ // 禁止第三方进行拷贝和使用。
  //
- // 文件名：policyConfig.c
- // 文件功能描述:策略增删
+ // 文件名：
+ // 文件功能描述: 
  //
  // 
- // 创建标识：曾衍仁 20141114
+ // 创建标识：曾衍仁 
  //
- // 修改标识：曾衍仁  20150814
+ // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
 #include <cvirte.h>		
@@ -171,8 +171,8 @@ void DisplayStrategyPanelAsTabPanel(int panelHandle)
 static ListType refreshCollectList()
 {
 	int itemCount=0,parent=-1,firstLoop=1,tagInt=0;
-	Collect tempCollect,newCollect;  
-	char tag[MAX_TREE_ITEM_TAG_LEN];
+	Collect tempCollect={0},newCollect={0};  
+	char tag[MAX_TREE_ITEM_TAG_LEN]={0};
 	char temp[100]={0};
 	ListType newCollectList=ListCreate(sizeof(Collect));
 	GetNumTreeItems(stategyPanel,PLCYPANEL_COLLECTTREE,VAL_ALL,0,VAL_FIRST,VAL_NEXT_PLUS_SELF,0,&itemCount);
@@ -205,7 +205,8 @@ static ListType refreshCollectList()
 		   newCollect.retryCount=tempCollect.retryCount;
 	   }else{
 	       //添加组ID到集合里面
-		   ListInsertItem(newCollect.groups,&tagInt,END_OF_LIST);  
+		   if(newCollect.groups!=0)
+		   		ListInsertItem(newCollect.groups,&tagInt,END_OF_LIST);  
 	   }
 	}
 	if(firstLoop==0)  

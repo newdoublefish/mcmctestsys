@@ -47,6 +47,8 @@ BOOL GetConfigWarnPanelRetWithQuitFlag(int panel,char *title,char *lableMessage,
 
 BOOL getUserCustiomName(char *fileName);
 
+void alignToParentPanel(int parent,int ctrl);
+
 
 
 #ifdef __cplusplus
