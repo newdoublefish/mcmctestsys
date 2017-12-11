@@ -38,6 +38,7 @@ METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable)
 TPS registerDemoTestTPS(void)
 {
 	TPS tps=newTps("demoType");
-	tps.autoTestFunction=(void *)DemoTest;
+	tps.autoTestFunction=DemoTest;
+	tps.manualTestFunction=DemoTest;
 	return tps;
 }

@@ -353,7 +353,7 @@ static int CVICALLBACK DoTestFunction(void * data)
 				 if(obj->onObjectGroupTestListener!=NULL)
 				 {
 					   //LOG_LEVEL("Debug","%x\n",obj->resultHashTable);
-					   testRet=(*(ON_OBJECT_GROUP_TEST_LISTENER)(obj->onObjectGroupTestListener))(testItem,obj);	
+					   testRet=(*(ON_OBJECT_GROUP_TEST_LISTENER)(obj->onObjectGroupTestListener))(testItem,obj,collect.tType);	
 			     }		   
 				 if(testRet==TEST_ALL_PASS)
 				 {

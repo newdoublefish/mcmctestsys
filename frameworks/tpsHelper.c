@@ -75,8 +75,10 @@ int getTps(char *tpsName,TPS *tpsPtr)
 		 //printf("getTps:current tpsName:%s\n",tpsPtr->tpsName);
 		 if(strcmp(tpsName,tpsPtr->tpsName)==0)
 		 {
-			 if(st.simuTest>0)
-			   tpsPtr->autoTestFunction=(void *)tpsSimuTest;
+			 if(st.simuTest>0){
+			   tpsPtr->autoTestFunction=(TEST_METHOD)tpsSimuTest;
+			   tpsPtr->manualTestFunction=(TEST_METHOD)tpsSimuTest;			 
+			 }
 		     return 1;
 		 }
 	 }

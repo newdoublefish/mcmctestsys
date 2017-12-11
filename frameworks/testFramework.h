@@ -24,6 +24,12 @@
 #ifdef __cplusplus
     extern "C" {
 #endif
+		
+typedef enum
+{
+	TYPE_AUTO=0x00,
+	TYPEMANUAL=0x01
+}TESTType;
 
 typedef enum
 {
@@ -83,7 +89,7 @@ typedef void (*ON_OBJECT_PANEL_INIT_LISTENER)(TESTobject *);
 typedef BOOL (*ON_RESULT_SHOW_LISTENER)(TESTobject *object,TestGroup group,int groupIndex,int*itemIndex); 
 typedef void (*ON_OBJECT_TEST_ERROR_LISTENER)(TESTobject *); 
 typedef void (*ON_OBJECT_TEST_FINISH_LISTENER)(TESTobject *);  
-typedef TESTresult (*ON_OBJECT_GROUP_TEST_LISTENER)(TestGroup,TESTobject *);
+typedef TESTresult (*ON_OBJECT_GROUP_TEST_LISTENER)(TestGroup,TESTobject *,TESTType);
 typedef TESTresult (*ON_OBJECT_COLLECT_TEST_LISTENER)(Collect,TESTobject *);
 
 typedef BOOL (*ON_TEST_BEGIN_LISTENER)(TESTengine *);

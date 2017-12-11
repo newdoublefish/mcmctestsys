@@ -437,7 +437,7 @@ static void operateTimer(int on)
 }
 
 
-TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj)
+TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 {
 	 	TESTresult ret=TEST_ALL_PASS;
 		
@@ -464,7 +464,23 @@ TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj)
 		if(getTps(testItem.type,&tps))
 		{
 			//printf("%s",tps.tpsName);
-			METHODRET testRet= (*(TEST_METHOD)(tps.autoTestFunction))(testItem,_obj->device,_obj->resultHashTable);
+			METHODRET testRet= TEST_ERROR;
+			if(type == TYPE_AUTO){
+				if(tps.autoTestFunction==NULL)
+				{
+					WarnShow1(0,"没有定义自动测试的方法"); 
+				}else{
+					testRet = (*(TEST_METHOD)(tps.autoTestFunction))(testItem,_obj->device,_obj->resultHashTable);
+				}
+			}else{
+				if(tps.manualTestFunction==NULL)
+				{
+					WarnShow1(0,"没有定义手动测试的方法");  
+				}else{
+					testRet = (*(TEST_METHOD)(tps.manualTestFunction))(testItem,_obj->device,_obj->resultHashTable); 
+				}
+				
+			} 
 		   	if(testRet==TEST_RESULT_ALLPASS)
 		    	ret=TEST_ALL_PASS;
 	     	else if(testRet==TEST_RESULT_ERROR)
@@ -475,9 +491,6 @@ TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj)
 		{
 		    WarnShow1(0,"不支持的TPS类型"); 
 		}
-		
-
-			
 		return ret;
 }
 
