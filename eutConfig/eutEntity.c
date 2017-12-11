@@ -81,22 +81,27 @@ static EUT xmlToEut(CVIXMLElement currElem)
 	   }else if(strcmp(elemName,"StopBit")==0)
 	   {
 	       tempDevice.matainConfig.stopBit=atoi(elemValue);
-	   }else if(strcmp(elemName,"RSR422ComPortNum")==0)
-	   {
-	       tempDevice.RS422Config.portNum=atoi(elemValue);
-	   }else if(strcmp(elemName,"RS422ComBandRate")==0)
-	   {
-	        tempDevice.RS422Config.baudRate=atoi(elemValue);  
-	   }else if(strcmp(elemName,"RS422ComParity")==0)
-	   {
-	       tempDevice.RS422Config.parity=atoi(elemValue);
-	   }else if(strcmp(elemName,"RS422ComDataBit")==0)
-	   {
-	       tempDevice.RS422Config.dataBit=atoi(elemValue);
-	   }else if(strcmp(elemName,"RS422ComtopBit")==0)
-	   {
-	       tempDevice.RS422Config.stopBit=atoi(elemValue);
 	   }
+	   //充电桩配置
+	   else if(strcmp(elemName,"IP1")==0)
+	   {
+		   memset(tempDevice.chargingPile.ip,0,MAX_NET_IP_LEN);
+	       strcpy(tempDevice.chargingPile.ip,elemValue);
+		   
+	   }else if(strcmp(elemName,"PORT1")==0) 
+	   {
+			tempDevice.chargingPile.port=atoi(elemValue);	   
+	   }
+	   //测试工装IP配置
+	   else if(strcmp(elemName,"IP2")==0)
+	   {
+		   memset(tempDevice.testInstrument.ip,0,MAX_NET_IP_LEN);
+	       strcpy(tempDevice.testInstrument.ip,elemValue);
+		   
+	   }else if(strcmp(elemName,"PORT2")==0) 
+	   {
+			tempDevice.testInstrument.port=atoi(elemValue);	   
+	   }	   
 	   
         free (elemName);
         free (elemValue);
@@ -289,47 +294,30 @@ static void eutToXml(ListType eutList,CVIXMLElement element)
 		 sprintf(temp,"%d",device.matainConfig.stopBit); 
 	     CVIXMLSetElementValue (currSuperChildElem, temp);
 		 
-		 //写 RS422PORT
+	     //写  NET1
+	     CVIXMLNewElement(currElem,1,"Net1",&currChildElem);
+	     //写 IP地址 IP1
+		 CVIXMLNewElement(currChildElem,0,"IP1",&currSuperChildElem);
+	     CVIXMLSetElementValue (currSuperChildElem, device.chargingPile.ip);
+		 //写 port1
+		 CVIXMLNewElement(currChildElem,1,"PORT1",&currSuperChildElem);
+		 memset(temp,100,0); 
+		 sprintf(temp,"%d",device.chargingPile.port); 
+	     CVIXMLSetElementValue (currSuperChildElem, temp);	
 		 
-	     CVIXMLNewElement(currElem,1,"RS422Com",&currChildElem);
-		 //memset(temp,100,0);
-		 //sprintf(temp,"%d",device.matainCom);  
-	     //CVIXMLSetElementValue (currChildElem, temp);
-		 //维护口
-		 //CVIXMLNewElement(currElem,1,"MatainCom",&currChildElem);
-		 //串口号
-		 CVIXMLNewElement(currChildElem,0,"RSR422ComPortNum",&currSuperChildElem);
+	     //写  NET2
+	     CVIXMLNewElement(currElem,2,"Net2",&currChildElem);
+	     //写 IP地址 IP2
+		 CVIXMLNewElement(currChildElem,0,"IP2",&currSuperChildElem);
+	     CVIXMLSetElementValue (currSuperChildElem, device.testInstrument.ip);
+		 //写 port2
+		 CVIXMLNewElement(currChildElem,1,"PORT2",&currSuperChildElem);
 		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.RS422Config.portNum); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);
-		 //波特率
-		 CVIXMLNewElement(currChildElem,1,"RS422ComBandRate",&currSuperChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.RS422Config.baudRate); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);
-		//校验码  
-		 CVIXMLNewElement(currChildElem,2,"RS422ComParity",&currSuperChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.RS422Config.parity); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);
+		 sprintf(temp,"%d",device.testInstrument.port); 
+	     CVIXMLSetElementValue (currSuperChildElem, temp);			 
 		 
-		 //数据位 
-		 CVIXMLNewElement(currChildElem,3,"RS422ComDataBit",&currSuperChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.RS422Config.dataBit); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);
-		 //停止位
-		 CVIXMLNewElement(currChildElem,4,"RS422ComtopBit",&currSuperChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.RS422Config.stopBit); 
-	     CVIXMLSetElementValue (currSuperChildElem, temp);
 
-	    //写  disable
-	     /*CVIXMLNewElement(currElem,2,"Enable",&currChildElem);
-		 memset(temp,100,0); 
-		 sprintf(temp,"%d",device.enable); 
-	     CVIXMLSetElementValue (currChildElem, temp);*/
-	    //写 429Card
+		 
 		 
 	}
 }

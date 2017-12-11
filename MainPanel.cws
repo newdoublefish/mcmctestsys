@@ -32,7 +32,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 3
+Number of Opened Files = 8
 Window Confinement Region Enabled = True
 MainColumnWidth = 248
 FileDateColumnWidth = 70
@@ -115,6 +115,26 @@ Source Window State = "1,140,140,140,7,12,12,0,0,0,0,0,0,0,0,0,0,0,12,78,323,707
 Breakpoint 0001 = "156,0,enabled,"
 
 [File 0010]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutConfig.c"
+File Type = "CSource"
+Disk Date = 3595816350
+In Projects = "1,"
+Window Top = 32
+Window Left = 10
+Window Z-Order = 2
+Source Window State = "1,124,124,124,70,71,71,0,0,95,0,25,0,0,0,25,355,0,291,50,323,605,1,30,"
+
+[File 0011]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
+File Type = "CSource"
+Disk Date = 3595569875
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Window Z-Order = 3
+Source Window State = "1,236,236,236,47,57,57,0,0,95,0,103,0,0,0,25,0,0,206,4,323,605,1,0,"
+
+[File 0012]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/AppInitSplash.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595558516
@@ -124,7 +144,7 @@ Window Left = 10
 Window Height = 275
 Window Width = 427
 
-[File 0011]
+[File 0013]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/AutoTestPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595549299
@@ -134,7 +154,7 @@ Window Left = 10
 Window Height = 323
 Window Width = 605
 
-[File 0012]
+[File 0014]
 Path Line0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/DownLoadFileHelperPane"
 Path Line0002 = "l.uir"
 File Type = "User Interface Resource"
@@ -145,13 +165,18 @@ Window Left = 10
 Window Height = 323
 Window Width = 487
 
-[File 0013]
+[File 0015]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/EutPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3595560693
+Disk Date = 3595807071
 In Projects = "1,"
+Window Top = 33
+Window Left = 10
+Window Height = 179
+Window Width = 517
+Window Z-Order = 5
 
-[File 0014]
+[File 0016]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/HardwarePanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3522103230
@@ -161,7 +186,7 @@ Window Left = 26
 Window Height = 311
 Window Width = 521
 
-[File 0015]
+[File 0017]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595569737
@@ -170,7 +195,7 @@ Window Top = 31
 Window Height = 695
 Window Width = 1278
 
-[File 0016]
+[File 0018]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595557110
@@ -180,7 +205,7 @@ Window Left = 90
 Window Height = 323
 Window Width = 605
 
-[File 0017]
+[File 0019]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/SettingPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595549579
@@ -190,7 +215,7 @@ Window Left = 58
 Window Height = 323
 Window Width = 605
 
-[File 0018]
+[File 0020]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/sutConfig/SutPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595557945
@@ -200,7 +225,7 @@ Window Left = 74
 Window Height = 323
 Window Width = 605
 
-[File 0019]
+[File 0021]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/WarnPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595549513
@@ -210,7 +235,7 @@ Window Left = 10
 Window Height = 323
 Window Width = 605
 
-[File 0020]
+[File 0022]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/appInit.c"
 File Type = "CSource"
 Disk Date = 3595478365
@@ -219,7 +244,7 @@ Window Top = 62
 Window Left = 26
 Source Window State = "1,0,12,12,0,81,81,0,0,0,0,0,0,0,0,0,50,0,63,20,323,605,1,0,"
 
-[File 0021]
+[File 0023]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/autoTest.c"
 File Type = "CSource"
 Disk Date = 3595559969
@@ -228,7 +253,7 @@ Window Top = 92
 Window Left = 42
 Source Window State = "1,560,560,560,54,64,64,0,0,0,0,556,0,13,0,0,581,0,590,46,287,605,1,26,"
 
-[File 0022]
+[File 0024]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/collectParamInit.c"
 File Type = "CSource"
 Disk Date = 3595478391
@@ -237,7 +262,7 @@ Window Top = 62
 Window Left = 26
 Source Window State = "1,0,12,12,0,83,83,0,0,0,0,0,0,0,0,0,15,0,12,78,323,707,1,14,"
 
-[File 0023]
+[File 0025]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/common.c"
 File Type = "CSource"
 Disk Date = 3595490713
@@ -246,7 +271,7 @@ Window Top = 192
 Window Left = 106
 Source Window State = "1,50,50,50,31,38,38,0,3,0,0,56,0,0,0,0,298,0,50,31,323,605,1,39,"
 
-[File 0024]
+[File 0026]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/convertTool.c"
 File Type = "CSource"
 Disk Date = 3595478403
@@ -255,16 +280,17 @@ Window Top = 122
 Window Left = 58
 Source Window State = "1,0,11,11,0,83,83,0,0,0,0,0,0,0,0,0,0,0,12,78,251,605,1,0,"
 
-[File 0025]
+[File 0027]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/xmltool/cvixml.c"
 File Type = "CSource"
 Disk Date = 3522103256
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,727,727,727,21,42,42,0,0,0,0,0,0,0,0,0,36,0,2103,17,287,605,1,0,"
+Window Z-Order = 6
+Source Window State = "1,444,444,444,21,37,37,0,0,95,0,0,0,0,0,22,431,0,444,41,287,605,1,0,"
 
-[File 0026]
+[File 0028]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/testCode/demoTestCode/demoTest.c"
 File Type = "CSource"
 Disk Date = 3595478420
@@ -273,26 +299,17 @@ Window Top = 242
 Window Left = 122
 Source Window State = "1,37,37,37,4,23,23,0,0,0,0,0,0,0,0,0,21,0,37,4,323,725,1,0,"
 
-[File 0027]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutConfig.c"
-File Type = "CSource"
-Disk Date = 3595560650
-In Projects = "1,"
-Window Top = 32
-Window Left = 10
-Window Z-Order = 3
-Source Window State = "1,427,427,427,9,19,19,0,3,95,0,30,0,0,0,25,418,0,427,9,323,605,1,0,"
-
-[File 0028]
+[File 0029]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutEntity.c"
 File Type = "CSource"
-Disk Date = 3595560586
+Disk Date = 3595816581
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Source Window State = "1,39,39,39,7,10,10,0,3,0,0,0,0,0,0,0,27,0,39,7,323,605,1,0,"
+Window Z-Order = 1
+Source Window State = "1,304,304,304,34,46,46,0,3,163,0,0,0,0,0,26,290,0,304,34,323,605,1,0,"
 
-[File 0029]
+[File 0030]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/excelHelper/excel2000.c"
 File Type = "CSource"
 Disk Date = 3522103228
@@ -301,7 +318,7 @@ Window Top = 122
 Window Left = 58
 Source Window State = "1,10927,10927,10927,16,34,34,0,0,0,0,0,0,0,0,0,0,0,2614,4,323,605,1,0,"
 
-[File 0030]
+[File 0031]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/expressHelper.c"
 File Type = "CSource"
 Disk Date = 3250533734
@@ -310,7 +327,7 @@ Window Top = 32
 Window Left = 6
 Source Window State = "1,194,194,194,7,18,18,0,3,0,0,0,0,0,0,0,0,0,194,7,323,521,1,0,"
 
-[File 0031]
+[File 0032]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/FileDownLoadHelper.c"
 File Type = "CSource"
 Disk Date = 3595478489
@@ -319,7 +336,7 @@ Window Top = 32
 Window Left = 10
 Source Window State = "1,0,12,12,0,90,90,0,0,0,0,0,0,0,0,0,66,0,12,78,323,725,1,0,"
 
-[File 0032]
+[File 0033]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/frameInit.c"
 File Type = "CSource"
 Disk Date = 3595478496
@@ -328,7 +345,7 @@ Window Top = 32
 Window Left = 10
 Source Window State = "1,0,12,12,0,90,90,0,0,0,0,0,0,0,0,0,0,0,12,78,323,713,1,0,"
 
-[File 0033]
+[File 0034]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/hardwareConfig.c"
 File Type = "CSource"
 Disk Date = 3595478500
@@ -337,7 +354,7 @@ Window Top = 212
 Window Left = 106
 Source Window State = "1,0,12,12,0,84,84,0,0,0,0,6,0,0,0,0,3,0,12,78,323,605,1,16,"
 
-[File 0034]
+[File 0035]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/hardwareSelect/hardwareEntity.c"
 File Type = "CSource"
 Disk Date = 3595478510
@@ -346,16 +363,17 @@ Window Top = 242
 Window Left = 122
 Source Window State = "1,32,32,32,5,19,19,0,0,0,0,0,0,0,0,0,25,0,12,78,323,605,1,0,"
 
-[File 0035]
+[File 0036]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/idasMaintainUART.c"
 File Type = "CSource"
 Disk Date = 3595478520
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,0,18,18,0,89,89,0,0,0,0,0,0,0,0,0,0,0,13,73,323,517,1,0,"
+Window Z-Order = 8
+Source Window State = "1,0,18,18,0,89,89,0,0,80,0,0,0,0,0,25,593,0,605,0,323,517,1,0,"
 
-[File 0036]
+[File 0037]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/iniHelper/inifile.c"
 File Type = "CSource"
 Disk Date = 3522103230
@@ -364,7 +382,7 @@ Window Top = 212
 Window Left = 106
 Source Window State = "1,2451,2451,2451,12,26,26,0,0,0,0,0,0,0,0,0,2209,0,2284,13,323,605,0,0,"
 
-[File 0037]
+[File 0038]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/log.c"
 File Type = "CSource"
 Disk Date = 3595478534
@@ -372,16 +390,6 @@ In Projects = "1,"
 Window Top = 62
 Window Left = 26
 Source Window State = "1,68,68,68,4,17,17,0,3,0,0,0,0,0,0,0,63,0,68,4,275,605,1,0,"
-
-[File 0038]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
-File Type = "CSource"
-Disk Date = 3595569875
-In Projects = "1,"
-Window Top = 62
-Window Left = 26
-Window Z-Order = 2
-Source Window State = "1,236,236,236,47,57,57,0,0,95,0,103,0,0,0,25,224,0,236,47,323,605,1,0,"
 
 [File 0039]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/matainHelper.c"
@@ -629,18 +637,22 @@ Source Window State = "1,23,23,23,9,19,19,0,3,0,0,0,0,0,0,0,14,0,23,9,251,517,1,
 [File 0066]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutEntity.h"
 File Type = "Include"
-Disk Date = 3595804228
+Disk Date = 3595807704
 In Projects = "1,"
 Window Top = 242
 Window Left = 122
-Source Window State = "1,0,12,12,0,82,82,0,0,0,0,0,0,0,0,0,9,0,21,63,323,605,1,0,"
+Window Z-Order = 7
+Source Window State = "1,22,22,22,8,22,22,0,0,95,0,0,0,0,0,25,11,0,35,9,323,605,1,0,"
 
 [File 0067]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/EutPanel.h"
 File Type = "Include"
-Disk Date = 3595560693
+Disk Date = 3595807071
 In Projects = "1,"
-Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+Window Top = 33
+Window Left = 10
+Window Z-Order = 4
+Source Window State = "1,45,45,45,9,16,16,0,0,80,0,0,0,0,0,24,24,0,33,49,311,517,1,0,"
 
 [File 0068]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/excelHelper/excel2000.h"
@@ -1105,20 +1117,15 @@ File Type = "Library"
 Disk Date = 3522103226
 In Projects = "1,"
 
-[File 0129]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/relayHelper/relayInstructionSet.c"
-File Type = "CSource"
-Disk Date = 3595478610
-In Projects = ""
-Window Top = 64
-Window Left = 26
-Window Z-Order = 1
-Source Window State = "1,0,0,0,0,0,0,0,0,163,0,0,0,0,0,19,118,0,127,20,179,517,1,0,"
-
 [Tab Order]
 Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutConfig.c"
-Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/relayHelper/relayInstructionSet.c"
-Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
+Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
+Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/idasMaintainUART.c"
+Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/EutPanel.uir"
+Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/EutPanel.h"
+Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutEntity.c"
+Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutEntity.h"
+Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/xmltool/cvixml.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

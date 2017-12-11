@@ -38,11 +38,12 @@
 #define  MATAIN_PORTNUM                   6       /* control type: ring, callback function: (none) */
 
      /* tab page panel controls */
-#define  RS422_STOPB                      2       /* control type: ring, callback function: (none) */
-#define  RS422_DATAB                      3       /* control type: ring, callback function: (none) */
-#define  RS422_PARITY                     4       /* control type: ring, callback function: (none) */
-#define  RS422_RATE                       5       /* control type: ring, callback function: (none) */
-#define  RS422_PORTNUM                    6       /* control type: ring, callback function: (none) */
+#define  NET1_PORT                        2       /* control type: string, callback function: (none) */
+#define  NET1_IP                          3       /* control type: string, callback function: (none) */
+
+     /* tab page panel controls */
+#define  NET2_PORT                        2       /* control type: string, callback function: (none) */
+#define  NET2_IP                          3       /* control type: string, callback function: (none) */
 
 
      /* Control Arrays: */

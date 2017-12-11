@@ -19,7 +19,8 @@
    extern "C" {
 #endif	 
 	   
-#define MAX_EUTNAME_LEN 30	   
+#define MAX_EUTNAME_LEN 30
+#define MAX_NET_IP_LEN 50
 
 typedef struct
 {
@@ -32,9 +33,10 @@ typedef struct
 
 typedef struct
 {
-   int card;
-   int ch;
-}ARINC429CONFIG;
+	char ip[MAX_NET_IP_LEN];
+	int port;
+}NETCONFIG;
+
 
 
 typedef struct
@@ -42,10 +44,8 @@ typedef struct
     int index;
 	char eutName[MAX_EUTNAME_LEN];
 	RSCONFIG matainConfig;
-	RSCONFIG RS422Config; 
-	//RSCONFIG relayConfig;
-	//ARINC429CONFIG arinc429Config;
-	//int arinc429Port;
+	NETCONFIG chargingPile;
+	NETCONFIG testInstrument;
 	int enable;
 } EUT;//Device under test	
 

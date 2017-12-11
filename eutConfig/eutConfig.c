@@ -36,9 +36,9 @@ static ListType eutList;  //设备链表
 
 #define EUT_SETTING_TAB_BASIC 0
 #define EUT_SETTING_TAB_MATAIN 1
-#define EUT_SETTING_TAB_RS422 2
-#define EUT_SETTING_TAB_ARINC429 3
-#define EUT_SETTING_TAB_RELAY 4   
+#define EUT_SETTING_TAB_NET1 2
+#define EUT_SETTING_TAB_NET2 3
+
 
 
 static void ShowEutListByTree(ListType eutList)
@@ -114,29 +114,23 @@ static void ShowEutDetail(int panel,int index)
 	 GetIndexFromValue(tempPanel,MATAIN_STOPB,&i,device.matainConfig.stopBit);
 	 SetCtrlIndex(tempPanel,MATAIN_STOPB,i);//停止位 
 	 
+	 //---------------------网口1--------------------------
+	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_NET1,&tempPanel);//获取面板句柄
+   	 SetCtrlVal(tempPanel,NET1_IP,device.chargingPile.ip);  //ip地址1
+	 memset(temp,0,32);
+	 sprintf(temp,"%d",device.chargingPile.port);
+	 SetCtrlVal(tempPanel,NET1_PORT,temp);	//端口号0 
 	 
-	 //---------------------422--------------------------  
-	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_RS422,&tempPanel); //获取面板句柄  
-	 GetIndexFromValue(tempPanel,RS422_PORTNUM,&i,device.RS422Config.portNum);
-	 SetCtrlIndex(tempPanel,RS422_PORTNUM,i);//串口号  
- 	 
-	 GetIndexFromValue(tempPanel,RS422_RATE,&i,device.RS422Config.baudRate);
-	 SetCtrlIndex(tempPanel,RS422_RATE,i);//波特率  
- 	 
-	 GetIndexFromValue(tempPanel,RS422_PARITY,&i,device.RS422Config.parity);
-	 SetCtrlIndex(tempPanel,RS422_PARITY,i); //奇偶校验 
- 	 
-	 GetIndexFromValue(tempPanel,RS422_DATAB,&i,device.RS422Config.dataBit);
-	 SetCtrlIndex(tempPanel,RS422_DATAB,i); //数据位
- 	 
-	 GetIndexFromValue(tempPanel,RS422_STOPB,&i,device.RS422Config.stopBit);
-	 SetCtrlIndex(tempPanel,RS422_STOPB,i);//停止位 
-
-
+	 //---------------------网口2--------------------------
+	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_NET2,&tempPanel);//获取面板句柄
+   	 SetCtrlVal(tempPanel,NET1_IP,device.testInstrument.ip);  //ip地址21
+	 memset(temp,0,32);
+	 sprintf(temp,"%d",device.testInstrument.port);
+	 SetCtrlVal(tempPanel,NET1_PORT,temp);	//端口号2 
 	 
+	 //printf("set %d,%d,%d,%d\n",device.chargingPile.ip,device.chargingPile.port,device.testInstrument.ip,device.testInstrument.port);   
 	 
-
-	 
+	
 }
 
 
@@ -167,13 +161,15 @@ static void DimEutConfigPanelControl(int panel,int dim)
 	 SetCtrlAttribute(tempPanel,MATAIN_DATAB,ATTR_DIMMED,dim);  
      SetCtrlAttribute(tempPanel,MATAIN_STOPB,ATTR_DIMMED,dim); 
 	 
-	 //---------------------422--------------------------   
-	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_RS422,&tempPanel);
-	 SetCtrlAttribute(tempPanel,RS422_PORTNUM,ATTR_DIMMED,dim);
-	 SetCtrlAttribute(tempPanel,RS422_RATE,ATTR_DIMMED,dim);  
-	 SetCtrlAttribute(tempPanel,RS422_PARITY,ATTR_DIMMED,dim);  
-	 SetCtrlAttribute(tempPanel,RS422_DATAB,ATTR_DIMMED,dim);  
-     SetCtrlAttribute(tempPanel,RS422_STOPB,ATTR_DIMMED,dim);
+	 //----------------------网口1------------------------------
+	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_NET1,&tempPanel);
+	 SetCtrlAttribute(tempPanel,NET1_IP,ATTR_DIMMED,dim);
+	 SetCtrlAttribute(tempPanel,NET1_PORT,ATTR_DIMMED,dim);
+	 
+	 //----------------------网口2------------------------------
+	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_NET2,&tempPanel);
+	 SetCtrlAttribute(tempPanel,NET2_IP,ATTR_DIMMED,dim);
+	 SetCtrlAttribute(tempPanel,NET2_PORT,ATTR_DIMMED,dim);
 	 
 	 
 }
@@ -278,21 +274,27 @@ static EUT GetEutInfo(int panelHandle)
 	GetCtrlIndex(tempPanel,MATAIN_STOPB,&selectedIndex); //停止位 
 	GetValueFromIndex(tempPanel,MATAIN_STOPB,selectedIndex,&device.matainConfig.stopBit); 
 	//printf("%d,%d,%d,%d,%d\n",device.matainConfig.portNum,device.matainConfig.baudRate,device.matainConfig.parity,device.matainConfig.dataBit,device.matainConfig.stopBit);
+	//---------------------网口1-----------------------------------
+	GetPanelHandleFromTabPage(panelHandle,EUTCONFIG_TAB,EUT_SETTING_TAB_NET1,&tempPanel); 
+	memset(temp,0,100);
+	GetCtrlVal(tempPanel,NET1_IP,temp);
+	sprintf(device.chargingPile.ip,temp);
+	memset(temp,0,100);
+	GetCtrlVal(tempPanel,NET1_PORT,temp);
+	device.chargingPile.port=atoi(temp);
 	
-	//---------------------422------------------------------- 
-	GetPanelHandleFromTabPage(panelHandle,EUTCONFIG_TAB,EUT_SETTING_TAB_RS422,&tempPanel);
-	GetCtrlIndex(tempPanel,RS422_PORTNUM,&selectedIndex);//串口号
-	GetValueFromIndex(tempPanel,RS422_PORTNUM,selectedIndex,&device.RS422Config.portNum);
-	GetCtrlIndex(tempPanel,RS422_RATE,&selectedIndex);//波特率 
-	GetValueFromIndex(tempPanel,RS422_RATE,selectedIndex,&device.RS422Config.baudRate);   
-	GetCtrlIndex(tempPanel,RS422_PARITY,&selectedIndex); //校验 
-	GetValueFromIndex(tempPanel,RS422_PARITY,selectedIndex,&device.RS422Config.parity);   
-	GetCtrlIndex(tempPanel,RS422_DATAB,&selectedIndex);//数据位  
-	GetValueFromIndex(tempPanel,RS422_DATAB,selectedIndex,&device.RS422Config.dataBit);   
-	GetCtrlIndex(tempPanel,RS422_STOPB,&selectedIndex);//停止位
-	GetValueFromIndex(tempPanel,RS422_STOPB,selectedIndex,&device.RS422Config.stopBit); 
-	//printf("%d,%d,%d,%d,%d\n",device.RS422Config.portNum,device.RS422Config.baudRate,device.RS422Config.parity,device.RS422Config.dataBit,device.RS422Config.stopBit); 
-
+	//---------------------网口2-----------------------------------
+	GetPanelHandleFromTabPage(panelHandle,EUTCONFIG_TAB,EUT_SETTING_TAB_NET2,&tempPanel); 
+	memset(temp,0,100);
+	GetCtrlVal(tempPanel,NET2_IP,temp);
+	sprintf(device.testInstrument.ip,temp);
+	memset(temp,0,100);
+	GetCtrlVal(tempPanel,NET2_PORT,temp);
+	device.testInstrument.port=atoi(temp);	
+	//printf("get %d,%d,%d,%d\n",device.chargingPile.ip,device.chargingPile.port,device.testInstrument.ip,device.testInstrument.port);
+	
+	
+	
 	
 #ifdef EUT_CONFIG_DEBUG
 	  PRINT("BASIC ID:%d,name:%s\n",device.index,device.eutName);
