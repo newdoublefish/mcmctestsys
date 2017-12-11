@@ -464,7 +464,7 @@ TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj)
 		if(getTps(testItem.type,&tps))
 		{
 			//printf("%s",tps.tpsName);
-			METHODRET testRet= (*(TEST_METHOD)(tps.testFunction))(testItem,_obj->device,_obj->resultHashTable);
+			METHODRET testRet= (*(TEST_METHOD)(tps.autoTestFunction))(testItem,_obj->device,_obj->resultHashTable);
 		   	if(testRet==TEST_RESULT_ALLPASS)
 		    	ret=TEST_ALL_PASS;
 	     	else if(testRet==TEST_RESULT_ERROR)

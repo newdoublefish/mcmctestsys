@@ -76,7 +76,7 @@ int getTps(char *tpsName,TPS *tpsPtr)
 		 if(strcmp(tpsName,tpsPtr->tpsName)==0)
 		 {
 			 if(st.simuTest>0)
-			   tpsPtr->testFunction=(void *)tpsSimuTest;
+			   tpsPtr->autoTestFunction=(void *)tpsSimuTest;
 		     return 1;
 		 }
 	 }
@@ -106,7 +106,8 @@ TPS newTps(char *name)
 	TPS tps;
 	memset(&tps,0,sizeof(TPS));
 	sprintf(tps.tpsName,"%s",name);
-	tps.testFunction=NULL;
+	tps.autoTestFunction=NULL;
+	tps.manualTestFunction=NULL;
 	tps.protocolInit=NULL;
 	tps.testPrepare=NULL;
 	return tps;    

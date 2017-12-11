@@ -261,7 +261,7 @@ static void strategyToXmlElement(CVIXMLElement element,ListType collectList)
 	    	CVIXMLSetElementValue (currChildElem, tempInfo.name_);
 	    	//д   ResultFrom
 	    	sprintf(temp,"%d",tempInfo.tType);
-	    	CVIXMLNewElement(currElem,1,"ResultFrom",&currChildElem);
+	    	CVIXMLNewElement(currElem,1,"Type",&currChildElem);
 	    	CVIXMLSetElementValue (currChildElem, temp);
 	    	memset(temp,100,0);
 		    //д   TestType  
