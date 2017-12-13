@@ -502,15 +502,11 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 	}
 }
 
-void saveTestResult(char *time,char *dirName,HashTableType hashTable)
+void generateReportFilePath(char *time,char *dirName,char *temp)
 {
-    char temp[MAX_PATHNAME_LEN]={0};
 	char fileName[MAX_PATHNAME_LEN]={0};   
 	int fileSize;
 	SETTING s=GetSetting();
-	SUT system=GetSeletedSut();
-	
-                                                                                                                   
 	if(FileExists(s.saveDir,&fileSize)==0)
 	{	
 	    MakeDir(temp);
@@ -530,7 +526,14 @@ void saveTestResult(char *time,char *dirName,HashTableType hashTable)
 	{
 	   sprintf(temp,"%s\\%s\\%s_%s%s",s.saveDir,dirName,dirName,time,".xls"); 
 	}
-	ValidateFile(temp);
+	ValidateFile(temp);	
+}
+
+void saveTestResult(char *time,char *dirName,HashTableType hashTable,char *fileName)
+{
+    char temp[MAX_PATHNAME_LEN]={0};
+	SUT system=GetSeletedSut();
+	generateReportFilePath(time,dirName,temp);
 	saveStep=SAVE_STEP_TABLE_TITLE;
 	LOG_EVENT_FORMAT(LOG_INFO,"save eut %s test result start!\n",dirName);
 	ExcelObj_Worksheet sheetHandle=GetWorkingSheet(system.reportFilePath,"Sheet1");//获得sheet句柄,打开模板路劲的文档
@@ -541,7 +544,9 @@ void saveTestResult(char *time,char *dirName,HashTableType hashTable)
 	//WriteResultToSheet(sheetHandle,hashTable);//操作句柄
     SaveWorkingSheet(temp);//保存更改内容 //保存在目标路径	
 	ClearWorkingSheet (&sheetHandle);//清除句柄，/ 
-	LOG_EVENT_FORMAT(LOG_INFO,"save %s test result finshed!\n",dirName);   
+	LOG_EVENT_FORMAT(LOG_INFO,"save %s test result finshed!\n",dirName);  
+	if(fileName!=NULL)
+		sprintf(fileName,"%s",temp);
    
 }
 #endif

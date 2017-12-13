@@ -96,12 +96,13 @@ static void setButtonState(int state)
 	 }	 
 }
 
-static void saveRecordToDb(TESTobject obj)
+static void saveRecordToDb(TESTobject obj,char *startTime,char *reportFilePath)
 {
 
 	tAutoTestRecord record={0};
 	sprintf(record.ProductId,"%s",obj.device.eutName);
 	sprintf(record.m_date,"%s",startTime);
+	sprintf(record.FtpAddress,"%s",reportFilePath);
 	record.Result=1;
 	record.m_update=1;
 	sprintf(record.m_name,"%s","ray");
@@ -113,14 +114,16 @@ static void saveAutoTestResult(TESTengine *t)
 	 int panelHandle=LoadPanel(0,"AutoTestPanel.uir",PANEL_WA_2);
 	 DisplayPanel(panelHandle);
 	 char temp[100]={0};
+	 char filePath[MAX_PATHNAME_LEN]={0};
      for(int i=0;i<t->totalTestObject;i++)
 	 {
 		  
+		 	
 		 	 memset(temp,0,100);
 		 	 sprintf(temp,"%d/%d",i+1,t->totalTestObject);
 			SetCtrlVal(panelHandle,PANEL_WA_2_TEXTMSG_2,temp);
-	     	 saveTestResult(startTime,t->objectArray[i].device.eutName,t->objectArray[i].resultHashTable);
-			 saveRecordToDb(t->objectArray[i]);
+	     	 saveTestResult(startTime,t->objectArray[i].device.eutName,t->objectArray[i].resultHashTable,filePath);
+			 saveRecordToDb(t->objectArray[i],startTime,filePath);
 	  
 	 }
 	 DiscardPanel(panelHandle);
@@ -428,21 +431,9 @@ static void objectTestFinish(TESTobject *_obj)
 	SETTING set=getSetting();
 	if(set.autoSave)
 	{
-	   //MessagePopup("helloWorld","finish");
-	   saveTestResult(startTime,_obj->device.eutName,_obj->resultHashTable);
-	   //Ð´ÈëÊý¾Ý¿â
-	   //tAutoTestRecord record={0};
-	   //sprintf(record.
-	   /*tAutoTestRecord record={0};
-	   sprintf(record.ProductId,"%s",_obj->device.eutName);
-	   sprintf(record.m_date,"%s",startTime);
-	   record.Result=1;
-	   record.m_update=0;
-	   sprintf(record.m_name,"%s","ray");
-	   insertReportRecord(record);*/
-	   saveRecordToDb(*_obj);
-	   
-	   
+	   char temp[MAX_PATHNAME_LEN]={0}; 	
+	   saveTestResult(startTime,_obj->device.eutName,_obj->resultHashTable,temp);
+	   saveRecordToDb(*_obj,startTime,temp);
 	}
 }
 

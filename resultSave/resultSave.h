@@ -7,7 +7,8 @@
    extern "C" {
 #endif
 	   
-void saveTestResult(char *time,char *dirName,HashTableType hashTable);
+//void saveTestResult(char *time,char *dirName,HashTableType hashTable);
+void saveTestResult(char *time,char *dirName,HashTableType hashTable,char *fileName); 
 
 #ifdef __cplusplus
    }

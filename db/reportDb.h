@@ -21,7 +21,7 @@
 typedef struct
 {
 	char ProductId[30];
-	char FtpAddress[50];
+	char FtpAddress[100];
 	unsigned short Result;
 	unsigned int id;
 	unsigned short m_update;
