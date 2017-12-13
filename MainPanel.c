@@ -367,6 +367,8 @@ int CVICALLBACK QUITAPP (int panel, int control, int event,
 	return 0;
 }
 
+extern int DisplayManagerPanel(void); 
+
 int CVICALLBACK PICTUREBUTTON_INSTRUCTIONCALLBACK (int panel, int control, int event,
 		void *callbackData, int eventData1, int eventData2)
 {
@@ -374,6 +376,7 @@ int CVICALLBACK PICTUREBUTTON_INSTRUCTIONCALLBACK (int panel, int control, int e
 	{
 		case EVENT_COMMIT:
 			//DisplayInstructionPanel();
+			DisplayManagerPanel();
 			break;
 	}
 	return 0;

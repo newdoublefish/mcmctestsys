@@ -20,6 +20,7 @@
 #include "AppInitSplash.h" 
 #include "excelHelper.h"   
 #include "log.h"
+#include "reportDb.h"
 
 
 
@@ -39,17 +40,7 @@ HRESULT EnterAppInit()
 	
 	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG,"正在初始化Excel组建...OK"); 
 	
-	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG_422,"正在初始化422板卡...");
-	
-	//Delay(2); 
-	
-	
-	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG_422,"正在初始化422板卡...OK");
-	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG_429,"正在初始化429板卡...");
-	
-	//Delay(2); 
-	
-	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG_429,"正在初始化429板卡...OK");  
+	initDb();
 	
 	initLogModule();
 	
