@@ -74,8 +74,8 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 			{
 				char tag[32]={0}; 
 				GetTreeItemTag(reportManagerPanel,controlID,i,tag);
-				printf("row:%d,checked:%d\n",i,check);
-				printf("id %d\n",atoi(tag));
+				//printf("row:%d,checked:%d\n",i,check);
+				//printf("id %d\n",atoi(tag));
 				deleteById(atoi(tag));
 			}
 		}

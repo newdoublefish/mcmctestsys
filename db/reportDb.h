@@ -11,8 +11,8 @@
  // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
-#ifndef __COMMON_H__
-#define __COMMON_H__
+#ifndef __REPORT_DB_H__
+#define __REPORT_DB_H__
 
 #ifdef __cplusplus
     extern "C" {
@@ -22,7 +22,7 @@ typedef struct
 {
 	char ProductId[30];
 	char FtpAddress[50];
-	short Result;
+	unsigned short Result;
 	unsigned int id;
 	unsigned short m_update;
 	char m_date[30];

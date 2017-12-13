@@ -32,7 +32,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 8
+Number of Opened Files = 10
 Window Confinement Region Enabled = True
 MainColumnWidth = 248
 FileDateColumnWidth = 70
@@ -155,11 +155,12 @@ Source Window State = "1,74,74,74,8,19,19,0,0,95,0,0,0,0,0,20,34,0,66,56,263,605
 [File 0014]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/autoTest.c"
 File Type = "CSource"
-Disk Date = 3595818457
+Disk Date = 3595997310
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,362,362,362,14,41,41,0,0,80,0,0,0,0,0,21,238,0,337,50,275,517,1,0,"
+Window Z-Order = 3
+Source Window State = "1,104,104,104,11,17,17,0,3,80,0,0,0,0,0,21,83,0,104,11,275,517,1,0,"
 
 [File 0015]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/testFramework.c"
@@ -198,7 +199,6 @@ Window Top = 32
 Window Left = 10
 Window Height = 323
 Window Width = 605
-Window Z-Order = 8
 
 [File 0019]
 Path Line0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/DownLoadFileHelperPane"
@@ -214,12 +214,11 @@ Window Width = 487
 [File 0020]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3595569737
+Disk Date = 3595995506
 In Projects = "1,"
 Window Top = 31
 Window Height = 695
 Window Width = 1278
-Window Z-Order = 1
 
 [File 0021]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyPanel.uir"
@@ -230,7 +229,6 @@ Window Top = 182
 Window Left = 90
 Window Height = 323
 Window Width = 605
-Window Z-Order = 2
 
 [File 0022]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/SettingPanel.uir"
@@ -414,7 +412,7 @@ In Projects = "1,"
 Window Top = 62
 Window Left = 26
 Window Z-Order = 5
-Source Window State = "1,369,369,369,11,30,30,0,0,95,0,103,0,0,0,25,355,0,367,40,323,605,1,0,"
+Source Window State = "1,369,369,369,11,30,30,0,0,95,0,103,0,0,0,25,194,0,206,4,323,605,1,0,"
 
 [File 0042]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/matainHelper.c"
@@ -459,8 +457,8 @@ Disk Date = 3595478624
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Window Z-Order = 4
-Source Window State = "1,0,0,0,18,19,18,0,0,95,0,549,0,549,0,19,517,0,520,35,251,605,1,0,"
+Window Z-Order = 9
+Source Window State = "1,504,504,504,5,19,19,0,0,95,0,549,0,549,0,19,489,0,505,60,251,605,1,0,"
 
 [File 0047]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/resultUtil.c"
@@ -649,7 +647,8 @@ Disk Date = 3595807704
 In Projects = "1,"
 Window Top = 242
 Window Left = 122
-Source Window State = "1,22,22,22,8,22,22,0,0,0,0,0,0,0,0,0,11,0,35,9,323,605,1,0,"
+Window Z-Order = 10
+Source Window State = "1,44,44,44,9,16,16,0,0,95,0,0,0,0,0,25,29,0,43,67,323,605,1,0,"
 
 [File 0068]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/EutPanel.h"
@@ -758,7 +757,8 @@ Disk Date = 3595545649
 In Projects = "1,"
 Window Top = 92
 Window Left = 42
-Source Window State = "1,0,12,12,0,85,85,0,0,0,0,0,0,0,0,0,53,0,65,0,323,605,1,0,"
+Window Z-Order = 6
+Source Window State = "1,41,41,41,8,16,16,0,0,95,0,0,0,0,0,25,26,0,50,73,323,605,1,0,"
 
 [File 0080]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/matainHelper.h"
@@ -884,7 +884,8 @@ Disk Date = 3595817910
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,29,29,29,4,13,13,0,3,0,0,72,0,13,0,0,16,0,29,4,275,605,1,0,"
+Window Z-Order = 4
+Source Window State = "1,78,78,78,4,14,14,0,0,95,0,72,0,13,0,21,71,0,78,106,275,605,1,0,"
 
 [File 0094]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/testGroupInit.h"
@@ -1115,23 +1116,33 @@ Disk Date = 3522103226
 In Projects = "1,"
 
 [File 0129]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/regexpr.c"
+File Type = "CSource"
+Disk Date = 3306448800
+In Projects = ""
+Window Top = 95
+Window Left = 42
+Window Z-Order = 8
+Source Window State = "1,0,0,0,0,0,0,0,0,80,0,0,0,0,0,18,1018,0,1027,0,239,517,1,0,"
+
+[File 0130]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.c"
 File Type = "CSource"
-Disk Date = 3595994273
+Disk Date = 3595996703
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 6
-Source Window State = "1,101,101,101,0,26,26,0,3,80,0,0,0,0,0,18,90,0,101,0,239,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,101,101,101,0,26,26,0,0,163,0,0,0,0,0,30,99,0,108,4,239,517,1,0,"
 
-[File 0130]
+[File 0131]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.h"
 File Type = "Include"
 Disk Date = 3595994035
 In Projects = "1,"
 Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
-[File 0131]
+[File 0132]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.uir"
 File Type = "User Interface Resource"
 Disk Date = 3595994080
@@ -1140,17 +1151,6 @@ Window Top = 95
 Window Left = 42
 Window Height = 239
 Window Width = 517
-Window Z-Order = 3
-
-[File 0132]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerView.c"
-File Type = "CSource"
-Disk Date = 3595903975
-In Projects = ""
-Window Top = 126
-Window Left = 58
-Window Z-Order = 7
-Source Window State = "1,0,0,0,0,0,0,0,0,80,0,0,0,0,0,18,0,0,0,0,239,517,1,0,"
 
 [File 0133]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/db/reportDb.c"
@@ -1159,26 +1159,30 @@ Disk Date = 3595994852
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,18,18,18,4,10,10,0,0,80,0,0,0,0,0,21,0,0,22,35,275,517,1,0,"
+Window Z-Order = 7
+Source Window State = "1,6,6,6,0,25,25,0,3,80,0,0,0,0,0,21,121,0,6,0,275,517,1,0,"
 
 [File 0134]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/db/reportDb.h"
 File Type = "Include"
-Disk Date = 3595993942
+Disk Date = 3595997392
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,32,32,32,4,10,10,0,3,80,0,0,0,0,0,21,11,0,32,4,275,517,1,0,"
+Window Z-Order = 2
+Source Window State = "1,24,24,24,10,16,16,0,0,80,0,0,0,0,0,21,12,0,24,13,275,517,1,0,"
 
 [Tab Order]
-Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/AutoTestPanel.uir"
-Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.uir"
-Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyPanel.uir"
-Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.uir"
-Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
-Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerView.c"
-Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.c"
-Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resultSave/resultSave.c"
+Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/autotest/autoTest.c"
+Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/db/reportDb.h"
+Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/regexpr.c"
+Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.c"
+Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/db/reportDb.c"
+Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/eutConfig/eutEntity.h"
+Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resultSave/resultSave.c"
+Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/log.h"
+Tab 0009 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
+Tab 0010 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/testFramework.h"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

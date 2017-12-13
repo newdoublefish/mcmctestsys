@@ -32,13 +32,15 @@
 #include "tipsParse.h"
 #include "log.h"
 #include "tpsHelper.h"
+#include "reportDb.h"    
 
 static int autoPanelHandle=0;
 
 static long totalSeconds;
 
 static char startTime[100]={0};
-extern int g_mainHWND;  
+extern int g_mainHWND; 
+
 
 static char autoTestImageAbsoluteImagePath[MAX_PATHNAME_LEN];
 #if 0
@@ -94,6 +96,18 @@ static void setButtonState(int state)
 	 }	 
 }
 
+static void saveRecordToDb(TESTobject obj)
+{
+
+	tAutoTestRecord record={0};
+	sprintf(record.ProductId,"%s",obj.device.eutName);
+	sprintf(record.m_date,"%s",startTime);
+	record.Result=1;
+	record.m_update=1;
+	sprintf(record.m_name,"%s","ray");
+	insertReportRecord(record);	
+}
+
 static void saveAutoTestResult(TESTengine *t)
 {
 	 int panelHandle=LoadPanel(0,"AutoTestPanel.uir",PANEL_WA_2);
@@ -102,10 +116,12 @@ static void saveAutoTestResult(TESTengine *t)
      for(int i=0;i<t->totalTestObject;i++)
 	 {
 		  
-		  memset(temp,0,100);
-		  sprintf(temp,"%d/%d",i+1,t->totalTestObject);
-		  SetCtrlVal(panelHandle,PANEL_WA_2_TEXTMSG_2,temp);
-	      saveTestResult(startTime,t->objectArray[i].device.eutName,t->objectArray[i].resultHashTable);
+		 	 memset(temp,0,100);
+		 	 sprintf(temp,"%d/%d",i+1,t->totalTestObject);
+			SetCtrlVal(panelHandle,PANEL_WA_2_TEXTMSG_2,temp);
+	     	 saveTestResult(startTime,t->objectArray[i].device.eutName,t->objectArray[i].resultHashTable);
+			 saveRecordToDb(t->objectArray[i]);
+	  
 	 }
 	 DiscardPanel(panelHandle);
 	 WarnShow1(0,"    保存完成");
@@ -401,17 +417,32 @@ static void objectTestError(TESTobject *_obj)
 	SetCtrlAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,ATTR_LABEL_COLOR,VAL_RED); 
 }
 
+
 static void objectTestFinish(TESTobject *_obj)
 {
 	/*char temp[30]={0};
 	Fmt(temp,"设备%d:%s 故障",_obj->objectIndex,_obj->device.eutName);
 	SetCtrlAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,ATTR_LABEL_TEXT,temp);    
 	SetCtrlAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,ATTR_LABEL_COLOR,VAL_RED);*/
+	//tAutoTestRecord record;
 	SETTING set=getSetting();
 	if(set.autoSave)
 	{
 	   //MessagePopup("helloWorld","finish");
-	   saveTestResult(startTime,_obj->device.eutName,_obj->resultHashTable); 
+	   saveTestResult(startTime,_obj->device.eutName,_obj->resultHashTable);
+	   //写入数据库
+	   //tAutoTestRecord record={0};
+	   //sprintf(record.
+	   /*tAutoTestRecord record={0};
+	   sprintf(record.ProductId,"%s",_obj->device.eutName);
+	   sprintf(record.m_date,"%s",startTime);
+	   record.Result=1;
+	   record.m_update=0;
+	   sprintf(record.m_name,"%s","ray");
+	   insertReportRecord(record);*/
+	   saveRecordToDb(*_obj);
+	   
+	   
 	}
 }
 
