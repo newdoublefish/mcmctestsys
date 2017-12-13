@@ -32,7 +32,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 7
+Number of Opened Files = 8
 Window Confinement Region Enabled = True
 MainColumnWidth = 248
 FileDateColumnWidth = 70
@@ -198,7 +198,7 @@ Window Top = 32
 Window Left = 10
 Window Height = 323
 Window Width = 605
-Window Z-Order = 7
+Window Z-Order = 8
 
 [File 0019]
 Path Line0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/DownLoadFileHelperPane"
@@ -219,7 +219,7 @@ In Projects = "1,"
 Window Top = 31
 Window Height = 695
 Window Width = 1278
-Window Z-Order = 4
+Window Z-Order = 1
 
 [File 0021]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/policyConfig/policyPanel.uir"
@@ -230,7 +230,7 @@ Window Top = 182
 Window Left = 90
 Window Height = 323
 Window Width = 605
-Window Z-Order = 5
+Window Z-Order = 2
 
 [File 0022]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/SettingPanel.uir"
@@ -413,8 +413,8 @@ Disk Date = 3595994977
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 1
-Source Window State = "1,369,369,369,11,30,30,0,0,163,0,103,0,0,0,30,355,0,367,40,323,605,1,0,"
+Window Z-Order = 5
+Source Window State = "1,369,369,369,11,30,30,0,0,95,0,103,0,0,0,25,355,0,367,40,323,605,1,0,"
 
 [File 0042]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/maintain/idasMaintain/matainHelper.c"
@@ -459,7 +459,8 @@ Disk Date = 3595478624
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,0,0,0,18,19,18,0,0,0,0,549,0,549,0,0,497,4,520,35,251,605,1,0,"
+Window Z-Order = 4
+Source Window State = "1,0,0,0,18,19,18,0,0,95,0,549,0,549,0,19,517,0,520,35,251,605,1,0,"
 
 [File 0047]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/resultUtil.c"
@@ -1120,7 +1121,7 @@ Disk Date = 3595994273
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 2
+Window Z-Order = 6
 Source Window State = "1,101,101,101,0,26,26,0,3,80,0,0,0,0,0,18,90,0,101,0,239,517,1,0,"
 
 [File 0130]
@@ -1139,7 +1140,7 @@ Window Top = 95
 Window Left = 42
 Window Height = 239
 Window Width = 517
-Window Z-Order = 6
+Window Z-Order = 3
 
 [File 0132]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerView.c"
@@ -1148,7 +1149,7 @@ Disk Date = 3595903975
 In Projects = ""
 Window Top = 126
 Window Left = 58
-Window Z-Order = 3
+Window Z-Order = 7
 Source Window State = "1,0,0,0,0,0,0,0,0,80,0,0,0,0,0,18,0,0,0,0,239,517,1,0,"
 
 [File 0133]
@@ -1177,6 +1178,7 @@ Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.uir"
 Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.c"
 Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerView.c"
 Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.c"
+Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resultSave/resultSave.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
