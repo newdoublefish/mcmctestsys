@@ -31,6 +31,7 @@ typedef struct
 
 
 int initDb(void);
+tAutoTestRecord getRecordById(int id);
 int insertReportRecord(tAutoTestRecord record);
 int getAllRecord(ListType list);
 int deleteById(int id);

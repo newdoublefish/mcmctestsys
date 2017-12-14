@@ -3,6 +3,7 @@
 #include <userint.h>
 #include "reportDb.h"
 #include "reportManagerPanel.h"
+#include "ftpHelper.h"
 
 static int reportManagerPanel;
 
@@ -59,7 +60,10 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 			{
 				char tag[32]={0}; 
 				GetTreeItemTag(reportManagerPanel,controlID,i,tag);
-				updateUpload(atoi(tag),1);
+				tAutoTestRecord record=getRecordById(atoi(tag));
+				//printRecord(record);
+				if(ftpSendFile(record.FtpAddress)>=0)
+					updateUpload(atoi(tag),1);
 			}
 		}
 		refreshRecordTree();

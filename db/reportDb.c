@@ -36,13 +36,13 @@ int insertReportRecord(tAutoTestRecord record)
 	Fmt(SQLCommand,"SELECT * FROM %s",DATABASE_TABLE_NAME);
 	
 	fileHandle= DBActivateSQL(dBHandle,SQLCommand);//与数据库中的表建立连接
-	if(DBBindColChar(fileHandle,1,30,record.ProductId,&dbstatus[0],"")!=DB_SUCCESS)
+	if(DBBindColChar(fileHandle,1,sizeof(record.ProductId),record.ProductId,&dbstatus[0],"")!=DB_SUCCESS)
 		return(err_report(1));
-	DBBindColChar(fileHandle,2,50,record.FtpAddress,&dbstatus[1],"");
+	DBBindColChar(fileHandle,2,sizeof(record.FtpAddress),record.FtpAddress,&dbstatus[1],"");
 	DBBindColShort(fileHandle,3,&record.Result,&dbstatus[2]);
 	DBBindColShort(fileHandle,5,&record.m_update,&dbstatus[3]);
-	DBBindColChar(fileHandle,6,30,record.m_date,&dbstatus[4],""); 
-	DBBindColChar(fileHandle,7,30,record.m_name,&dbstatus[5],""); 
+	DBBindColChar(fileHandle,6,sizeof(record.m_date),record.m_date,&dbstatus[4],""); 
+	DBBindColChar(fileHandle,7,sizeof(record.m_name),record.m_name,&dbstatus[5],""); 
 	
 	DBCreateRecord (fileHandle); //创建记录  								s
 	if(DBPutRecord (fileHandle)!=DB_SUCCESS)
@@ -54,12 +54,12 @@ int insertReportRecord(tAutoTestRecord record)
 #else
 	int hstmt1;
 	hstmt1=DBPrepareSQL(dBHandle,"insert into abc values(?,?,?,?,?,?)");
-	DBCreateParamChar(hstmt1,"ProductId",DB_PARAM_INPUT,record.ProductId,30);
-	DBCreateParamChar(hstmt1,"FtpAddress",DB_PARAM_INPUT,record.FtpAddress,50);
+	DBCreateParamChar(hstmt1,"ProductId",DB_PARAM_INPUT,record.ProductId,sizeof(record.ProductId));
+	DBCreateParamChar(hstmt1,"FtpAddress",DB_PARAM_INPUT,record.FtpAddress,sizeof(record.FtpAddress));
 	DBCreateParamShort(hstmt1,"Result",DB_PARAM_INPUT,record.Result);
 	DBCreateParamShort(hstmt1,"m_update",DB_PARAM_INPUT,record.m_update);
-	DBCreateParamChar(hstmt1,"m_date",DB_PARAM_INPUT,record.m_date,30); 
-	DBCreateParamChar(hstmt1,"m_name",DB_PARAM_INPUT,record.m_name,30);
+	DBCreateParamChar(hstmt1,"m_date",DB_PARAM_INPUT,record.m_date,sizeof(record.m_date)); 
+	DBCreateParamChar(hstmt1,"m_name",DB_PARAM_INPUT,record.m_name,sizeof(record.m_name));
 	//DBCreateParamInt(hstmt1,"id",DB_PARAM_INPUT,record.id);
 	DBExecutePreparedSQL(hstmt1);
 	DBClosePreparedSQL(hstmt1);	
@@ -80,14 +80,15 @@ int getAllRecord(ListType list)
 	fileHandle= DBActivateSQL(dBHandle,SQLCommand);//与数据库中的表建立连接 
 	//num=DBNumberOfRecords (fileHandle);//获取当前数据库中的记录
 	
-	//printf("%d\n",num);
-	DBBindColChar(fileHandle,1,30,record.ProductId,&dbstatus[0],"");
-	DBBindColChar(fileHandle,2,50,record.FtpAddress,&dbstatus[1],"");
+	
+	if(DBBindColChar(fileHandle,1,sizeof(record.ProductId),record.ProductId,&dbstatus[0],"")!=DB_SUCCESS)
+		return(err_report(1));
+	DBBindColChar(fileHandle,2,sizeof(record.FtpAddress),record.FtpAddress,&dbstatus[1],"");
 	DBBindColShort(fileHandle,3,&record.Result,&dbstatus[2]);
-	DBBindColShort(fileHandle,4,&record.id,&dbstatus[3]); 
+	DBBindColShort(fileHandle,4,&record.id,&dbstatus[3]);
 	DBBindColShort(fileHandle,5,&record.m_update,&dbstatus[4]);
-	DBBindColChar(fileHandle,6,30,record.m_date,&dbstatus[5],""); 
-	DBBindColChar(fileHandle,7,30,record.m_name,&dbstatus[6],""); 
+	DBBindColChar(fileHandle,6,sizeof(record.m_date),record.m_date,&dbstatus[5],""); 
+	DBBindColChar(fileHandle,7,sizeof(record.m_name),record.m_name,&dbstatus[6],""); 	
 	
 	while(DBFetchNext(fileHandle)==0)
 	{
@@ -108,13 +109,14 @@ int updateUpload(int id,short flag)
 	Fmt(SQLCommand,"SELECT * FROM %s where id=%d",DATABASE_TABLE_NAME,id);
 	
 	fileHandle= DBActivateSQL(dBHandle,SQLCommand);//与数据库中的表建立连接
-	DBBindColChar(fileHandle,1,30,record.ProductId,&dbstatus[0],"");
-	DBBindColChar(fileHandle,2,50,record.FtpAddress,&dbstatus[1],"");
+	if(DBBindColChar(fileHandle,1,sizeof(record.ProductId),record.ProductId,&dbstatus[0],"")!=DB_SUCCESS)
+		return(err_report(1));
+	DBBindColChar(fileHandle,2,sizeof(record.FtpAddress),record.FtpAddress,&dbstatus[1],"");
 	DBBindColShort(fileHandle,3,&record.Result,&dbstatus[2]);
-	//DBBindColShort(fileHandle,4,&record.id,&dbstatus[3]);
+	//DBBindColShort(fileHandle,4,&record.id,&dbstatus[4]);
 	DBBindColShort(fileHandle,5,&record.m_update,&dbstatus[4]);
-	DBBindColChar(fileHandle,6,30,record.m_date,&dbstatus[5],""); 
-	DBBindColChar(fileHandle,7,30,record.m_name,&dbstatus[6],"");
+	DBBindColChar(fileHandle,6,sizeof(record.m_date),record.m_date,&dbstatus[5],""); 
+	DBBindColChar(fileHandle,7,sizeof(record.m_name),record.m_name,&dbstatus[6],""); 	
 	
 	while(DBFetchNext(fileHandle)==0)
 	{
@@ -140,6 +142,31 @@ int deleteById(int id)
 	DBDeleteRecord(fileHandle);
 	DBDeactivateSQL (fileHandle); 
 	return 0;		
+}
+
+
+tAutoTestRecord getRecordById(int id)
+{
+	char SQLCommand[250];
+	int  dbstatus[7];
+	int  fileHandle;
+	tAutoTestRecord record={0};
+	Fmt(SQLCommand,"SELECT * FROM %s where id=%d",DATABASE_TABLE_NAME,id);
+	
+	fileHandle= DBActivateSQL(dBHandle,SQLCommand);//与数据库中的表建立连接
+	DBBindColChar(fileHandle,1,sizeof(record.ProductId),record.ProductId,&dbstatus[0],"");
+	DBBindColChar(fileHandle,2,sizeof(record.FtpAddress),record.FtpAddress,&dbstatus[1],"");
+	DBBindColShort(fileHandle,3,&record.Result,&dbstatus[2]);
+	DBBindColShort(fileHandle,4,&record.id,&dbstatus[3]);
+	DBBindColShort(fileHandle,5,&record.m_update,&dbstatus[4]);
+	DBBindColChar(fileHandle,6,sizeof(record.m_date),record.m_date,&dbstatus[5],""); 
+	DBBindColChar(fileHandle,7,sizeof(record.m_name),record.m_name,&dbstatus[6],""); 	
+	while(DBFetchNext(fileHandle)==0)
+	{
+		//printRecord(record);
+	}	
+	DBDeactivateSQL (fileHandle); 	
+	return record;
 }
 
 void printRecord(tAutoTestRecord record)

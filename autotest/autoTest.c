@@ -104,7 +104,7 @@ static void saveRecordToDb(TESTobject obj,char *startTime,char *reportFilePath)
 	sprintf(record.m_date,"%s",startTime);
 	sprintf(record.FtpAddress,"%s",reportFilePath);
 	record.Result=1;
-	record.m_update=1;
+	record.m_update=0;
 	sprintf(record.m_name,"%s","ray");
 	insertReportRecord(record);	
 }

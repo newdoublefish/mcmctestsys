@@ -19,7 +19,7 @@
     extern "C" {
 #endif
 		
-		
+int ftpSendFile(char *fileName);		
 #ifdef __cplusplus
     }
 #endif
