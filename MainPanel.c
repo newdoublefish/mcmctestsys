@@ -25,6 +25,7 @@
 #include "testGroupInit.h"
 #include "settingConfig.h"
 #include "hardwareConfig.h"
+#include "ftpConfigView.h"
 #include "testInit.h"
 #include "log.h"
 
@@ -273,7 +274,7 @@ int CVICALLBACK MainPnlMsgCallback (int panelHandle, int message,
 		   //显示软件设置面板
 		   DisplaySettingPanelAsTabPanel(tabSystemConfig);
 		   //显示硬件资源面板
-		   DisplayHardwarePanelAsTabPanel(tabHardwareConfig);
+		   DisplayFtpConfigView(tabHardwareConfig);
 
 		}
 	}else if(*wParam==2)  //登入成功,进行系统选择
