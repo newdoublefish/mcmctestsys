@@ -607,14 +607,14 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 	
 	adjustPanelSize(autoPanelHandle);
 	DisplayPanel(autoPanelHandle);	
-	
+#if 0 //协议解析不放到这里，放到tps初始化后面	
 	s=GetSetting();
 	
 	if(s.collectTestMention) //如果允许提示，解析提示
 	{
 		getTipsFromExcel();
 	}
-	
+#endif	
 	engine=createTestEngine(tempPanel,groupList,collectList);//step1 创建基于策略的测试
 	engine->onTestBeginListener=(void *)ontestBeginListener;   //测试启动回调函数
 	engine->onTestFinishListener=(void *)ontestFinishListener; //测试完成后回调函数

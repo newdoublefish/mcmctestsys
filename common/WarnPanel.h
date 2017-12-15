@@ -14,16 +14,16 @@
      /* Panels and Controls: */
 
 #define  MANUALTIPS                       1
-#define  MANUALTIPS_PICTURE               2       /* control type: picture, callback function: (none) */
-#define  MANUALTIPS_TEXTBOX               3       /* control type: textBox, callback function: (none) */
-#define  MANUALTIPS_COMMANDBUTTON         4       /* control type: command, callback function: (none) */
-#define  MANUALTIPS_TEXTMSG_3             5       /* control type: textMsg, callback function: (none) */
-#define  MANUALTIPS_TEXTMSG_2             6       /* control type: textMsg, callback function: (none) */
-#define  MANUALTIPS_GRROUPNAME_2          7       /* control type: textMsg, callback function: (none) */
-#define  MANUALTIPS_GRROUPNAME            8       /* control type: textMsg, callback function: (none) */
-#define  MANUALTIPS_TIMER                 9       /* control type: timer, callback function: (none) */
-#define  MANUALTIPS_TIMERSTR              10      /* control type: textMsg, callback function: (none) */
-#define  MANUALTIPS_TEXTMSG               11      /* control type: textMsg, callback function: (none) */
+#define  MANUALTIPS_TEXTBOX               2       /* control type: textBox, callback function: (none) */
+#define  MANUALTIPS_COMMANDBUTTON         3       /* control type: command, callback function: (none) */
+#define  MANUALTIPS_TEXTMSG_2             4       /* control type: textMsg, callback function: (none) */
+#define  MANUALTIPS_GRROUPNAME_2          5       /* control type: textMsg, callback function: (none) */
+#define  MANUALTIPS_GRROUPNAME            6       /* control type: textMsg, callback function: (none) */
+#define  MANUALTIPS_TIMER                 7       /* control type: timer, callback function: (none) */
+#define  MANUALTIPS_TIMERSTR              8       /* control type: textMsg, callback function: (none) */
+#define  MANUALTIPS_BACKGROUD             9       /* control type: textMsg, callback function: (none) */
+#define  MANUALTIPS_TEXTMSG               10      /* control type: textMsg, callback function: (none) */
+#define  MANUALTIPS_TEXTMSG_3             11      /* control type: textMsg, callback function: (none) */
 
 #define  NAMEPANEL                        2
 #define  NAMEPANEL_PICTURE                2       /* control type: picture, callback function: (none) */

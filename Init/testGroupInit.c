@@ -135,18 +135,19 @@ static HRESULT showProgress(char *itemName,int error)
 	
 	int perc;
 	
-	itemCount++; 
+	//itemCount++; 
     perc=itemCount*100/testCaseCount;
 	
 	
 	if(error>0)
 	{	
 		char description[100]={0};
-		Fmt(description,"%s     %s\n",itemName,"ok");
+		Fmt(description,"%s     %s\n",itemName,"error");
 	    slideProgressShowWithTextBox(slidePanelHandle,perc,description,0.01);
 	}else{
-		
-		slideProgressShowWithTextBox(slidePanelHandle,perc,NULL,0.01);
+		char description[100]={0};
+		Fmt(description,"%s     %s\n",itemName,"ok");		
+		slideProgressShowWithTextBox(slidePanelHandle,perc,description,0.01);
 	}
 	return 0;
 }
@@ -273,7 +274,8 @@ static HRESULT onCellListenerTestCase(VARIANT *MyVariant,int row,int column)
 					CA_FreeMemory(temp);
 		  }
 		 ListInsertItem(group.subItems,&item,END_OF_LIST);
-		 ListInsertItem(tiaoliList,&item,END_OF_LIST); 
+		 ListInsertItem(tiaoliList,&item,END_OF_LIST);
+		 itemCount++;
 		 showProgress(item.itemName_,0);//显示进度  
 	}	
 	return EXCEL_TASK_OK; 
@@ -285,8 +287,11 @@ static HRESULT onRowListenerTestCase(void)
 	
 	int perc;
 	char temp[100]={0};
-	itemCount++; 
-    perc=itemCount*100/testCaseCount;
+	//itemCount++; 
+	if(itemCount<=testCaseCount)
+    	perc=itemCount*100/testCaseCount;
+	else
+		perc=100;
 	Fmt(temp,"%d percent",perc);
 	slideProgressShow(slidePanelHandle,perc,temp,0.01);
 	return 0;
@@ -419,7 +424,7 @@ HRESULT testGroupInit(char *filePath)
 	EXCELTask task2=createExcelTask(filePath,"测试条例",TEST_CASE_RANGE,8); 
 	task2.onExcelTaskStartListener=(void *)onExcelTaskStartListenerTestCase;
 	task2.onCellListener=(void *)onCellListenerTestCase;
-	//task2.onRowListener=(void *)onRowListenerTestCase;
+	//task2.onRowListener=(void *)onRowListenerTestCase;//进度显示
 	task2.onExcelTaskFinishListener=(void *)onFinishListenerTestCase; 
 	if(runExcelTask(task2)<0)  //获取到测试条例的数量	
 	{

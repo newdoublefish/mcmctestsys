@@ -28,6 +28,7 @@
 #include "common.h"
 #include "frameInit.h"
 #include "tpsHelper.h"
+#include "tipsParse.h"
 
 
 
@@ -129,7 +130,9 @@ HRESULT testInit(SUT selectedsut)
 	}*/	
 	
 	initTps();
-#if 1	
+	
+	getTipsFromExcel();
+#if 0	
 	if(protocolInit()<0)                   //½âÎöÐ­Òé
 	{
 		LOG_EVENT(LOG_ERROR,"protocol analyse error"); 
