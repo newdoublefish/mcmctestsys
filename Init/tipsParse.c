@@ -18,13 +18,13 @@
 #include "eutConfig.h"
 
 static HashTableType tipsHashTable=0;
-static char key[50]={0};
 #define SHEET_RANGE_TIPS "A2:C2" 
 
 
 static HRESULT onCellListenerGetTips(VARIANT *MyVariant,int row,int column)    
 {
 	char *temp;
+	static char key[50]={0}; 
 	if(column==1)
 	{
 		 if(CA_VariantHasCString(MyVariant))
