@@ -13,7 +13,13 @@
 
      /* Panels and Controls: */
 
-#define  PANEL                            1       /* callback function: ReportPanelCallbak */
+#define  FTP                              1
+#define  FTP_TEXTBOX                      2       /* control type: textBox, callback function: (none) */
+#define  FTP_BACKGROUD                    3       /* control type: textMsg, callback function: (none) */
+#define  FTP_COMMANDBUTTON                4       /* control type: command, callback function: onFtpFinishClick */
+#define  FTP_TEXTMSG                      5       /* control type: textMsg, callback function: (none) */
+
+#define  PANEL                            2       /* callback function: ReportPanelCallbak */
 #define  PANEL_RECORDTREE                 2       /* control type: tree, callback function: (none) */
 #define  PANEL_BACKGROUD                  3       /* control type: textMsg, callback function: (none) */
 #define  PANEL_TITLE                      4       /* control type: textMsg, callback function: (none) */
@@ -31,6 +37,7 @@
 
      /* Callback Prototypes: */
 
+int  CVICALLBACK onFtpFinishClick(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK ReportPanelCallbak(int panel, int event, void *callbackData, int eventData1, int eventData2);
 
 

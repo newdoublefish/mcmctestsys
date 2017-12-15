@@ -24,31 +24,6 @@ static BOOL parseProtocol(TestGroup group)
 {
    	
    BOOL ret=FALSE;
-/*
-   if(strcmp(group.type,"422信号")==0)
-   {
-	   ret=add422Protocol(group.groupName);
-   }else if(strcmp(group.type,"429信号")==0)
-   {
-	   ret=add429Protocol(group.groupName);
-   }else if(strcmp(group.type,"振动信号")==0)
-   {
-	   ret=addFileProtocol(group.groupName);
-   }	   
-   else if(strcmp(group.type,"模拟信号")==0) 
-   {
-	   ret=addSimuProtocol(group.groupName);
-   }else if(strcmp(group.type,"离散信号")==0)
-   {
-       ret=addDispProtocol(group.groupName);
-   }else if(strcmp(group.type,"飞参记录")==0)
-   {
-       ret = addFlyParamProtocol(group.groupName);
-   }else if(strcmp(group.type,"8路输入输出")==0)
-   {
-       ret=add8InputOutputProtocol(group.groupName);
-   }
-*/   
    TPS tps;
    if(getTps(group.type,&tps))
    {

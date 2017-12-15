@@ -4,6 +4,7 @@
 #include "reportDb.h"
 #include "reportManagerPanel.h"
 #include "ftpHelper.h"
+#include "common.h"
 
 static int reportManagerPanel;
 
@@ -50,6 +51,9 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 	int count=0,check=0;
 	if(MenuItemID==1)
 	{
+		int ftpPanel= LoadPanel (reportManagerPanel, "reportManagerPanel.uir", FTP);
+		DisplayPanel(ftpPanel);
+		SetCtrlVal(ftpPanel,FTP_TEXTBOX,"开始上传\n");
 		
 		GetNumListItems(panel,controlID,&count);
 		for(int i=0;i<count;i++)
@@ -62,10 +66,21 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 				GetTreeItemTag(reportManagerPanel,controlID,i,tag);
 				tAutoTestRecord record=getRecordById(atoi(tag));
 				//printRecord(record);
+				
 				if(ftpSendFile(record.FtpAddress)>=0)
+				{	
 					updateUpload(atoi(tag),1);
+				    SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.FtpAddress);
+					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"\n"); 
+				}else{
+					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"Ftp上传出错\n");
+					break;
+				}
+				
 			}
 		}
+		SetCtrlAttribute(ftpPanel,FTP_COMMANDBUTTON,ATTR_DIMMED,0);
+		SetCtrlVal(ftpPanel,FTP_TEXTBOX,"完成\n"); 
 		refreshRecordTree();
 	}else if(MenuItemID==2)
 	{
@@ -130,6 +145,18 @@ int CVICALLBACK ReportPanelCallbak (int panel, int event, void *callbackData,
 			break;
 		case EVENT_CLOSE:
 		    QuitUserInterface (0);
+			break;
+	}
+	return 0;
+}
+
+int CVICALLBACK onFtpFinishClick (int panel, int control, int event,
+								  void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_COMMIT:
+			DiscardPanel(panel);
 			break;
 	}
 	return 0;

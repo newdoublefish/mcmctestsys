@@ -81,7 +81,8 @@ HRESULT testInit(SUT selectedsut)
 	initTps();
 	
 	getTipsFromExcel();
-#if 0	
+	
+#if 1	
 	if(protocolInit()<0)                   //½âÎöÐ­Òé
 	{
 		LOG_EVENT(LOG_ERROR,"protocol analyse error"); 

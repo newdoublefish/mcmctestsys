@@ -64,6 +64,8 @@ static HRESULT onStartGetTips(VARIANT *MyVariant,int row,int column)
     return 0;	
 }
 
+
+
 void getTipsFromExcel()   
 {
 	

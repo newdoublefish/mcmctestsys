@@ -31,7 +31,7 @@ int ftpSendFile(char *pathName)
 	ftp_handle = InetFTPLogin (config.server, config.userName, config.password);
 	if (ftp_handle < 0)
 	{
-		MessagePopup ("An Error Occurred", "Can't Connect To Server");
+		//MessagePopup ("An Error Occurred", "Can't Connect To Server");
 		return -1;
 	}	
 	

@@ -32,7 +32,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 1
+Number of Opened Files = 5
 Window Confinement Region Enabled = True
 MainColumnWidth = 280
 FileDateColumnWidth = 70
@@ -87,11 +87,11 @@ In Projects = "1,"
 [File 0007]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/excelHelper/excelHelper.c"
 File Type = "CSource"
-Disk Date = 3595478459
+Disk Date = 3596163154
 In Projects = "1,"
 Window Top = 152
 Window Left = 74
-Source Window State = "1,225,225,225,46,68,68,0,0,95,0,0,0,0,0,19,222,0,228,63,251,605,1,0,"
+Source Window State = "1,61,61,61,4,17,17,0,0,95,0,228,0,0,0,19,61,0,67,48,251,605,1,114,"
 Breakpoint 0001 = "147,0,disabled,"
 
 [File 0008]
@@ -121,16 +121,17 @@ Disk Date = 3596081753
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,102,102,102,4,16,16,0,0,80,0,0,0,0,0,21,89,0,97,82,275,517,1,0,"
+Source Window State = "1,102,102,102,4,16,16,0,0,158,0,104,0,0,0,23,107,0,103,49,275,517,1,0,"
 
 [File 0011]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.c"
 File Type = "CSource"
-Disk Date = 3596090841
+Disk Date = 3596166598
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Source Window State = "1,62,62,62,32,38,38,0,0,80,0,0,0,0,0,18,0,0,87,0,239,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,73,73,73,53,69,53,0,0,158,0,0,0,0,0,27,60,0,73,55,239,517,1,0,"
 
 [File 0012]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/ftpHelper/ftpHelper.c"
@@ -139,7 +140,7 @@ Disk Date = 3596090786
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,21,21,21,4,15,15,0,0,80,0,4,0,4,0,18,0,0,31,84,239,517,1,0,"
+Source Window State = "1,30,30,30,4,14,14,0,3,80,0,4,0,4,0,18,36,0,30,4,239,517,1,0,"
 
 [File 0013]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/WarnPanel.uir"
@@ -158,7 +159,7 @@ Disk Date = 3596150394
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,612,612,612,7,8,8,0,0,80,0,0,0,0,0,21,746,0,766,22,275,517,1,0,"
+Source Window State = "1,612,612,612,7,8,8,0,0,80,0,0,0,0,0,21,764,0,766,22,275,517,1,0,"
 
 [File 0015]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/common.c"
@@ -167,7 +168,7 @@ Disk Date = 3595490713
 In Projects = "1,"
 Window Top = 192
 Window Left = 106
-Source Window State = "1,232,232,232,65,76,76,0,0,95,0,56,0,0,0,25,223,0,239,79,323,605,1,39,"
+Source Window State = "1,247,247,247,14,62,62,0,0,95,0,56,0,0,0,25,227,0,250,49,323,605,1,39,"
 
 [File 0016]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/AppInitSplash.uir"
@@ -208,6 +209,7 @@ Window Top = 157
 Window Left = 74
 Window Height = 251
 Window Width = 517
+Window Z-Order = 5
 
 [File 0020]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/MainPanel.uir"
@@ -231,12 +233,13 @@ Window Width = 605
 [File 0022]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3596079877
+Disk Date = 3596165653
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
 Window Height = 239
 Window Width = 517
+Window Z-Order = 4
 
 [File 0023]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/setting/SettingPanel.uir"
@@ -261,11 +264,11 @@ Window Width = 605
 [File 0025]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/appInit.c"
 File Type = "CSource"
-Disk Date = 3595994813
+Disk Date = 3596161942
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Source Window State = "1,42,42,42,4,10,10,0,3,0,0,0,0,0,0,0,24,0,42,4,323,605,1,0,"
+Source Window State = "1,44,44,44,4,13,13,0,3,158,0,0,0,0,0,23,31,0,44,4,323,605,1,0,"
 
 [File 0026]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/convertTool.c"
@@ -274,7 +277,7 @@ Disk Date = 3595478403
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,0,11,11,0,83,83,0,0,0,0,0,0,0,0,0,0,0,12,78,251,605,1,0,"
+Source Window State = "1,0,11,11,0,83,83,0,0,95,0,0,0,0,0,19,0,0,12,78,251,605,1,0,"
 
 [File 0027]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/xmltool/cvixml.c"
@@ -283,7 +286,7 @@ Disk Date = 3522103256
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,444,444,444,21,37,37,0,0,0,0,0,0,0,0,0,431,0,444,41,287,605,0,0,"
+Source Window State = "1,444,444,444,21,37,37,0,0,95,0,0,0,0,0,22,431,0,444,41,287,605,1,0,"
 
 [File 0028]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/testCode/demoTestCode/demoTest.c"
@@ -310,7 +313,7 @@ Disk Date = 3595816581
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Source Window State = "1,304,304,304,34,46,46,0,0,0,0,0,0,0,0,0,293,0,301,92,323,605,1,0,"
+Source Window State = "1,304,304,304,34,46,46,0,0,95,0,0,0,0,0,25,121,0,133,15,323,605,1,0,"
 
 [File 0031]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/excelHelper/excel2000.c"
@@ -319,7 +322,7 @@ Disk Date = 3596144528
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,2607,2607,2607,16,29,29,0,3,0,0,0,0,0,0,0,2600,0,2607,16,323,605,0,0,"
+Source Window State = "1,2607,2607,2607,16,29,29,0,3,95,0,0,0,0,0,25,2600,0,2607,16,323,605,1,0,"
 
 [File 0032]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/expressHelper.c"
@@ -346,7 +349,7 @@ Disk Date = 3596077289
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,65,65,65,12,25,25,0,0,80,0,14,0,14,0,20,37,0,67,12,263,517,1,0,"
+Source Window State = "1,65,65,65,12,25,25,0,0,80,0,14,0,14,0,20,12,0,67,12,263,517,1,0,"
 
 [File 0035]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/iniHelper/inifile.c"
@@ -355,7 +358,7 @@ Disk Date = 3522103230
 In Projects = "1,"
 Window Top = 212
 Window Left = 106
-Source Window State = "1,2274,2274,2274,12,22,22,0,0,95,0,0,0,0,0,25,2255,0,2260,52,323,605,1,0,"
+Source Window State = "1,2274,2274,2274,12,22,22,0,0,95,0,0,0,0,0,25,2255,0,2260,52,323,605,0,0,"
 
 [File 0036]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/log.c"
@@ -391,16 +394,17 @@ Disk Date = 3595817500
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Source Window State = "1,263,263,263,41,51,51,0,0,95,0,0,0,0,0,25,258,0,263,45,323,605,1,0,"
+Source Window State = "1,263,263,263,41,51,51,0,0,95,0,0,0,0,0,25,68,0,80,37,323,605,1,0,"
 
 [File 0040]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/protocolHelper.c"
 File Type = "CSource"
-Disk Date = 3595478592
+Disk Date = 3596163320
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Source Window State = "1,54,54,54,14,26,26,0,3,80,0,0,0,0,0,25,32,0,54,14,323,517,1,0,"
+Window Z-Order = 3
+Source Window State = "1,46,46,46,20,51,51,0,3,80,0,0,0,0,0,25,41,0,46,20,323,517,1,0,"
 
 [File 0041]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resultSave/resultSave.c"
@@ -409,7 +413,7 @@ Disk Date = 3596145200
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,547,547,547,4,21,21,0,0,158,0,556,0,556,0,23,490,0,548,70,251,605,1,0,"
+Source Window State = "1,547,547,547,4,21,21,0,0,95,0,556,0,556,0,19,536,0,520,55,251,605,1,0,"
 
 [File 0042]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/common/resultUtil.c"
@@ -463,17 +467,16 @@ Disk Date = 3596146505
 In Projects = "1,"
 Window Top = 32
 Window Left = 10
-Source Window State = "1,35,35,35,66,67,67,0,3,158,0,0,0,0,0,23,24,0,35,66,323,707,1,0,"
+Source Window State = "1,417,417,417,7,19,19,0,3,112,0,0,0,0,0,25,419,0,417,7,323,707,1,0,"
 
 [File 0048]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/testInit.c"
 File Type = "CSource"
-Disk Date = 3596153892
+Disk Date = 3596163306
 In Projects = "1,"
 Window Top = 182
 Window Left = 90
-Window Z-Order = 1
-Source Window State = "1,48,90,48,0,7,0,0,0,158,0,0,0,0,0,21,35,0,48,0,311,521,1,20,"
+Source Window State = "1,85,85,85,7,19,19,0,3,81,0,0,0,0,0,24,72,0,85,7,311,521,1,20,"
 
 [File 0049]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/threadFramework.c"
@@ -487,11 +490,11 @@ Source Window State = "1,0,12,12,0,82,82,0,0,0,0,0,0,0,0,0,0,0,12,78,323,605,1,0
 [File 0050]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/tipsParse.c"
 File Type = "CSource"
-Disk Date = 3596151681
+Disk Date = 3596162893
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Source Window State = "1,73,73,73,12,36,36,0,0,80,0,38,0,0,0,25,71,0,80,72,323,517,1,38,"
+Source Window State = "1,59,59,59,15,29,29,0,0,80,0,38,0,0,0,25,32,0,66,76,323,517,1,38,"
 
 [File 0051]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/tpsHelper.c"
@@ -667,11 +670,11 @@ Source Window State = "1,22,22,22,0,26,26,0,3,0,0,0,0,0,0,0,8,0,22,0,263,517,1,0
 [File 0070]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/ftpHelper/ftpHelper.h"
 File Type = "Include"
-Disk Date = 3596082021
+Disk Date = 3596163920
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,21,21,21,0,32,32,0,0,0,0,27,0,27,0,0,0,0,21,32,239,517,1,0,"
+Source Window State = "1,20,22,22,0,1,1,0,0,80,0,26,0,26,0,18,7,0,19,6,239,517,1,0,"
 
 [File 0071]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/iniHelper/inifile.h"
@@ -734,14 +737,17 @@ Disk Date = 3596080389
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,23,23,23,9,19,19,0,0,0,0,0,0,0,0,0,12,0,22,60,275,517,1,0,"
+Source Window State = "1,29,29,29,1,16,16,0,0,80,0,0,0,0,0,21,15,0,24,52,275,517,1,0,"
 
 [File 0078]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.h"
 File Type = "Include"
-Disk Date = 3595994035
+Disk Date = 3596165653
 In Projects = "1,"
-Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+Window Top = 64
+Window Left = 26
+Window Z-Order = 2
+Source Window State = "1,16,16,16,9,20,20,0,0,80,0,0,0,0,0,16,11,0,19,61,215,517,1,0,"
 
 [File 0079]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/resultSave/resultSave.h"
@@ -867,7 +873,7 @@ Disk Date = 3595819007
 In Projects = "1,"
 Window Top = 152
 Window Left = 74
-Source Window State = "1,50,50,50,8,11,11,0,3,105,0,0,0,0,0,25,29,0,50,8,323,665,1,0,"
+Source Window State = "1,44,44,44,10,22,22,0,0,105,0,0,0,0,0,25,32,0,44,62,323,665,1,0,"
 
 [File 0093]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/contentVerification/verification.h"
@@ -1017,7 +1023,11 @@ Disk Date = 3522103248
 In Projects = "1,"
 
 [Tab Order]
-Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/Init/testInit.c"
+Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.c"
+Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.uir"
+Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/ftpConfig/ftpConfigPanel.uir"
+Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/reportManager/reportManagerPanel.h"
+Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/frameworks/protocolHelper.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
@@ -1109,9 +1119,4 @@ Environment Options = ""
 
 [Watch 1]
 Watch Expression = "TPG_StopThread"
-
-[Distributions]
-Active Index = 1
-AbsCDSPath 0001 = "/c/workspace/≤‚ ‘»Ìº˛/1431/platDemo/ZJS◊‘∂Ø≤‚ ‘_1.cds"
-RelCDSPath 0001 = "ZJS◊‘∂Ø≤‚ ‘_1.cds"
 
