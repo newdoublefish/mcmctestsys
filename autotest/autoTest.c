@@ -777,8 +777,9 @@ int  CVICALLBACK onPanelAutoCall(int panel, int event, void *callbackData, int e
 	{
 		case EVENT_PANEL_SIZE:
             //printf("----------zooming");
-			if(engine->testState==TEST_IDLE)   //IDLE状态下才能进行大小调整
-			   reFreshAutoTestPanel(panel);
+			
+			//if(engine->testState==TEST_IDLE)   //IDLE状态下才能进行大小调整
+			//   reFreshAutoTestPanel(panel);
 			break;	
 	}
 	return 0;
