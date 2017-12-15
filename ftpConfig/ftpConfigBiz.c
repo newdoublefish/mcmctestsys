@@ -15,7 +15,7 @@
 #include "ftpConfigBiz.h"
 
 
-char *ftpConfigIniFilePath="\\config\\ftpconfig.ini";
+char *ftpConfigIniFilePath="\\config\\setting.ini";
 
 HRESULT saveFtpConfig(tFtpConfig s)
 {
