@@ -542,7 +542,9 @@ void saveTestResult(char *time,char *dirName,HashTableType hashTable,char *fileN
 	writeResultToExcelSheet(rangeHandler,hashTable);
 	
 	//WriteResultToSheet(sheetHandle,hashTable);//操作句柄
+	
     SaveWorkingSheet(temp);//保存更改内容 //保存在目标路径	
+	ClearObjHandler (&rangeHandler); //清除句柄  
 	ClearWorkingSheet (&sheetHandle);//清除句柄，/ 
 	LOG_EVENT_FORMAT(LOG_INFO,"save %s test result finshed!\n",dirName);  
 	if(fileName!=NULL)
