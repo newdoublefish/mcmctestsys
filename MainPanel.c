@@ -24,7 +24,6 @@
 #include "appInit.h"
 #include "testGroupInit.h"
 #include "settingConfig.h"
-#include "hardwareConfig.h"
 #include "ftpConfigView.h"
 #include "testInit.h"
 #include "log.h"

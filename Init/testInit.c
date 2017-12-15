@@ -23,10 +23,8 @@
 #include "testGroupInit.h"  
 #include "sutCommon.h"
 #include "protocolHelper.h"
-#include "collectParamInit.h"
 #include "log.h"
 #include "common.h"
-#include "frameInit.h"
 #include "tpsHelper.h"
 #include "tipsParse.h"
 
@@ -48,49 +46,6 @@ static HRESULT showProgressValidity(int panel,char *itemName,int perc,char *stat
 	return 0;
 }
 
-BOOL validityTestGroup()
-{
-	BOOL ret=FALSE;
-	int perc; 
-	CollectParam collectParam; 
-    ListType testCaseList=getTestCaseList();
-	HashTableType collectHashTable=getCollcetParamHashType();
-	int panel=displaySlideProgressWithTextBox("校验采集条例表");
-	int count=ListNumItems(testCaseList);
-	slideProgressShowWithTextBox(panel,-1,"开始校验采集条例表\n",1);
-	for(int i=1;i<=count;i++)
-	{
-			int found;
-		    TestItem testItem;
-			ListGetItem(testCaseList,&testItem,i);
-			HashTableFindItem(collectHashTable,testItem.itemName_,&found); 
-			perc=i*100/count; 
-			if(found!=1)
-			{	
-			   //printf("itemName:%s,found:%d\n",testItem.itemName_,found);
-			   showProgressValidity(panel,testItem.itemName_,perc,"erro 参数名称错误");
-			   ret=-1;
-			}else
-			{
-			    HashTableGetItem(collectHashTable,testItem.itemName_,&collectParam,sizeof(CollectParam)); 
-				if(collectParam.id!=testItem.paramId)
-				{
-				    showProgressValidity(panel,testItem.itemName_,perc,"erro 参数ID错误");  
-				}	
-			}	
-			showProgressValidity(panel,testItem.itemName_,perc,NULL); 
-			
-			
-	}
-	slideProgressShowWithTextBox(panel,-1,"校验采集条例表完成\n",1);  
-	if(ret<0)
-	{
-	   disposeSlideProgressWithButton(panel); 
-	}else{	
-	   disposeSlideProgress(panel);
-	}   
-	return ret;
-}
 
 
 HRESULT testInit(SUT selectedsut)
@@ -122,12 +77,6 @@ HRESULT testInit(SUT selectedsut)
 	}
 	
 	
-	
-	/*
-	if(validityTestGroup()<0)
-	{
-	    //return -1;
-	}*/	
 	
 	initTps();
 	
