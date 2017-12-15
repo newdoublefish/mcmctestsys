@@ -22,7 +22,7 @@
 #include "log.h"
 #include "reportDb.h"
 
-
+#define DEBUG
 
 HRESULT EnterAppInit()
 {
@@ -34,6 +34,12 @@ HRESULT EnterAppInit()
 	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG_V,"版本:v0.1");
 	
 	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG,"正在初始化Excel组建...");
+	
+	
+	//注意加入以下这行代码，程序不会中断，调试时候打开
+#ifndef DEBUG	
+	DisableBreakOnLibraryErrors();
+#endif	
 	
 	//Delay(2);
 	InitExcel();
