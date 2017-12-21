@@ -36,14 +36,14 @@ HRESULT  ShowSettingInfo(SETTING s)
    SetCtrlVal(settingPanel,SET_PANEL_NUMERIC,s.maxComunPerRowInAutoTestPanel);
    SetCtrlVal(settingPanel,SET_PANEL_CBCOLLECTMENTION,s.collectTestMention); 
    SetCtrlVal(settingPanel,SET_PANEL_AUTOSAVE,s.autoSave); 
-   SetCtrlVal(settingPanel,SET_PANEL_RELAY_ENABLE,s.relayEnable); 
-   SetCtrlVal(settingPanel,SET_PANEL_RING_CLOSETIME,s.mentionAutoCloseTime);
+   //SetCtrlVal(settingPanel,SET_PANEL_RELAY_ENABLE,s.relayEnable); 
+   //SetCtrlVal(settingPanel,SET_PANEL_RING_CLOSETIME,s.mentionAutoCloseTime);
    SetCtrlVal(settingPanel,SET_PANEL_RETESTNUM,s.reTestCnt);
    //printf("sssss:%d\n",s.reportInfoCustom);
    SetCtrlVal(settingPanel,SET_PANEL_RPINFOCB,s.reportInfoCustom); 
-   int i=0;
-   GetIndexFromValue(settingPanel,SET_PANEL_RING,&i,s.methodToGetdirFile); 
-   SetCtrlIndex(settingPanel,SET_PANEL_RING,i);//´®¿ÚºÅ 
+   //int i=0;
+   //GetIndexFromValue(settingPanel,SET_PANEL_RING,&i,s.methodToGetdirFile); 
+   //SetCtrlIndex(settingPanel,SET_PANEL_RING,i);//´®¿ÚºÅ 
    return 0;
 }
 
@@ -76,8 +76,8 @@ int CVICALLBACK SETTINGSAVECALLBACK (int panel, int control, int event,
 		    gSetting.collectTestMention=flag;
 			GetCtrlVal(settingPanel,SET_PANEL_AUTOSAVE,&flag);
 		    gSetting.autoSave=flag;
-			GetCtrlVal(settingPanel,SET_PANEL_RELAY_ENABLE,&flag);
-		    gSetting.relayEnable=flag;			
+			//GetCtrlVal(settingPanel,SET_PANEL_RELAY_ENABLE,&flag);
+		    //gSetting.relayEnable=flag;			
 			GetCtrlVal(settingPanel,SET_PANEL_CBLOG,&flag);
 		    gSetting.saveLog=flag;
 			GetCtrlVal(settingPanel,SET_PANEL_SIMUTESTCB,&flag);
@@ -90,10 +90,10 @@ int CVICALLBACK SETTINGSAVECALLBACK (int panel, int control, int event,
 			memset(gSetting.saveDir,strlen(gSetting.saveDir),0); 
 			sprintf(gSetting.saveDir,"%s",temp);
 			
-	        GetCtrlIndex(settingPanel,SET_PANEL_RING,&flag);
-	        GetValueFromIndex(settingPanel,SET_PANEL_RING,flag,&gSetting.methodToGetdirFile);
+	        //GetCtrlIndex(settingPanel,SET_PANEL_RING,&flag);
+	        //GetValueFromIndex(settingPanel,SET_PANEL_RING,flag,&gSetting.methodToGetdirFile);
 			
-			GetCtrlVal(settingPanel,SET_PANEL_RING_CLOSETIME,&flag);
+			//GetCtrlVal(settingPanel,SET_PANEL_RING_CLOSETIME,&flag);
 			gSetting.mentionAutoCloseTime=flag;
 			
 			GetCtrlVal(settingPanel,SET_PANEL_RETESTNUM,&flag);

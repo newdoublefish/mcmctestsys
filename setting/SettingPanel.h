@@ -22,14 +22,12 @@
 #define  SET_PANEL_CBLOG                  7       /* control type: radioButton, callback function: (none) */
 #define  SET_PANEL_RETESTNUM              8       /* control type: numeric, callback function: (none) */
 #define  SET_PANEL_NUMERIC                9       /* control type: numeric, callback function: (none) */
-#define  SET_PANEL_RING                   10      /* control type: ring, callback function: (none) */
-#define  SET_PANEL_Operater               11      /* control type: string, callback function: (none) */
-#define  SET_PANEL_RELAY_ENABLE           12      /* control type: radioButton, callback function: (none) */
-#define  SET_PANEL_AUTOSAVE               13      /* control type: radioButton, callback function: (none) */
-#define  SET_PANEL_CBCOLLECTMENTION       14      /* control type: radioButton, callback function: (none) */
-#define  SET_PANEL_RING_CLOSETIME         15      /* control type: ring, callback function: (none) */
-#define  SET_PANEL_RPINFOCB               16      /* control type: radioButton, callback function: (none) */
-#define  SET_PANEL_SIMUTESTCB             17      /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_Operater               10      /* control type: string, callback function: (none) */
+#define  SET_PANEL_AUTOSAVE               11      /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_CBCOLLECTMENTION       12      /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_RING_CLOSETIME         13      /* control type: ring, callback function: (none) */
+#define  SET_PANEL_RPINFOCB               14      /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_SIMUTESTCB             15      /* control type: radioButton, callback function: (none) */
 
 
      /* Control Arrays: */

@@ -49,10 +49,10 @@ HRESULT saveSetting(SETTING gSetting)
 	 Ini_PutBoolean (g_myInifile,"Setting","SimuTest",gSetting.simuTest); 
      Ini_PutRawString (g_myInifile,"Setting","FileSaveDir",gSetting.saveDir);
 	 Ini_PutInt (g_myInifile,"Setting","MaxComunPerRowInAutoTestPanel",gSetting.maxComunPerRowInAutoTestPanel);
-	 Ini_PutInt (g_myInifile,"Setting","MethodToGetdirFile ",gSetting.methodToGetdirFile); 
+	 //Ini_PutInt (g_myInifile,"Setting","MethodToGetdirFile ",gSetting.methodToGetdirFile); 
 	 Ini_PutBoolean (g_myInifile,"Setting","CollectTestMention ",gSetting.collectTestMention);
 	 Ini_PutBoolean (g_myInifile,"Setting","AutoSave ",gSetting.autoSave); 
-	 Ini_PutBoolean (g_myInifile,"Setting","RelayEnable ",gSetting.relayEnable);    
+	 //Ini_PutBoolean (g_myInifile,"Setting","RelayEnable ",gSetting.relayEnable);    
 	 Ini_PutInt (g_myInifile,"Setting","MentionAutoCloseTime",gSetting.mentionAutoCloseTime); 
 	 Ini_PutInt (g_myInifile,"Setting","ReTestCnt",gSetting.reTestCnt);
 	 Ini_PutBoolean (g_myInifile,"Setting","ReportInfoCustom",gSetting.reportInfoCustom);
@@ -207,7 +207,7 @@ SETTING getSetting(void)
 						     gSetting.maxComunPerRowInAutoTestPanel=2;
 						}	
 					     
-					 }else if(strcmp(itemName,"MethodToGetdirFile")==0)
+					 }/*else if(strcmp(itemName,"MethodToGetdirFile")==0)
 					 {
 						int tempValue=0;
 					    if(Ini_GetInt(g_myInifile,sectionName,itemName,&tempValue)>0)
@@ -218,7 +218,7 @@ SETTING getSetting(void)
 						     gSetting.methodToGetdirFile=0;
 						}	
 					     
-					 }else if(strcmp(itemName,"CollectTestMention")==0)
+					 }*/else if(strcmp(itemName,"CollectTestMention")==0)
 					 {
                         if (Ini_GetBoolean (g_myInifile, sectionName, itemName,
                                             &booleanValue) > 0)
@@ -238,7 +238,7 @@ SETTING getSetting(void)
 						     gSetting.autoSave=0;
 						}
 							
-					 }else if(strcmp(itemName,"RelayEnable")==0)
+					 }/*else if(strcmp(itemName,"RelayEnable")==0)
 					 {
                         if (Ini_GetBoolean (g_myInifile, sectionName, itemName,
                                             &booleanValue) > 0)
@@ -248,7 +248,7 @@ SETTING getSetting(void)
 						     gSetting.relayEnable=0;
 						}
 							
-					 }else if(strcmp(itemName,"MentionAutoCloseTime")==0)
+					 }*/else if(strcmp(itemName,"MentionAutoCloseTime")==0)
 					 {
                         if (Ini_GetInt(g_myInifile, sectionName, itemName,
                                             &booleanValue) > 0)
