@@ -18,6 +18,7 @@
 #define  EUTCONFIG_SURE                   3       /* control type: command, callback function: EUTCONFIG_CALLBACK */
 #define  EUTCONFIG_TAB                    4       /* control type: tab, callback function: (none) */
 #define  EUTCONFIG_TREE                   5       /* control type: tree, callback function: EUTCONFIG_CALLBACK */
+#define  EUTCONFIG_TEXTMSG                6       /* control type: textMsg, callback function: (none) */
 
 #define  EUTPANEL                         2
 #define  EUTPANEL_EUT_TREE                2       /* control type: tree, callback function: TREESELECTED */

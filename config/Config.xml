@@ -2,9 +2,15 @@
 <Projects>
   <Version>0.2</Version>
   <Project>
-    <ProjectName>demo</ProjectName>
-    <ConfigPath>demo\demo配置表.xls</ConfigPath>
-    <StrategyPath>demo\Strategy.xml</StrategyPath>	
-    <ReportPath>demo\报表模板.xls</ReportPath>	
+    <ProjectName>可靠性检验</ProjectName>
+    <ConfigPath>可靠性检验\demo配置表.xls</ConfigPath>
+    <StrategyPath>可靠性检验\Strategy.xml</StrategyPath>	
+    <ReportPath>可靠性检验\报表模板.xls</ReportPath>	
   </Project>   
+  <Project>
+    <ProjectName>直流充电桩板级检验</ProjectName>
+    <ConfigPath>直流充电桩板级检验\demo配置表.xls</ConfigPath>
+    <StrategyPath>直流充电桩板级检验\Strategy.xml</StrategyPath>	
+    <ReportPath>直流充电桩板级检验\报表模板.xls</ReportPath>	
+  </Project>    
 </Projects>

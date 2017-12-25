@@ -17,11 +17,19 @@
 #include "resultUtil.h" 
 static ListType tpsList;
 extern TPS registerDemoTestTPS(void);
+extern TPS registerframeTestTPS(void);
+extern TPS registerCanTestTPS(void);
+extern TPS registerSpiFlashTestTPS(void);
+extern TPS registerResistanceTestTPS(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 {
 	registerDemoTestTPS,
+	registerframeTestTPS,
+	registerCanTestTPS,
+	registerSpiFlashTestTPS,
+	registerResistanceTestTPS,
 };
 
 
