@@ -466,8 +466,8 @@ TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 		SETTING set=getSetting();
 		if(set.collectTestMention)
 		{	
-		   char temp[100]={0};
-		   char temp1[100]={0};
+		   char temp[256]={0};
+		   char temp1[256]={0};
 		   if(getTip(testItem.groupName,temp1)>0)
 		   {
 		       sprintf(temp,"%s:%s,×¼±¸²âÊÔ!",_obj->device.eutName,temp1);   

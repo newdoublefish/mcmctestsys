@@ -20,11 +20,13 @@
 #include "sutCommon.h"
 
 
-static HashTableType resistProtocolHashTable=0; 
+static HashTableType voltageProtocolHashTable=0; 
 #define SHEET_RANGE_TIPS "A2:M2"
 
 
-static HRESULT onCellListenerResisProtocol(VARIANT *MyVariant,int row,int column)    
+
+
+static HRESULT onCellListenerVoltageProtocol(VARIANT *MyVariant,int row,int column)    
 {
 	char *temp;
 	static tSCPICMD proc={0}; 
@@ -118,36 +120,36 @@ static HRESULT onCellListenerResisProtocol(VARIANT *MyVariant,int row,int column
 		if(CA_VariantHasDouble(MyVariant))
 	    {
 			CA_VariantGetDouble(MyVariant,&(proc.range));
-			if(resistProtocolHashTable!=0)
+			if(voltageProtocolHashTable!=0)
 			{
-			   HashTableInsertItem(resistProtocolHashTable,proc.name,&proc);
+			   HashTableInsertItem(voltageProtocolHashTable,proc.name,&proc);
 			}			
 		}
 	}
 	return EXCEL_TASK_OK;
 }
 
-static HRESULT onStartResisProtocol(VARIANT *MyVariant,int row,int column)				
+static HRESULT onStartVoltageProtocol(VARIANT *MyVariant,int row,int column)				
 {
 	//istList=ListCreate(sizeof(INSTRUCTION));
 	//HashTableCreate(10,C_STRING_KEY,0,80,&tipsHashTable);
-	if(resistProtocolHashTable==0)
-		HashTableCreate(10,C_STRING_KEY,0,sizeof(tSCPICMD),&resistProtocolHashTable);
+	if(voltageProtocolHashTable==0)
+		HashTableCreate(10,C_STRING_KEY,0,sizeof(tSCPICMD),&voltageProtocolHashTable);
     return 0;	
 }
 
-void resisProtocolInit(char *name)
+void voltageProtocolInit(char *name)
 {
 	 SUT sut=GetSeletedSut();
 	 EXCELTask task=createExcelTask(sut.configPath,name,SHEET_RANGE_TIPS,13);
-	 task.onExcelTaskStartListener=(void *)onStartResisProtocol;
-	 task.onCellListener=(void *)onCellListenerResisProtocol;
+	 task.onExcelTaskStartListener=(void *)onStartVoltageProtocol;
+	 task.onCellListener=(void *)onCellListenerVoltageProtocol;
 	 runExcelTask(task);
 }
 
 
 
-void ComCallback(int portNumber, int eventMask, void *callbackdata)
+void voltageComCallback(int portNumber, int eventMask, void *callbackdata)
 {
 
 //	if (eventMask & LWRS_RXFLAG)
@@ -162,23 +164,23 @@ void ComCallback(int portNumber, int eventMask, void *callbackdata)
 
 }
 
-tSCPICMD getResisiProc(char *itemName)
+tSCPICMD getVoltageProc(char *itemName)
 {
 	tSCPICMD tpro={0};
 	int foud=0;
 	//printf("%s\n",itemName);
-	HashTableFindItem(resistProtocolHashTable,itemName,&foud);
+	HashTableFindItem(voltageProtocolHashTable,itemName,&foud);
 	if(foud)
 	{
-		HashTableGetItem(resistProtocolHashTable,itemName,&tpro,sizeof(tSCPICMD));
+		HashTableGetItem(voltageProtocolHashTable,itemName,&tpro,sizeof(tSCPICMD));
 	}
 	return tpro;
 }
 
 
-void resistanceTestCallback(TestItem item,result *resultPtr,int comPort)
+void voltageTestCallback(TestItem item,result *resultPtr,int comPort)
 {
-	tSCPICMD proc=getResisiProc(item.itemName_);
+	tSCPICMD proc=getVoltageProc(item.itemName_);
 	scpiDispPage(comPort,MSETUP);
 	Delay(0.2);
 	scpiSendCmd(comPort,proc);
@@ -199,7 +201,7 @@ void resistanceTestCallback(TestItem item,result *resultPtr,int comPort)
 	return;
 }
 
-METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET voltageTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	char buffer[512]={0};
@@ -221,8 +223,8 @@ METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
 		ListGetItem(group.subItems,&tTestResult.item,i);
 		tTestResult.res.index=tTestResult.item.itemId;
 		tTestResult.res.pass=-1;
-		InstallComCallback(eut.matainConfig.portNum,eventMask,0,eventChar,ComCallback, &tTestResult);
-		resistanceTestCallback(tTestResult.item,&tTestResult.res,eut.matainConfig.portNum);
+		InstallComCallback(eut.matainConfig.portNum,eventMask,0,eventChar,voltageComCallback, &tTestResult);
+		voltageTestCallback(tTestResult.item,&tTestResult.res,eut.matainConfig.portNum);
 		saveResult(hashTable,&tTestResult.res);
 	}
 	
@@ -232,11 +234,11 @@ METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
 
 
 
-TPS registerResistanceTestTPS(void)
+TPS registerVoltageTestTPS(void)
 {
-	TPS tps=newTps("resistance");
-	tps.autoTestFunction=resistanceTest;
-	tps.protocolInit=resisProtocolInit;
+	TPS tps=newTps("voltage");
+	tps.autoTestFunction=voltageTest;
+	tps.protocolInit=voltageProtocolInit;
 	//tps.manualTestFunction=resistanceTest;
 	return tps;
 }

@@ -120,6 +120,8 @@ int scpiSendCmd(int port,tSCPICMD cmd)
 #else
 	if(strcmp("IR",cmd.type)==0)
 		scpiSetType(port,IR);
+	else if(strcmp("ACW",cmd.type)==0)
+		scpiSetType(port,ACW);
 	Delay(0.2);
 	scpiSetVolt(port,cmd.volt);
 	Delay(0.2);

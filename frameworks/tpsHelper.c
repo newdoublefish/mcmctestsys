@@ -21,15 +21,17 @@ extern TPS registerframeTestTPS(void);
 extern TPS registerCanTestTPS(void);
 extern TPS registerSpiFlashTestTPS(void);
 extern TPS registerResistanceTestTPS(void);
+extern TPS registerVoltageTestTPS(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 {
-	registerDemoTestTPS,
-	registerframeTestTPS,
-	registerCanTestTPS,
-	registerSpiFlashTestTPS,
+	//registerDemoTestTPS,
+	//registerframeTestTPS,
+	//registerCanTestTPS,
+	//registerSpiFlashTestTPS,
 	registerResistanceTestTPS,
+	registerVoltageTestTPS,
 };
 
 

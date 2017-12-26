@@ -29,6 +29,12 @@
 	   
 #define MAX_TPS_NAME_LEN 30
 	   
+typedef struct {
+	TestItem item;
+	result res;
+}tTEST_RESULT;
+
+	   
 typedef enum
 {
     TEST_RESULT_ALLPASS=0,//测试全部通过
