@@ -11,16 +11,145 @@
  // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
+#include "excelHelper.h" 
 #include <formatio.h>
 #include <rs232.h>
 #include "tpsHelper.h"
 #include "resultSave.h"
 #include "scpiHelper.h"
+#include "sutCommon.h"
+
+
+static HashTableType resistProtocolHashTable=0; 
+#define SHEET_RANGE_TIPS "A2:M2"
 
 typedef struct {
 	TestItem item;
 	result res;
 }tTEST_RESULT;
+
+
+
+static HRESULT onCellListenerResisProtocol(VARIANT *MyVariant,int row,int column)    
+{
+	char *temp;
+	static tSCPICMD proc={0}; 
+	if(column==0)
+	{
+		 if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			//memcpy(tempInstruction.name,temp,strlen(temp)+1);
+			memset(&proc,0,sizeof(tSCPICMD));
+			memcpy(proc.name,temp,strlen(temp)+1);
+			//printf("%s,",temp);
+			CA_FreeMemory(temp);
+		 }else
+		 {
+			return EXCEL_TASK_QUIT;
+		 }
+	}else if(column==1)
+	{
+		 if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			//memcpy(tempInstruction.name,temp,strlen(temp)+1);
+			memcpy(proc.type,temp,strlen(temp)+1);
+			//printf("%s,",temp);
+			CA_FreeMemory(temp);
+		 }		
+	}else if(column==2)
+	{
+		
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.volt));
+		}
+	}else if(column==3)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.upper));
+		}
+	}else if(column==4)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.lower));
+		}
+	}else if(column==5)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.rtim));
+		}
+	}else if(column==6)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.ttim));
+		}
+	}else if(column==7)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.ftim));
+		}
+	}else if(column==8)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.arc));
+		}
+	}else if(column==9)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.freq));
+		}
+	}else if(column==10)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.wtim));
+		}
+	}else if(column==11)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.ramp));
+		}
+	}else if(column==12)
+	{
+		if(CA_VariantHasDouble(MyVariant))
+	    {
+			CA_VariantGetDouble(MyVariant,&(proc.range));
+			if(resistProtocolHashTable!=0)
+			{
+			   HashTableInsertItem(resistProtocolHashTable,proc.name,&proc);
+			}			
+		}
+	}
+	return EXCEL_TASK_OK;
+}
+
+static HRESULT onStartResisProtocol(VARIANT *MyVariant,int row,int column)				
+{
+	//istList=ListCreate(sizeof(INSTRUCTION));
+	//HashTableCreate(10,C_STRING_KEY,0,80,&tipsHashTable);
+	if(resistProtocolHashTable==0)
+		HashTableCreate(10,C_STRING_KEY,0,sizeof(tSCPICMD),&resistProtocolHashTable);
+    return 0;	
+}
+
+void resisProtocolInit(char *name)
+{
+	 SUT sut=GetSeletedSut();
+	 EXCELTask task=createExcelTask(sut.configPath,name,SHEET_RANGE_TIPS,13);
+	 task.onExcelTaskStartListener=(void *)onStartResisProtocol;
+	 task.onCellListener=(void *)onCellListenerResisProtocol;
+	 runExcelTask(task);
+}
 
 
 
@@ -39,56 +168,41 @@ void ComCallback(int portNumber, int eventMask, void *callbackdata)
 
 }
 
+tSCPICMD getResisiProc(char *itemName)
+{
+	tSCPICMD tpro={0};
+	int foud=0;
+	//printf("%s\n",itemName);
+	HashTableFindItem(resistProtocolHashTable,itemName,&foud);
+	if(foud)
+	{
+		HashTableGetItem(resistProtocolHashTable,itemName,&tpro,sizeof(tSCPICMD));
+	}
+	return tpro;
+}
+
 
 void resistanceTestCallback(TestItem item,result *resultPtr,int comPort)
 {
-
-	int bytes=0;
-	if(strcmp("ABCN相连对地",item.itemName_)==0)
+	tSCPICMD proc=getResisiProc(item.itemName_);
+	scpiDispPage(comPort,MSETUP);
+	Delay(0.2);
+	scpiSendCmd(comPort,proc);
+	scpiDispPage(comPort,MEASUREMENT);
+	Delay(0.2);
+	scpiStartTest(comPort);
+	int outTime = proc.ttim+2;
+	while(resultPtr->pass==-1)
 	{
-		scpiDispPage(comPort,MSETUP);
-		Delay(0.2);
-		scpiSetType(comPort,IR);
-		Delay(0.2);
-		scpiSetVolt(comPort,0.5);
-		Delay(0.2);
-		scpiSetTestTime(comPort,5);
-		Delay(0.2);
-		scpiDispPage(comPort,MEASUREMENT);
-		Delay(0.2);
-		scpiStartTest(comPort);
-		return;
-	}else if(strcmp("ABCN相连对DC12V",item.itemName_)==0) 
-	{
-		scpiDispPage(comPort,MSETUP);
-		Delay(0.2);
-		scpiSetType(comPort,IR);
-		Delay(0.2);
-		scpiSetVolt(comPort,0.5);
-		Delay(0.2);
-		scpiSetTestTime(comPort,5);
-		Delay(0.2);
-		scpiDispPage(comPort,MEASUREMENT);
-		Delay(0.2); 
-		scpiStartTest(comPort);
-		return;
-	}else if(strcmp("交流输入对直流输出",item.itemName_)==0) 
-	{
-		scpiDispPage(comPort,MSETUP);
-		Delay(0.2);
-		scpiSetType(comPort,IR);
-		Delay(0.2);
-		scpiSetVolt(comPort,1);
-		Delay(0.2);
-		scpiSetTestTime(comPort,5);
-		Delay(0.2);
-		scpiDispPage(comPort,MEASUREMENT);
-		Delay(0.2); 
-		scpiStartTest(comPort); 
-		return;
-	}else{
-		resultPtr->pass=0;
-	}
+		Delay(1);
+		ProcessSystemEvents ();
+		outTime--;
+		if(outTime<=0)
+		{
+			resultPtr->pass=0;
+		}
+	}	
+	return;
 }
 
 METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
@@ -115,11 +229,6 @@ METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
 		tTestResult.res.pass=-1;
 		InstallComCallback(eut.matainConfig.portNum,eventMask,0,eventChar,ComCallback, &tTestResult);
 		resistanceTestCallback(tTestResult.item,&tTestResult.res,eut.matainConfig.portNum);
-		while(tTestResult.res.pass==-1)
-		{
-			Delay(1);
-			ProcessSystemEvents ();
-		}
 		saveResult(hashTable,&tTestResult.res);
 	}
 	
@@ -133,6 +242,7 @@ TPS registerResistanceTestTPS(void)
 {
 	TPS tps=newTps("resistance");
 	tps.autoTestFunction=resistanceTest;
+	tps.protocolInit=resisProtocolInit;
 	//tps.manualTestFunction=resistanceTest;
 	return tps;
 }

@@ -45,7 +45,9 @@ int protocolInit(void)
 	char description[100]={0};
 
 	int slideHandle=displaySlideProgressWithTextBox("协议解析");
-	int itemCount=ListNumItems(list);
+	slideProgressShowWithTextBox(slideHandle,0,"正在分析协议",0.01);
+#if 0 //TODO:以后改进	
+	/*int itemCount=ListNumItems(list);
 	for(int i=1;i<=itemCount;i++)
 	{
 		TestGroup group; 
@@ -64,8 +66,10 @@ int protocolInit(void)
 		 Fmt(description,"%s     %s\n",group.groupName,"ok");
 		 slideProgressShowWithTextBox(slideHandle,perc,description,0.01);  
 		 //Delay(0.1);
-	}
-	
+	}*/
+#endif	
+	TpsInitProtocol();
+	slideProgressShowWithTextBox(slideHandle,100,"协议分析完成",0.01);	
 	disposeSlideProgress(slideHandle); 
 	return ret;
 }

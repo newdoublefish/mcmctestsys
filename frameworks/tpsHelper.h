@@ -53,6 +53,7 @@ typedef TPS (*REGISTER_TPS_FUNCTION)(void);
 int initTps(void);
 TPS newTps(char *name);
 int getTps(char *tpsName,TPS *tpsPtr);
+void TpsInitProtocol(void);
 
 void TpsPrepareTest(void);
 #ifdef __cplusplus

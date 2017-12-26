@@ -110,6 +110,20 @@ void TpsPrepareTest(void)
 	}
 }
 
+void TpsInitProtocol()
+{
+	int tpsCnt=ListNumItems(tpsList);
+	TPS tps;
+    for(int i=1;i<=tpsCnt;i++)
+	{
+	    ListGetItem(tpsList,&tps,i);
+		if(tps.protocolInit!=NULL)
+		{
+		     (*(PROTOCOL_INIT)(tps.protocolInit))(tps.tpsName);
+		}
+	}	
+}
+
 TPS newTps(char *name)
 {
 	

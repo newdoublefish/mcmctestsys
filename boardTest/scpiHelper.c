@@ -1,3 +1,5 @@
+#include <utility.h>
+#include <ansi_c.h>
 #include <rs232.h>
 #include <formatio.h>
 #include "scpiHelper.h"
@@ -80,4 +82,49 @@ int scpiStopTest(int port){
     char buffer[100]={0};
 	Fmt(buffer,"func:start\n");
 	return ComWrt (port, buffer, StringLength(buffer)); 
+}
+
+void printfScpiCmd(tSCPICMD cmd)
+{
+	printf("%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",cmd.name,cmd.type,cmd.volt,cmd.upper,cmd.lower,cmd.rtim,cmd.ttim,cmd.ftim,cmd.arc,cmd.freq,cmd.wtim,cmd.ramp,cmd.range);
+}
+
+int scpiSendCmd(int port,tSCPICMD cmd)
+{
+#if 0	
+	char buffer[1024]={0};
+	char temp[128]={0};
+	//TYPE
+	Fmt(temp,"func:sour:step1:type %s;",cmd.type);
+	strcat(buffer,temp);
+	//VOLT
+	memset(temp,0,128);
+	Fmt(temp,"func:sour:step1:volt %f;",cmd.volt);
+	strcat(buffer,temp);
+	//UPPER
+	
+	memset(temp,0,128);
+	Fmt(temp,"func:sour:step1:upper %f;",cmd.upper);
+	strcat(buffer,temp);
+	//UPPER
+	memset(temp,0,128);
+	Fmt(temp,"func:sour:step1:lower %f;",cmd.lower);
+	strcat(buffer,temp);
+
+	//ADD NL
+	strcat(buffer,"\n");
+	
+	printf("%s",buffer);
+	 	
+	return ComWrt (port, buffer, StringLength(buffer));
+#else
+	if(strcmp("IR",cmd.type)==0)
+		scpiSetType(port,IR);
+	Delay(0.2);
+	scpiSetVolt(port,cmd.volt);
+	Delay(0.2);
+	scpiSetTestTime(port,cmd.ttim);
+	Delay(0.2);
+	return 0;
+#endif	
 }
