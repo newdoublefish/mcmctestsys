@@ -18,6 +18,7 @@
 #include "resultSave.h"
 #include "scpiHelper.h"
 #include "sutCommon.h"
+#include "common.h"
 
 
 static HashTableType voltageProtocolHashTable=0; 
@@ -159,7 +160,9 @@ void voltageComCallback(int portNumber, int eventMask, void *callbackdata)
 	ComRd (portNumber, readBuf, strLen); 
 	//printf("%s",readBuf);
 	tTEST_RESULT *tr = (tTEST_RESULT *)callbackdata;
-	sprintf(tr->res.recvString,"%s",readBuf);
+	tr->res.recevValue = readElectricCurrent(readBuf);  
+	
+	sprintf(tr->res.recvString,"%0.4f",tr->res.recevValue);
 	tr->res.pass = 1; 
 
 }
@@ -213,6 +216,12 @@ METHODRET voltageTest(TestGroup group,EUT eut,HashTableType hashTable)
     RS232Error = OpenComConfig (eut.matainConfig.portNum,"",eut.matainConfig.baudRate, eut.matainConfig.parity,
                                         eut.matainConfig.dataBit, eut.matainConfig.stopBit, 0, 0);
 	
+	if(RS232Error<0)
+	{
+		  WarnShow("´®¿ÚÁ¬½ÓÊ§°Ü£¡");
+		  return TEST_RESULT_ERROR;
+	}	
+	
 	 
 
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
@@ -225,11 +234,11 @@ METHODRET voltageTest(TestGroup group,EUT eut,HashTableType hashTable)
 		tTestResult.res.pass=-1;
 		InstallComCallback(eut.matainConfig.portNum,eventMask,0,eventChar,voltageComCallback, &tTestResult);
 		voltageTestCallback(tTestResult.item,&tTestResult.res,eut.matainConfig.portNum);
-		saveResult(hashTable,&tTestResult.res);
+		saveResult(hashTable,&tTestResult.res) ;
 	}
 	
 	CloseCom(eut.matainConfig.portNum);
-	return ret;
+	return TEST_RESULT_ALLPASS;
 }
 
 

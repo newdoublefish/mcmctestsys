@@ -3,6 +3,7 @@
 #include <rs232.h>
 #include <formatio.h>
 #include "scpiHelper.h"
+#include "regexpr.h"  
 int scpiDispPage(int port,enumPageType pageType){
 	char buffer[100]={0};
 	char *page="mset";
@@ -87,6 +88,32 @@ int scpiStopTest(int port){
 void printfScpiCmd(tSCPICMD cmd)
 {
 	printf("%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",cmd.name,cmd.type,cmd.volt,cmd.upper,cmd.lower,cmd.rtim,cmd.ttim,cmd.ftim,cmd.arc,cmd.freq,cmd.wtim,cmd.ramp,cmd.range);
+}
+
+float readResistent(char *resultStr)
+{
+	 int matched,position,matchedLen;
+	 RegExpr_FindPatternInText("[0-9]*[.][0-9]*{M¦¸}|{G¦¸}",0,resultStr,strlen(resultStr),1,1,&matched,&position,&matchedLen);
+	 if(matched)
+	 {	
+		char temp[20]={0};
+	 	memcpy(temp,resultStr+position,matchedLen-2);
+	 	return atof(temp);
+	 }
+	return 0;
+}
+
+float readElectricCurrent(char *resultStr)
+{
+	 int matched,position,matchedLen;
+	 RegExpr_FindPatternInText("[0-9]*[.][0-9]*{mA}",0,resultStr,strlen(resultStr),1,1,&matched,&position,&matchedLen);
+	 if(matched)
+	 {	
+		char temp[20]={0};
+	 	memcpy(temp,resultStr+position,matchedLen-2);
+	 	return atof(temp);
+	 }
+	return 0;
 }
 
 int scpiSendCmd(int port,tSCPICMD cmd)

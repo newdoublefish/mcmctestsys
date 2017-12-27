@@ -47,6 +47,8 @@ int scpiStartTest(int port);
 int scpiStopTest(int port);
 int scpiSendCmd(int port,tSCPICMD cmd);
 void printfScpiCmd(tSCPICMD cmd);
+float readResistent(char *resultStr);
+float readElectricCurrent(char *resultStr);
 #ifdef __cplusplus
    }
 #endif

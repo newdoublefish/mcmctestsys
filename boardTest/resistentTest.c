@@ -11,6 +11,7 @@
  // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
+
 #include "excelHelper.h" 
 #include <formatio.h>
 #include <rs232.h>
@@ -18,6 +19,8 @@
 #include "resultSave.h"
 #include "scpiHelper.h"
 #include "sutCommon.h"
+#include "common.h"
+#include "regexpr.h"   
 
 
 static HashTableType resistProtocolHashTable=0; 
@@ -147,6 +150,8 @@ void resisProtocolInit(char *name)
 
 
 
+
+
 void ComCallback(int portNumber, int eventMask, void *callbackdata)
 {
 
@@ -157,7 +162,9 @@ void ComCallback(int portNumber, int eventMask, void *callbackdata)
 	ComRd (portNumber, readBuf, strLen); 
 	//printf("%s",readBuf);
 	tTEST_RESULT *tr = (tTEST_RESULT *)callbackdata;
-	sprintf(tr->res.recvString,"%s",readBuf);
+	tr->res.recevValue = readResistent(readBuf);  
+	
+	sprintf(tr->res.recvString,"%0.4f",tr->res.recevValue);
 	tr->res.pass = 1; 
 
 }
@@ -211,7 +218,11 @@ METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
     RS232Error = OpenComConfig (eut.matainConfig.portNum,"",eut.matainConfig.baudRate, eut.matainConfig.parity,
                                         eut.matainConfig.dataBit, eut.matainConfig.stopBit, 0, 0);
 	
-	 
+	if(RS232Error<0)
+	{
+		  WarnShow("串口连接失败！");  
+		  return TEST_RESULT_ERROR;
+	}		 
 
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
