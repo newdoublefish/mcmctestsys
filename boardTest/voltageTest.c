@@ -160,11 +160,15 @@ void voltageComCallback(int portNumber, int eventMask, void *callbackdata)
 	ComRd (portNumber, readBuf, strLen); 
 	//printf("%s",readBuf);
 	tTEST_RESULT *tr = (tTEST_RESULT *)callbackdata;
-	tr->res.recevValue = readElectricCurrent(readBuf);  
-	
-	sprintf(tr->res.recvString,"%0.4f",tr->res.recevValue);
-	tr->res.pass = 1; 
-
+	tr->res.pass=0;
+	tr->res.recevValue = readElectricCurrent(readBuf,tr->res.recvString);
+	if(strstr(tr->res.recvString,"mA"))
+	{
+		if(tr->res.recevValue<10)
+			tr->res.pass=1;
+	}else if(strstr(tr->res.recvString,"uA")){
+		tr->res.pass=1;
+	}
 }
 
 tSCPICMD getVoltageProc(char *itemName)

@@ -90,7 +90,7 @@ void printfScpiCmd(tSCPICMD cmd)
 	printf("%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",cmd.name,cmd.type,cmd.volt,cmd.upper,cmd.lower,cmd.rtim,cmd.ttim,cmd.ftim,cmd.arc,cmd.freq,cmd.wtim,cmd.ramp,cmd.range);
 }
 
-float readResistent(char *resultStr)
+float readResistent(char *resultStr,char *resStr)
 {
 	 int matched,position,matchedLen;
 	 RegExpr_FindPatternInText("[0-9]*[.][0-9]*{M¦¸}|{G¦¸}",0,resultStr,strlen(resultStr),1,1,&matched,&position,&matchedLen);
@@ -98,12 +98,14 @@ float readResistent(char *resultStr)
 	 {	
 		char temp[20]={0};
 	 	memcpy(temp,resultStr+position,matchedLen-2);
+		if(resStr!=NULL)
+			memcpy(resStr,resultStr+position,matchedLen);
 	 	return atof(temp);
 	 }
 	return 0;
 }
 
-float readElectricCurrent(char *resultStr)
+float readElectricCurrent(char *resultStr,char *resStr)
 {
 	 int matched,position,matchedLen;
 	 RegExpr_FindPatternInText("[0-9]*[.][0-9]*{mA}",0,resultStr,strlen(resultStr),1,1,&matched,&position,&matchedLen);
@@ -111,6 +113,8 @@ float readElectricCurrent(char *resultStr)
 	 {	
 		char temp[20]={0};
 	 	memcpy(temp,resultStr+position,matchedLen-2);
+		if(resStr!=NULL)
+			memcpy(resStr,resultStr+position,matchedLen);
 	 	return atof(temp);
 	 }
 	return 0;
