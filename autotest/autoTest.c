@@ -458,7 +458,7 @@ static void operateTimer(int on)
 	//SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0分0秒");
 }
 
-
+extern METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable);
 TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 {
 	 	TESTresult ret=TEST_ALL_PASS;
@@ -497,7 +497,8 @@ TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 			}else{
 				if(tps.manualTestFunction==NULL)
 				{
-					WarnShow1(0,"没有定义手动测试的方法");  
+					//WarnShow1(0,"没有定义手动测试的方法");
+					manualTest(testItem,_obj->device,_obj->resultHashTable);
 				}else{
 					testRet = (*(TEST_METHOD)(tps.manualTestFunction))(testItem,_obj->device,_obj->resultHashTable); 
 				}

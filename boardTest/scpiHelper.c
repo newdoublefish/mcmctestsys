@@ -108,7 +108,7 @@ void printfScpiCmd(tSCPICMD cmd)
 float readResistent(char *resultStr,char *resStr)
 {
 	 int matched,position,matchedLen;
-	 RegExpr_FindPatternInText("[0-9]*[.][0-9]*{M次}|{G次}",0,resultStr,strlen(resultStr),1,1,&matched,&position,&matchedLen);
+	 RegExpr_FindPatternInText("[0-9]*[.][0-9]*{M次}|{G次}|{mA}|{uA}|{A}",0,resultStr,strlen(resultStr),1,1,&matched,&position,&matchedLen);
 	 if(matched)
 	 {	
 		char temp[20]={0};
