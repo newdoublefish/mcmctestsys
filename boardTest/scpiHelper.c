@@ -52,6 +52,21 @@ int scpiSetVolt(int port,float val)
 	return ComWrt (port, buffer, StringLength(buffer)); 
 }
 
+int scpiSetUpper(int port,float val)
+{
+	char buffer[100]={0};
+	Fmt(buffer,"func:sour:step1:upper %f\n",val); 
+	return ComWrt (port, buffer, StringLength(buffer)); 
+}
+
+int scpiSetLower(int port,float val)
+{
+	char buffer[100]={0};
+	Fmt(buffer,"func:sour:step1:lower %f\n",val); 
+	return ComWrt (port, buffer, StringLength(buffer)); 
+}
+
+
 int scpiSetTestTime(int port,float val)
 {
 	char buffer[100]={0};
@@ -120,6 +135,17 @@ float readElectricCurrent(char *resultStr,char *resStr)
 	return 0;
 }
 
+int scpiResult(char *resultStr)
+{
+	 int matched,position,matchedLen;
+	 RegExpr_FindPatternInText("PASS",0,resultStr,strlen(resultStr),1,1,&matched,&position,&matchedLen);
+	 if(matched)
+	 {	
+	 	return 1;
+	 }
+	return 0;
+}
+
 int scpiSendCmd(int port,tSCPICMD cmd)
 {
 #if 0	
@@ -153,11 +179,16 @@ int scpiSendCmd(int port,tSCPICMD cmd)
 		scpiSetType(port,IR);
 	else if(strcmp("ACW",cmd.type)==0)
 		scpiSetType(port,ACW);
+	else if(strcmp("DCW",cmd.type)==0)
+		scpiSetType(port,DCW);	
 	Delay(0.2);
 	scpiSetVolt(port,cmd.volt);
 	Delay(0.2);
 	scpiSetTestTime(port,cmd.ttim);
 	Delay(0.2);
+	scpiSetUpper(port,cmd.upper);
+	Delay(0.2);
+	scpiSetLower(port,cmd.lower);
 	return 0;
 #endif	
 }

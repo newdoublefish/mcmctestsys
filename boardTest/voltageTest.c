@@ -160,15 +160,17 @@ void voltageComCallback(int portNumber, int eventMask, void *callbackdata)
 	ComRd (portNumber, readBuf, strLen); 
 	//printf("%s",readBuf);
 	tTEST_RESULT *tr = (tTEST_RESULT *)callbackdata;
-	tr->res.pass=0;
+	  
 	tr->res.recevValue = readElectricCurrent(readBuf,tr->res.recvString);
+	tr->res.pass = scpiResult(readBuf);
+	/*
 	if(strstr(tr->res.recvString,"mA"))
 	{
 		if(tr->res.recevValue<10)
 			tr->res.pass=1;
 	}else if(strstr(tr->res.recvString,"uA")){
 		tr->res.pass=1;
-	}
+	}*/
 }
 
 tSCPICMD getVoltageProc(char *itemName)
@@ -224,7 +226,7 @@ METHODRET voltageTest(TestGroup group,EUT eut,HashTableType hashTable)
 	{
 		  WarnShow("´®¿ÚÁ¬½ÓÊ§°Ü£¡");
 		  return TEST_RESULT_ERROR;
-	}	
+	}								   
 	
 	 
 

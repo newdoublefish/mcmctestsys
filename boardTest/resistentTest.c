@@ -163,8 +163,8 @@ void ComCallback(int portNumber, int eventMask, void *callbackdata)
 	//printf("%s",readBuf);
 	tTEST_RESULT *tr = (tTEST_RESULT *)callbackdata;
 	tr->res.recevValue = readResistent(readBuf,tr->res.recvString);
-	tr->res.pass = 0; 
-	if(strstr(tr->res.recvString,"G¦¸"))
+	tr->res.pass = scpiResult(readBuf); 
+	/*if(strstr(tr->res.recvString,"G¦¸"))
 	{
 		tr->res.pass = 1; 	
 	}else if(strstr(tr->res.recvString,"M¦¸"))
@@ -175,7 +175,7 @@ void ComCallback(int portNumber, int eventMask, void *callbackdata)
 		}
 	}else{ 
 		tr->res.pass = 1;
-	}
+	}*/
 
 }
 
