@@ -521,10 +521,10 @@ void generateReportFilePath(char *time,char *dirName,char *temp)
 	if(s.reportInfoCustom)
 	{	
 	   getUserCustiomName(fileName);
-	   sprintf(temp,"%s\\%s\\%s_%s_%s%s",s.saveDir,dirName,dirName,time,fileName,".xls");
+	   sprintf(temp,"%s\\%s\\%s_%s_%s%s",s.saveDir,dirName,dirName,time,fileName,".xlsx");
 	}else
 	{
-	   sprintf(temp,"%s\\%s\\%s_%s%s",s.saveDir,dirName,dirName,time,".xls"); 
+	   sprintf(temp,"%s\\%s\\%s_%s%s",s.saveDir,dirName,dirName,time,".xlsx"); 
 	}
 	ValidateFile(temp);	
 }

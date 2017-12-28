@@ -52,7 +52,7 @@ static HRESULT onCellListenerResisProtocol(VARIANT *MyVariant,int row,int column
 		    CA_VariantGetCString(MyVariant, &temp); 
 			//memcpy(tempInstruction.name,temp,strlen(temp)+1);
 			memcpy(proc.type,temp,strlen(temp)+1);
-			printf("%s,",temp);
+			//printf("%s,",temp);
 			CA_FreeMemory(temp);
 		 }		
 	}else if(column==2)

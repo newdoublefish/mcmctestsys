@@ -464,6 +464,21 @@ void getGroupItemByName(TestGroup group,TestItem *item,char *itemName)
 	  }	  
 }
 
+int isTypeGroupExsit(char *typeName)
+{
+	  int itemCount=ListNumItems(tiaoliGroup);
+	  TestGroup group;
+	  for(int i=1;i<=itemCount;i++)
+	  {
+	      ListGetItem(tiaoliGroup,&group,i);
+		  if(strcmp(group.type,typeName)==0)
+		  {
+		     return 1;
+		  }	  
+	  }	  
+	  return 0;
+}
+
 ListType getTestCaseList(void)
 {
    return tiaoliList;

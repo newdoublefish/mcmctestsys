@@ -66,6 +66,8 @@ void getGroupItemByName(TestGroup group,TestItem *item,char *itemName);
 
 ListType getTestCaseList(void);
 
+int isTypeGroupExsit(char *typeName);
+
 
 #ifdef __cplusplus
     }

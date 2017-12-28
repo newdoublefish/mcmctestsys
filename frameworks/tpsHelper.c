@@ -15,6 +15,7 @@
 #include "tpsHelper.h"
 #include "settingConfig.h"
 #include "resultUtil.h" 
+#include "testGroupInit.h"
 static ListType tpsList;
 extern TPS registerDemoTestTPS(void);
 extern TPS registerframeTestTPS(void);
@@ -42,8 +43,10 @@ int initTps()
 
 	 for(int i=0;i<sizeof(registerTpsFunctionGroup)/4;i++)
 	 {
+		 
 		 TPS tps=(*(registerTpsFunctionGroup[i]))();
-		 ListInsertItem(tpsList,&tps,END_OF_LIST);
+		 if(isTypeGroupExsit(tps.tpsName)) 
+		 	ListInsertItem(tpsList,&tps,END_OF_LIST);
 
 	 }
 	 

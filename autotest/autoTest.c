@@ -431,7 +431,8 @@ static void objectTestFinish(TESTobject *_obj)
 	SETTING set=getSetting();
 	if(set.autoSave)
 	{
-	   char temp[MAX_PATHNAME_LEN]={0}; 	
+	   char temp[MAX_PATHNAME_LEN]={0}; 
+	   //TODO:后续要加上
 	   saveTestResult(startTime,_obj->device.eutName,_obj->resultHashTable,temp);
 	   saveRecordToDb(*_obj,startTime,temp);
 	}
