@@ -11,6 +11,7 @@
  // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
+
 #include <cvirte.h>		
 #include <userint.h>
 #include <pathctrl.h>
@@ -32,7 +33,8 @@
 #include "tipsParse.h"
 #include "log.h"
 #include "tpsHelper.h"
-#include "reportDb.h"    
+#include "reportDb.h" 
+#include "regexpr.h"   
 
 static int autoPanelHandle=0;
 
@@ -58,6 +60,9 @@ static TESTengine *engine;
 static void operateTimer(int on);
 
 static SETTING s;
+
+TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type);
+BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *testItemIndex);
 
 
 static void setButtonState(int state)
@@ -174,12 +179,92 @@ static void ontestFinishListener(TESTengine *t)
 	
 }
 
+static int getNumFromTag(char *tag)
+{
+	int matched,position,matchedLen; 
+	RegExpr_FindPatternInText("[0-9]*[0-9]",0,tag,strlen(tag),1,1,&matched,&position,&matchedLen);
+	 if(matched)
+	 {	
+		char temp[20]={0};
+	 	memcpy(temp,tag+position,matchedLen);
+		//printf(":%s\n",temp);
+	 	return atoi(temp);
+	 }
+	 return -1;
+}
+
+static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int MenuItemID, 
+									void *callbackData)
+{
+	
+	char groupTag[32]={0}; 
+	int selected=0;
+	int numDescendents=0;
+	int parent=0;
+	GetActiveTreeItem(panel,P_ITEMSHOW_TREE,&selected);
+	GetTreeItemNumDescendents(panel,P_ITEMSHOW_TREE,selected,&numDescendents);
+	GetTreeItemParent(panel,P_ITEMSHOW_TREE,selected,&parent);
+	GetTreeItemTag(panel,P_ITEMSHOW_TREE,selected,groupTag); 
+	//printf("selected:%d,numDescendents:%d,parent:%d\n",selected,numDescendents,parent);
+	if(parent!=-1 && numDescendents!=0)
+	{
+		int collectSelected=0;
+		int testGroupIndex=0; 
+		char collectTag[32]={0};
+		GetTreeItemTag(panel,P_ITEMSHOW_TREE,parent,collectTag);
+		//printf("selected:%d,collectSelected:%d\n",selected,parent);
+		//printf("collect:%d,group:%d\n",getNumFromTag(collectTag),getNumFromTag(groupTag));
+		int numberOfChildren;
+		GetTreeItemNumChildren(panel,controlID,parent,&numberOfChildren);
+		int childStart=parent+1;
+		if(childStart==selected)
+		{
+			testGroupIndex=1;	
+		}else{
+			for(int i=1;i<=numberOfChildren-1;i++)
+			{
+				GetTreeItem(panel,controlID,VAL_SIBLING,childStart,childStart,VAL_NEXT,0,&childStart);
+				//printf("%d\n",childStart);
+				testGroupIndex=i+1;
+				if(childStart==selected)
+					break;
+			}
+		}
+		//printf("testGroupIndex:%d\n",testGroupIndex);
+		int collectId = getNumFromTag(collectTag);
+		int groupId = getNumFromTag(groupTag);
+		TestGroup group={0}; 
+		ListGetItem(engine->itemList,&group,groupId);
+		//printf("groupName:%s\n",group.groupName);
+		//测试单项
+		TESTobject *_obj=getTestObjectByPanelHandle(panel,engine);
+		if(_obj!=NULL)
+		{
+			
+			int testItemIndex=0;
+			onObjectGroupTest(group,_obj,TYPE_AUTO); 
+			engine->currentCollect = collectId;
+			objectResultShow(_obj,group,testGroupIndex,&testItemIndex);
+		}
+	}
+	//printf("-------tag:%d,numDescendents:%d,numParents:%d\n",getNumFromTag(tag),numDescendents,numParents); 
+}
+
+
+
 static void objectPanelCreate(int *panel)
 {
     *panel=LoadPanel (engine->panelHandle, "AutoTestPanel.uir", P_ITEMSHOW);
+	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_EXPAND_SUBTREE); 
+	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_SEARCH);
+	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_SORT);  
+	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_COLLAPSE_SUBTREE);
+	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_EXPAND_ALL);
+	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_COLLAPSE_ALL);
+	NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "单项测试", -1, onMenuSingleItemTestCB, 0);
 }
 
-static BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *testItemIndex)
+BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *testItemIndex)
 {
 	BOOL flag=TRUE;
 	int reTestFlag=1;
@@ -367,8 +452,10 @@ static void objectPanelInit(TESTobject *_obj)
 	for(int count=1;count<=ListNumItems(t->collectList);count++)
 	{
 		  ListGetItem(t->collectList,&collect,count);
+		  memset(temp,0,30);
+		  sprintf(temp,"%d",count);
 		  InsertTreeItem (panelHandle, P_ITEMSHOW_TREE, VAL_SIBLING,0, VAL_LAST,
-                    collect.name_ ,0, 0, 0);
+                    collect.name_ ,temp, 0, 0);
 		 
 		  groupList=collect.groups;
 		
@@ -383,9 +470,9 @@ static void objectPanelInit(TESTobject *_obj)
 		      ListGetItem(groupList,&num,count1);//获取组的ID号
 			 
 			  ListGetItem(t->itemList,&group,num);//获取组
-			  sprintf(groupIndexStr,"%d",count1);
+			  sprintf(groupIndexStr,"%d",num);
 			  
-			  //PRINT("groupIndexStr=%s",groupIndexStr);
+			  //PRINT("groupIndexStr=%s\n",groupIndexStr);
 			  
        		  InsertTreeItem (panelHandle, P_ITEMSHOW_TREE, VAL_CHILD,parent,VAL_LAST,
                     group.nickName,groupIndexStr, 0, 0);  //TAG 用组在组链表中的序号
@@ -476,6 +563,7 @@ TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 		       sprintf(temp,"%s:%s,准备测试!",_obj->device.eutName,testItem.groupName);
 		   }
 		   //WarnShow1(0,temp);
+		   //TESTengine *engine = (TESTengine*)_obj->enginePtr;
 		   ShowManualTip(0,testItem.groupName,temp1);  
 		}   
 		

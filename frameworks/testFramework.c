@@ -477,6 +477,18 @@ void releaseTestEngine(TESTengine *t)
 	free(t);
 }
 
+TESTobject *getTestObjectByPanelHandle(int objPanelHandle,TESTengine *engine){
+	for(int i=0;i<8;i++)
+	{
+		if(engine->objectArray[i].panelHandle == objPanelHandle)
+		{
+			return &(engine->objectArray[i]);
+		}
+	
+	}
+	return NULL;
+}
+
 
 
 

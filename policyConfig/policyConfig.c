@@ -342,7 +342,8 @@ int CVICALLBACK OnAddTestItemToCollect (int panel, int control, int event,
 			if(parent!=-1)
 			{
 			     destinationIndex=parent;
-			}	
+			}
+			//printf("%d\n",parent);
 			CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
                  VAL_CHILD, destinationIndex, VAL_LAST);
 			}else

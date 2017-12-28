@@ -113,6 +113,8 @@ void runTestEngine(TESTengine *t);
 
 void releaseTestEngine(TESTengine *t);
 
+TESTobject *getTestObjectByPanelHandle(int objPanelHandle,TESTengine *engine);
+
 BOOL JudgeTestProcess(TESTengine *t);
 #ifdef __cplusplus
     }
