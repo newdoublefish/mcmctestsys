@@ -38,6 +38,7 @@
 
 static int autoPanelHandle=0;
 
+
 static long totalSeconds;
 
 static char startTime[100]={0};
@@ -60,6 +61,7 @@ static TESTengine *engine;
 static void operateTimer(int on);
 
 static SETTING s;
+static BOOL autoTestFlag=TRUE;
 
 TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type);
 BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *testItemIndex);
@@ -242,9 +244,11 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 		{
 			
 			int testItemIndex=0;
-			onObjectGroupTest(group,_obj,TYPE_AUTO); 
+			TESTresult ret = onObjectGroupTest(group,_obj,TYPE_AUTO); 
 			engine->currentCollect = collectId;
-			objectResultShow(_obj,group,testGroupIndex,&testItemIndex);
+			
+			if(ret != TEST_RESULT_QUIT)
+				objectResultShow(_obj,group,testGroupIndex,&testItemIndex);
 		}
 	}
 	//printf("-------tag:%d,numDescendents:%d,numParents:%d\n",getNumFromTag(tag),numDescendents,numParents); 
@@ -549,7 +553,8 @@ static void operateTimer(int on)
 extern METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable);
 TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 {
-	 	TESTresult ret=TEST_ALL_PASS;
+	 	TESTresult ret=TEST_RESULT_ALL_PASS;
+		BOOL testFlag=TRUE;
 		
 		SETTING set=getSetting();
 		if(set.collectTestMention)
@@ -564,8 +569,13 @@ TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 		   }
 		   //WarnShow1(0,temp);
 		   //TESTengine *engine = (TESTengine*)_obj->enginePtr;
-		   ShowManualTip(0,testItem.groupName,temp1);  
-		}   
+		   //ShowManualTip(0,testItem.groupName,temp1);
+		   //提示面板可以控制是否进行下一项测试
+		   testFlag=showTips(0,testItem.groupName,temp1);
+		} 
+		
+		if(FALSE == testFlag)
+			return TEST_RESULT_QUIT;//注意返回值这里，应该让整个引擎停止，暂时返回ERROR
 		
 	    /*TEST_METHOD method=getTestMethod(testItem); //获取测试方法
 		//LOG_LEVEL("Debug","%x\n",_obj->resultHashTable);
@@ -594,11 +604,11 @@ TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 				
 			} 
 		   	if(testRet==TEST_RESULT_ALLPASS)
-		    	ret=TEST_ALL_PASS;
+		    	ret=TEST_RESULT_ALL_PASS;
 	     	else if(testRet==TEST_RESULT_ERROR)
 		    	ret=TEST_ERROR;
 	     	else if(testRet=TEST_RESULT_SOMEPASS)
-		    	ret=TEST_SOME_PASS; 
+		    	ret=TEST_RESULT_SOME_PASS; 
 		}else
 		{
 		    WarnShow1(0,"不支持的TPS类型"); 

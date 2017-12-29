@@ -69,36 +69,42 @@ void WarnShow1(int panel,char *meesage)
 }
 
 
-int CVICALLBACK TipTimerCallback (int panel, int control, int event,
+int CVICALLBACK tipTimerCallback (int panel, int control, int event,
 		void *callbackData, int eventData1, int eventData2)
 {
-	double interVal;
-	int *data;
-	char temp[30]={0};
-	SETTING s;  
 	switch (event)
 	{
 		case EVENT_TIMER_TICK:
 			
+			char temp[30]={0};			
 			SETTING s=GetSetting(); 
-			data=(int *)callbackData;
+			int *data=(int *)callbackData;
 			*data+=1;
 			sprintf(temp,"%d",s.mentionAutoCloseTime-*data);
 			SetCtrlVal(panel,MANUALTIPS_TIMERSTR,temp); 
-			s=GetSetting();
 			if(*data>=s.mentionAutoCloseTime)
-				 DiscardPanel (panel); 
+				 QuitUserInterface(1); 
+			break;
+		case EVENT_COMMIT:
+			BOOL *ret = (BOOL *)callbackData; 
+			if(control==MANUALTIPS_SURE)
+			{	
+				*ret=TRUE;
+			}else if(control==MANUALTIPS_CANCEL){
+				*ret=FALSE;			
+			}
+			QuitUserInterface(1);
 			break;
 	}
 	return 0;
 }
 
 
-void ShowManualTip(int panel,char *title,char *tip)
+BOOL showTips(int panel,char *title,char *tip)
 {
-    int ctrl=0, quit=0,timeOut=0;
+	BOOL ret=1;
+    int timeOut=0;
 	int testPanel;
-	double interVal;
 	SETTING s=GetSetting();
 	//InstallPopup (panelHandle);
 	testPanel=LoadPanel (panel, "WarnPanel.uir", MANUALTIPS);  
@@ -106,25 +112,17 @@ void ShowManualTip(int panel,char *title,char *tip)
 	SetCtrlVal(testPanel,MANUALTIPS_TEXTBOX,tip); 
 	
 	if(s.mentionAutoCloseTime>0)
-	   InstallCtrlCallback (testPanel,MANUALTIPS_TIMER,TipTimerCallback,&timeOut);
-	//InstallPopup(testPanel);
-	InstallPopup(testPanel);
-    while (!quit) {
-        GetUserEvent (0, &testPanel, &ctrl);
-		if(timeOut>=s.mentionAutoCloseTime && s.mentionAutoCloseTime>0)
-		{	
-			quit=1;
-		}
-        if (ctrl == MANUALTIPS_COMMANDBUTTON) {
-             DiscardPanel (testPanel); 
-             quit=1;
-         }
-    }
-	
-	//DiscardPanel (testPanel);
-	
-	
+	   InstallCtrlCallback (testPanel,MANUALTIPS_TIMER,tipTimerCallback,&timeOut);
+	InstallCtrlCallback(testPanel,MANUALTIPS_SURE,tipTimerCallback,&ret);
+	InstallCtrlCallback(testPanel,MANUALTIPS_CANCEL,tipTimerCallback,&ret);
+	DisplayPanel(testPanel);
+	RunUserInterface();
+	DiscardPanel(testPanel);
+	//printf("%d\n",ret);
+	return ret;
 }
+
+
 
 BOOL GetWarnPanelRet(char *meesage)
 {

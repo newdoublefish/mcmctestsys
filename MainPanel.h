@@ -26,7 +26,7 @@
 #define  PANEL_MAIN_COPYRIGHT             11      /* control type: textMsg, callback function: (none) */
 
      /* tab page panel controls */
-#define  TABPANEL_PICTUREBUTTON_MANUAL    2       /* control type: pictButton, callback function: (none) */
+#define  TABPANEL_PICTUREBUTTON_MANUAL    2       /* control type: pictButton, callback function: PICTUREBUTTON_STATE */
 #define  TABPANEL_PICTUREBUTTON_INSTR     3       /* control type: pictButton, callback function: PICTUREBUTTON_INSTRUCTIONCALLBACK */
 #define  TABPANEL_PICTUREBUTTON_AUTO      4       /* control type: pictButton, callback function: PICTUREBUTTON_AUTO */
 #define  TABPANEL_PICTUREBUTTON_STATE     5       /* control type: pictButton, callback function: PICTUREBUTTON_STATE */

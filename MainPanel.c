@@ -143,13 +143,13 @@ static void  adjustTstTab(int tabPanel)
 	int paddingLeft=0,paddingTop=0;
 	GetPanelAttribute(tabPanel,ATTR_WIDTH,&panelWidth);
 	GetPanelAttribute(tabPanel,ATTR_HEIGHT,&panelHeight);
-	GetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_STATE,ATTR_WIDTH,&buttonSize);
+	GetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_MANUAL,ATTR_WIDTH,&buttonSize);
 	paddingLeft = (panelWidth - 3*buttonSize)/4;
 	paddingTop = (panelHeight-buttonSize)/2;
 	
 	//第一个按钮
-	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_STATE,ATTR_TOP,paddingTop);
-	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_STATE,ATTR_LEFT,paddingLeft);
+	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_MANUAL,ATTR_TOP,paddingTop);
+	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_MANUAL,ATTR_LEFT,paddingLeft);
 	//第二个按钮
 	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_AUTO,ATTR_TOP,paddingTop);
 	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_AUTO,ATTR_LEFT,2*paddingLeft+buttonSize);	

@@ -355,7 +355,7 @@ static int CVICALLBACK DoTestFunction(void * data)
 					   //LOG_LEVEL("Debug","%x\n",obj->resultHashTable);
 					   testRet=(*(ON_OBJECT_GROUP_TEST_LISTENER)(obj->onObjectGroupTestListener))(testItem,obj,collect.tType);	
 			     }		   
-				 if(testRet==TEST_ALL_PASS)
+				 if(testRet==TEST_RESULT_ALL_PASS)
 				 {
 				     break; //测试成功,不在进行测试，否则重测
 				 }else if(testRet==TEST_ERROR) 

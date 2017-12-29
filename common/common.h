@@ -41,13 +41,13 @@ void disposeSlideProgressWithButton(int handle);
 
 void refreshSlideProgress(int panel,int perc);
 
-void ShowManualTip(int panel,char *title,char *tip);
-
 BOOL GetConfigWarnPanelRetWithQuitFlag(int panel,char *title,char *lableMessage,char *lableNegative,char *lablePositive,int *flag);
 
 BOOL getUserCustiomName(char *fileName);
 
 void alignToParentPanel(int parent,int ctrl);
+
+BOOL showTips(int panel,char *title,char *tip);
 
 
 
