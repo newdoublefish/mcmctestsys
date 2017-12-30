@@ -220,6 +220,7 @@ int CVICALLBACK PICTUREBUTTON_STATE (int panel, int control, int event,
 	{
 		case EVENT_COMMIT:
 			//DisplayStatusMonitorPanel2();
+			DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_MANUAL);
 			break;
 	}
 	return 0;
@@ -234,7 +235,7 @@ int CVICALLBACK PICTUREBUTTON_AUTO (int panel, int control, int event,
 	{
 		case EVENT_COMMIT:
 			HidePanel(panelMain); 
-			DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList());
+			DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO);
 			break;
 	}
 	return 0;

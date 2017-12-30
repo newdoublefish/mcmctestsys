@@ -193,7 +193,7 @@ tSCPICMD getResisiProc(char *itemName)
 }
 
 
-void resistanceTestCallback(TestItem item,result *resultPtr,int comPort)
+void resistanceTestCallback(TestItem item,RESULT *resultPtr,int comPort)
 {
 	tSCPICMD proc=getResisiProc(item.itemName_);
 	scpiDispPage(comPort,MSETUP);

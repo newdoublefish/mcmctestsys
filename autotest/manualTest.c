@@ -37,7 +37,7 @@ METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable)
 	{
 		TestItem item;
 		ListGetItem(group.subItems,&item,i);
-		result res={0};
+		RESULT res={0};
 		res.index=item.itemId;
 		GetTableCellVal(panelHandle,PANEL_TABLE,MakePoint(3,i),res.recvString);
 		char temp[50]={0};

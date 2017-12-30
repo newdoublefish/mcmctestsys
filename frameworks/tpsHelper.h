@@ -31,7 +31,7 @@
 	   
 typedef struct {
 	TestItem item;
-	result res;
+	RESULT res;
 }tTEST_RESULT;
 
 	   

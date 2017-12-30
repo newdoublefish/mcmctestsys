@@ -187,7 +187,7 @@ tSCPICMD getVoltageProc(char *itemName)
 }
 
 
-void voltageTestCallback(TestItem item,result *resultPtr,int comPort)
+void voltageTestCallback(TestItem item,RESULT *resultPtr,int comPort)
 {
 	tSCPICMD proc=getVoltageProc(item.itemName_);
 	scpiDispPage(comPort,MSETUP);

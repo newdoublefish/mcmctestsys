@@ -28,6 +28,7 @@
 #define  PANEL_AUTO_TIMER                 8       /* control type: timer, callback function: TESTTIMECALLBACK */
 #define  PANEL_AUTO_TAB_AUTO              9       /* control type: tab, callback function: (none) */
 #define  PANEL_AUTO_BACKGROUD             10      /* control type: textMsg, callback function: (none) */
+#define  PANEL_AUTO_GENREPORT             11      /* control type: pictButton, callback function: genReport */
 
 #define  PANEL_WA_2                       3
 #define  PANEL_WA_2_TEXTMSG               2       /* control type: textMsg, callback function: (none) */
@@ -52,6 +53,7 @@
 
      /* Callback Prototypes: */
 
+int  CVICALLBACK genReport(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK onPanelAutoCall(int panel, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK QUITAUTOTEST(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK RESET(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);

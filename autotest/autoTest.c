@@ -34,7 +34,8 @@
 #include "log.h"
 #include "tpsHelper.h"
 #include "reportDb.h" 
-#include "regexpr.h"   
+#include "regexpr.h"  
+#include "mediaHelper.h"
 
 static int autoPanelHandle=0;
 
@@ -61,9 +62,9 @@ static TESTengine *engine;
 static void operateTimer(int on);
 
 static SETTING s;
-static BOOL autoTestFlag=TRUE;
+static ENUMETestPanel testFlag=ENUM_TEST_PANEL_AUTO;
 
-TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type);
+ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type);
 BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *testItemIndex);
 
 
@@ -164,7 +165,7 @@ static void ontestFinishListener(TESTengine *t)
 	   t->testState=TEST_IDLE; 
 	   LOG_EVENT(LOG_INFO,"测试完成");
        WarnShow1(0,"测试完成");
-	   SETTING set=getSetting();  
+	   /*SETTING set=getSetting();  
 	   if(!set.autoSave)
 	   {
 	     if(GetConfigWarnPanelRet(0,"提示","是否保存测试结果","不保存","保存")==TRUE)
@@ -172,7 +173,7 @@ static void ontestFinishListener(TESTengine *t)
 		     saveAutoTestResult(t); 
 		     LOG_EVENT(LOG_INFO,"保存结果完成"); 
 	     }
-	   }
+	   }*/
 	   setButtonState(2);
 	}else if(t->testState==TEST_RUN)
 	{
@@ -244,7 +245,7 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 		{
 			
 			int testItemIndex=0;
-			TESTresult ret = onObjectGroupTest(group,_obj,TYPE_AUTO); 
+			ENUMTestResult ret = onObjectGroupTest(group,_obj,TYPE_AUTO); 
 			engine->currentCollect = collectId;
 			
 			if(ret != TEST_RESULT_QUIT)
@@ -330,7 +331,7 @@ BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *te
 		if(/*groupNum==group.groupId*/i==testGroupIndex)
 		{	
 			//PRINT("----------select i:%d,testGroupIndex:%d\n",i,testGroupIndex);
-		    result groupResult;
+		    ENUMTestResult groupResult;
 		    //HashTableGetItem(device.resultHashTable,&groupNum,&groupResult,sizeof(result));
 		
 		    int k=1;
@@ -348,12 +349,12 @@ BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *te
 			//上颜色，setActivie
 		   //printf("itemIndex=%d\n",j);
 			
-			    result itemResult;
+			    RESULT itemResult;
 				TestItem subItem;
 			
 		    	ListGetItem(group.subItems,&subItem,k++); 
 				
-				HashTableGetItem(obj->resultHashTable,&(subItem.itemId),&itemResult,sizeof(result));
+				HashTableGetItem(obj->resultHashTable,&(subItem.itemId),&itemResult,sizeof(RESULT));
 				
 			   if(j<*testItemIndex+groupIndex+1)
 			   {
@@ -551,9 +552,9 @@ static void operateTimer(int on)
 }
 
 extern METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable);
-TESTresult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
+ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 {
-	 	TESTresult ret=TEST_RESULT_ALL_PASS;
+	 	ENUMTestResult ret=TEST_RESULT_ALL_PASS;
 		BOOL testFlag=TRUE;
 		
 		SETTING set=getSetting();
@@ -629,11 +630,14 @@ static void adjustHeader(int panel)
 	GetCtrlAttribute(panel,PANEL_AUTO_TEST,ATTR_WIDTH,&buttonSize);
 	//第一个图标
 	SetCtrlAttribute(panel,PANEL_AUTO_TEST,ATTR_TOP,AUTOTEST_BUTTON_PADDING_SIZE);
-	SetCtrlAttribute(panel,PANEL_AUTO_TEST,ATTR_LEFT,autoPanelWidth-(3*AUTOTEST_BUTTON_PADDING_SIZE+3*buttonSize));
+	SetCtrlAttribute(panel,PANEL_AUTO_TEST,ATTR_LEFT,autoPanelWidth-(4*AUTOTEST_BUTTON_PADDING_SIZE+4*buttonSize));
 	//第二个图标
+	SetCtrlAttribute(panel,PANEL_AUTO_GENREPORT,ATTR_TOP,AUTOTEST_BUTTON_PADDING_SIZE);
+	SetCtrlAttribute(panel,PANEL_AUTO_GENREPORT,ATTR_LEFT,autoPanelWidth-(3*AUTOTEST_BUTTON_PADDING_SIZE+3*buttonSize));	
+	//第三个图标
 	SetCtrlAttribute(panel,PANEL_AUTO_RESTBUTTON,ATTR_TOP,AUTOTEST_BUTTON_PADDING_SIZE);
 	SetCtrlAttribute(panel,PANEL_AUTO_RESTBUTTON,ATTR_LEFT,autoPanelWidth-(2*AUTOTEST_BUTTON_PADDING_SIZE+2*buttonSize));	
-	//第三个图标
+	//第四个图标
 	SetCtrlAttribute(panel,PANEL_AUTO_BACK,ATTR_TOP,AUTOTEST_BUTTON_PADDING_SIZE);
 	SetCtrlAttribute(panel,PANEL_AUTO_BACK,ATTR_LEFT,autoPanelWidth-(AUTOTEST_BUTTON_PADDING_SIZE+buttonSize));	
 	//设置测试时间LABEL
@@ -693,7 +697,7 @@ static void adjustPanelSize(int panel)
 }
 
 
-void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collectList)
+void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type)
 {
 	
 	int tempPanel=0;
@@ -704,6 +708,14 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
   	{
 	        return;
    	}
+	
+	testFlag = type; 
+	if(type == ENUM_TEST_PANEL_MANUAL){
+		
+		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TEST,ATTR_VISIBLE,0);
+		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TEXTMSG,ATTR_VISIBLE,0);		
+		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TEXTMSG_3,ATTR_VISIBLE,0);		
+	}
 	
 	adjustPanelSize(autoPanelHandle);
 	DisplayPanel(autoPanelHandle);	
@@ -721,7 +733,7 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 	SETTING s=GetSetting();
 	engine->maxObjectPanelCountPerRow=s.maxComunPerRowInAutoTestPanel;
 	engine->reTestCnt=s.reTestCnt;
-	
+
 
 	for(int eutIndex=1;eutIndex<=ListNumItems(deviceList);eutIndex++)
 	{
@@ -827,46 +839,12 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
 	}
 	return 0;
 }
-/*
- tabTop:122
- TEST 1309-929=380
- REST 1309-1062=247
- BACK 1309-1189=120
- 
 
-*/
 #if 1
 static void reFreshAutoTestPanel(int panel)
 {
-			/*int monitorWidth,monitorHight,monitorTop,moinitorLeft;
-			
-			GetPanelAttribute (panel, ATTR_WIDTH, &monitorWidth);
-            GetPanelAttribute (panel, ATTR_HEIGHT, &monitorHight);
-			GetPanelAttribute (panel, ATTR_TOP, &monitorTop);
-            GetPanelAttribute (panel, ATTR_LEFT, &moinitorLeft);
-			
-			//printf("monitortop=%d,monitorwidth=%d,monitorheight=%d,monitorleft=%d\n",monitorTop,monitorWidth,monitorHight,moinitorLeft);  
-			
-			//设置背景位置
-			SetCtrlAttribute(panel,PANEL_AUTO_PICTURE_3,ATTR_TOP,0);
-			SetCtrlAttribute(panel,PANEL_AUTO_PICTURE_3,ATTR_HEIGHT,monitorHight);
-			SetCtrlAttribute(panel,PANEL_AUTO_PICTURE_3,ATTR_WIDTH,monitorWidth);
-			SetCtrlAttribute(panel,PANEL_AUTO_PICTURE_3,ATTR_LEFT,0);
-			
-			//设置按键位置
-			int top,width,height,left=0;
-			SetCtrlAttribute(panel,PANEL_AUTO_TEST,ATTR_LEFT,monitorWidth-380);
-			SetCtrlAttribute(panel,PANEL_AUTO_BACK,ATTR_LEFT,monitorWidth-120);
-			SetCtrlAttribute(panel,PANEL_AUTO_RESTBUTTON,ATTR_LEFT,monitorWidth-247);
-
-			//设置TAB位置
-			SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_HEIGHT,monitorHight-122-30);
-			SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_WIDTH,monitorWidth);
-			SetCtrlAttribute(panel,PANEL_AUTO_TAB_AUTO,ATTR_LEFT,0);*/
-			adjustPanelSize(autoPanelHandle);
-			//各个子面板充值
-			reSetEngine(engine);
-			//reSizeTestPanel(engine);
+	adjustPanelSize(autoPanelHandle);
+	reSetEngine(engine);
 }
 #endif
 
@@ -876,10 +854,6 @@ int  CVICALLBACK onPanelAutoCall(int panel, int event, void *callbackData, int e
 	switch (event)
 	{
 		case EVENT_PANEL_SIZE:
-            //printf("----------zooming");
-			
-			//if(engine->testState==TEST_IDLE)   //IDLE状态下才能进行大小调整
-			//   reFreshAutoTestPanel(panel);
 			break;	
 	}
 	return 0;
@@ -888,3 +862,32 @@ int  CVICALLBACK onPanelAutoCall(int panel, int event, void *callbackData, int e
 
 
 
+int CVICALLBACK genReport (int panel, int control, int event,
+						   void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_COMMIT:
+	     if(GetConfigWarnPanelRet(0,"提示","是否保存测试结果","不保存","保存")==TRUE)
+	     {
+			 if(testFlag == ENUM_TEST_PANEL_MANUAL) //手动测试，这个时间要自己生成
+			 {
+				unsigned int year, month, day, hour, min, sec, weekDay;
+				CVIAbsoluteTime absTime;
+				memset(startTime,0,100);
+				GetCurrentCVIAbsoluteTime(&absTime);
+        		CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
+                	&min, &sec, 0, &weekDay);
+				sprintf(startTime,"%d年%02d月%02d日%2d时%02d分%02d秒",year,month,day,hour,min,sec); 
+			 	
+			 }
+		     saveAutoTestResult(engine);
+			 soundFinish();
+			 
+		     LOG_EVENT(LOG_INFO,"保存结果完成"); 
+	     }
+				 
+		break;
+	}
+	return 0;
+}

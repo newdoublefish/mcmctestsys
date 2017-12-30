@@ -291,7 +291,7 @@ static int CVICALLBACK DoTestFunction(void * data)
 	 {
 		 if(obj->onObjectCollectTestListener!=NULL)
 		 {
-		     TESTresult testRet= TEST_ERROR; 
+		     ENUMTestResult testRet= TEST_ERROR; 
 			 testRet=(*(ON_OBJECT_COLLECT_TEST_LISTENER)(obj->onObjectCollectTestListener))(collect,obj);
 			 
 			 for(int i=1;i<=ListNumItems(collect.groups);i++)  //一组一组显示结果
@@ -349,7 +349,7 @@ static int CVICALLBACK DoTestFunction(void * data)
 				 }	 //单组测试*/
 				 //TEST_METHOD method=getTestMethod(testItem.itemType); //获取测试方法
 				 //METHODRET testRet= (*method)(testItem,obj->device,obj->resultHashTable);
-				 TESTresult testRet= TEST_ERROR;    
+				 ENUMTestResult testRet= TEST_ERROR;    
 				 if(obj->onObjectGroupTestListener!=NULL)
 				 {
 					   //LOG_LEVEL("Debug","%x\n",obj->resultHashTable);

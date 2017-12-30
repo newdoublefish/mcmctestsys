@@ -15,11 +15,11 @@ typedef struct
   double recevValue;
   char recvString[RESULT_RECEIVE_LEN];
   int pass;
-} result; //组结果 用于快速比较
+} RESULT; //组结果 用于快速比较
 
 HRESULT createResultHashTable(HashTableType *table);
 
-HRESULT saveResult(HashTableType table,result *resPtr);
+HRESULT saveResult(HashTableType table,RESULT *resPtr);
 
 #ifdef __cplusplus
    }

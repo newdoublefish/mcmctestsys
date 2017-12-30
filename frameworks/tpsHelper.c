@@ -60,7 +60,7 @@ TEST_METHOD tpsSimuTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	   for(int k=1;k<=ListNumItems(group.subItems);k++)
 	   {
-		  result itemResult;
+		  RESULT itemResult;
 		  TestItem subItem;
 		  ListGetItem(group.subItems,&subItem,k); 
 		  itemResult.pass=1;

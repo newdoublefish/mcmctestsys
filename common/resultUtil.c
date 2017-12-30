@@ -24,11 +24,11 @@
 
 HRESULT createResultHashTable(HashTableType *tablePtr)
 {
-   HashTableCreate(10,FIXED_SIZE_KEY,sizeof(int),sizeof(result),tablePtr);
+   HashTableCreate(10,FIXED_SIZE_KEY,sizeof(int),sizeof(RESULT),tablePtr);
    return 0;
 }
 
-HRESULT saveResult(HashTableType table,result *resPtr)
+HRESULT saveResult(HashTableType table,RESULT *resPtr)
 {
 	int found; 
 	/*HashTableFindItem(table,indexPtr,&found); 

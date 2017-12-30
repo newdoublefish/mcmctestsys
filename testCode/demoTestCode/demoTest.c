@@ -21,7 +21,7 @@ METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable)
 	{
 		TestItem item;
 		ListGetItem(group.subItems,&item,i);
-		result itemResult;
+		RESULT itemResult;
 		itemResult.index=item.itemId;
 		itemResult.pass=1%2;
 		memset(itemResult.recvString,0,sizeof(itemResult.recvString));

@@ -20,10 +20,12 @@
 #ifdef __cplusplus
     extern "C" {
 #endif
-
-
-
-void DisplayAutoTestPanel(ListType itemList,ListType deviceList,ListType collectList);
+typedef enum{
+	ENUM_TEST_PANEL_AUTO=0,
+	ENUM_TEST_PANEL_MANUAL=1,
+	ENUM_TEST_PANEL_NONE
+}ENUMETestPanel;
+void DisplayAutoTestPanel(ListType itemList,ListType deviceList,ListType collectList,ENUMETestPanel type);
 #ifdef __cplusplus
     }
 #endif

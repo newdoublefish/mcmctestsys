@@ -84,7 +84,7 @@ HRESULT WriteResultToSheet(ExcelObj_Worksheet sheetHandle,HashTableType hashTabl
     while(1)
     {
 		int index=-1;
-		result itemResult;
+		RESULT itemResult={0};
         for (j=0;j<10;j++)
         {
             // Ask for the ith by jth value of the range which returns a dispatch to a new single cell range
@@ -265,7 +265,7 @@ HRESULT WriteResultToSheet(ExcelObj_Worksheet sheetHandle,HashTableType hashTabl
 				{
 				   //获取测试结果
 					
-					HashTableGetItem(hashTable,&index,&itemResult,sizeof(result));
+					HashTableGetItem(hashTable,&index,&itemResult,sizeof(RESULT));
 					//LOG_EVENT_FORMAT(LOG_INFO,"testCase:%s,result:%d",itemName,itemResult.pass); 
 			    	/*printf("index=%d\n",itemResult.index);
 				    printf("value=%f,pass=%d\n",itemResult.recevValue,itemResult.pass);
@@ -379,13 +379,13 @@ void saveTestResult(char *time,char *dirName,HashTableType hashTable)
 #else
 void parseExcelCell(char *writeStr,char *temp,HashTableType hashTable)
 {
-	 result itemResult;
+	 RESULT itemResult;
 	 int matched,position,matchedLen;
 	 char tempBuffer[100]={0};
 	 RegExpr_FindPatternInText("[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
 	 memcpy(tempBuffer,temp+position,matchedLen);
 	 int id=atoi(tempBuffer);
-	 HashTableGetItem(hashTable,&id,&itemResult,sizeof(result)); 
+	 HashTableGetItem(hashTable,&id,&itemResult,sizeof(RESULT)); 
 	 RegExpr_FindPatternInText("{result}",1,temp,-1,1,1,&matched,&position,&matchedLen);
 	//printf("result:%d,recvString:%s",itemResult.pass,itemResult.recvString);
 	 TestItem item;
@@ -431,7 +431,7 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 	while(1)
 	{
 		int index=-1;
-		result itemResult;
+		RESULT itemResult;
         for (j=0;j<10;j++)
 		{
             error = Excel_RangeGetItem (rangeHandler, &ErrorInfo, CA_VariantInt (i+1), CA_VariantInt (j+1), &MyVariant);

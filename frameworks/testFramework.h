@@ -38,7 +38,7 @@ typedef enum
 	TEST_ERROR=0x03,
 	TEST_RESULT_QUIT=0x04, 
 	TEST_RESULT_NON_DEF 
-}TESTresult;	
+}ENUMTestResult;	
 		
 
 typedef enum
@@ -66,9 +66,19 @@ typedef struct
 	void *onObjectTestErrorListener;       //对象测试出错
 	void *onObjectTestFinish;//该对象测试完成
 	BOOL errorFlag;			              //如果串口或者网络错误标志，如果错误就不会继续往下测试了
-	int currentSubItemIndex;		   //当前显示的条例序号
 	int totalFinishedTestGroupCount; //已经完成的测试组数量
 }TESTobject;	
+
+typedef struct{
+	ListType collectList;
+	ListType itemList;
+}TESTresource;
+
+typedef enum{
+	ENUM_TEST_TYPE_AUTO=0,
+	ENUM_TEST_TYPE_MANUAL,
+	ENUM_TEST_TYPE_NONE
+}TESTtype;
 
 typedef struct
 {
@@ -79,6 +89,7 @@ typedef struct
 	int totalTestObject;
 	TESTstate testState;   
 	TESTobject objectArray[8];
+	//TESTtype type;
 	int maxObjectPanelCountPerRow;
 	void *onTestBeginListener;// 测试开始前回调
 	void *onTestFinishListener;// 测试完成回调
@@ -91,8 +102,8 @@ typedef void (*ON_OBJECT_PANEL_INIT_LISTENER)(TESTobject *);
 typedef BOOL (*ON_RESULT_SHOW_LISTENER)(TESTobject *object,TestGroup group,int groupIndex,int*itemIndex); 
 typedef void (*ON_OBJECT_TEST_ERROR_LISTENER)(TESTobject *); 
 typedef void (*ON_OBJECT_TEST_FINISH_LISTENER)(TESTobject *);  
-typedef TESTresult (*ON_OBJECT_GROUP_TEST_LISTENER)(TestGroup,TESTobject *,TESTType);
-typedef TESTresult (*ON_OBJECT_COLLECT_TEST_LISTENER)(Collect,TESTobject *);
+typedef ENUMTestResult (*ON_OBJECT_GROUP_TEST_LISTENER)(TestGroup,TESTobject *,TESTType);
+typedef ENUMTestResult (*ON_OBJECT_COLLECT_TEST_LISTENER)(Collect,TESTobject *);
 
 typedef BOOL (*ON_TEST_BEGIN_LISTENER)(TESTengine *);
 typedef void (*ON_TEST_FINISH_LISTENER)(TESTengine *); 
