@@ -32,7 +32,6 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	//registerCanTestTPS,
 	//registerSpiFlashTestTPS,
 	registerResistanceTestTPS,
-	registerVoltageTestTPS,
 };
 
 
