@@ -267,6 +267,8 @@ static void objectPanelCreate(int *panel)
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_EXPAND_ALL);
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_COLLAPSE_ALL);
 	NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "µ•œÓ≤‚ ‘", -1, onMenuSingleItemTestCB, 0);
+
+	int i=0;
 }
 
 BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *testItemIndex)
@@ -500,6 +502,8 @@ static void objectPanelInit(TESTobject *_obj)
 			}  
 		}	
 	}
+	SETTING set=getSetting();
+	SetTreeCellAttribute (panelHandle,P_ITEMSHOW_TREE, VAL_ALL_OBJECTS ,  VAL_ALL_OBJECTS , ATTR_LABEL_POINT_SIZE,set.frontSize);
 		
 
 }

@@ -28,6 +28,7 @@
 #define  SET_PANEL_RING_CLOSETIME         13      /* control type: ring, callback function: (none) */
 #define  SET_PANEL_RPINFOCB               14      /* control type: radioButton, callback function: (none) */
 #define  SET_PANEL_SIMUTESTCB             15      /* control type: radioButton, callback function: (none) */
+#define  SET_PANEL_FRONT_SIZE             16      /* control type: ring, callback function: (none) */
 
 
      /* Control Arrays: */

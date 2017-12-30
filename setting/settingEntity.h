@@ -33,6 +33,7 @@ typedef struct
 	int reTestCnt; //重测次数
 	int reportInfoCustom;//是否自定义文件信息
 	int simuTest;//模拟测试
+	int frontSize;
 }SETTING;
  
 

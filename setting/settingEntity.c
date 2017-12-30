@@ -54,6 +54,7 @@ HRESULT saveSetting(SETTING gSetting)
 	 Ini_PutBoolean (g_myInifile,"Setting","AutoSave ",gSetting.autoSave); 
 	 //Ini_PutBoolean (g_myInifile,"Setting","RelayEnable ",gSetting.relayEnable);    
 	 Ini_PutInt (g_myInifile,"Setting","MentionAutoCloseTime",gSetting.mentionAutoCloseTime); 
+	 Ini_PutInt (g_myInifile,"Setting","FrontSize",gSetting.frontSize);
 	 Ini_PutInt (g_myInifile,"Setting","ReTestCnt",gSetting.reTestCnt);
 	 Ini_PutBoolean (g_myInifile,"Setting","ReportInfoCustom",gSetting.reportInfoCustom);
 	 Ini_WriteToFile (g_myInifile, inifileName);  
@@ -256,6 +257,16 @@ SETTING getSetting(void)
 							 gSetting.mentionAutoCloseTime=booleanValue;
 						}else{
 						     gSetting.mentionAutoCloseTime=0;
+						}
+							
+					 }else if(strcmp(itemName,"FrontSize")==0)
+					 {
+                        if (Ini_GetInt(g_myInifile, sectionName, itemName,
+                                            &booleanValue) > 0)
+						{
+							 gSetting.frontSize=booleanValue;
+						}else{
+						     gSetting.frontSize=0;
 						}
 							
 					 }else if(strcmp(itemName,"ReTestCnt")==0)

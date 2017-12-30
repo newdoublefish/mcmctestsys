@@ -38,6 +38,7 @@ HRESULT  ShowSettingInfo(SETTING s)
    SetCtrlVal(settingPanel,SET_PANEL_AUTOSAVE,s.autoSave); 
    //SetCtrlVal(settingPanel,SET_PANEL_RELAY_ENABLE,s.relayEnable); 
    SetCtrlVal(settingPanel,SET_PANEL_RING_CLOSETIME,s.mentionAutoCloseTime);
+   SetCtrlVal(settingPanel,SET_PANEL_FRONT_SIZE,s.frontSize);  
    SetCtrlVal(settingPanel,SET_PANEL_RETESTNUM,s.reTestCnt);
    //printf("sssss:%d\n",s.reportInfoCustom);
    SetCtrlVal(settingPanel,SET_PANEL_RPINFOCB,s.reportInfoCustom); 
@@ -95,6 +96,9 @@ int CVICALLBACK SETTINGSAVECALLBACK (int panel, int control, int event,
 			
 			GetCtrlVal(settingPanel,SET_PANEL_RING_CLOSETIME,&flag);
 			gSetting.mentionAutoCloseTime=flag;
+			
+			GetCtrlVal(settingPanel,SET_PANEL_FRONT_SIZE,&flag);
+			gSetting.frontSize=flag;			
 			
 			GetCtrlVal(settingPanel,SET_PANEL_RETESTNUM,&flag);
 		    gSetting.reTestCnt=flag;			
