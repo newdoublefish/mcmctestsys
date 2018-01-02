@@ -24,6 +24,8 @@ METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable)
 	InsertTableRows (panelHandle,PANEL_TABLE,-1,ListNumItems(group.subItems),VAL_USE_MASTER_CELL_TYPE);
 	InsertTableCellRangeRingItem (panelHandle, PANEL_TABLE, MakeRect(1, 4, ListNumItems(group.subItems), 1), -1, "合格");
 	InsertTableCellRangeRingItem (panelHandle, PANEL_TABLE, MakeRect(1, 4, ListNumItems(group.subItems), 1), -1, "不合格");
+	SetActiveTableCell (panelHandle, PANEL_TABLE, MakePoint(3,1));
+	FakeKeystroke(VAL_F2_VKEY); 
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item;
