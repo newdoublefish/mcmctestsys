@@ -123,6 +123,7 @@ static void saveAutoTestResult(TESTengine *t)
 	 DisplayPanel(panelHandle);
 	 char temp[100]={0};
 	 char filePath[MAX_PATHNAME_LEN]={0};
+	 SETTING set=GetSetting();
      for(int i=0;i<t->totalTestObject;i++)
 	 {
 		  
@@ -131,7 +132,8 @@ static void saveAutoTestResult(TESTengine *t)
 		 	 sprintf(temp,"%d/%d",i+1,t->totalTestObject);
 			SetCtrlVal(panelHandle,PANEL_WA_2_TEXTMSG_2,temp);
 	     	 saveTestResult(startTime,t->objectArray[i].device.eutName,t->objectArray[i].resultHashTable,filePath);
-			 saveRecordToDb(t->objectArray[i],startTime,filePath);
+			 if(set.saveToDb)    
+			 	saveRecordToDb(t->objectArray[i],startTime,filePath);
 	  
 	 }
 	 DiscardPanel(panelHandle);
@@ -530,7 +532,8 @@ static void objectTestFinish(TESTobject *_obj)
 	   char temp[MAX_PATHNAME_LEN]={0}; 
 	   //TODO:后续要加上
 	   saveTestResult(startTime,_obj->device.eutName,_obj->resultHashTable,temp);
-	   saveRecordToDb(*_obj,startTime,temp);
+	   if(set.saveToDb)
+	   	saveRecordToDb(*_obj,startTime,temp);
 	}
 }
 
@@ -887,7 +890,7 @@ int CVICALLBACK genReport (int panel, int control, int event,
 			 	
 			 }
 		     saveAutoTestResult(engine);
-			 soundFinish();
+			 //soundFinish();
 			 
 		     LOG_EVENT(LOG_INFO,"保存结果完成"); 
 	     }

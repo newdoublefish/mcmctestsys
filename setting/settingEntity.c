@@ -45,6 +45,7 @@ HRESULT saveSetting(SETTING gSetting)
 	 
 	 Ini_PutBoolean (g_myInifile,"Setting","ShowTipsWhenError",gSetting.showTipsWhenError);
 	 Ini_PutBoolean (g_myInifile,"Setting","Voice",gSetting.voice);
+	 Ini_PutBoolean (g_myInifile,"Setting","SaveToDb",gSetting.saveToDb); 
 	 Ini_PutBoolean (g_myInifile,"Setting","LogSave",gSetting.saveLog); 
 	 Ini_PutBoolean (g_myInifile,"Setting","SimuTest",gSetting.simuTest); 
      Ini_PutRawString (g_myInifile,"Setting","FileSaveDir",gSetting.saveDir);
@@ -181,6 +182,14 @@ SETTING getSetting(void)
                                             &booleanValue) > 0)
 						{
 							 gSetting.voice=booleanValue;
+						}	
+					 
+					 }else if(strcmp(itemName,"SaveToDb")==0)
+					 {
+                        if (Ini_GetBoolean (g_myInifile, sectionName, itemName,
+                                            &booleanValue) > 0)
+						{
+							 gSetting.saveToDb=booleanValue;
 						}	
 					 
 					 }else if(strcmp(itemName,"LogSave")==0)

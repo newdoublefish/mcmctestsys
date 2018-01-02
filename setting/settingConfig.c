@@ -30,6 +30,7 @@ HRESULT  ShowSettingInfo(SETTING s)
 {
    SetCtrlVal(settingPanel,SET_PANEL_CBTIPS,s.showTipsWhenError);
    SetCtrlVal(settingPanel,SET_PANEL_CBVOICE,s.voice);
+   SetCtrlVal(settingPanel,SET_PANEL_SAVETODB,s.saveToDb);
    SetCtrlVal(settingPanel,SET_PANEL_SAVEDIR,s.saveDir);  
    SetCtrlVal(settingPanel,SET_PANEL_CBLOG,s.saveLog);
    SetCtrlVal(settingPanel,SET_PANEL_SIMUTESTCB,s.simuTest); 
@@ -73,6 +74,8 @@ int CVICALLBACK SETTINGSAVECALLBACK (int panel, int control, int event,
 			gSetting.showTipsWhenError=flag;
 			GetCtrlVal(settingPanel,SET_PANEL_CBVOICE,&flag);
 		    gSetting.voice=flag;
+			GetCtrlVal(settingPanel,SET_PANEL_SAVETODB,&flag);
+		    gSetting.saveToDb=flag;			
 			GetCtrlVal(settingPanel,SET_PANEL_CBCOLLECTMENTION,&flag);
 		    gSetting.collectTestMention=flag;
 			GetCtrlVal(settingPanel,SET_PANEL_AUTOSAVE,&flag);
