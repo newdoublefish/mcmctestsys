@@ -47,11 +47,12 @@ METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable)
 			res.pass=1;
 		}else{
 			res.pass=0;
+			ret = TEST_RESULT_SOMEPASS;
 		}
-		printf("%s,%d\n",res.recvString,res.pass);
+		//printf("%s,%d\n",res.recvString,res.pass);
 		saveResult(hashTable,&res);
 	}	
 	DiscardPanel(panelHandle);
 	
-	return TEST_RESULT_ALLPASS;
+	return ret;
 }

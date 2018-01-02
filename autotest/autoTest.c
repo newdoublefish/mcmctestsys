@@ -62,7 +62,7 @@ static TESTengine *engine;
 static void operateTimer(int on);
 
 static SETTING s;
-static ENUMETestPanel testFlag=ENUM_TEST_PANEL_AUTO;
+static ENUMETestPanel gTestFlag=ENUM_TEST_PANEL_AUTO;
 
 ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type);
 BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *testItemIndex);
@@ -562,7 +562,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		BOOL testFlag=TRUE;
 		
 		SETTING set=getSetting();
-		if(set.collectTestMention)
+		if(set.collectTestMention || gTestFlag == ENUM_TEST_PANEL_MANUAL)
 		{	
 		   char temp[256]={0};
 		   char temp1[256]={0};
@@ -602,9 +602,10 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 				if(tps.manualTestFunction==NULL)
 				{
 					//WarnShow1(0,"没有定义手动测试的方法");
-					manualTest(testItem,_obj->device,_obj->resultHashTable);
+					testRet =manualTest(testItem,_obj->device,_obj->resultHashTable);
 				}else{
 					testRet = (*(TEST_METHOD)(tps.manualTestFunction))(testItem,_obj->device,_obj->resultHashTable); 
+					PRINT("%d\n",testRet);
 				}
 				
 			} 
@@ -713,7 +714,7 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 	        return;
    	}
 	
-	testFlag = type; 
+	gTestFlag = type; 
 	if(type == ENUM_TEST_PANEL_MANUAL){
 		
 		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TEST,ATTR_VISIBLE,0);
@@ -874,7 +875,7 @@ int CVICALLBACK genReport (int panel, int control, int event,
 		case EVENT_COMMIT:
 	     if(GetConfigWarnPanelRet(0,"提示","是否保存测试结果","不保存","保存")==TRUE)
 	     {
-			 if(testFlag == ENUM_TEST_PANEL_MANUAL) //手动测试，这个时间要自己生成
+			 if(gTestFlag == ENUM_TEST_PANEL_MANUAL) //手动测试，这个时间要自己生成
 			 {
 				unsigned int year, month, day, hour, min, sec, weekDay;
 				CVIAbsoluteTime absTime;
