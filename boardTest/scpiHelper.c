@@ -88,6 +88,12 @@ float scpiGetVolt(int port){
 	return ComWrt (port, buffer, StringLength(buffer)); 
 }
 
+float scpiGetTime(int port){
+    char buffer[100]={0};
+	Fmt(buffer,"func:sour:step1:volt?\n");
+	return ComWrt (port, buffer, StringLength(buffer)); 
+}
+
 int scpiStartTest(int port){
     char buffer[100]={0};
 	Fmt(buffer,"func:start\n");
@@ -96,7 +102,7 @@ int scpiStartTest(int port){
 
 int scpiStopTest(int port){
     char buffer[100]={0};
-	Fmt(buffer,"func:start\n");
+	Fmt(buffer,"func:stop\n");
 	return ComWrt (port, buffer, StringLength(buffer)); 
 }
 

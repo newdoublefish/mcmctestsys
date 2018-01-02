@@ -29,10 +29,7 @@
 	   
 #define MAX_TPS_NAME_LEN 30
 	   
-typedef struct {
-	TestItem item;
-	RESULT res;
-}tTEST_RESULT;
+
 
 	   
 typedef enum
