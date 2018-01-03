@@ -563,6 +563,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 {
 	 	ENUMTestResult ret=TEST_RESULT_ALL_PASS;
 		BOOL testFlag=TRUE;
+		METHODRET testRet= TEST_ERROR; 
 		
 		SETTING set=getSetting();
 		if(set.collectTestMention || gTestFlag == ENUM_TEST_PANEL_MANUAL)
@@ -593,7 +594,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		if(getTps(testItem.type,&tps))
 		{
 			//printf("%s",tps.tpsName);
-			METHODRET testRet= TEST_ERROR;
+			
 			if(type == TYPE_AUTO){
 				if(tps.autoTestFunction==NULL)
 				{
@@ -620,7 +621,15 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		    	ret=TEST_RESULT_SOME_PASS; 
 		}else
 		{
-		    WarnShow1(0,"不支持的TPS类型"); 
+		    WarnShow1(0,"不支持的TPS类型，请人工填写测试数据和结果"); 
+			//不支持的用默认弹框来测试
+			testRet =manualTest(testItem,_obj->device,_obj->resultHashTable);
+		   	if(testRet==TEST_RESULT_ALLPASS)
+		    	ret=TEST_RESULT_ALL_PASS;
+	     	else if(testRet==TEST_RESULT_ERROR)
+		    	ret=TEST_ERROR;
+	     	else if(testRet=TEST_RESULT_SOMEPASS)
+		    	ret=TEST_RESULT_SOME_PASS; 			
 		}
 		return ret;
 }
