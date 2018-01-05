@@ -32,7 +32,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 6
+Number of Opened Files = 1
 Window Confinement Region Enabled = True
 MainColumnWidth = 251
 FileDateColumnWidth = 70
@@ -121,7 +121,6 @@ Disk Date = 3597902414
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 4
 Source Window State = "1,222,222,222,12,32,32,0,0,95,0,103,0,0,0,25,194,0,206,4,323,605,1,0,"
 
 [File 0011]
@@ -131,7 +130,6 @@ Disk Date = 3597396632
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Window Z-Order = 3
 Source Window State = "1,469,469,469,20,45,45,0,0,95,0,556,0,556,0,19,522,0,477,85,251,605,1,0,"
 
 [File 0012]
@@ -269,8 +267,7 @@ Disk Date = 3597957484
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 1
-Source Window State = "1,887,887,887,12,30,30,0,0,163,0,601,0,0,0,26,204,0,38,76,275,517,1,0,"
+Source Window State = "1,887,887,887,12,30,30,0,0,163,0,601,0,0,0,28,21,0,38,76,275,517,1,0,"
 
 [File 0026]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/canTest.c"
@@ -279,7 +276,6 @@ Disk Date = 3597037446
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 2
 Source Window State = "1,20,47,47,0,19,19,0,0,80,0,59,0,59,0,16,20,0,23,110,215,517,1,0,"
 
 [File 0027]
@@ -478,7 +474,8 @@ Disk Date = 3597902435
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,254,254,254,8,20,20,0,0,0,0,0,0,0,0,0,264,0,277,22,215,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,277,277,277,10,19,19,0,0,163,0,0,0,0,0,26,117,0,80,77,215,517,1,0,"
 
 [File 0049]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/resultUtil.c"
@@ -541,7 +538,6 @@ Disk Date = 3597396208
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 5
 Source Window State = "1,355,355,355,70,95,95,0,0,95,0,403,0,0,0,25,171,0,208,108,323,605,1,0,"
 
 [File 0056]
@@ -569,7 +565,6 @@ Disk Date = 3595478701
 In Projects = "1,"
 Window Top = 182
 Window Left = 90
-Window Z-Order = 6
 Source Window State = "1,165,165,165,11,33,33,0,0,95,0,0,0,0,0,25,128,0,134,104,323,605,1,0,"
 
 [File 0059]
@@ -1167,12 +1162,7 @@ Disk Date = 3522103248
 In Projects = "1,"
 
 [Tab Order]
-Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/resultSave/resultSave.c"
-Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.c"
-Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/testFramework.c"
-Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/threadFramework.c"
-Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/canTest.c"
-Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
+Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/resistentTest.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
