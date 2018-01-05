@@ -47,6 +47,7 @@ typedef struct{
     char tpsName[MAX_TPS_NAME_LEN];
 	void *protocolInit;//协议初始化函数
 	void *testPrepare;//测试准备
+	void *onTestFinish;//测试准备 
 	TEST_METHOD autoTestFunction;//自动测试函数 
 	TEST_METHOD manualTestFunction;//手动测试函数 	
 }TPS;

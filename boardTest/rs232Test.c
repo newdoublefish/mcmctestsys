@@ -37,7 +37,7 @@ METHODRET Rs232Test(TestGroup group,EUT eut,HashTableType hashTable)
 
 TPS registerRs232TestTPS(void)
 {
-	TPS tps=newTps("demoType");
+	TPS tps=newTps("RS232");
 	tps.autoTestFunction=Rs232Test;
 	//tps.manualTestFunction=DemoTest;
 	return tps;
