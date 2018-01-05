@@ -14,7 +14,7 @@
 		
 
 #define MAX_TESTITEM_INPUTVALUE_LEN 30
-#define MAX_TESTITEM_STANDARD_LEN 30 		
+#define MAX_TESTITEM_STANDARD_LEN 128 		
 
 
 typedef struct
@@ -38,7 +38,7 @@ typedef struct
 	 int itemId;       //条例序号   这个序号为在全局的条例序号
 	 
 	 int paramId;     //条例参数ID
-	 char description[MAX_TESTITEM_DESCRIPTION_LEN]; //用于描述该条例
+	 //char description[MAX_TESTITEM_DESCRIPTION_LEN]; //用于描述该条例
 	 char itemType_[MAX_TESTITEM_TYPE_LEN];  //参数类型，检查项目
 	 unsigned char inputValue_[MAX_TESTITEM_INPUTVALUE_LEN];  //输入值字符串用于显示用
      double input_Value; //输入值用于实际比较
