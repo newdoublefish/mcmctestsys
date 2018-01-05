@@ -137,7 +137,7 @@ static void saveAutoTestResult(TESTengine *t)
 	  
 	 }
 	 DiscardPanel(panelHandle);
-	 WarnShow1(0,"    保存完成");
+	 WarnShow1(0,"保存完成");
 }
 
 static BOOL ontestBeginListener(TESTengine *t)
@@ -885,7 +885,7 @@ int CVICALLBACK genReport (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-	     if(GetConfigWarnPanelRet(0,"提示","是否保存测试结果","不保存","保存")==TRUE)
+	     if(AlertDialogWithRet(0,"提示","是否保存测试结果","不保存","保存")==TRUE)
 	     {
 			 if(gTestFlag == ENUM_TEST_PANEL_MANUAL) //手动测试，这个时间要自己生成
 			 {

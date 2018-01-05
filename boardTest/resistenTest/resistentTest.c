@@ -275,7 +275,7 @@ METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
 	
 	if(RS232Error<0)
 	{
-		  WarnShow("串口连接失败！");  
+		  WarnShow1(0,"串口连接失败！");  
 		  return TEST_RESULT_ERROR;
 	}		 
 

@@ -303,7 +303,7 @@ int CVICALLBACK CLICKTAB (int panel, int control, int event,
 		case EVENT_ACTIVE_TAB_CHANGE:
 			if(isStrategyNeedToSave())
 			{
-				WarnShow("«Îœ»±£¥Ê≈‰÷√!");
+				WarnShow1(0,"«Îœ»±£¥Ê≈‰÷√!");
 			    SetActiveTabPage(tabconfig,TABPANEL_2_TAB,tabIndex); 
 			}
 			break;

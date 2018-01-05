@@ -307,7 +307,7 @@ HRESULT runExcelTask(EXCELTask task)
 		  char temp[100]={0};
 		  Fmt(temp,"ªÒ»°±Ì(%s) ß∞‹",task.sheetName);
 		  ret=EXCEL_TASK_ERROR;
-		  WarnShow(temp);
+		  WarnShow1(0,temp);
 	      goto DONE;
 	}	
 	

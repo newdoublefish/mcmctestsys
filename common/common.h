@@ -18,13 +18,11 @@
     extern "C" {
 #endif
 
-void WarnShow(char *meesage);
 
 void WarnShow1(int panel,char *meesage);
 
-BOOL GetWarnPanelRet(char *meesage);
 
-BOOL GetConfigWarnPanelRet(int panel,char *title,char *lableMessage,char *lableNegative,char *lablePositive);
+BOOL AlertDialogWithRet(int panel,char *title,char *lableMessage,char *lableNegative,char *lablePositive);
 
 
 int displaySlideProgress(char *title);  

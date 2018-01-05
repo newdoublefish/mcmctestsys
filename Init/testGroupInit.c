@@ -262,7 +262,7 @@ static HRESULT onCellListenerTestCase(VARIANT *MyVariant,int row,int column)
 			  {
 						char message[100]={0};
 						sprintf(message,"第%d行格式有误\n",itemCount+3);
-						WarnShow(message);
+						WarnShow1(0,message);
 						CA_FreeMemory(temp);  
 						return EXCEL_TASK_ERROR;   //参数有错，返回  
 					}	

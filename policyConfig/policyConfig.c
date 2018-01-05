@@ -141,7 +141,7 @@ static void showStrategyOnPanelByTree(void)
 	if(ShowSrategyByTree()<0)
 	{
 	    //最好能进行提示并且清除策略链表以及策略文件
-		WarnShow("策略过时或者出错，请重新分配!");
+		WarnShow1(0,"策略过时或者出错，请重新分配!");
 		ClearListCtrl(stategyPanel,PLCYPANEL_COLLECTTREE);//清空
 		freeCollectList(gCollectList);
 		gCollectList=ListCreate(sizeof(Collect));

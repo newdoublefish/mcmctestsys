@@ -15,6 +15,14 @@ int CVICALLBACK onManualTestCallBack (int panel, int control, int event,
 	return 0;
 }
 
+int CVICALLBACK onManualTestPanelCallBack (int panel, int event, void *callbackData,
+		int eventData1, int eventData2)
+{
+	if (event == EVENT_CLOSE)
+		QuitUserInterface (0);
+	return 0;
+}
+
 METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	//printf("manualTest\n");
@@ -34,6 +42,7 @@ METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable)
 		SetTableCellVal(panelHandle,PANEL_TABLE,MakePoint(2,i),item.standard_);  
 	}
 	InstallCtrlCallback(panelHandle,PANEL_COMMANDBUTTON,onManualTestCallBack,NULL);
+	InstallPanelCallback(panelHandle,onManualTestPanelCallBack,NULL);
 	RunUserInterface ();
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{

@@ -28,44 +28,29 @@ void alignToParentPanel(int parent,int ctrl)
 	SetCtrlAttribute(parent,ctrl,ATTR_HEIGHT,parentTabHeight);	
 }
 
-void WarnShow(char *meesage)
-{
-	BOOL ret;
-    int ctrl=0, quit=0;
-	int testPanel;
-	//InstallPopup (panelHandle);
-	testPanel=LoadPanel (0, "WarnPanel.uir", PANEL_WARN);  
-	SetCtrlVal(testPanel,PANEL_WARN_TEXTMSG,meesage);
-	InstallPopup(testPanel);
-    while (!quit) {
-        GetUserEvent (0, &testPanel, &ctrl);
-        if (ctrl == PANEL_WARN_COMMANDBUTTON) {
-             DiscardPanel (testPanel);
-             quit=1;
-			 ret=FALSE;			
-         }
-    }
-}
 
+int CVICALLBACK onWarn1CtrlCallBack (int panel, int control, int event,
+		void *callbackData, int eventData1, int eventData2)
+{
+	
+	switch (event)
+	{
+		case EVENT_COMMIT:
+			 QuitUserInterface(1);
+		     break;
+	}
+	return 0;
+}
 
 void WarnShow1(int panel,char *meesage)
 {
-	BOOL ret;
-    int ctrl=0, quit=0;
-	int testPanel;
-	//InstallPopup (panelHandle);
-	testPanel=LoadPanel (panel, "WarnPanel.uir", PANEL_WARN);  
-	SetCtrlVal(testPanel,PANEL_WARN_TEXTMSG,meesage);
-	//InstallPopup(testPanel);
-	DisplayPanel(testPanel);
-    while (!quit) {
-        GetUserEvent (0, &testPanel, &ctrl);
-        if (ctrl == PANEL_WARN_COMMANDBUTTON) {
-             DiscardPanel (testPanel);
-             quit=1;
-			 ret=FALSE;			
-         }
-    }
+	int pnl;
+	pnl=LoadPanel (panel, "WarnPanel.uir", PANEL_WARN);  
+	SetCtrlVal(pnl,PANEL_WARN_TEXTMSG,meesage);
+	DisplayPanel(pnl);
+	InstallCtrlCallback(pnl,PANEL_WARN_COMMANDBUTTON,onWarn1CtrlCallBack,NULL);
+	RunUserInterface();
+	DiscardPanel(pnl);
 }
 
 
@@ -124,60 +109,41 @@ BOOL showTips(int panel,char *title,char *tip)
 
 
 
-BOOL GetWarnPanelRet(char *meesage)
+
+int CVICALLBACK AlertDialogCtrlCallBack (int panel, int control, int event,
+		void *callbackData, int eventData1, int eventData2)
 {
-	BOOL ret=FALSE;
-    int ctrl=0, quit=0;
-	int testPanel;
-	//InstallPopup (panelHandle);
-	testPanel=LoadPanel (0, "WarnPanel.uir", PANEL2);  
-	SetCtrlVal(testPanel,PANEL2_TEXTMSG,meesage);
-	InstallPopup(testPanel);
-    while (!quit) {
-        GetUserEvent (0, &testPanel, &ctrl);
-        if (ctrl == PANEL2_SURE) {
-             DiscardPanel (testPanel);
-             quit=1;
-			 ret=TRUE;			
-         }
-        if (ctrl == PANEL2_CANCEL) {
-             DiscardPanel (testPanel);
-             quit=1;
-			 ret=FALSE;			
-         }
-		
-    }
-	return ret;
+	
+	switch (event)
+	{
+		case EVENT_COMMIT:
+			BOOL *ret=(BOOL *)callbackData;
+        	if (control == PANEL2_SURE) {
+				 *ret=TRUE;			
+         	}else if (control == PANEL2_CANCEL) {
+			 	 *ret=FALSE;			
+        	 }			
+			 QuitUserInterface(1);
+		     break;
+	}
+	return 0;
 }
 
-BOOL GetConfigWarnPanelRet(int panel,char *title,char *lableMessage,char *lableNegative,char *lablePositive)
+BOOL AlertDialogWithRet(int panel,char *title,char *lableMessage,char *lableNegative,char *lablePositive)
 {
 	BOOL ret=FALSE;
     int ctrl=0, quit=0;
 	int testPanel;
-	//InstallPopup (panelHandle);
 	testPanel=LoadPanel (0, "WarnPanel.uir", PANEL2);  
-	//setPanelAttribute(testPanel,ATTR_TITLE,title);
 	SetPanelAttribute(testPanel,ATTR_TITLE,title);
 	SetCtrlVal(testPanel,PANEL2_TEXTMSG,lableMessage);
 	SetCtrlAttribute(testPanel,PANEL2_CANCEL,ATTR_LABEL_TEXT,lableNegative);
-	SetCtrlAttribute(testPanel,PANEL2_SURE,ATTR_LABEL_TEXT,lablePositive);  
-	
-	InstallPopup(testPanel);
-    while (!quit) {
-        GetUserEvent (0, &testPanel, &ctrl);
-        if (ctrl == PANEL2_SURE) {
-             DiscardPanel (testPanel);
-             quit=1;
-			 ret=TRUE;			
-         }
-        if (ctrl == PANEL2_CANCEL) {
-             DiscardPanel (testPanel);
-             quit=1;
-			 ret=FALSE;			
-         }
-		
-    }
+	SetCtrlAttribute(testPanel,PANEL2_SURE,ATTR_LABEL_TEXT,lablePositive);
+	InstallCtrlCallback(testPanel,PANEL2_SURE,AlertDialogCtrlCallBack,&ret);
+	InstallCtrlCallback(testPanel,PANEL2_CANCEL,AlertDialogCtrlCallBack,&ret);
+	DisplayPanel(testPanel);
+	RunUserInterface();
+	DiscardPanel(testPanel);
 	return ret;
 }
 
