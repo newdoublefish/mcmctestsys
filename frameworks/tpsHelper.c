@@ -24,7 +24,8 @@ extern TPS registerSpiFlashTestTPS(void);
 extern TPS registerResistanceTestTPS(void);
 extern TPS registerVoltageTestTPS(void);
 extern TPS registerRs232TestTPS(void);
-extern TPS registerParamTestTPS(void);   
+extern TPS registerParamTestTPS(void);  
+extern TPS registerParamsCheckTps(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
@@ -36,6 +37,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerResistanceTestTPS,
 	registerRs232TestTPS,
 	registerParamTestTPS,
+	registerParamsCheckTps,
 };
 
 

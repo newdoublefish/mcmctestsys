@@ -315,10 +315,12 @@ tNET_SERVICE *getStubNetService(char *ip,int port)
 		 gServicePtr->onDisConnect = onStubDisConnected; 
 		 gServicePtr->onTimeOut = onStubTimeOut; 
 		 connectToStub(gServicePtr);
-		 if(gServicePtr->connected==-1)
-		 {
-		 	free(gServicePtr);
-		 	gServicePtr=NULL;
+		 if(gServicePtr!=NULL){
+		 	if(gServicePtr->connected==-1)
+		 	{
+		 		free(gServicePtr);
+		 		gServicePtr=NULL;
+		 	}
 		 }
 		 
 	}else if(gServicePtr->connected==-1)

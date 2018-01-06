@@ -24,6 +24,7 @@
 #include "excelHelper.h"
 #include "configPath.h"
 #include "log.h"
+#include "debug.h"
 
 
 static TestGroup group;
@@ -258,6 +259,7 @@ static HRESULT onCellListenerTestCase(VARIANT *MyVariant,int row,int column)
 		 {
 			  CA_VariantGetCString(MyVariant, &temp);
 			  //TODO:解码最大值最小值
+			  //PRINT("%s\n",temp);
 			  if(ParseStandardValue(temp,&item.standard_value)==-1)
 			  {
 						char message[100]={0};
@@ -265,13 +267,13 @@ static HRESULT onCellListenerTestCase(VARIANT *MyVariant,int row,int column)
 						WarnShow1(0,message);
 						CA_FreeMemory(temp);  
 						return EXCEL_TASK_ERROR;   //参数有错，返回  
-					}	
+			  }	
 					//item.standard=(char *)malloc(strlen(temp)+1);
-			        memset(item.standard_,0,MAX_TESTITEM_STANDARD_LEN); 
+			  memset(item.standard_,0,MAX_TESTITEM_STANDARD_LEN); 
 					//memset(item.standard,0,strlen(temp)+1);
-					memcpy(item.standard_,temp,strlen(temp)+1);
+			  memcpy(item.standard_,temp,strlen(temp)+1);
 					
-					CA_FreeMemory(temp);
+			  CA_FreeMemory(temp);
 		  }
 		 ListInsertItem(group.subItems,&item,END_OF_LIST);
 		 ListInsertItem(tiaoliList,&item,END_OF_LIST);
@@ -333,7 +335,8 @@ void printGroupList()
 			 //printf("最大值：%f，最小值：%f\n",item.standard_value.maxValue,item.standard_value.minValue);  
 			 LOG_FORMAT("-----------------------\n参数名称：%s\n",item.itemName_);  
 			 LOG_FORMAT("序号:%d\n",item.itemId);
-			 LOG_FORMAT("输入值：%f\n",item.input_Value); 
+			 LOG_FORMAT("输入值：%f\n",item.input_Value);
+			 LOG_FORMAT("技术要求：%s\n",item.standard_); 
 			 LOG_FORMAT("最大值：%f，最小值：%f\n",item.standard_value.maxValue,item.standard_value.minValue);  
 		 }	 
 	 }	 

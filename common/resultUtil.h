@@ -9,6 +9,9 @@
 
 #define RESULT_RECEIVE_LEN 50
 	   
+#define RESULT_PASS 1
+#define RESULT_FAIL 0	  
+	   
 typedef struct
 {
   int index;//ÌõÀýÐòºÅ

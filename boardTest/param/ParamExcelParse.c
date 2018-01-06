@@ -4,6 +4,7 @@
 #include "toolbox.h"  
 #include "ParamRuleParse.h"
 #include "sutCommon.h" 
+#include "debug.h"
 
 //static HashTableType tipsHashTable=0;
 #define SHEET_RANGE_TIPS "A2:F2" 
@@ -117,6 +118,8 @@ static HRESULT onStartGetTips(VARIANT *MyVariant,int row,int column)
 
 BOOL ParamProtocolInit(char *sheetName)   
 {
+	if(paramList!=0)
+		return TRUE;
 	SUT sut=GetSeletedSut();
 	EXCELTask task=createExcelTask(sut.configPath,sheetName,SHEET_RANGE_TIPS,6);
 	task.onExcelTaskStartListener=(void *)onStartGetTips;
@@ -124,6 +127,21 @@ BOOL ParamProtocolInit(char *sheetName)
 	runExcelTask(task);
 	return TRUE;
 	//printf("%d\n",ListNumItems(paramList));
+}
+
+BOOL getParameter(char *paramName,PARAMETER *paramPtr)
+{
+	for(int i=1;i<ListNumItems(paramList);i++)
+	{
+		ListGetItem(paramList,paramPtr,i);
+		if(strcmp(paramName,paramPtr->paramName)==0)
+		{
+			
+			return TRUE;
+		}
+				
+	}
+	return FALSE;
 }
 
 ListType getParamList()

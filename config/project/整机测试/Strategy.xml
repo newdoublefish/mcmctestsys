@@ -3,5 +3,5 @@
 	<StrategyName>策略1</StrategyName>
 	<StrategyTestType>Serial</StrategyTestType>
 	<Collects>
-		<Collect><CollectName>1</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>12</GroupId></Groups></Collect></Collects>
+		<Collect><CollectName>1</CollectName><Type>1</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>13</GroupId></Groups></Collect></Collects>
 </Strategy>
