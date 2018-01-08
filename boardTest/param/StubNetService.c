@@ -186,6 +186,10 @@ int sendTcpData(const char *buffer,tNET_SERVICE *servicePtr,float timeOutSec)
 
 int startCommand(tNET_SERVICE *servicePtr,char *cmd)
 {
+	if(servicePtr==NULL)
+	{
+		return -1;
+	}
 	if(servicePtr->connected>0)
 		return sendTcpData(cmd,servicePtr,TIME_OUT);  //60S³¬Ê±
 	else 
@@ -243,7 +247,7 @@ void connectToStubSync(tNET_SERVICE *servicePtr)
 void connectToStub(tNET_SERVICE *servicePtr)
 {
 	if(ConnectToTCPServer (&(servicePtr->connectHandler), servicePtr->port, servicePtr->ip, 
-		TCPCallback, servicePtr, 0)>=0){	
+		TCPCallback, servicePtr, 500)>=0){	
 		servicePtr->connected=1;
 		if(servicePtr->onConnect!=NULL)
 			(*(ON_NET_CONNECTED)(servicePtr->onConnect))(servicePtr);

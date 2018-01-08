@@ -609,7 +609,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 					testRet =manualTest(testItem,_obj->device,_obj->resultHashTable);
 				}else{
 					testRet = (*(TEST_METHOD)(tps.manualTestFunction))(testItem,_obj->device,_obj->resultHashTable); 
-					PRINT("%d\n",testRet);
+					//PRINT("%d\n",testRet);
 				}
 				
 			} 

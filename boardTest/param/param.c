@@ -63,10 +63,10 @@ void showParamSetPanel(ListType paramsToSet)
 METHODRET ParamTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
-	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 		return 	TEST_RESULT_ALLPASS;
-	*/
+	
 	ListType paramsToSet=ListCreate(sizeof(PARAMETER));
 	ListType paramsToFetch;
 	
@@ -78,19 +78,37 @@ METHODRET ParamTest(TestGroup group,EUT eut,HashTableType hashTable)
 		if(FALSE==getParameter(item.itemName_,&param))
 		{
 			WarnShow1(0,"无该参数配置");
-			return TEST_RESULT_ALLPASS;
+			goto DONE;
 		}
 		ListInsertItem(paramsToSet,&param,END_OF_LIST);
 	}
 	
 	paramsToFetch = ListCopy(paramsToSet);
 	
-	showParamSetPanel(paramsToSet);
+	showParamSetPanel(paramsToSet);  
+	
+	for(int i=1;i<=ListNumItems(paramsToSet);i++)
+	{
+		PARAMETER paramSet={0},paramGet={0};
+		ListGetItem(paramsToSet,&paramSet,i);
+		ListGetItem(paramsToFetch,&paramGet,i);
+		ConfigParameter(servicePtr,paramSet);
+		if(GetParameter(servicePtr,&paramGet)>=0)
+		{
+			ListReplaceItem(paramsToFetch,&paramGet,i);
+		}else{
+			WarnShow1(0,"设置错误!");
+		}
+	}
+																		 
+	//showParamSetPanel(paramsToFetch); 
+	
+	
 	//设置参数
 	//TODO:读回参数并对比
 	//showParamSetPanel(paramsToSet);
-	showParamSetPanel(paramsToFetch);
-	
+	//showParamSetPanel(paramsToFetch);
+
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item;
@@ -135,6 +153,9 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 	if(servicePtr==NULL)
 		return 	TEST_RESULT_ALLPASS;
 	*/
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;	
 	ListType paramsToFetch=ListCreate(sizeof(PARAMETER));
 
 	
@@ -146,12 +167,12 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 		if(FALSE==getParameter(item.itemName_,&param))
 		{
 			WarnShow1(0,"无该参数配置");
-			return TEST_RESULT_ALLPASS;
+			goto DONE;
 		}
 		ListInsertItem(paramsToFetch,&param,END_OF_LIST);
 	}
 	//TODO:读回参数
-	showParamSetPanel(paramsToFetch);
+	//showParamSetPanel(paramsToFetch);
 	//设置参数
 
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
@@ -160,15 +181,23 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 		ListGetItem(group.subItems,&item,i);
 		PARAMETER paramGet={0};
 		ListGetItem(paramsToFetch,&paramGet,i); 
+		///printfParam(paramGet);
+		
+		if(GetParameter(servicePtr,&paramGet)<0)
+		{	
+			WarnShow1(0,"获取失败");
+			goto DONE;
+		}
 		RESULT itemResult;
 		itemResult.index=item.itemId;
-		if(strcmp(item.standard_,paramGet.value)==0)
+		if(strcmp("true",paramGet.value)==0)
 		{
 			itemResult.pass=1;
 		}else{
 			itemResult.pass=0;
 		}
 		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
+		//printf("----------%s\n",paramGet.value);
 		sprintf(itemResult.recvString,"%s",paramGet.value);
 		saveResult(hashTable,&itemResult);
 	}	

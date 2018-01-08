@@ -121,7 +121,7 @@ BOOL ParamProtocolInit(char *sheetName)
 	if(paramList!=0)
 		return TRUE;
 	SUT sut=GetSeletedSut();
-	EXCELTask task=createExcelTask(sut.configPath,sheetName,SHEET_RANGE_TIPS,6);
+	EXCELTask task=createExcelTask(sut.configPath,"param",SHEET_RANGE_TIPS,6);
 	task.onExcelTaskStartListener=(void *)onStartGetTips;
 	task.onCellListener=(void *)onCellListenerGetTips;
 	runExcelTask(task);

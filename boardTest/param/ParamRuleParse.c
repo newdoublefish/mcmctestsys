@@ -21,9 +21,13 @@ int ConfigParameter(tNET_SERVICE *servicePtr,PARAMETER para)
 
 //[0-9] [0-9]* [0-9]*.*
 int SearchAndParse(char *str,PARAMETER *para){
+	if(strstr(str,"´íÎó")!=NULL)
+		return -1;
+	
 	int matched,position,matchedLen; 
 	char cmd[50]={0};
 	sprintf(cmd,"%d %d %d.*",para->gunIndex,para->array,para->element);
+	//printf("------cmd:%s\n",cmd);
 	RegExpr_FindPatternInText(cmd,0,str,strlen(str),1,1,&matched,&position,&matchedLen);
 	if(matched)
 	{	
@@ -74,8 +78,9 @@ int GetParameter(tNET_SERVICE *servicePtr,PARAMETER *para)
 	if(startCommand(servicePtr,"v\r\n")<0)
 		return -1;
 	//ÕÒµ½Õâ¶ù×Ö·û´®
+	//printf("-----%s\n",servicePtr->packet);
 	if(SearchAndParse(servicePtr->packet,para)<0)
-		return -1;
+		return -2;
 	return 0;	
 }
 
