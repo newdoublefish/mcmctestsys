@@ -32,7 +32,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 5
+Number of Opened Files = 1
 Window Confinement Region Enabled = True
 MainColumnWidth = 251
 FileDateColumnWidth = 70
@@ -121,8 +121,8 @@ Disk Date = 3598239619
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 2
-Source Window State = "1,185,185,185,11,23,23,0,3,80,0,217,0,217,0,18,176,0,185,11,239,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,185,185,185,11,23,23,0,0,163,0,217,0,217,0,30,4,0,192,98,239,517,1,0,"
 
 [File 0011]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
@@ -413,7 +413,6 @@ Disk Date = 3597902414
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 4
 Source Window State = "1,222,222,222,12,32,32,0,0,95,0,103,0,0,0,25,281,0,206,4,323,605,1,0,"
 
 [File 0042]
@@ -450,7 +449,6 @@ Disk Date = 3598239344
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 5
 Source Window State = "1,71,71,71,7,19,19,0,3,80,0,0,0,0,0,18,61,0,71,7,239,517,1,0,"
 
 [File 0046]
@@ -568,8 +566,7 @@ Disk Date = 3598240130
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 1
-Source Window State = "1,188,188,188,7,17,17,0,0,163,0,0,0,0,0,30,0,0,189,73,239,517,1,0,"
+Source Window State = "1,188,188,188,7,17,17,0,0,80,0,0,0,0,0,18,93,0,18,108,239,517,1,0,"
 
 [File 0059]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/sutConfig.c"
@@ -1255,22 +1252,8 @@ File Type = "Unknown"
 Disk Date = 3522103248
 In Projects = "1,"
 
-[File 0144]
-Path = "/c/Program Files (x86)/National Instruments/CVI2017/include/tcpsupp.h"
-File Type = "Include"
-Disk Date = 3573565200
-In Projects = ""
-Window Top = 33
-Window Left = 10
-Window Z-Order = 3
-Source Window State = "1,72,72,72,12,30,30,0,3,80,0,63,0,0,0,18,63,0,72,12,239,517,1,0,"
-
 [Tab Order]
 Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/param.c"
-Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/ParamRuleParse.c"
-Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.c"
-Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/StubNetService.c"
-Tab 0005 = "/c/Program Files (x86)/National Instruments/CVI2017/include/tcpsupp.h"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
