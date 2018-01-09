@@ -168,7 +168,7 @@ int sendTcpData(const char *buffer,tNET_SERVICE *servicePtr,float timeOutSec)
 	printf("send:%s",buffer);
 #endif	
 	baseTime = Timer();
-	while(servicePtr->setFlag==1)
+	while(servicePtr!=NULL && servicePtr->setFlag==1)
 	{
 		ProcessTCPEvents();
 		ProcessSystemEvents();
@@ -295,14 +295,14 @@ void ReleaseStubNetService()
 
 void onStubDisConnected(tNET_SERVICE *servicePtr)
 {
-	MessagePopup("warning","diconnect from server");
+	//MessagePopup("warning","diconnect from server");
 	disConnectFromStub(servicePtr);
 	ReleaseStubNetService();
 }
 
 void onStubTimeOut(tNET_SERVICE *servicePtr)
 {
-	MessagePopup("warning","time out");
+	//MessagePopup("warning","time out");
 	onStubDisConnected(servicePtr);
 }
 

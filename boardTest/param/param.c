@@ -68,7 +68,7 @@ METHODRET ParamTest(TestGroup group,EUT eut,HashTableType hashTable)
 		return 	TEST_RESULT_ALLPASS;
 	
 	ListType paramsToSet=ListCreate(sizeof(PARAMETER));
-	ListType paramsToFetch;
+	ListType paramsToFetch=0;
 	
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -212,6 +212,75 @@ TPS registerParamsCheckTps(void)
 {
 	TPS tps=newTps("paramCheck");
 	tps.autoTestFunction=ParamCheckTest;
+	tps.protocolInit=ParamProtocolInit;
+	return tps;			
+}
+
+METHODRET ParamTemperature(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;
+	*/
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;	
+	ListType paramsToFetch=ListCreate(sizeof(PARAMETER));
+
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item;
+		ListGetItem(group.subItems,&item,i);
+		PARAMETER param={0};
+		if(FALSE==getParameter(item.itemName_,&param))
+		{
+			WarnShow1(0,"无该参数配置");
+			goto DONE;
+		}
+		ListInsertItem(paramsToFetch,&param,END_OF_LIST);
+	}
+	//TODO:读回参数
+	//showParamSetPanel(paramsToFetch);
+	//设置参数
+
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item;
+		ListGetItem(group.subItems,&item,i);
+		PARAMETER paramGet={0};
+		ListGetItem(paramsToFetch,&paramGet,i); 
+		///printfParam(paramGet);
+		
+		if(GetParameter(servicePtr,&paramGet)<0)
+		{	
+			WarnShow1(0,"获取失败");
+			goto DONE;
+		}
+		RESULT itemResult;
+		itemResult.index=item.itemId;
+		/*if(strcmp("true",paramGet.value)==0)
+		{
+			itemResult.pass=1;
+		}else{
+			itemResult.pass=0;
+		}*/
+		itemResult.pass=1;
+		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
+		//printf("----------%s\n",paramGet.value);
+		sprintf(itemResult.recvString,"%s",paramGet.value);
+		saveResult(hashTable,&itemResult);
+	}	
+DONE:	
+	ListDispose(paramsToFetch);
+	return ret;
+}
+
+TPS registerParamTemperatureTps(void)
+{
+	TPS tps=newTps("temperature");
+	tps.autoTestFunction=ParamTemperature;
 	tps.protocolInit=ParamProtocolInit;
 	return tps;			
 }
