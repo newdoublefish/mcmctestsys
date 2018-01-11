@@ -18,6 +18,7 @@
 #include "StubNetService.h"
 #include "common.h"
 #include "ParamPanel.h"
+#include "BiboExcelParse.h"
 
 int CVICALLBACK showPramSetCtrlCallback (int panel, int control, int event,
 		void *callbackData, int eventData1, int eventData2)
@@ -216,7 +217,7 @@ TPS registerParamsCheckTps(void)
 	return tps;			
 }
 
-METHODRET ParamTemperature(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
@@ -280,7 +281,31 @@ DONE:
 TPS registerParamTemperatureTps(void)
 {
 	TPS tps=newTps("temperature");
-	tps.autoTestFunction=ParamTemperature;
+	tps.autoTestFunction=ParamTemperatureTest;
 	tps.protocolInit=ParamProtocolInit;
+	return tps;			
+}
+
+
+METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;
+	*/
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;	
+
+	return ret;
+}
+
+
+TPS registerBiboTestTps(void)
+{
+	TPS tps=newTps("BIBO");
+	tps.autoTestFunction=ParamBiboTest;
+	tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }

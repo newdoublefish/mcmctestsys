@@ -351,7 +351,6 @@ tNET_SERVICE *getStubNetService(char *ip,int port)
 		}
 	}
 	return gServicePtr;
-
 }
 
 

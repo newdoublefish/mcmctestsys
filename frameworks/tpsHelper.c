@@ -27,6 +27,7 @@ extern TPS registerRs232TestTPS(void);
 extern TPS registerParamTestTPS(void);  
 extern TPS registerParamsCheckTps(void);
 extern TPS registerParamTemperatureTps(void);
+extern TPS registerBiboTestTps(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
@@ -40,6 +41,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerParamTestTPS,
 	registerParamsCheckTps,
 	registerParamTemperatureTps,
+	registerBiboTestTps,
 };
 
 

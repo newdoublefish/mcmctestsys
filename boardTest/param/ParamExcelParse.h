@@ -8,7 +8,7 @@
 
 BOOL ParamProtocolInit(char *sheetName); 
 
-ListType getParamList(void);
+//ListType getParamList(void);
 
 BOOL getParameter(char *paramName,PARAMETER *param);
 		
