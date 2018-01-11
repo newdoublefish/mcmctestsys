@@ -38,6 +38,7 @@ static ListType eutList;  //设备链表
 #define EUT_SETTING_TAB_MATAIN 1
 #define EUT_SETTING_TAB_NET1 2
 #define EUT_SETTING_TAB_NET2 3
+#define EUT_SETTING_TAB_RELAY 4 
 
 
 
@@ -114,6 +115,24 @@ static void ShowEutDetail(int panel,int index)
 	 GetIndexFromValue(tempPanel,MATAIN_STOPB,&i,device.matainConfig.stopBit);
 	 SetCtrlIndex(tempPanel,MATAIN_STOPB,i);//停止位 
 	 
+ 	 //---------------------继电器-------------------------- 
+	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_RELAY,&tempPanel);//获取面板句柄  
+	 
+	 GetIndexFromValue(tempPanel,RELAY_PORTNUM,&i,device.relayConfig.portNum);
+	 SetCtrlIndex(tempPanel,RELAY_PORTNUM,i);//串口号
+ 	 
+	 GetIndexFromValue(tempPanel,RELAY_RATE,&i,device.relayConfig.baudRate);
+	 SetCtrlIndex(tempPanel,RELAY_RATE,i);//波特率 
+ 	 
+	 GetIndexFromValue(tempPanel,RELAY_PARITY,&i,device.relayConfig.parity);
+	 SetCtrlIndex(tempPanel,RELAY_PARITY,i); //奇偶校验   
+ 	 
+	 GetIndexFromValue(tempPanel,RELAY_DATAB,&i,device.relayConfig.dataBit);
+	 SetCtrlIndex(tempPanel,RELAY_DATAB,i);//数据位 
+ 	 
+	 GetIndexFromValue(tempPanel,RELAY_STOPB,&i,device.relayConfig.stopBit);
+	 SetCtrlIndex(tempPanel,RELAY_STOPB,i);//停止位 	 
+	 
 	 //---------------------网口1--------------------------
 	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_NET1,&tempPanel);//获取面板句柄
    	 SetCtrlVal(tempPanel,NET1_IP,device.chargingPile.ip);  //ip地址1
@@ -160,6 +179,14 @@ static void DimEutConfigPanelControl(int panel,int dim)
 	 SetCtrlAttribute(tempPanel,MATAIN_PARITY,ATTR_DIMMED,dim);  
 	 SetCtrlAttribute(tempPanel,MATAIN_DATAB,ATTR_DIMMED,dim);  
      SetCtrlAttribute(tempPanel,MATAIN_STOPB,ATTR_DIMMED,dim); 
+	 
+	 //---------------------继电器--------------------------   
+	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_RELAY,&tempPanel); 
+	 SetCtrlAttribute(tempPanel,RELAY_PORTNUM,ATTR_DIMMED,dim);
+	 SetCtrlAttribute(tempPanel,RELAY_RATE,ATTR_DIMMED,dim);  
+	 SetCtrlAttribute(tempPanel,RELAY_PARITY,ATTR_DIMMED,dim);  
+	 SetCtrlAttribute(tempPanel,RELAY_DATAB,ATTR_DIMMED,dim);  
+     SetCtrlAttribute(tempPanel,RELAY_STOPB,ATTR_DIMMED,dim); 	 
 	 
 	 //----------------------网口1------------------------------
 	 GetPanelHandleFromTabPage(panel,EUTCONFIG_TAB,EUT_SETTING_TAB_NET1,&tempPanel);
@@ -273,6 +300,18 @@ static EUT GetEutInfo(int panelHandle)
 	GetValueFromIndex(tempPanel,MATAIN_DATAB,selectedIndex,&device.matainConfig.dataBit);   
 	GetCtrlIndex(tempPanel,MATAIN_STOPB,&selectedIndex); //停止位 
 	GetValueFromIndex(tempPanel,MATAIN_STOPB,selectedIndex,&device.matainConfig.stopBit); 
+	//---------------------继电器-------------------------------
+	GetPanelHandleFromTabPage(panelHandle,EUTCONFIG_TAB,EUT_SETTING_TAB_RELAY,&tempPanel);   
+	GetCtrlIndex(tempPanel,RELAY_PORTNUM,&selectedIndex); //串口号 
+	GetValueFromIndex(tempPanel,RELAY_PORTNUM,selectedIndex,&device.relayConfig.portNum);
+	GetCtrlIndex(tempPanel,RELAY_RATE,&selectedIndex); //波特率
+	GetValueFromIndex(tempPanel,RELAY_RATE,selectedIndex,&device.relayConfig.baudRate);   
+	GetCtrlIndex(tempPanel,RELAY_PARITY,&selectedIndex);//校验 
+	GetValueFromIndex(tempPanel,RELAY_PARITY,selectedIndex,&device.relayConfig.parity);   
+	GetCtrlIndex(tempPanel,RELAY_DATAB,&selectedIndex);//数据位 
+	GetValueFromIndex(tempPanel,RELAY_DATAB,selectedIndex,&device.relayConfig.dataBit);   
+	GetCtrlIndex(tempPanel,RELAY_STOPB,&selectedIndex); //停止位 
+	GetValueFromIndex(tempPanel,RELAY_STOPB,selectedIndex,&device.relayConfig.stopBit); 	
 	//printf("%d,%d,%d,%d,%d\n",device.matainConfig.portNum,device.matainConfig.baudRate,device.matainConfig.parity,device.matainConfig.dataBit,device.matainConfig.stopBit);
 	//---------------------网口1-----------------------------------
 	GetPanelHandleFromTabPage(panelHandle,EUTCONFIG_TAB,EUT_SETTING_TAB_NET1,&tempPanel); 

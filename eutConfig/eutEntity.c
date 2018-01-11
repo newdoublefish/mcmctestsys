@@ -81,6 +81,21 @@ static EUT xmlToEut(CVIXMLElement currElem)
 	   }else if(strcmp(elemName,"StopBit")==0)
 	   {
 	       tempDevice.matainConfig.stopBit=atoi(elemValue);
+	   }else if(strcmp(elemName,"RelayComPortNum")==0)
+	   {
+	       tempDevice.relayConfig.portNum=atoi(elemValue);
+	   }else if(strcmp(elemName,"RelayComBandRate")==0)
+	   {
+	        tempDevice.relayConfig.baudRate=atoi(elemValue);  
+	   }else if(strcmp(elemName,"RelayComParity")==0)
+	   {
+	       tempDevice.relayConfig.parity=atoi(elemValue);
+	   }else if(strcmp(elemName,"RelayComDataBit")==0)
+	   {
+	       tempDevice.relayConfig.dataBit=atoi(elemValue);
+	   }else if(strcmp(elemName,"RelayComStopBit")==0)
+	   {
+	       tempDevice.relayConfig.stopBit=atoi(elemValue);
 	   }
 	   //充电桩配置
 	   else if(strcmp(elemName,"IP1")==0)
@@ -265,7 +280,7 @@ static void eutToXml(ListType eutList,CVIXMLElement element)
 		 sprintf(temp,"%d",device.enable); 
 	     CVIXMLSetElementValue (currChildElem, temp);		 
 	     //写  MatainCom
-	     CVIXMLNewElement(currElem,1,"MatainCom",&currChildElem);
+	     CVIXMLNewElement(currElem,0,"MatainCom",&currChildElem);
          //串口号
 		 CVIXMLNewElement(currChildElem,0,"PortNum",&currSuperChildElem);
 		 memset(temp,100,0); 
@@ -293,9 +308,38 @@ static void eutToXml(ListType eutList,CVIXMLElement element)
 		 memset(temp,100,0); 
 		 sprintf(temp,"%d",device.matainConfig.stopBit); 
 	     CVIXMLSetElementValue (currSuperChildElem, temp);
+		//写继电器
+	     CVIXMLNewElement(currElem,0,"RelayCom",&currChildElem);
+         //串口号
+		 CVIXMLNewElement(currChildElem,0,"RelayComPortNum",&currSuperChildElem);
+		 memset(temp,100,0); 
+		 sprintf(temp,"%d",device.relayConfig.portNum); 
+	     CVIXMLSetElementValue (currSuperChildElem, temp);
+		 //波特率
+		 CVIXMLNewElement(currChildElem,1,"RelayComBandRate",&currSuperChildElem);
+		 memset(temp,100,0); 
+		 sprintf(temp,"%d",device.relayConfig.baudRate); 
+	     CVIXMLSetElementValue (currSuperChildElem, temp);
+		 //校验码  
+		 CVIXMLNewElement(currChildElem,2,"RelayComParity",&currSuperChildElem);
+		 memset(temp,100,0); 
+		 sprintf(temp,"%d",device.relayConfig.parity); 
+	     CVIXMLSetElementValue (currSuperChildElem, temp);
+		 
+		 //数据位 
+		 CVIXMLNewElement(currChildElem,3,"RelayComDataBit",&currSuperChildElem);
+		 memset(temp,100,0); 
+		 sprintf(temp,"%d",device.relayConfig.dataBit); 
+	     CVIXMLSetElementValue (currSuperChildElem, temp);
+		 
+		 //停止位
+		 CVIXMLNewElement(currChildElem,4,"RelayComStopBit",&currSuperChildElem);
+		 memset(temp,100,0); 
+		 sprintf(temp,"%d",device.relayConfig.stopBit); 
+	     CVIXMLSetElementValue (currSuperChildElem, temp);
 		 
 	     //写  NET1
-	     CVIXMLNewElement(currElem,1,"Net1",&currChildElem);
+	     CVIXMLNewElement(currElem,0,"Net1",&currChildElem);
 	     //写 IP地址 IP1
 		 CVIXMLNewElement(currChildElem,0,"IP1",&currSuperChildElem);
 	     CVIXMLSetElementValue (currSuperChildElem, device.chargingPile.ip);
@@ -306,7 +350,7 @@ static void eutToXml(ListType eutList,CVIXMLElement element)
 	     CVIXMLSetElementValue (currSuperChildElem, temp);	
 		 
 	     //写  NET2
-	     CVIXMLNewElement(currElem,2,"Net2",&currChildElem);
+	     CVIXMLNewElement(currElem,0,"Net2",&currChildElem);
 	     //写 IP地址 IP2
 		 CVIXMLNewElement(currChildElem,0,"IP2",&currSuperChildElem);
 	     CVIXMLSetElementValue (currSuperChildElem, device.testInstrument.ip);

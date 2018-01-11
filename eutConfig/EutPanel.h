@@ -46,6 +46,13 @@
 #define  NET2_PORT                        2       /* control type: string, callback function: (none) */
 #define  NET2_IP                          3       /* control type: string, callback function: (none) */
 
+     /* tab page panel controls */
+#define  RELAY_STOPB                      2       /* control type: ring, callback function: (none) */
+#define  RELAY_DATAB                      3       /* control type: ring, callback function: (none) */
+#define  RELAY_PARITY                     4       /* control type: ring, callback function: (none) */
+#define  RELAY_RATE                       5       /* control type: ring, callback function: (none) */
+#define  RELAY_PORTNUM                    6       /* control type: ring, callback function: (none) */
+
 
      /* Control Arrays: */
 

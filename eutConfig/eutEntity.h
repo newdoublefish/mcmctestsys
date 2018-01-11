@@ -44,6 +44,7 @@ typedef struct
     int index;
 	char eutName[MAX_EUTNAME_LEN];
 	RSCONFIG matainConfig;
+	RSCONFIG relayConfig; 
 	NETCONFIG chargingPile;
 	NETCONFIG testInstrument;
 	int enable;
