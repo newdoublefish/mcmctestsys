@@ -145,7 +145,7 @@ static BOOL ontestBeginListener(TESTengine *t)
 	BOOL ret=TRUE;
 
 	//各个TPS测试预先准备的工作
-	TpsPrepareTest(); 
+	//TpsPrepareTest(); 
 	return ret;
 }	
 
@@ -612,7 +612,8 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 					//PRINT("%d\n",testRet);
 				}
 				
-			} 
+			}
+			
 		   	if(testRet==TEST_RESULT_ALLPASS)
 		    	ret=TEST_RESULT_ALL_PASS;
 	     	else if(testRet==TEST_RESULT_ERROR)

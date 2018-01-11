@@ -107,6 +107,7 @@ int getTps(char *tpsName,TPS *tpsPtr)
 	 return 0;
 }
 
+//TODO:该功能是否应该存在
 void TpsPrepareTest(void)
 {
 	SETTING st=GetSetting();  

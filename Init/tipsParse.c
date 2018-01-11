@@ -86,7 +86,7 @@ HRESULT getTip(char *key,char *value)
    HashTableFindItem(tipsHashTable,key,&found);
    if(found==1)
    {
-   	   HashTableGetItem(tipsHashTable,key,value,80);
+   	   HashTableGetItem(tipsHashTable,key,value,256);
    }
    return found;
 }

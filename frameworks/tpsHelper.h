@@ -45,7 +45,7 @@ typedef void (*TEST_PREPARE)(void);
 	   
 typedef struct{
     char tpsName[MAX_TPS_NAME_LEN];
-	void *protocolInit;//协议初始化函数
+	void *protocolInit;//协议初始化函数,系统起来的时候执行一次
 	void *testPrepare;//测试准备
 	void *onTestFinish;//测试准备 
 	TEST_METHOD autoTestFunction;//自动测试函数 
