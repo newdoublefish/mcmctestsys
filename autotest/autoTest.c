@@ -593,10 +593,14 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		
 		//¼ÌµçÆ÷²Ù×÷
 		unsigned int mask=0;
-		if(getRelayMask(testItem.groupName,&mask)){
+		if(set.relayEnable)
+		{
+			if(getRelayMask(testItem.groupName,&mask)){
 		
 			//PRINT("%x\n",mask);
 			//OperatDoSet(_obj->device.testInstrument
+				OperatDoSet(_obj->device.relayConfig,mask);
+			}
 		}
 		
 		

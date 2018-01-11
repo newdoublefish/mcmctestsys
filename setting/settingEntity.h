@@ -29,7 +29,7 @@ typedef struct
 	int collectTestMention; //集合是否进行提示 
 	int mentionAutoCloseTime; //提示自动关闭时间
 	int autoSave;//自动保存
-	//int relayEnable;//继电器使能
+	int relayEnable;//继电器使能
 	int reTestCnt; //重测次数
 	int reportInfoCustom;//是否自定义文件信息
 	int simuTest;//模拟测试
