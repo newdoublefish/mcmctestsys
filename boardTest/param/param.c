@@ -309,3 +309,78 @@ TPS registerBiboTestTps(void)
 	tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }
+
+int CVICALLBACK ParamScanCtrlCallback (int panel, int control, int event,
+		void *callbackData, int eventData1, int eventData2)
+{
+	
+	switch (event)
+	{
+		case EVENT_VAL_CHANGED:
+			 //QuitUserInterface(1);
+			 if(control == SCANPANEL_SCAN1)
+			 {
+			 	char temp[100]={0};
+				GetCtrlVal(panel,control,temp);
+				//printf("from scan1:%s\n",temp);
+				if(strstr(temp,"/r/n")!=NULL)
+				{
+					SetActiveCtrl(panel,SCANPANEL_SCAN2);
+				}
+			 
+			 }else if(control == SCANPANEL_SCAN2){
+			 	char temp[100]={0};
+				GetCtrlVal(panel,control,temp);
+				//printf("from scan2:%s\n",temp);
+				if(strstr(temp,"/r/n")!=NULL)
+				{
+					QuitUserInterface(1);	
+				}
+			 }
+		     break;
+	}
+	return 0;
+}
+
+int CVICALLBACK ParaPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			 QuitUserInterface(1);
+		     break;
+	}
+	return 0;
+}
+
+
+METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;
+	*/
+	int panelHandle=LoadPanel(0,"ParamPanel.uir",SCANPANEL);
+	
+	InstallPanelCallback(panelHandle,ParaPanelCallback,NULL);
+	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN1,ParamScanCtrlCallback,NULL);
+	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN2,ParamScanCtrlCallback,NULL); 
+	SetActiveCtrl(panelHandle,SCANPANEL_SCAN1);
+	DisplayPanel(panelHandle); 
+	RunUserInterface();
+	DiscardPanel(panelHandle);
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;	
+
+	return ret;
+}
+
+TPS registerScanTestTps(void)
+{
+	TPS tps=newTps("scan");
+	tps.autoTestFunction=ParaScanTest;
+	return tps;	
+}
+

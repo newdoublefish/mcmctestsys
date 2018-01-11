@@ -36,6 +36,8 @@
 #include "reportDb.h" 
 #include "regexpr.h"  
 #include "mediaHelper.h"
+#include "relayProtocol.h"
+#include "relayHelper.h"
 
 static int autoPanelHandle=0;
 
@@ -566,6 +568,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		METHODRET testRet= TEST_ERROR; 
 		
 		SETTING set=getSetting();
+		//提示
 		if(set.collectTestMention || gTestFlag == ENUM_TEST_PANEL_MANUAL)
 		{	
 		   char temp[256]={0};
@@ -583,8 +586,19 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		   testFlag=showTips(0,testItem.groupName,temp1);
 		} 
 		
+
+		
 		if(FALSE == testFlag)
 			return TEST_RESULT_QUIT;//注意返回值这里，应该让整个引擎停止，暂时返回ERROR
+		
+		//继电器操作
+		unsigned int mask=0;
+		if(getRelayMask(testItem.groupName,&mask)){
+		
+			//PRINT("%x\n",mask);
+			//OperatDoSet(_obj->device.testInstrument
+		}
+		
 		
 	    /*TEST_METHOD method=getTestMethod(testItem); //获取测试方法
 		//LOG_LEVEL("Debug","%x\n",_obj->resultHashTable);

@@ -27,6 +27,7 @@
 #include "common.h"
 #include "tpsHelper.h"
 #include "tipsParse.h"
+#include "relayProtocol.h"
 
 
 
@@ -81,6 +82,8 @@ HRESULT testInit(SUT selectedsut)
 	initTps();
 	
 	getTipsFromExcel();
+	
+	parseRelayProtocol();					//继电器协议解析	
 	
 #if 1	
 	if(protocolInit()<0)                   //解析协议

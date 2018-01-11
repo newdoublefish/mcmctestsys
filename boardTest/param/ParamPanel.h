@@ -17,6 +17,10 @@
 #define  PANEL_TABLE                      2       /* control type: table, callback function: (none) */
 #define  PANEL_COMMANDBUTTON              3       /* control type: command, callback function: (none) */
 
+#define  SCANPANEL                        2
+#define  SCANPANEL_SCAN2                  2       /* control type: string, callback function: (none) */
+#define  SCANPANEL_SCAN1                  3       /* control type: string, callback function: (none) */
+
 
      /* Control Arrays: */
 

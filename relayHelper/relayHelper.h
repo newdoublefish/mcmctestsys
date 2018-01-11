@@ -6,16 +6,7 @@
 #ifdef __cplusplus
     extern "C" {
 #endif
-
-typedef struct
-{
-    int portNum;
-    int baudRate;
-    int parity;
-    int dataBit;
-    int stopBit;
-}RSCONFIG;
-
+#include "eutEntity.h"
 typedef struct
 {
     int len;
