@@ -133,7 +133,7 @@ In Projects = "1,"
 Window Top = 92
 Window Left = 42
 Window Z-Order = 1
-Source Window State = "1,132,136,136,0,11,11,0,0,163,0,16,0,0,0,27,129,0,146,87,251,605,1,22,"
+Source Window State = "1,7,8,7,35,35,35,0,0,163,0,16,0,0,0,31,0,0,11,54,251,605,1,22,"
 
 [File 0012]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/SutPanel.uir"
@@ -1273,6 +1273,34 @@ Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/resource/image/suspend_red.png"
 File Type = "Unknown"
 Disk Date = 3522103248
 In Projects = "1,"
+
+[File 0146]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/crcCalc.c"
+File Type = "CSource"
+Disk Date = 3598484252
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0147]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/crcCalc.h"
+File Type = "Include"
+Disk Date = 3598484586
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0148]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/relayHelper.c"
+File Type = "CSource"
+Disk Date = 3598495908
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+
+[File 0149]
+Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/relayHelper.h"
+File Type = "Include"
+Disk Date = 3598495603
+In Projects = "1,"
+Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
 [Tab Order]
 Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/setting/SettingPanel.uir"
