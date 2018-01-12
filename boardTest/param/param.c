@@ -596,3 +596,37 @@ TPS registerInverseWarnTestTps(void)
 	return tps;	
 }
 
+METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	TestItem item;
+	ListGetItem(group.subItems,&item,1);
+	//step1
+	OpenDo(eut.relayConfig,29);
+	CloseDo(eut.relayConfig,28);
+	BOOL flag=TRUE;
+	if(AlertDialogWithRet(0,"枪检查","请确认可以正常充电","错误","正确")==FALSE)
+	{
+		flag=FALSE;
+	}
+	
+	//OpenDo(eut.relayConfig,29);
+	OpenDo(eut.relayConfig,28);
+	if(AlertDialogWithRet(0,"枪检查","请确认不能正常充电","错误","正确")==FALSE)
+	{
+		flag=FALSE;
+	}
+	CloseDo(eut.relayConfig,29);
+	CloseDo(eut.relayConfig,28);
+	
+	return ret;
+}
+
+
+TPS registerInsulationTestTestTps(void)
+{
+	TPS tps=newTps("insulation");
+	tps.autoTestFunction=InsulationTest;
+	return tps;	
+}
+

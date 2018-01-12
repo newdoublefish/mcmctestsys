@@ -30,6 +30,7 @@ extern TPS registerParamTemperatureTps(void);
 extern TPS registerBiboTestTps(void);
 extern TPS registerScanTestTps(void);
 extern TPS registerInverseWarnTestTps(void);
+extern TPS registerInsulationTestTestTps(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
@@ -46,6 +47,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerBiboTestTps,
 	registerScanTestTps,
 	registerInverseWarnTestTps,//·´½Ó¸æ¾¯
+	registerInsulationTestTestTps,
 };
 
 
