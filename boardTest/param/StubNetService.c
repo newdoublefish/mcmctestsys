@@ -82,10 +82,10 @@ static int CVICALLBACK TCPCallback (unsigned int handle, int xType,
 			break;
 		case TCP_DATAREADY:
 			//DisableBreakOnLibraryErrors ();
-			char buffer[512]={0};
+			char buffer[4096]={0};
 			int bytesRead=0;
 			//do{
-			bytesRead = ClientTCPRead (handle, buffer, 512, 5);
+			bytesRead = ClientTCPRead (handle, buffer, 4096, 5);
 #ifdef DEBUG
 			printf("recv :%s",buffer);
 #endif			

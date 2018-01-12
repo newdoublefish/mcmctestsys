@@ -19,6 +19,7 @@
 #include "common.h"
 #include "ParamPanel.h"
 #include "BiboExcelParse.h"
+#include "relayHelper.h"
 
 int CVICALLBACK showPramSetCtrlCallback (int panel, int control, int event,
 		void *callbackData, int eventData1, int eventData2)
@@ -489,6 +490,108 @@ TPS registerScanTestTps(void)
 {
 	TPS tps=newTps("scan");
 	tps.autoTestFunction=ParaScanTest;
+	return tps;	
+}
+
+METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	int flag1=0;
+	int flag2=0;
+	int flag3=0;
+	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;
+	*/
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;
+	
+	TestItem item;
+	PARAMETER param={0};
+	ListGetItem(group.subItems,&item,1);
+	if(FALSE==getParameter(item.itemName_,&param))
+	{
+		WarnShow1(0,"无该参数配置");
+	}
+	if(GetParameter(servicePtr,&param)<0)
+	{	
+		WarnShow1(0,"获取失败");
+		//goto DONE;
+	}
+	printf("-----------------%s\n",param.value);
+	
+	if(strcmp(param.value,"false")==0)
+	{
+		flag1=1;
+	}
+	
+	OpenDo(eut.relayConfig,30);
+	
+	Delay(2);
+	
+	if(GetParameter(servicePtr,&param)<0)
+	{	
+		WarnShow1(0,"获取失败");
+		//goto DONE;
+	}
+	printf("-----------------%s\n",param.value); 
+	
+	if(strcmp(param.value,"true")==0)
+	{
+		flag2=1;
+	}	
+	
+	//showTips(0,"检查项目","请检查面板显示应充电枪故障指示灯显示应该为X"); 
+
+	if(AlertDialogWithRet(0,"枪检查","请检查面板显示应充电枪故障指示灯显示应该为X","错误","正确")==FALSE)
+	{
+		flag2=0;
+	}else{
+		//goto DONE;
+	}
+	
+
+	CloseDo(eut.relayConfig,30);
+	Delay(2); 
+	
+	if(GetParameter(servicePtr,&param)<0)
+	{	
+		WarnShow1(0,"获取失败");
+		//goto DONE;
+	}
+	printf("-----------------%s\n",param.value); 
+	
+	if(strcmp(param.value,"false")==0)
+	{
+		flag3=1;
+	}	
+	
+	/*if(AlertDialogWithRet(0,"枪检查","请检查面板显示应充电枪故障指示灯显示应该消失","错误","正确")==FALSE)
+	{
+		flag3=0;
+	}*/
+	
+	//合上开关31
+	
+	//printf("-----------------%s\n",param.value);
+DONE:	
+	RESULT itemResult={0};
+	itemResult.index=item.itemId;
+	itemResult.pass = flag1 & flag2 & flag3;
+	if(itemResult.pass)
+		sprintf(itemResult.recvString,"%s","合格");
+	else
+		sprintf(itemResult.recvString,"%s","不合格");
+	saveResult(hashTable,&itemResult);	
+
+	return ret;
+}
+
+TPS registerInverseWarnTestTps(void)
+{
+	TPS tps=newTps("inverseWarn");
+	tps.autoTestFunction=InverseWarnTest;
 	return tps;	
 }
 
