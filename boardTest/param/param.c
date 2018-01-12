@@ -575,6 +575,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	//合上开关31
 	
 	//printf("-----------------%s\n",param.value);
+	printf("%d,%d,%d\n",flag1,flag2,flag3);
 DONE:	
 	RESULT itemResult={0};
 	itemResult.index=item.itemId;
