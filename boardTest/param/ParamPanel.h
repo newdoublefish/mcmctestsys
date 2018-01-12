@@ -18,8 +18,11 @@
 #define  PANEL_COMMANDBUTTON              3       /* control type: command, callback function: (none) */
 
 #define  SCANPANEL                        2
-#define  SCANPANEL_SCAN2                  2       /* control type: string, callback function: (none) */
-#define  SCANPANEL_SCAN1                  3       /* control type: string, callback function: (none) */
+#define  SCANPANEL_SCAN4                  2       /* control type: string, callback function: (none) */
+#define  SCANPANEL_SCAN3                  3       /* control type: string, callback function: (none) */
+#define  SCANPANEL_SCAN2                  4       /* control type: string, callback function: (none) */
+#define  SCANPANEL_SCAN1                  5       /* control type: string, callback function: (none) */
+#define  SCANPANEL_TEXTMSG                6       /* control type: textMsg, callback function: (none) */
 
 
      /* Control Arrays: */

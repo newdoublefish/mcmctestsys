@@ -340,39 +340,42 @@ int CVICALLBACK ParamScanCtrlCallback (int panel, int control, int event,
 							SetActiveCtrl(panel,SCANPANEL_SCAN2);
 						//printf("%s\n",temp);
 					}
-				}else if(strlen(temp)>=16){
-				
-					SetActiveCtrl(panel,SCANPANEL_SCAN2);
-					//printf("%s\n",temp); 
 				}
 			 
-			 }else if(control == SCANPANEL_SCAN2){
-				char temp[100]={0};
+			 } else if(control == SCANPANEL_SCAN2)
+			 {
+			 	char temp[100]={0};
 				GetCtrlVal(panel,control,temp);
 				if(strstr(temp,"http")!=NULL)
 				{
 					if(strlen(temp)>=52)
 					{
-						char *strPtr=strstr(temp,"=");
-						if(strPtr!=NULL)
-						{
-							strPtr=strPtr+1;
-							SetCtrlVal(panel,control,strPtr);
-						}
-						char *tempPtr=(char*)callbackData;
-						if(strstr(temp,strPtr)==NULL)
-						{
-							memset(strPtr,0,strlen(strPtr));
-						}
-						
-						
-						QuitUserInterface(1);
+							char *strPtr=strstr(temp,"=");
+							if(strPtr!=NULL)
+							{
+								strPtr=strPtr+1;
+								SetCtrlVal(panel,control,strPtr);
+								char *tempPtr=(char*)callbackData;
+								memcpy(tempPtr,strPtr,strlen(strPtr)-1);
+							}										
+							SetActiveCtrl(panel,SCANPANEL_SCAN3);
 						//printf("%s\n",temp);
 					}
-				}else if(strlen(temp)>=16){
-				
+				}
+			 
+			 }else if(control == SCANPANEL_SCAN3)
+			 {
+			 	char temp[100]={0};
+				GetCtrlVal(panel,control,temp);
+				if(strlen(temp)>=16){
+					SetActiveCtrl(panel,SCANPANEL_SCAN4);
+				}
+			 
+			 }else if(control == SCANPANEL_SCAN4){
+				char temp[100]={0};
+				GetCtrlVal(panel,control,temp);
+				if(strlen(temp)>=16){
 					QuitUserInterface(1);
-					//printf("%s\n",temp); 
 				}				
 			 }
 		     break;
@@ -404,7 +407,9 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 	
 	InstallPanelCallback(panelHandle,ParaPanelCallback,NULL);
 	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN1,ParamScanCtrlCallback,stubName);
-	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN2,ParamScanCtrlCallback,stubName); 
+	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN2,ParamScanCtrlCallback,stubName);
+	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN3,ParamScanCtrlCallback,stubName);
+	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN4,ParamScanCtrlCallback,stubName); 	
 	SetActiveCtrl(panelHandle,SCANPANEL_SCAN1);
 	DisplayPanel(panelHandle); 
 	RunUserInterface();
@@ -425,6 +430,12 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}else if(i==3)
 		{
 			sprintf(itemResult.recvString,"%s",stubName);
+		}else if(i==4)
+		{
+			 GetCtrlVal(panelHandle,SCANPANEL_SCAN3,itemResult.recvString);
+		}else if(i==5)
+		{
+			 GetCtrlVal(panelHandle,SCANPANEL_SCAN4,itemResult.recvString);
 		}
 		saveResult(hashTable,&itemResult);
 	}	
