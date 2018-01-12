@@ -619,6 +619,10 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 	CloseDo(eut.relayConfig,29);
 	CloseDo(eut.relayConfig,28);
 	
+	RESULT itemResult={0};
+	itemResult.index=item.itemId;
+	itemResult.pass=flag;
+	saveResult(hashTable,&itemResult);
 	return ret;
 }
 
@@ -627,6 +631,74 @@ TPS registerInsulationTestTestTps(void)
 {
 	TPS tps=newTps("insulation");
 	tps.autoTestFunction=InsulationTest;
+	return tps;	
+}
+
+METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	BOOL flag=TRUE;
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+		return 	TEST_RESULT_ALLPASS;	
+	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动","错误","正确")==FALSE)
+	{
+		flag=FALSE;
+		goto DONE;
+	}
+	OpenDo(eut.relayConfig,31);
+
+	WarnShow1(0,"按下确定开始读数");
+	
+	ListType paramsToGet=ListCreate(sizeof(PARAMETER));
+	ListType paramsToSet=ListCreate(sizeof(PARAMETER));
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item;
+		ListGetItem(group.subItems,&item,i);
+		if(i>=2 && i<=4)
+		{
+			PARAMETER param={0};
+			if(FALSE==getParameter(item.itemName_,&param))
+			{
+				WarnShow1(0,"无该参数配置");
+			//goto DONE;
+			}
+			if(GetParameter(servicePtr,&param)<0)
+			{	
+				WarnShow1(0,"获取失败");
+				//goto DONE;
+			}			
+			printf("----------------------------%s\n",param.value);
+			ListInsertItem(paramsToGet,&param,END_OF_LIST);
+			RESULT itemResult={0};
+			itemResult.index=item.itemId;
+			itemResult.pass=flag;
+			saveResult(hashTable,&itemResult);			
+		}
+	}
+		
+	//ListType paramsToSet=ListCopy(paramsToGet);
+	//showParamSetPanel(paramsToSet);
+	
+	
+	
+	
+	
+	
+	
+	ListType paramsToFetch=0;	
+	
+	
+	CloseDo(eut.relayConfig,31); 
+DONE:	
+	return ret;
+}
+
+TPS registerChargingTestTestTps(void)
+{
+	TPS tps=newTps("charging");
+	tps.autoTestFunction=ChargingTest;
 	return tps;	
 }
 
