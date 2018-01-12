@@ -640,56 +640,102 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 	BOOL flag=TRUE;
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;	
+		return 	TEST_RESULT_ALLPASS;
+	//充电模块确认
+	TestItem item1;
+	ListGetItem(group.subItems,&item1,1);
+	RESULT itemResult1={0};
+	itemResult1.index=item1.itemId;
+	itemResult1.pass=1; 
 	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动","错误","正确")==FALSE)
 	{
 		flag=FALSE;
+		itemResult1.pass=0;
+		saveResult(hashTable,&itemResult1);
 		goto DONE;
 	}
+	
+	saveResult(hashTable,&itemResult1);	
+	
 	OpenDo(eut.relayConfig,31);
 
 	WarnShow1(0,"按下确定开始读数");
 	
 	ListType paramsToGet=ListCreate(sizeof(PARAMETER));
 	ListType paramsToSet=ListCreate(sizeof(PARAMETER));
-	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	for(int i=2;i<=4;i++)
 	{
 		TestItem item;
 		ListGetItem(group.subItems,&item,i);
-		if(i>=2 && i<=4)
+
+		PARAMETER param={0};
+		ListInsertItem(paramsToSet,&param,END_OF_LIST);
+		if(FALSE==getParameter(item.itemName_,&param))
 		{
-			PARAMETER param={0};
-			if(FALSE==getParameter(item.itemName_,&param))
-			{
-				WarnShow1(0,"无该参数配置");
+			WarnShow1(0,"无该参数配置");
 			//goto DONE;
-			}
-			if(GetParameter(servicePtr,&param)<0)
-			{	
-				WarnShow1(0,"获取失败");
-				//goto DONE;
-			}			
-			printf("----------------------------%s\n",param.value);
-			ListInsertItem(paramsToGet,&param,END_OF_LIST);
-			RESULT itemResult={0};
-			itemResult.index=item.itemId;
-			itemResult.pass=flag;
-			saveResult(hashTable,&itemResult);			
 		}
+		if(GetParameter(servicePtr,&param)<0)
+		{	
+			WarnShow1(0,"获取失败");
+				//goto DONE;
+		}			
+		printf("----------------------------%s\n",param.value);
+		ListInsertItem(paramsToGet,&param,END_OF_LIST);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		sprintf(itemResult.recvString,"%s",param.value);
+		float strValue=atof(param.value);
+		if(i==2)
+		{
+			if(strValue<352 && strValue>348)
+			{
+				itemResult.pass=1;
+			}
+		}else if(i==3)
+		{
+			if(strValue<2.87 && strValue>2.67)
+			{
+				itemResult.pass=1;
+			}
+		}
+		saveResult(hashTable,&itemResult);			
 	}
 		
 	//ListType paramsToSet=ListCopy(paramsToGet);
-	//showParamSetPanel(paramsToSet);
+	showParamSetPanel(paramsToSet);
 	
+	for(int i=1;i<=ListNumItems(paramsToSet);i++)
+	{
+		TestItem item;
+		PARAMETER param={0};
+		ListGetItem(paramsToSet,&param,i);
+		ListGetItem(group.subItems,&item,i+4);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		sprintf(itemResult.recvString,"%s",param.value);
+		float strValue=atof(param.value);
+		if(i==1)
+		{
+			if(strValue<352 && strValue>348)
+			{
+				itemResult.pass=1;
+			}
+		}else if(i==2)
+		{
+			if(strValue<2.87 && strValue>2.67)
+			{
+				itemResult.pass=1;
+			}
+		}
+		saveResult(hashTable,&itemResult);			
+	}		
+		
+		
 	
-	
-	
-	
-	
-	
-	ListType paramsToFetch=0;	
-	
-	
+
+	ListDispose(paramsToSet);
+	ListDispose(paramsToGet);
 	CloseDo(eut.relayConfig,31); 
 DONE:	
 	return ret;
