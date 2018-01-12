@@ -175,6 +175,8 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 	//TODO:读回参数
 	//showParamSetPanel(paramsToFetch);
 	//设置参数
+	//发送自检命令
+	startCommand(servicePtr,"product self_test\r\n");
 
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -368,13 +370,16 @@ int CVICALLBACK ParamScanCtrlCallback (int panel, int control, int event,
 			 	char temp[100]={0};
 				GetCtrlVal(panel,control,temp);
 				if(strlen(temp)>=16){
+					SetCtrlVal(panel,control,temp+4);
 					SetActiveCtrl(panel,SCANPANEL_SCAN4);
 				}
+				
 			 
 			 }else if(control == SCANPANEL_SCAN4){
 				char temp[100]={0};
 				GetCtrlVal(panel,control,temp);
 				if(strlen(temp)>=16){
+					SetCtrlVal(panel,control,temp+4);
 					QuitUserInterface(1);
 				}				
 			 }
@@ -399,10 +404,10 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	char stubName[20]={0};
-	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 		return 	TEST_RESULT_ALLPASS;
-	*/
+	
 	int panelHandle=LoadPanel(0,"ParamPanel.uir",SCANPANEL);
 	
 	InstallPanelCallback(panelHandle,ParaPanelCallback,NULL);
@@ -417,7 +422,9 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item;
+		PARAMETER param={0};
 		ListGetItem(group.subItems,&item,i);
+		
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
 		if(stubNameLen>0)
@@ -429,13 +436,43 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN2,itemResult.recvString);
 		}else if(i==3)
 		{
+			if(FALSE==getParameter(item.itemName_,&param))
+			{
+				WarnShow1(0,"无该参数配置");
+				continue;
+			}
 			sprintf(itemResult.recvString,"%s",stubName);
+			sprintf(param.value,"00000%s",itemResult.recvString);
+			if(ConfigParameter(servicePtr,param)<0)
+				continue;			
+			
+			
 		}else if(i==4)
 		{
-			 GetCtrlVal(panelHandle,SCANPANEL_SCAN3,itemResult.recvString);
+			if(FALSE==getParameter(item.itemName_,&param))
+			{
+				WarnShow1(0,"无该参数配置");
+				continue;
+			}
+			GetCtrlVal(panelHandle,SCANPANEL_SCAN3,itemResult.recvString);
+			sprintf(param.value,"%s",itemResult.recvString);
+			if(ConfigParameter(servicePtr,param)<0)
+				continue;
+			
+			
+			
 		}else if(i==5)
 		{
-			 GetCtrlVal(panelHandle,SCANPANEL_SCAN4,itemResult.recvString);
+			if(FALSE==getParameter(item.itemName_,&param))
+			{
+				WarnShow1(0,"无该参数配置");
+				continue;
+			}
+						
+			GetCtrlVal(panelHandle,SCANPANEL_SCAN4,itemResult.recvString);
+			sprintf(param.value,"%s",itemResult.recvString);
+			if(ConfigParameter(servicePtr,param)<0)
+				continue;			
 		}
 		saveResult(hashTable,&itemResult);
 	}	

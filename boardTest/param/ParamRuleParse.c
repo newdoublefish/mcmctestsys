@@ -9,13 +9,30 @@ int ConfigParameter(tNET_SERVICE *servicePtr,PARAMETER para)
 {
 	char cmd[50]={0};
 	sprintf(cmd,"g %d\r\n",para.group);
-	startCommand(servicePtr,cmd);
+	if(startCommand(servicePtr,cmd)<0)
+		return -1;
 	memset(cmd,0,50);
 	sprintf(cmd,"i %d\r\n",para.item);
-	startCommand(servicePtr,cmd);
+	if(startCommand(servicePtr,cmd)<0)
+		return -1;
 	memset(cmd,0,50);
+	char *temp=NULL;
+	temp=strstr(para.value," ");
+	if(temp!=NULL)
+	{
+		//printf("%s\n",para.value); 
+		*temp='-';
+		//printf("%s\n",para.value);
+	}
+
 	sprintf(cmd,"v %d %d %d %s\r\n",para.gunIndex,para.array,para.element,para.value);
-	startCommand(servicePtr,cmd);
+	if(startCommand(servicePtr,cmd)<0)
+		return -1;
+	//printf("%s\n",servicePtr->packet);
+	if(strstr(servicePtr->packet,"³É¹¦")==NULL)
+	{
+		 return -1;
+	}
 	return 0;
 }
 
