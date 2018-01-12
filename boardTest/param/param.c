@@ -310,6 +310,9 @@ TPS registerBiboTestTps(void)
 	return tps;			
 }
 
+//枪二维码 "http://www.gdmcmc.cn/qrcode.html?qrcode=881011000851";
+//电表地址 strAddress="1711424989000065";
+
 int CVICALLBACK ParamScanCtrlCallback (int panel, int control, int event,
 		void *callbackData, int eventData1, int eventData2)
 {
@@ -322,20 +325,55 @@ int CVICALLBACK ParamScanCtrlCallback (int panel, int control, int event,
 			 {
 			 	char temp[100]={0};
 				GetCtrlVal(panel,control,temp);
-				//printf("from scan1:%s\n",temp);
-				if(strstr(temp,"/r/n")!=NULL)
+				if(strstr(temp,"http")!=NULL)
 				{
+					if(strlen(temp)>=52)
+					{
+							char *strPtr=strstr(temp,"=");
+							if(strPtr!=NULL)
+							{
+								strPtr=strPtr+1;
+								SetCtrlVal(panel,control,strPtr);
+								char *tempPtr=(char*)callbackData;
+								memcpy(tempPtr,strPtr,strlen(strPtr)-1);
+							}										
+							SetActiveCtrl(panel,SCANPANEL_SCAN2);
+						//printf("%s\n",temp);
+					}
+				}else if(strlen(temp)>=16){
+				
 					SetActiveCtrl(panel,SCANPANEL_SCAN2);
+					//printf("%s\n",temp); 
 				}
 			 
 			 }else if(control == SCANPANEL_SCAN2){
-			 	char temp[100]={0};
+				char temp[100]={0};
 				GetCtrlVal(panel,control,temp);
-				//printf("from scan2:%s\n",temp);
-				if(strstr(temp,"/r/n")!=NULL)
+				if(strstr(temp,"http")!=NULL)
 				{
-					QuitUserInterface(1);	
-				}
+					if(strlen(temp)>=52)
+					{
+						char *strPtr=strstr(temp,"=");
+						if(strPtr!=NULL)
+						{
+							strPtr=strPtr+1;
+							SetCtrlVal(panel,control,strPtr);
+						}
+						char *tempPtr=(char*)callbackData;
+						if(strstr(temp,strPtr)==NULL)
+						{
+							memset(strPtr,0,strlen(strPtr));
+						}
+						
+						
+						QuitUserInterface(1);
+						//printf("%s\n",temp);
+					}
+				}else if(strlen(temp)>=16){
+				
+					QuitUserInterface(1);
+					//printf("%s\n",temp); 
+				}				
 			 }
 		     break;
 	}
@@ -357,6 +395,7 @@ int CVICALLBACK ParaPanelCallback (int panelHandle, int event, void *callbackDat
 METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
+	char stubName[20]={0};
 	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 		return 	TEST_RESULT_ALLPASS;
@@ -364,15 +403,36 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 	int panelHandle=LoadPanel(0,"ParamPanel.uir",SCANPANEL);
 	
 	InstallPanelCallback(panelHandle,ParaPanelCallback,NULL);
-	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN1,ParamScanCtrlCallback,NULL);
-	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN2,ParamScanCtrlCallback,NULL); 
+	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN1,ParamScanCtrlCallback,stubName);
+	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN2,ParamScanCtrlCallback,stubName); 
 	SetActiveCtrl(panelHandle,SCANPANEL_SCAN1);
 	DisplayPanel(panelHandle); 
 	RunUserInterface();
+	int stubNameLen=strlen(stubName);
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item;
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		if(stubNameLen>0)
+			itemResult.pass=1;
+		if(i==1)
+		{
+			GetCtrlVal(panelHandle,SCANPANEL_SCAN1,itemResult.recvString); 
+		}else if(i==2){
+			GetCtrlVal(panelHandle,SCANPANEL_SCAN2,itemResult.recvString);
+		}else if(i==3)
+		{
+			sprintf(itemResult.recvString,"%s",stubName);
+		}
+		saveResult(hashTable,&itemResult);
+	}	
+	
 	DiscardPanel(panelHandle);
-	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;	
+		return 	TEST_RESULT_ALLPASS;*/	
 
 	return ret;
 }
