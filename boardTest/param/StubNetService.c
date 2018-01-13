@@ -8,7 +8,7 @@
 #include "StubNetService.h"
 #include "common.h"
 #define tcpChk(f) if ((tcpErr=(f))<0) {ReportTCPError(tcpErr); goto Done;} else    
-#define DEBUG	
+//#define DEBUG	
 tNET_SERVICE *gServicePtr=NULL;	
 	
 char *getCompletePacket(char *str)

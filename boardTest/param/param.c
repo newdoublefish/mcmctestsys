@@ -197,11 +197,19 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}
 		RESULT itemResult;
 		itemResult.index=item.itemId;
-		if(strcmp("true",paramGet.value)==0)
+		if(strcmp(group.groupName,"硬件自检")==0)
+		{
+			if(strcmp("true",paramGet.value)==0)
+			{
+				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
+			}
+		}else if(strcmp(group.groupName,"电表时间")==0)
 		{
 			itemResult.pass=1;
 		}else{
-			itemResult.pass=0;
+			itemResult.pass=1;	
 		}
 		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
 		//printf("----------%s\n",paramGet.value);
@@ -781,6 +789,91 @@ TPS registerChargingTestTestTps(void)
 {
 	TPS tps=newTps("charging");
 	tps.autoTestFunction=ChargingTest;
+	return tps;	
+}
+
+static void getSysTime(char *timeBuffer)
+{
+	unsigned int year, month, day, hour, min, sec, weekDay;
+	CVIAbsoluteTime absTime;
+	GetCurrentCVIAbsoluteTime(&absTime);
+    CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
+                &min, &sec, 0, &weekDay);
+	//sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d",year-2000,month,day,hour,min,sec);
+	sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d:0000",year-2000,month,day,hour,min,sec);
+
+}
+
+METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	PARAMETER param={0};
+	RESULT itemResult={0};
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+	{
+		return 	TEST_RESULT_ERROR;
+	}	
+	TestItem item;
+	ListGetItem(group.subItems,&item,1);
+	if(FALSE==getParameter(item.itemName_,&param))
+	{
+		WarnShow1(0,"无该参数配置");
+	}
+	char tempStr[50]={0};
+	printf("%s\n",item.inputValue_);
+	if(strcmp("NA",item.inputValue_)!=0){
+		sprintf(tempStr,"%s",item.inputValue_);			
+	}else{
+		getSysTime(tempStr);
+	}
+	sprintf(param.value,"%s",tempStr);
+	itemResult.index=item.itemId;
+	if(ConfigParameter(servicePtr,param)>=0)
+	{
+		 itemResult.pass =1;
+	}else{
+		itemResult.pass=0;
+	}
+	sprintf(itemResult.recvString,"%s",param.value);
+	saveResult(hashTable,&itemResult);
+	
+	if(CloseDo(eut.relayConfig,1)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	
+	Delay(5);
+	
+	if(OpenDo(eut.relayConfig,1)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	
+	WarnShow1(0,"请确认设备已经器动");
+	
+	//printf("-------------------------set:%s\n",param.value);
+	TestItem item2;
+	RESULT itemResult2={0};
+	ListGetItem(group.subItems,&item2,2);	
+	memset(param.value,0,128);
+	servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+	{
+		return 	TEST_RESULT_ERROR;
+	}	
+	GetParameter(servicePtr,&param);
+	itemResult2.index = item2.itemId;
+	itemResult2.pass = 1;
+	sprintf(itemResult2.recvString,"%s",param.value);
+	saveResult(hashTable,&itemResult2); 	
+	return ret;
+}
+
+TPS registerTimeSetTestTps(void)
+{
+	TPS tps=newTps("timeSet");
+	tps.autoTestFunction=TimeSetTest;
 	return tps;	
 }
 

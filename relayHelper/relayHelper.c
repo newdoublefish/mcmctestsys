@@ -16,7 +16,7 @@
 #include "relayHelper.h"
 #include "crcCalc.h"
 #include "common.h"
-#define DEBUG
+//#define DEBUG
 
 /*
 FE 0F 00 00 00 02 01 03 D1 92 
