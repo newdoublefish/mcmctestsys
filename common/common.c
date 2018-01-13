@@ -77,6 +77,8 @@ int CVICALLBACK tipTimerCallback (int panel, int control, int event,
 				*ret=TRUE;
 			}else if(control==MANUALTIPS_CANCEL){
 				*ret=FALSE;			
+			}else if(control==MANUALTIPS_STOP){
+				*ret=0x03;
 			}
 			QuitUserInterface(1);
 			break;
@@ -85,7 +87,7 @@ int CVICALLBACK tipTimerCallback (int panel, int control, int event,
 }
 
 
-BOOL showTips(int panel,char *title,char *tip)
+BOOL showTips(int panel,char *title,char *tip,int *flag)
 {
 	BOOL ret=1;
     int timeOut=0;
@@ -100,6 +102,7 @@ BOOL showTips(int panel,char *title,char *tip)
 	   InstallCtrlCallback (testPanel,MANUALTIPS_TIMER,tipTimerCallback,&timeOut);
 	InstallCtrlCallback(testPanel,MANUALTIPS_SURE,tipTimerCallback,&ret);
 	InstallCtrlCallback(testPanel,MANUALTIPS_CANCEL,tipTimerCallback,&ret);
+	InstallCtrlCallback(testPanel,MANUALTIPS_STOP,tipTimerCallback,flag);
 	DisplayPanel(testPanel);
 	RunUserInterface();
 	DiscardPanel(testPanel);

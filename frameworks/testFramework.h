@@ -67,6 +67,7 @@ typedef struct
 	void *onObjectTestFinish;//该对象测试完成
 	BOOL errorFlag;			              //如果串口或者网络错误标志，如果错误就不会继续往下测试了
 	int totalFinishedTestGroupCount; //已经完成的测试组数量
+	char errorInfo[128];
 }TESTobject;	
 
 typedef struct{

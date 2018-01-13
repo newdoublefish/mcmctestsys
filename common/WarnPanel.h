@@ -23,8 +23,9 @@
 #define  MANUALTIPS_TEXTMSG               8       /* control type: textMsg, callback function: (none) */
 #define  MANUALTIPS_TEXTMSG_3             9       /* control type: textMsg, callback function: (none) */
 #define  MANUALTIPS_GRROUPNAME            10      /* control type: textMsg, callback function: (none) */
-#define  MANUALTIPS_CANCEL                11      /* control type: command, callback function: (none) */
-#define  MANUALTIPS_TEXTBOX               12      /* control type: textMsg, callback function: (none) */
+#define  MANUALTIPS_STOP                  11      /* control type: command, callback function: (none) */
+#define  MANUALTIPS_CANCEL                12      /* control type: command, callback function: (none) */
+#define  MANUALTIPS_TEXTBOX               13      /* control type: textMsg, callback function: (none) */
 
 #define  NAMEPANEL                        2
 #define  NAMEPANEL_PICTURE                2       /* control type: picture, callback function: (none) */

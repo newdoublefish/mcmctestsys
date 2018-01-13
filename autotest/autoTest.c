@@ -583,7 +583,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		   //TESTengine *engine = (TESTengine*)_obj->enginePtr;
 		   //ShowManualTip(0,testItem.groupName,temp1);
 		   //提示面板可以控制是否进行下一项测试
-		   testFlag=showTips(0,testItem.groupName,temp1);
+		   testFlag=showTips(0,testItem.groupName,temp1,&((TESTengine*)_obj->enginePtr)->testState);
 		} 
 		
 
@@ -599,8 +599,16 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		
 			//PRINT("%x\n",mask);
 			//OperatDoSet(_obj->device.testInstrument
-				OperatDoSet(_obj->device.relayConfig,mask);
+				if(OperatDoSet(_obj->device.relayConfig,mask)==FALSE)
+				{
+					WarnShow1(0,"操作继电器失败");
+					((TESTengine*)_obj->enginePtr)->testState=TEST_STOP;
+				}
 			}
+		}
+		
+		if(((TESTengine*)_obj->enginePtr)->testState==TEST_STOP){
+			 return TEST_ERROR;
 		}
 		
 		

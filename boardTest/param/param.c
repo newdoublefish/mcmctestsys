@@ -67,8 +67,9 @@ METHODRET ParamTest(TestGroup group,EUT eut,HashTableType hashTable)
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;
-	
+	{
+		return 	TEST_RESULT_ERROR;
+	}
 	ListType paramsToSet=ListCreate(sizeof(PARAMETER));
 	ListType paramsToFetch=0;
 	
@@ -157,7 +158,9 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 	*/
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;	
+	{
+		return 	TEST_RESULT_ERROR;
+	}	
 	ListType paramsToFetch=ListCreate(sizeof(PARAMETER));
 
 	
@@ -229,7 +232,9 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable)
 	*/
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;	
+	{
+		return 	TEST_RESULT_ERROR;
+	}	
 	ListType paramsToFetch=ListCreate(sizeof(PARAMETER));
 
 	
@@ -299,7 +304,9 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 	*/
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;	
+	{
+		return 	TEST_RESULT_ERROR;
+	};	
 
 	return ret;
 }
@@ -407,7 +414,9 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 	char stubName[20]={0};
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;
+	{
+		return 	TEST_RESULT_ERROR;
+	}
 	
 	int panelHandle=LoadPanel(0,"ParamPanel.uir",SCANPANEL);
 	
@@ -505,7 +514,9 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	*/
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;
+	{
+		return 	TEST_RESULT_ERROR;
+	}
 	
 	TestItem item;
 	PARAMETER param={0};
@@ -526,7 +537,10 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 		flag1=1;
 	}
 	
-	OpenDo(eut.relayConfig,30);
+	if(OpenDo(eut.relayConfig,30)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
 	
 	Delay(2);
 	
@@ -552,7 +566,10 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	}
 	
 
-	CloseDo(eut.relayConfig,30);
+	if(CloseDo(eut.relayConfig,30)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
 	Delay(2); 
 	
 	if(GetParameter(servicePtr,&param)<0)
@@ -602,8 +619,14 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 	TestItem item;
 	ListGetItem(group.subItems,&item,1);
 	//step1
-	OpenDo(eut.relayConfig,29);
-	CloseDo(eut.relayConfig,28);
+	if(OpenDo(eut.relayConfig,29)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	if(CloseDo(eut.relayConfig,28)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
 	BOOL flag=TRUE;
 	if(AlertDialogWithRet(0,"枪检查","请确认可以正常充电","错误","正确")==FALSE)
 	{
@@ -611,13 +634,22 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 	}
 	
 	//OpenDo(eut.relayConfig,29);
-	OpenDo(eut.relayConfig,28);
+	if(OpenDo(eut.relayConfig,28)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
 	if(AlertDialogWithRet(0,"枪检查","请确认不能正常充电","错误","正确")==FALSE)
 	{
 		flag=FALSE;
 	}
-	CloseDo(eut.relayConfig,29);
-	CloseDo(eut.relayConfig,28);
+	if(CloseDo(eut.relayConfig,29)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	if(CloseDo(eut.relayConfig,28)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
 	
 	RESULT itemResult={0};
 	itemResult.index=item.itemId;
@@ -640,7 +672,9 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 	BOOL flag=TRUE;
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;
+	{
+		return 	TEST_RESULT_ERROR;
+	}
 	//充电模块确认
 	TestItem item1;
 	ListGetItem(group.subItems,&item1,1);
@@ -657,7 +691,10 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 	
 	saveResult(hashTable,&itemResult1);	
 	
-	OpenDo(eut.relayConfig,31);
+	if(OpenDo(eut.relayConfig,31)==FALSE)
+	{
+		return 	TEST_RESULT_ERROR;
+	}
 
 	WarnShow1(0,"按下确定开始读数");
 	
@@ -673,12 +710,12 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		if(FALSE==getParameter(item.itemName_,&param))
 		{
 			WarnShow1(0,"无该参数配置");
-			//goto DONE;
+			goto DONE;
 		}
 		if(GetParameter(servicePtr,&param)<0)
 		{	
 			WarnShow1(0,"获取失败");
-				//goto DONE;
+			goto DONE;
 		}			
 		printf("----------------------------%s\n",param.value);
 		ListInsertItem(paramsToGet,&param,END_OF_LIST);
@@ -730,14 +767,13 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}
 		saveResult(hashTable,&itemResult);			
 	}		
-		
-		
-	
-
+DONE:
 	ListDispose(paramsToSet);
 	ListDispose(paramsToGet);
-	CloseDo(eut.relayConfig,31); 
-DONE:	
+	if(CloseDo(eut.relayConfig,31)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}	
 	return ret;
 }
 

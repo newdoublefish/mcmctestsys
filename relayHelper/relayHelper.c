@@ -15,6 +15,7 @@
 #include <rs232.h>
 #include "relayHelper.h"
 #include "crcCalc.h"
+#include "common.h"
 #define DEBUG
 
 /*
@@ -90,7 +91,8 @@ BOOL operateDo(RSCONFIG config,RelayBuf *bufPtr)
 {
 	if(OpenComConfig (config.portNum, NULL, config.baudRate,config.parity,config.dataBit,config.stopBit, 1024, 1024)<0)
 	{
-	     return FALSE;;
+		WarnShow1(0,"打开继电器串口失败");
+	     return FALSE;
 	}
 
 	if(SendRelayData(config.portNum,*bufPtr)<0)
