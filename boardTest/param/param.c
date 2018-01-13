@@ -396,7 +396,7 @@ int CVICALLBACK ParamScanCtrlCallback (int panel, int control, int event,
 				GetCtrlVal(panel,control,temp);
 				if(strlen(temp)>=16){
 					SetCtrlVal(panel,control,temp+4);
-					QuitUserInterface(1);
+					//QuitUserInterface(1);
 				}				
 			 }
 		     break;
@@ -538,7 +538,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 		WarnShow1(0,"获取失败");
 		//goto DONE;
 	}
-	printf("-----------------%s\n",param.value);
+	//printf("-----------------%s\n",param.value);
 	
 	if(strcmp(param.value,"false")==0)
 	{
@@ -557,7 +557,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 		WarnShow1(0,"获取失败");
 		//goto DONE;
 	}
-	printf("-----------------%s\n",param.value); 
+	//printf("-----------------%s\n",param.value); 
 	
 	if(strcmp(param.value,"true")==0)
 	{
@@ -585,7 +585,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 		WarnShow1(0,"获取失败");
 		//goto DONE;
 	}
-	printf("-----------------%s\n",param.value); 
+	//printf("-----------------%s\n",param.value); 
 	
 	if(strcmp(param.value,"false")==0)
 	{
@@ -600,7 +600,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	//合上开关31
 	
 	//printf("-----------------%s\n",param.value);
-	printf("%d,%d,%d\n",flag1,flag2,flag3);
+	//("%d,%d,%d\n",flag1,flag2,flag3);
 DONE:	
 	RESULT itemResult={0};
 	itemResult.index=item.itemId;
@@ -639,9 +639,12 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 	if(AlertDialogWithRet(0,"枪检查","请确认可以正常充电","错误","正确")==FALSE)
 	{
 		flag=FALSE;
+		goto DONE;
 	}
 	
 	//OpenDo(eut.relayConfig,29);
+	
+	WarnShow1(0,"请关闭充电！！");
 	if(OpenDo(eut.relayConfig,28)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
@@ -650,6 +653,7 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 	{
 		flag=FALSE;
 	}
+DONE:	
 	if(CloseDo(eut.relayConfig,29)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
@@ -694,7 +698,7 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		flag=FALSE;
 		itemResult1.pass=0;
 		saveResult(hashTable,&itemResult1);
-		goto DONE;
+		return TEST_RESULT_ALLPASS;
 	}
 	
 	saveResult(hashTable,&itemResult1);	
@@ -714,35 +718,38 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		ListGetItem(group.subItems,&item,i);
 
 		PARAMETER param={0};
-		ListInsertItem(paramsToSet,&param,END_OF_LIST);
+		
 		if(FALSE==getParameter(item.itemName_,&param))
 		{
 			WarnShow1(0,"无该参数配置");
 			goto DONE;
 		}
+		ListInsertItem(paramsToSet,&param,END_OF_LIST);
 		if(GetParameter(servicePtr,&param)<0)
 		{	
 			WarnShow1(0,"获取失败");
 			goto DONE;
 		}			
-		printf("----------------------------%s\n",param.value);
+		//printf("----------------------------%s\n",param.value);
 		ListInsertItem(paramsToGet,&param,END_OF_LIST);
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
 		sprintf(itemResult.recvString,"%s",param.value);
 		float strValue=atof(param.value);
-		if(i==2)
+		if(i==3)
 		{
 			if(strValue<352 && strValue>348)
 			{
 				itemResult.pass=1;
 			}
-		}else if(i==3)
+		}else if(i==2)
 		{
 			if(strValue<2.87 && strValue>2.67)
 			{
 				itemResult.pass=1;
 			}
+		}else{
+			itemResult.pass=1; 
 		}
 		saveResult(hashTable,&itemResult);			
 	}
@@ -760,13 +767,14 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		itemResult.index=item.itemId;
 		sprintf(itemResult.recvString,"%s",param.value);
 		float strValue=atof(param.value);
-		if(i==1)
+		itemResult.pass=1;
+		if(i==2)
 		{
 			if(strValue<352 && strValue>348)
 			{
 				itemResult.pass=1;
 			}
-		}else if(i==2)
+		}else if(i==1)
 		{
 			if(strValue<2.87 && strValue>2.67)
 			{
@@ -776,8 +784,8 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		saveResult(hashTable,&itemResult);			
 	}		
 DONE:
-	ListDispose(paramsToSet);
-	ListDispose(paramsToGet);
+	//ListDispose(paramsToSet);
+	//ListDispose(paramsToGet);
 	if(CloseDo(eut.relayConfig,31)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
@@ -821,7 +829,7 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable)
 		WarnShow1(0,"无该参数配置");
 	}
 	char tempStr[50]={0};
-	printf("%s\n",item.inputValue_);
+	//printf("%s\n",item.inputValue_);
 	if(strcmp("NA",item.inputValue_)!=0){
 		sprintf(tempStr,"%s",item.inputValue_);			
 	}else{
@@ -837,18 +845,22 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable)
 	}
 	sprintf(itemResult.recvString,"%s",param.value);
 	saveResult(hashTable,&itemResult);
-	
+	disConnectFromStub(servicePtr);	
+	ReleaseStubNetService();	
 	if(CloseDo(eut.relayConfig,1)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
 	
 	Delay(5);
+
 	
 	if(OpenDo(eut.relayConfig,1)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
+	
+	
 	
 	WarnShow1(0,"请确认设备已经器动");
 	

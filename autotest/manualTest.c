@@ -34,6 +34,7 @@ METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable)
 	InsertTableCellRangeRingItem (panelHandle, PANEL_TABLE, MakeRect(1, 4, ListNumItems(group.subItems), 1), -1, "²»ºÏ¸ñ");
 	SetActiveTableCell (panelHandle, PANEL_TABLE, MakePoint(3,1));
 	FakeKeystroke(VAL_F2_VKEY); 
+	SetActiveCtrl(panelHandle,PANEL_COMMANDBUTTON);
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item;

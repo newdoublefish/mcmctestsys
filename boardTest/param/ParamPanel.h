@@ -23,6 +23,7 @@
 #define  SCANPANEL_SCAN2                  4       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN1                  5       /* control type: string, callback function: (none) */
 #define  SCANPANEL_TEXTMSG                6       /* control type: textMsg, callback function: (none) */
+#define  SCANPANEL_COMMANDBUTTON          7       /* control type: command, callback function: (none) */
 
 
      /* Control Arrays: */
