@@ -32,7 +32,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 10
+Number of Opened Files = 12
 Window Confinement Region Enabled = True
 MainColumnWidth = 251
 FileDateColumnWidth = 70
@@ -148,7 +148,7 @@ Disk Date = 3598850757
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 8
+Window Z-Order = 10
 Source Window State = "1,291,291,291,5,29,29,0,3,80,0,0,0,0,0,18,278,0,291,5,239,517,1,0,"
 
 [File 0014]
@@ -160,7 +160,7 @@ Window Top = 32
 Window Left = 10
 Window Height = 323
 Window Width = 605
-Window Z-Order = 2
+Window Z-Order = 3
 
 [File 0015]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
@@ -169,7 +169,7 @@ Disk Date = 3598877356
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 3
+Window Z-Order = 5
 Source Window State = "1,652,652,652,26,27,27,0,0,80,0,828,0,0,0,21,0,0,20,101,275,517,1,59,"
 
 [File 0016]
@@ -237,7 +237,7 @@ Window Top = 32
 Window Left = 10
 Window Height = 323
 Window Width = 605
-Window Z-Order = 9
+Window Z-Order = 11
 
 [File 0023]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/eutConfig/EutPanel.uir"
@@ -321,12 +321,13 @@ Window Width = 605
 [File 0031]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/SutPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3598827356
+Disk Date = 3598878523
 In Projects = "1,"
 Window Top = 152
 Window Left = 74
 Window Height = 323
 Window Width = 605
+Window Z-Order = 2
 
 [File 0032]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/appInit.c"
@@ -362,8 +363,8 @@ Disk Date = 3598878020
 In Projects = "1,"
 Window Top = 192
 Window Left = 106
-Window Z-Order = 1
-Source Window State = "1,173,173,173,10,19,19,0,0,163,0,88,0,0,0,27,339,0,138,86,323,605,1,0,"
+Window Z-Order = 4
+Source Window State = "1,173,173,173,10,19,19,0,0,95,0,88,0,0,0,25,174,0,192,78,323,605,1,0,"
 
 [File 0036]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/convertTool.c"
@@ -645,11 +646,12 @@ Source Window State = "1,23,23,23,8,14,14,0,0,0,0,44,0,44,0,0,17,0,18,4,215,517,
 [File 0067]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/sutConfig.c"
 File Type = "CSource"
-Disk Date = 3595559776
+Disk Date = 3598878660
 In Projects = "1,"
 Window Top = 92
 Window Left = 42
-Source Window State = "1,99,99,99,4,17,17,0,0,0,0,0,0,0,0,0,80,0,96,43,251,605,1,0,"
+Window Z-Order = 1
+Source Window State = "1,94,94,94,10,31,31,0,0,163,0,0,0,0,0,27,101,0,123,33,251,605,1,0,"
 
 [File 0068]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/sutEntity.c"
@@ -667,7 +669,7 @@ Disk Date = 3598875283
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 4
+Window Z-Order = 6
 Source Window State = "1,352,352,352,100,101,100,0,0,95,0,403,0,0,0,25,270,0,347,87,323,605,1,0,"
 
 [File 0070]
@@ -695,7 +697,7 @@ Disk Date = 3595478701
 In Projects = "1,"
 Window Top = 182
 Window Left = 90
-Window Z-Order = 10
+Window Z-Order = 12
 Source Window State = "1,104,104,104,8,20,20,0,0,95,0,0,0,0,0,25,127,0,99,75,323,605,1,0,"
 
 [File 0073]
@@ -1081,7 +1083,7 @@ Disk Date = 3598845439
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 7
+Window Z-Order = 9
 Source Window State = "1,68,68,68,5,26,26,0,0,80,0,0,0,0,0,18,51,0,59,64,239,517,1,0,"
 
 [File 0116]
@@ -1105,7 +1107,7 @@ Source Window State = "1,19,19,19,8,22,22,0,0,0,0,0,0,0,0,0,0,0,12,96,323,605,1,
 [File 0118]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/SutPanel.h"
 File Type = "Include"
-Disk Date = 3598827356
+Disk Date = 3598878523
 In Projects = "1,"
 Window Top = 212
 Window Left = 106
@@ -1118,7 +1120,7 @@ Disk Date = 3598869020
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Window Z-Order = 6
+Window Z-Order = 8
 Source Window State = "1,76,76,76,1,11,11,0,0,95,0,72,0,13,0,21,54,0,63,72,275,605,1,0,"
 
 [File 0120]
@@ -1128,7 +1130,7 @@ Disk Date = 3597961146
 In Projects = "1,"
 Window Top = 32
 Window Left = 10
-Window Z-Order = 5
+Window Z-Order = 7
 Source Window State = "1,32,32,32,1,10,10,0,0,112,0,0,0,0,0,25,28,0,33,33,323,707,1,0,"
 
 [File 0121]
@@ -1349,6 +1351,8 @@ Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/StubNetService.c
 Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/testGroupInit.h"
 Tab 0009 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/common.c"
 Tab 0010 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.uir"
+Tab 0011 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/SutPanel.uir"
+Tab 0012 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/sutConfig.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

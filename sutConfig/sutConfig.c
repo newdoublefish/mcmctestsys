@@ -58,6 +58,8 @@ void DisplaySutConfigPanel()
 	}
     //显示面板
     DisplayPanel(sutConfigPanelHandle);
+	RunUserInterface();
+	DiscardPanel (sutConfigPanelHandle); 
 }
 
 
@@ -88,9 +90,9 @@ int CVICALLBACK SYSTEM_SELECTE_NEXT (int panel, int control, int event,
           //打印结果  
 		  //if(testInit(selectSut))
 
-		  DiscardPanel (sutConfigPanelHandle); 
+		  
 		  PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);
- 
+ 		  QuitUserInterface(1);
 
 		  break;
 	}
@@ -118,7 +120,8 @@ int CVICALLBACK oNsutQuit (int panel, int control, int event,
 		case EVENT_COMMIT:
 			unsigned int wParam1=9;
             unsigned int lParam1=0;
-			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);  
+			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1); 
+			QuitUserInterface(1);
 			break;
 	}
 	return 0;
