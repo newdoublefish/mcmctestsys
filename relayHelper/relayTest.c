@@ -13,6 +13,7 @@
  //-------------------------------------------------------------------------*/
 #include "tpsHelper.h"
 #include "resultSave.h"
+#include "common.h"
 
 METHODRET RelayTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
@@ -24,8 +25,8 @@ METHODRET RelayTest(TestGroup group,EUT eut,HashTableType hashTable)
 		RESULT itemResult;
 		itemResult.index=item.itemId;
 		itemResult.pass=1;
-		if(item.input_Value>0)
-			Delay(item.input_Value);
+		if((int)item.input_Value > 0)
+			WarnAlert(0,"延时中....,按确定跳过",(int)item.input_Value);
 		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
 		sprintf(itemResult.recvString,"%s","OK");
 		saveResult(hashTable,&itemResult);

@@ -162,6 +162,7 @@ int sendTcpData(const char *buffer,tNET_SERVICE *servicePtr,float timeOutSec)
 		bytesToWrite -= bytesWritten;
 		if(Timer()-baseTime > timeOutSec)
 		{
+			//if()
 			servicePtr->setFlag=0; 
 			(*(ON_NET_TIMEOUT)servicePtr->onTimeOut)(servicePtr);
 			return -1;
@@ -290,16 +291,18 @@ void onStubConnected(tNET_SERVICE *servicePtr)
 
 void ReleaseStubNetService()
 {
-	if(gServicePtr!=NULL)
+	if(gServicePtr!=NULL){
 		free(gServicePtr);
-	gServicePtr=NULL;
+		gServicePtr=NULL;
+	}
 }
 
 
 void onStubDisConnected(tNET_SERVICE *servicePtr)
 {
 	//MessagePopup("warning","diconnect from server");
-	disConnectFromStub(servicePtr);
+	if(servicePtr!=NULL)
+		disConnectFromStub(servicePtr);
 	ReleaseStubNetService();
 }
 
@@ -312,6 +315,7 @@ void onStubTimeOut(tNET_SERVICE *servicePtr)
 
 tNET_SERVICE *getStubNetService(char *ip,int port)
 {
+	ProcessTCPEvents();
 	if(gServicePtr==NULL)
 	{
 		 gServicePtr =(tNET_SERVICE*)malloc(sizeof(tNET_SERVICE));

@@ -19,6 +19,12 @@
 #include "WarnPanel.h"
 #include "settingConfig.h"
 
+typedef struct{
+	int currentTime;
+	int closeTime;
+	int buttonDimmedTimer;
+}tDialogTime;
+
 void alignToParentPanel(int parent,int ctrl)
 {
 	int parentTabWidth,parentTabHeight,width,height;
@@ -53,6 +59,59 @@ void WarnShow1(int panel,char *meesage)
 	DiscardPanel(pnl);
 }
 
+int CVICALLBACK onWarnAlertCtrlCallBack (int panel, int control, int event,
+		void *callbackData, int eventData1, int eventData2)
+{
+	
+	switch (event)
+	{
+		case EVENT_TIMER_TICK:
+			char temp[30]={0};
+			int *t = (int *)callbackData;
+			*t=*t-1;;
+			//printf("%d\n",*t);
+			sprintf(temp,"%d",*t);
+			SetCtrlVal(panel,PANEL_WARN_TimeDisplayTM,temp);			
+			if(*t--<=0)
+			{
+				QuitUserInterface(1);	
+			}
+			break;			
+		case EVENT_COMMIT:
+			 QuitUserInterface(1);
+		     break;
+	}
+	return 0;
+}
+
+void WarnAlert(int panel,char *meesage,int closeTime)
+{
+	int pnl;
+	char temp[30]={0};
+	pnl=LoadPanel (panel, "WarnPanel.uir", PANEL_WARN);  
+	SetCtrlVal(pnl,PANEL_WARN_TEXTMSG,meesage);
+	DisplayPanel(pnl);
+	InstallCtrlCallback(pnl,PANEL_WARN_COMMANDBUTTON,onWarnAlertCtrlCallBack,NULL);
+	
+	if(closeTime > 0)
+	{
+		sprintf(temp,"%d",closeTime);
+		SetCtrlVal(pnl,PANEL_WARN_TimeDisplayTM,temp);
+		InstallCtrlCallback (pnl,PANEL_WARN_TIMER,onWarnAlertCtrlCallBack,&closeTime); 
+	}else{
+		SetCtrlVal(pnl,PANEL_WARN_TimeDisplayTM," ");
+	}
+	RunUserInterface();
+	DiscardPanel(pnl);
+}
+
+void SetTipPanelButtonDimmed(int panel,int dimmed){
+
+	SetCtrlAttribute(panel,MANUALTIPS_SURE,ATTR_DIMMED,dimmed);
+	SetCtrlAttribute(panel,MANUALTIPS_CANCEL,ATTR_DIMMED,dimmed);
+	SetCtrlAttribute(panel,MANUALTIPS_STOP,ATTR_DIMMED,dimmed);	
+}
+
 
 int CVICALLBACK tipTimerCallback (int panel, int control, int event,
 		void *callbackData, int eventData1, int eventData2)
@@ -62,13 +121,19 @@ int CVICALLBACK tipTimerCallback (int panel, int control, int event,
 		case EVENT_TIMER_TICK:
 			
 			char temp[30]={0};			
-			SETTING s=GetSetting(); 
-			int *data=(int *)callbackData;
-			*data+=1;
-			sprintf(temp,"%d",s.mentionAutoCloseTime-*data);
-			SetCtrlVal(panel,MANUALTIPS_TIMERSTR,temp); 
-			if(*data>=s.mentionAutoCloseTime)
-				 QuitUserInterface(1); 
+			tDialogTime *data=(tDialogTime *)callbackData;
+			data->currentTime+=1;
+			if(data->closeTime>0)
+			{
+				sprintf(temp,"%d",data->closeTime - data->currentTime);
+				SetCtrlVal(panel,MANUALTIPS_TIMERSTR,temp); 
+				if(data->currentTime>=data->closeTime)
+					 QuitUserInterface(1);
+			}
+			if(data->currentTime > data->buttonDimmedTimer)
+			{
+				SetTipPanelButtonDimmed(panel,0);
+			}
 			break;
 		case EVENT_COMMIT:
 			BOOL *ret = (BOOL *)callbackData; 
@@ -90,7 +155,6 @@ int CVICALLBACK tipTimerCallback (int panel, int control, int event,
 BOOL showTips(int panel,char *title,char *tip,int *flag)
 {
 	BOOL ret=1;
-    int timeOut=0;
 	int testPanel;
 	SETTING s=GetSetting();
 	//InstallPopup (panelHandle);
@@ -98,11 +162,17 @@ BOOL showTips(int panel,char *title,char *tip,int *flag)
 	SetCtrlVal(testPanel,MANUALTIPS_GRROUPNAME,title);
 	SetCtrlVal(testPanel,MANUALTIPS_TEXTBOX,tip); 
 	
-	if(s.mentionAutoCloseTime>0)
-	   InstallCtrlCallback (testPanel,MANUALTIPS_TIMER,tipTimerCallback,&timeOut);
+	//if(s.mentionAutoCloseTime>0)
+	tDialogTime tt={0};
+	tt.closeTime = s.mentionAutoCloseTime;
+	tt.currentTime=0;
+	tt.buttonDimmedTimer = 0;
+	InstallCtrlCallback (testPanel,MANUALTIPS_TIMER,tipTimerCallback,&tt);
 	InstallCtrlCallback(testPanel,MANUALTIPS_SURE,tipTimerCallback,&ret);
 	InstallCtrlCallback(testPanel,MANUALTIPS_CANCEL,tipTimerCallback,&ret);
 	InstallCtrlCallback(testPanel,MANUALTIPS_STOP,tipTimerCallback,flag);
+	if(tt.closeTime>0)
+		SetTipPanelButtonDimmed(panel,1); 	
 	DisplayPanel(testPanel);
 	RunUserInterface();
 	DiscardPanel(testPanel);

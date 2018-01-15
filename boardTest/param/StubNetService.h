@@ -63,8 +63,8 @@ void connectToStub(tNET_SERVICE *servicePtr);
 
 
 int startCommand(tNET_SERVICE *servicePtr,char *cmd);  
-void disConnectFromStub(tNET_SERVICE *servicePtr);
-void ReleaseStubNetService();
+
+void onStubDisConnected(tNET_SERVICE *servicePtr);
 
 
 void connectToStubSync(tNET_SERVICE *servicePtr);

@@ -86,6 +86,7 @@ int GetParameter(tNET_SERVICE *servicePtr,PARAMETER *para)
 {
 	char cmd[50]={0};
 	sprintf(cmd,"g %d\r\n",para->group);
+	memset(para->value,0,128);
 	if(startCommand(servicePtr,cmd)<0)
 		return -1;
 	memset(cmd,0,50);

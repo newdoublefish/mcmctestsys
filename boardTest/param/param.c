@@ -445,6 +445,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 		
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
+		itemResult.pass=0;
 		if(stubNameLen>0)
 			itemResult.pass=1;
 		if(i==1)
@@ -459,10 +460,21 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 				WarnShow1(0,"无该参数配置");
 				continue;
 			}
-			sprintf(itemResult.recvString,"%s",stubName);
-			sprintf(param.value,"00000%s",itemResult.recvString);
+			sprintf(itemResult.recvString,"00000%s",stubName);
+			sprintf(param.value,"%s",itemResult.recvString);
 			if(ConfigParameter(servicePtr,param)<0)
-				continue;			
+				continue;
+			if(GetParameter(servicePtr,&param)<0){
+				continue;
+			}
+			
+			if(strcmp(itemResult.recvString,param.value)==0)
+			{
+				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
+			}
+			sprintf(itemResult.recvString,"%s",param.value);			
 			
 			
 		}else if(i==4)
@@ -476,9 +488,20 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 			sprintf(param.value,"%s",itemResult.recvString);
 			if(ConfigParameter(servicePtr,param)<0)
 				continue;
+			if(GetParameter(servicePtr,&param)<0){
+				continue;
+			}
 			
+			if(strcmp(itemResult.recvString,param.value)==0)
+			{
+				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
+			}
+			sprintf(itemResult.recvString,"%s",param.value);
 			
-			
+						
+	
 		}else if(i==5)
 		{
 			if(FALSE==getParameter(item.itemName_,&param))
@@ -490,7 +513,18 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN4,itemResult.recvString);
 			sprintf(param.value,"%s",itemResult.recvString);
 			if(ConfigParameter(servicePtr,param)<0)
-				continue;			
+				continue;
+			if(GetParameter(servicePtr,&param)<0){
+				continue;
+			}
+			
+			if(strcmp(itemResult.recvString,param.value)==0)
+			{
+				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
+			}
+			sprintf(itemResult.recvString,"%s",param.value);			
 		}
 		saveResult(hashTable,&itemResult);
 	}	
@@ -549,6 +583,14 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	{
 		return TEST_RESULT_ERROR;
 	}
+	if(OpenDo(eut.relayConfig,2)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	if(OpenDo(eut.relayConfig,3)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}	
 	
 	Delay(2);
 	
@@ -578,6 +620,14 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	{
 		return TEST_RESULT_ERROR;
 	}
+	if(CloseDo(eut.relayConfig,2)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	if(CloseDo(eut.relayConfig,3)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}	
 	Delay(2); 
 	
 	if(GetParameter(servicePtr,&param)<0)
@@ -845,8 +895,7 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable)
 	}
 	sprintf(itemResult.recvString,"%s",param.value);
 	saveResult(hashTable,&itemResult);
-	disConnectFromStub(servicePtr);	
-	ReleaseStubNetService();	
+	onStubDisConnected(servicePtr);
 	if(CloseDo(eut.relayConfig,1)==FALSE)
 	{
 		return TEST_RESULT_ERROR;

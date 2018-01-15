@@ -43,6 +43,8 @@
 #define  PANEL_WARN_COMMANDBUTTON         2       /* control type: command, callback function: (none) */
 #define  PANEL_WARN_TEXTMSG_2             3       /* control type: textMsg, callback function: (none) */
 #define  PANEL_WARN_TEXTMSG               4       /* control type: textMsg, callback function: (none) */
+#define  PANEL_WARN_TIMER                 5       /* control type: timer, callback function: (none) */
+#define  PANEL_WARN_TimeDisplayTM         6       /* control type: textMsg, callback function: (none) */
 
 #define  PROGRESS                         5
 #define  PROGRESS_RINGSLIDE               2       /* control type: slide, callback function: (none) */

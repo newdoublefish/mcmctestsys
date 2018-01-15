@@ -591,6 +591,10 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		if(FALSE == testFlag)
 			return TEST_RESULT_QUIT;//注意返回值这里，应该让整个引擎停止，暂时返回ERROR
 		
+		if(((TESTengine*)_obj->enginePtr)->testState==TEST_STOP){
+			 return TEST_RESULT_QUIT;
+		}		
+		
 		//继电器操作
 		unsigned int mask=0;
 		if(set.relayEnable)
