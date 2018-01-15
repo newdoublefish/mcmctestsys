@@ -287,14 +287,14 @@ static int CVICALLBACK DoTestFunction(void * data)
 	 ListGetItem(((TESTengine *)(obj->enginePtr))->collectList,&collect,currentCollect);
 	 
 	
-    for(int i= obj->seq.beginGroup ;i<=ListNumItems(collect.groups);i++)
+    for(;obj->seq.beginGroup<=ListNumItems(collect.groups);obj->seq.beginGroup++)
 	{
 		//PRINT("collect:%d,group:%d\n",currentCollect,i);
 		BOOL retryFlag=FALSE;
 		int groupIndex;
 		int itemIndex=0;  //重第几个条例开始显示
 		TestGroup testItem;   
-		ListGetItem(collect.groups,&groupIndex,i);//获取组的ID号
+		ListGetItem(collect.groups,&groupIndex,obj->seq.beginGroup);//获取组的ID号
 		ListGetItem(((TESTengine *)(obj->enginePtr))->itemList,&testItem,groupIndex);//获取组
 		obj->totalFinishedTestGroupCount+=1;  //已完成测试组数量加1
 		//int retryCount=0;
@@ -350,7 +350,7 @@ static int CVICALLBACK DoTestFunction(void * data)
 				 //endTime=Timer();
 			  }
 			  if(obj->onResultShowListener!=NULL)
-			       retryFlag=! (*(ON_RESULT_SHOW_LISTENER)(obj->onResultShowListener))(obj,testItem,i,&itemIndex);
+			       retryFlag=! (*(ON_RESULT_SHOW_LISTENER)(obj->onResultShowListener))(obj,testItem,obj->seq.beginGroup,&itemIndex);
 			  
 		}while(retryFlag);
 		

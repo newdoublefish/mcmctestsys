@@ -38,6 +38,7 @@
 #include "mediaHelper.h"
 #include "relayProtocol.h"
 #include "relayHelper.h"
+//#include "StubNetService.h"
 
 static int autoPanelHandle=0;
 
@@ -259,6 +260,8 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 	//printf("-------tag:%d,numDescendents:%d,numParents:%d\n",getNumFromTag(tag),numDescendents,numParents); 
 }
 
+
+//TODO:最好不要有这种情况，因为在多台设备并行测试时候不好操作，所幸，这里只测试一台。
 static void CVICALLBACK onMenuSingleObjectTestCB(int panel, int controlID, int MenuItemID, 
 									void *callbackData)
 {
@@ -621,12 +624,53 @@ static void operateTimer(int on)
 	//SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0分0秒");
 }
 
+void SetActiveTestGroup(TESTobject *_obj)
+{
+	//获取到collect的具体index
+	int collectIndex=0;
+
+	 
+	for(int i=1;i<_obj->seq.beginCollect;i++)
+    {		
+		GetTreeItem(_obj->panelHandle,P_ITEMSHOW_TREE,VAL_SIBLING,0,collectIndex,VAL_NEXT,0,&collectIndex); 
+	}
+    int groupCount;
+	GetNumTreeItems(_obj->panelHandle,P_ITEMSHOW_TREE,VAL_CHILD,collectIndex,VAL_FIRST,VAL_NEXT_PLUS_SELF,0,&groupCount);	
+	int groupIndex=collectIndex+1;
+	//PRINT("groupIndex=%d\n",groupIndex); 
+	//PRINT("total:%d,current:%d,%s",t->totalTestGroupCount,obj->totalFinishedTestGroupCount,percStr);
+	
+	for(int i=1;i<=groupCount;i++)
+	{
+		//获取条例的数量
+		int itemCount;
+		GetNumTreeItems(_obj->panelHandle,P_ITEMSHOW_TREE,VAL_CHILD,groupIndex,VAL_FIRST,VAL_NEXT_PLUS_SELF,0,&itemCount);
+		
+		//SetActiveTreeItem(_obj->panelHandle,P_ITEMSHOW_TREE,groupIndex,VAL_REPLACE_SELECTION_WITH_ITEM);
+		//break;
+		int itemIndex=groupIndex+1;
+		
+		//获取组结果
+		char groupIndexStr[32]={0}; 
+		GetTreeItemTag(_obj->panelHandle,P_ITEMSHOW_TREE,groupIndex,groupIndexStr);
+			
+		int groupNum=atoi(groupIndexStr);
+		if(i==_obj->seq.beginGroup)
+		{	
+			SetActiveTreeItem(_obj->panelHandle,P_ITEMSHOW_TREE,itemIndex,VAL_REPLACE_SELECTION_WITH_ITEM);
+		}
+		GetTreeItem(_obj->panelHandle,P_ITEMSHOW_TREE,VAL_SIBLING,groupIndex,groupIndex,VAL_NEXT,0,&groupIndex);
+	}
+}
+
 extern METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable);
 ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 {
 	 	ENUMTestResult ret=TEST_RESULT_ALL_PASS;
 		BOOL testFlag=TRUE;
 		METHODRET testRet= TEST_ERROR; 
+		
+		SetActiveTestGroup(_obj);
 		
 		SETTING set=getSetting();
 		//提示
@@ -713,7 +757,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		    	ret=TEST_RESULT_SOME_PASS; 
 		}else
 		{
-		    WarnShow1(0,"不支持的TPS类型，请人工填写测试数据和结果"); 
+		    //WarnShow1(0,"不支持的TPS类型，请人工填写测试数据和结果"); 
 			//不支持的用默认弹框来测试
 			testRet =manualTest(testItem,_obj->device,_obj->resultHashTable);
 		   	if(testRet==TEST_RESULT_ALLPASS)
@@ -941,6 +985,7 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
+			//ReleaseStubNetService();//断开与充电桩的连接
 			releaseTestEngine(engine);
 			DiscardPanel(panel); 
 			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);  
