@@ -171,8 +171,8 @@ BOOL showTips(int panel,char *title,char *tip,int *flag)
 	InstallCtrlCallback(testPanel,MANUALTIPS_SURE,tipTimerCallback,&ret);
 	InstallCtrlCallback(testPanel,MANUALTIPS_CANCEL,tipTimerCallback,&ret);
 	InstallCtrlCallback(testPanel,MANUALTIPS_STOP,tipTimerCallback,flag);
-	if(tt.closeTime>0)
-		SetTipPanelButtonDimmed(panel,1); 	
+	if(tt.buttonDimmedTimer>0)
+		SetTipPanelButtonDimmed(testPanel,1); 	
 	DisplayPanel(testPanel);
 	RunUserInterface();
 	DiscardPanel(testPanel);

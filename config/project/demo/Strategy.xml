@@ -3,5 +3,5 @@
 	<StrategyName>策略1</StrategyName>
 	<StrategyTestType>Serial</StrategyTestType>
 	<Collects>
-		<Collect><CollectName>22</CollectName><Type>1</Type><TestType>0</TestType><MaxTestDevice>2</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>1</GroupId><GroupId>2</GroupId><GroupId>3</GroupId></Groups></Collect><Collect><CollectName>33</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>1</GroupId><GroupId>2</GroupId><GroupId>3</GroupId><GroupId>4</GroupId></Groups></Collect></Collects>
+		<Collect><CollectName>22</CollectName><Type>1</Type><TestType>0</TestType><MaxTestDevice>2</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>1</GroupId><GroupId>2</GroupId><GroupId>3</GroupId></Groups></Collect><Collect><CollectName>33</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>1</GroupId><GroupId>2</GroupId><GroupId>3</GroupId><GroupId>4</GroupId></Groups></Collect><Collect><CollectName>43</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>7</GroupId><GroupId>6</GroupId><GroupId>5</GroupId><GroupId>4</GroupId><GroupId>3</GroupId><GroupId>2</GroupId><GroupId>1</GroupId></Groups></Collect></Collects>
 </Strategy>
