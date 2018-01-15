@@ -283,33 +283,13 @@ static int CVICALLBACK DoTestFunction(void * data)
 	     goto Done;
 	 }	 
 	 
-	 currentCollect= ((TESTengine *)(obj->enginePtr))->currentCollect;
+	 currentCollect= obj->seq.beginCollect;
 	 ListGetItem(((TESTengine *)(obj->enginePtr))->collectList,&collect,currentCollect);
 	 
-	 //printf("type:%d\n",collect.testType);
-	 if(collect.testType==2)//飞参测试
-	 {
-		 if(obj->onObjectCollectTestListener!=NULL)
-		 {
-		     ENUMTestResult testRet= TEST_ERROR; 
-			 testRet=(*(ON_OBJECT_COLLECT_TEST_LISTENER)(obj->onObjectCollectTestListener))(collect,obj);
-			 
-			 for(int i=1;i<=ListNumItems(collect.groups);i++)  //一组一组显示结果
-			 {
-				int groupIndex;
-				int itemIndex=0;
-			    TestGroup group;
-	          	ListGetItem(collect.groups,&groupIndex,i);//获取组的ID号
-	         	ListGetItem(((TESTengine *)(obj->enginePtr))->itemList,&group,groupIndex);//获取组
-			    if(obj->onResultShowListener!=NULL)
-			       (*(ON_RESULT_SHOW_LISTENER)(obj->onResultShowListener))(obj,group,i,&itemIndex);				
-			 }
-		 }
-	     goto Done;
-	 }
 	
-    for(int i=1;i<=ListNumItems(collect.groups);i++)
+    for(int i= obj->seq.beginGroup ;i<=ListNumItems(collect.groups);i++)
 	{
+		//PRINT("collect:%d,group:%d\n",currentCollect,i);
 		BOOL retryFlag=FALSE;
 		int groupIndex;
 		int itemIndex=0;  //重第几个条例开始显示
@@ -387,6 +367,67 @@ Done:
 	 return 0;
 }
 
+void runSingleObject(TESTengine *t,TESTobject *testObject){
+	if(t->totalTestObject==0)
+	{
+	    return;
+	}
+	
+	if(t->testState!=TEST_IDLE)
+	{
+	    goto Done;
+	}
+	
+	if(t->onTestBeginListener!=NULL)
+	{	
+	   if((*(ON_TEST_BEGIN_LISTENER)(t->onTestBeginListener))(t)==FALSE)
+	   {
+		  t->testState=TEST_FINISH;   
+		  LOG_EVENT(LOG_ERROR,"测试初始化出错"); 
+	      goto Done;
+	   }	   
+	   
+	}
+	t->testState=TEST_RUN;
+	Collect currentCollet;
+	for(int collectNum=testObject->seq.beginCollect;collectNum<=ListNumItems(t->collectList);collectNum++)
+	{
+		//currentCollectNum=collectNum;
+		Collect currentCollect;
+        if(!JudgeTestProcess(t))  //如果为完成，或者是重置，则跳出   
+	    {
+		    goto Done;
+		}	
+		
+		t->currentCollect=collectNum;
+		memset(&currentCollect,sizeof(Collect),0);
+		ListGetItem(t->collectList,&currentCollect,collectNum);
+		tTask task=createTask();
+		task.maxParallelObject=currentCollect.maxParallelDevice;
+		if(collectNum!=testObject->seq.beginCollect) //从指定组和集合开始测试，如果不为指定组合，那就从组1开始测试。
+		{
+			
+			testObject->seq.beginGroup = 1;
+			testObject->seq.beginCollect = collectNum;
+		}
+		
+		tObject object=createObject((void *)(testObject),DoTestFunction);
+		addObjectToTask(&task,&object);
+		//}
+		runTask(task);
+        if(!JudgeTestProcess(t))  //如果为完成，或者是重置，则跳出   
+	    {
+		    goto Done;
+		}	
+		
+	}
+	t->testState=TEST_FINISH;
+Done:
+	if(t->onTestFinishListener!=NULL) 
+	   (*(ON_TEST_FINISH_LISTENER)(t->onTestFinishListener))(t);	
+}
+
+
 void runTestEngine(TESTengine *t)
 {
 	/*获取集合序号*/
@@ -429,6 +470,8 @@ void runTestEngine(TESTengine *t)
 		task.maxParallelObject=currentCollect.maxParallelDevice;
 		for(int deviceIndex=1;deviceIndex<=t->totalTestObject;deviceIndex++)
 		{
+			  t->objectArray[deviceIndex-1].seq.beginCollect=collectNum;
+			  t->objectArray[deviceIndex-1].seq.beginGroup=1;
 			  tObject object=createObject((void *)(&(t->objectArray[deviceIndex-1])),DoTestFunction);
 			  addObjectToTask(&task,&object);
 		}

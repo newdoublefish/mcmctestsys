@@ -50,12 +50,18 @@ typedef enum
 	 TEST_NON_DEF
 }TESTstate;	
 
+typedef struct{
+	int beginCollect;
+	int beginGroup;
+}TESTObjectSeq;
+
 
 typedef struct
 {
 	int objectIndex;
 	int panelHandle;//显示面板
     EUT device; //测试设备信息
+	TESTObjectSeq seq;
 	HashTableType resultHashTable;//测试结果
 	void *enginePtr;
 	void *onObjectPanelCreateListener;   //对象面板创建
@@ -124,6 +130,8 @@ void reSetEngine(TESTengine *t);
 void disPlayTestPanel(TESTengine *t);
 
 void runTestEngine(TESTengine *t);
+
+void runSingleObject(TESTengine *t,TESTobject *testObject);
 
 void releaseTestEngine(TESTengine *t);
 

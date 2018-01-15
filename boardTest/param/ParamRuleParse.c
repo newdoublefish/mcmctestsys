@@ -83,6 +83,12 @@ int SearchAndParse(char *str,PARAMETER *para){
 			}else if(5==index)
 			{
 				sprintf(para->value,"%s %s",para->value,result);
+			}else if(6==index)
+			{
+				sprintf(para->value,"%s %s",para->value,result);
+			}else if(7==index)
+			{
+				sprintf(para->value,"%s %s",para->value,result);
 			}
        	 	result = strtok( NULL, delims );
 			index++;

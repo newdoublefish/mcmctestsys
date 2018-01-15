@@ -436,6 +436,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 	SetActiveCtrl(panelHandle,SCANPANEL_SCAN1);
 	DisplayPanel(panelHandle); 
 	RunUserInterface();
+	HidePanel(panelHandle);
 	int stubNameLen=strlen(stubName);
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -915,7 +916,7 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable)
 		return TEST_RESULT_ERROR;
 	}
 	
-	Delay(5);
+	WarnAlert(0,"重启中",3);
 
 	
 	if(OpenDo(eut.relayConfig,1)==FALSE)
@@ -925,7 +926,7 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable)
 	
 	
 	
-	WarnShow1(0,"请确认设备已经器动");
+	WarnAlert(0,"请确认设备已经器动",30);
 	
 	//printf("-------------------------set:%s\n",param.value);
 	TestItem item2;
