@@ -566,11 +566,12 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	if(FALSE==getParameter(item.itemName_,&param))
 	{
 		WarnShow1(0,"无该参数配置");
+		return TEST_RESULT_ERROR;
 	}
 	if(GetParameter(servicePtr,&param)<0)
 	{	
 		WarnShow1(0,"获取失败");
-		//goto DONE;
+		
 	}
 	//printf("-----------------%s\n",param.value);
 	
@@ -642,10 +643,10 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 		flag3=1;
 	}	
 	
-	/*if(AlertDialogWithRet(0,"枪检查","请检查面板显示应充电枪故障指示灯显示应该消失","错误","正确")==FALSE)
+	if(AlertDialogWithRet(0,"枪检查","请检查面板显示应充电枪故障指示灯显示应该消失","错误","正确")==FALSE)
 	{
 		flag3=0;
-	}*/
+	}
 	
 	//合上开关31
 	
@@ -659,7 +660,20 @@ DONE:
 		sprintf(itemResult.recvString,"%s","合格");
 	else
 		sprintf(itemResult.recvString,"%s","不合格");
-	saveResult(hashTable,&itemResult);	
+	saveResult(hashTable,&itemResult);
+	
+	if(CloseDo(eut.relayConfig,30)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	if(CloseDo(eut.relayConfig,2)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	if(CloseDo(eut.relayConfig,3)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}		
 
 	return ret;
 }
@@ -935,6 +949,80 @@ TPS registerTimeSetTestTps(void)
 {
 	TPS tps=newTps("timeSet");
 	tps.autoTestFunction=TimeSetTest;
+	return tps;	
+}
+
+METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+	{
+		return 	TEST_RESULT_ERROR;
+	}	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item;
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult;
+		itemResult.index=item.itemId;
+		itemResult.pass=1;
+		if(strcmp(item.itemName_,"参数校正")==0){
+			if(startCommand(servicePtr,"prd coeff ins\r\n")<0)
+			{
+				WarnShow1(0,"参数校正失败");
+				itemResult.pass=0;
+			}
+		}else if(strcmp(item.itemName_,"看门狗检查")==0){ 
+			if(startCommand(servicePtr,"product watch_dog\r\n")<0)
+			{
+				WarnShow1(0,"看门狗检查");
+				itemResult.pass=0;
+			}
+			onStubDisConnected(servicePtr);
+			servicePtr=NULL;
+			WarnAlert(0,"请稍后！！！",30);
+			servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+			if(servicePtr==NULL)
+			{
+				itemResult.pass=0;
+				return 	TEST_RESULT_ERROR;
+			}			
+		}else if(strcmp(item.itemName_,"交流复位")==0){
+			PARAMETER param={0};
+			if(FALSE==getParameter(item.itemName_,&param))
+			{
+				WarnShow1(0,"无该参数配置");
+			}
+			sprintf(param.value,"%s","1");
+			if(ConfigParameter(servicePtr,param)>=0)
+			{
+		 		itemResult.pass =1;
+			}else{
+				itemResult.pass=0;
+			}
+			onStubDisConnected(servicePtr);
+			servicePtr=NULL;
+			WarnAlert(0,"请稍后！！！",30);
+			servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+			if(servicePtr==NULL)
+			{
+				itemResult.pass=0;
+				return 	TEST_RESULT_ERROR;
+			}			
+		}
+		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
+		sprintf(itemResult.recvString,"%s","OK");
+		saveResult(hashTable,&itemResult);
+		
+	}
+	return ret;
+}
+
+TPS registerStubCmdTestTps(void)
+{
+	TPS tps=newTps("StubCmd");
+	tps.autoTestFunction=StubCmdTest;
 	return tps;	
 }
 

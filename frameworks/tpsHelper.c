@@ -34,6 +34,7 @@ extern TPS registerInsulationTestTestTps(void);
 extern TPS registerChargingTestTestTps(void);
 extern TPS registerTimeSetTestTps(void);
 extern TPS registerRelayTestTPS(void);
+extern TPS registerStubCmdTestTps(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
@@ -54,6 +55,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerChargingTestTestTps,//充电流程
 	registerTimeSetTestTps,//时间设置
 	registerRelayTestTPS,
+	registerStubCmdTestTps,
 };
 
 

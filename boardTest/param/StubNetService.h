@@ -66,6 +66,8 @@ int startCommand(tNET_SERVICE *servicePtr,char *cmd);
 
 void onStubDisConnected(tNET_SERVICE *servicePtr);
 
+void ReleaseStubNetService();
+
 
 void connectToStubSync(tNET_SERVICE *servicePtr);
 int startCommandSync(tNET_SERVICE *servicePtr,char *cmd);   //这个去掉，再内部用宏来定义用同步还是异步，加入了processSystemEvent来处理系统事物，可能卡顿会有所好转

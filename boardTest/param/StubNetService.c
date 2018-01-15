@@ -8,7 +8,7 @@
 #include "StubNetService.h"
 #include "common.h"
 #define tcpChk(f) if ((tcpErr=(f))<0) {ReportTCPError(tcpErr); goto Done;} else    
-//#define DEBUG	
+#define DEBUG	
 tNET_SERVICE *gServicePtr=NULL;	
 	
 char *getCompletePacket(char *str)
@@ -291,6 +291,8 @@ void onStubConnected(tNET_SERVICE *servicePtr)
 
 void ReleaseStubNetService()
 {
+	if(gServicePtr!=NULL)
+		disConnectFromStub(gServicePtr);	
 	if(gServicePtr!=NULL){
 		free(gServicePtr);
 		gServicePtr=NULL;
@@ -303,7 +305,7 @@ void onStubDisConnected(tNET_SERVICE *servicePtr)
 	//MessagePopup("warning","diconnect from server");
 	if(servicePtr!=NULL)
 		disConnectFromStub(servicePtr);
-	ReleaseStubNetService();
+	//ReleaseStubNetService();
 }
 
 void onStubTimeOut(tNET_SERVICE *servicePtr)

@@ -3,7 +3,22 @@
 #include "StubNetService.h"
 #include "regexpr.h"   
 //#define DEBUG
+#define RETRY_CNT 3
 
+int ConfigParameterWithRetry(tNET_SERVICE *servicePtr,PARAMETER para)
+{
+	 int reTryCnt= RETRY_CNT;
+	 while(reTryCnt>0)
+	 {
+	 	 if(ConfigParameter(servicePtr,para)<0)
+		 {
+		 	reTryCnt--;
+		 }else{
+		 	return 0;
+		 }
+	 }
+	 return -1;
+}
 
 int ConfigParameter(tNET_SERVICE *servicePtr,PARAMETER para)
 {
@@ -100,6 +115,21 @@ int GetParameter(tNET_SERVICE *servicePtr,PARAMETER *para)
 	if(SearchAndParse(servicePtr->packet,para)<0)
 		return -2;
 	return 0;	
+}
+
+int GetParameterWithRetry(tNET_SERVICE *servicePtr,PARAMETER *para)
+{
+	 int reTryCnt= RETRY_CNT;
+	 while(reTryCnt>0)
+	 {
+	 	 if(GetParameter(servicePtr,para)<0)
+		 {
+		 	reTryCnt--;
+		 }else{
+		 	return 0;
+		 }
+	 }
+	 return -1;
 }
 
 void printfParam(PARAMETER para){

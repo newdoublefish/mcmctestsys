@@ -18,6 +18,8 @@ typedef struct{
 }PARAMETER;
 int ConfigParameter(tNET_SERVICE *servicePtr,PARAMETER para);
 int GetParameter(tNET_SERVICE *servicePtr,PARAMETER *para);
+int GetParameterWithRetry(tNET_SERVICE *servicePtr,PARAMETER *para);
+int ConfigParameterWithRetry(tNET_SERVICE *servicePtr,PARAMETER para);
 void printfParam(PARAMETER para);
 
 
