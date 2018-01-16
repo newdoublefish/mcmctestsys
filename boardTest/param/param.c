@@ -770,7 +770,8 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 		goto DONE; 
 	}	
 	
-	WarnAlert(0,"延时中",20);
+	//WarnAlert(0,"延时中",30);
+	WarnShow1(0,"下一步测试");
 	
 	if(OpenDo(eut.relayConfig,28)==FALSE)
 	{
@@ -882,6 +883,7 @@ DONE:
 	
 */	
 DONE:
+	onStubDisConnected(servicePtr); 
 	if(ParamSet(servicePtr,"1枪调试停止充电","1")==FALSE)
 	{
 		//goto DONE; 
@@ -923,22 +925,34 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 	RESULT itemResult1={0};
 	itemResult1.index=item1.itemId;
 	itemResult1.pass=1; 
-	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动","错误","正确")==FALSE)
+	if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
+	{
+		goto DONE;
+	}
+	onStubDisConnected(servicePtr);	
+	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动,点击确认加负载","错误","正确")==FALSE)
 	{
 		flag=FALSE;
 		itemResult1.pass=0;
 		saveResult(hashTable,&itemResult1);
 		return TEST_RESULT_ALLPASS;
 	}
+	servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+	{
+		return 	TEST_RESULT_ERROR;
+	}
 	
 	saveResult(hashTable,&itemResult1);	
+	
+
+
+	WarnShow1(0,"按下确定开始读数");
 	
 	if(OpenDo(eut.relayConfig,31)==FALSE)
 	{
 		return 	TEST_RESULT_ERROR;
-	}
-
-	WarnShow1(0,"按下确定开始读数");
+	}	
 	
 	ListType paramsToGet=ListCreate(sizeof(PARAMETER));
 	ListType paramsToSet=ListCreate(sizeof(PARAMETER));
@@ -1012,10 +1026,15 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 			}
 		}
 		saveResult(hashTable,&itemResult);			
-	}		
+	}
+	if(ParamSet(servicePtr,"1枪调试停止充电","1")==FALSE)
+	{
+		goto DONE;
+	}	
 DONE:
 	//ListDispose(paramsToSet);
 	//ListDispose(paramsToGet);
+	
 	if(CloseDo(eut.relayConfig,31)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
