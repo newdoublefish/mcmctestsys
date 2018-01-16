@@ -161,7 +161,7 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 	if(servicePtr==NULL)
 	{
 		return 	TEST_RESULT_ERROR;
-	}	
+	}
 	ListType paramsToFetch=ListCreate(sizeof(PARAMETER));
 
 	
@@ -181,7 +181,9 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 	//showParamSetPanel(paramsToFetch);
 	//设置参数
 	//发送自检命令
-	startCommand(servicePtr,"product self_test\r\n");
+	if(startCommand(servicePtr,"product self_test\r\n")<0)
+		goto DONE;
+	
 
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -220,11 +222,13 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 #else	
 		itemResult.pass=1;
 		ParamGet(servicePtr,item.itemName_,itemResult.recvString);
+		//ParamGetDepend(eut,item.itemName_,itemResult.recvString);
 #endif		
 		saveResult(hashTable,&itemResult);
 	}	
 DONE:	
 	ListDispose(paramsToFetch);
+	onStubDisConnected(servicePtr);	
 	return ret;
 }
 
@@ -592,101 +596,76 @@ TPS registerScanTestTps(void)
 METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
-	int flag1=0;
-	int flag2=0;
-	int flag3=0;
-	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;
-	*/
+	int flag1=-1;
+	int flag2=-1;
+	int flag3=-1;
+	
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 	{
-		return 	TEST_RESULT_ERROR;
-	}
-	
-	TestItem item;
-	PARAMETER param={0};
-	ListGetItem(group.subItems,&item,1);
-	if(FALSE==getParameter(item.itemName_,&param))
-	{
-		WarnShow1(0,"无该参数配置");
 		return TEST_RESULT_ERROR;
 	}
-	if(GetParameter(servicePtr,&param)<0)
-	{	
-		WarnShow1(0,"获取失败");
-		
-	}
-	//printf("-----------------%s\n",param.value);
 	
-	if(strcmp(param.value,"false")==0)
+	TestItem item={0};
+	ListGetItem(group.subItems,&item,1); 
+	char queryResult[20]={0};
+	if(ParamGet(servicePtr,item.itemName_,queryResult)<0)
+	{
+		goto DONE;
+	}
+	
+	if(strcmp(queryResult,"false")==0)
 	{
 		flag1=1;
+	}else{
+		flag1=0;
 	}
 	
-	if(OpenDo(eut.relayConfig,30)==FALSE)
+	if(OperatDoSet(eut.relayConfig,RELAY(31)|RELAY(3)|RELAY(4)|RELAY(2))==FALSE)
 	{
-		return TEST_RESULT_ERROR;
+		goto DONE;
 	}
-	if(OpenDo(eut.relayConfig,2)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
-	}
-	if(OpenDo(eut.relayConfig,3)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
-	}	
 	
 	//WarnAlert(0,);
 	WarnAlert(0,"延时中",30);
 	
-	if(GetParameter(servicePtr,&param)<0)
-	{	
-		WarnShow1(0,"获取失败");
-		//goto DONE;
+	memset(queryResult,0,20);
+	if(ParamGet(servicePtr,item.itemName_,queryResult)<0)
+	{
+		goto DONE;
 	}
-	//printf("-----------------%s\n",param.value); 
-	
-	if(strcmp(param.value,"true")==0)
+
+	if(strcmp(queryResult,"true")==0)
 	{
 		flag2=1;
+	}else{
+		flag2=0;
 	}	
 	
-	//showTips(0,"检查项目","请检查面板显示应充电枪故障指示灯显示应该为X"); 
-
 	if(AlertDialogWithRet(0,"枪检查","请检查面板显示应充电枪故障指示灯显示应该为X","错误","正确")==FALSE)
 	{
 		flag2=0;
-	}else{
-		//goto DONE;
 	}
 	
 
-	if(CloseDo(eut.relayConfig,30)==FALSE)
+	if(OperatDoSet(eut.relayConfig,RELAY(2))==FALSE)
 	{
-		return TEST_RESULT_ERROR;
+		goto DONE;
 	}
-	if(CloseDo(eut.relayConfig,2)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
-	}
-	if(CloseDo(eut.relayConfig,3)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
-	}	
+	
 	WarnAlert(0,"延时中",30); 
 	
-	if(GetParameter(servicePtr,&param)<0)
-	{	
-		WarnShow1(0,"获取失败");
-		//goto DONE;
+	memset(queryResult,0,20);
+	if(ParamGet(servicePtr,item.itemName_,queryResult)<0)
+	{
+		goto DONE;
 	}
-	//printf("-----------------%s\n",param.value); 
 	
-	if(strcmp(param.value,"false")==0)
+	if(strcmp(queryResult,"false")==0)
 	{
 		flag3=1;
+	}else{
+		flag3=0;
 	}	
 	
 	if(AlertDialogWithRet(0,"枪检查","请检查面板显示应充电枪故障指示灯显示应该消失","错误","正确")==FALSE)
@@ -694,33 +673,18 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 		flag3=0;
 	}
 	
-	//合上开关31
-	
-	//printf("-----------------%s\n",param.value);
-	//("%d,%d,%d\n",flag1,flag2,flag3);
 DONE:	
 	RESULT itemResult={0};
 	itemResult.index=item.itemId;
 	itemResult.pass = flag1 & flag2 & flag3;
-	if(itemResult.pass)
-		sprintf(itemResult.recvString,"%s","合格");
-	else
-		sprintf(itemResult.recvString,"%s","不合格");
+	sprintf(itemResult.recvString,"{%d,%d,%d}",flag1,flag2,flag3);
 	saveResult(hashTable,&itemResult);
 	
-	if(CloseDo(eut.relayConfig,30)==FALSE)
+	if(OperatDoSet(eut.relayConfig,RELAY(2))==FALSE)
 	{
-		return TEST_RESULT_ERROR;
-	}
-	if(CloseDo(eut.relayConfig,2)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
-	}
-	if(CloseDo(eut.relayConfig,3)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
+		
 	}		
-
+	onStubDisConnected(servicePtr);
 	return ret;
 }
 
@@ -736,69 +700,82 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 #if 1
 	BOOL flag=TRUE; 
 	METHODRET ret = TEST_RESULT_ALLPASS;
-	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
-	{
-		return 	TEST_RESULT_ERROR;
-	}	
 	TestItem item;
 	ListGetItem(group.subItems,&item,1);
+	char startChargeCmd[20]={0};
+	char stopChargeCMD[20]={0};
+	if(strcmp(item.itemName_,"枪1绝缘检测")==0)
+	{
+		sprintf(startChargeCmd,"%s","1枪调试启动充电");		
+		sprintf(stopChargeCMD,"%s","1枪调试停止充电");
+	}else if(strcmp(item.itemName_,"枪2绝缘检测")==0){
+		sprintf(startChargeCmd,"%s","2枪调试启动充电");		
+		sprintf(stopChargeCMD,"%s","2枪调试停止充电");	
+	}
 	//step1
-	if(OpenDo(eut.relayConfig,29)==FALSE)
+	/*if(OpenDo(eut.relayConfig,29)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
 	if(CloseDo(eut.relayConfig,28)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
-	}
-	if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
+	}*/
+	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(30)|RELAY(2)))
 	{
 		goto DONE;
-	}	
+	}
+	/*if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
+	{
+		goto DONE;
+	}*/
+	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
+	{
+		WarnShow1(0,"无法启动充电！");
+		flag=FALSE; 
+		goto DONE;
+	}
 	
-	onStubDisConnected(servicePtr); 
 	if(AlertDialogWithRet(0,"枪检查","请确认充电功能正常","错误","正确")==FALSE)
 	{
 		flag=FALSE;
 		goto DONE;
 	}
-	servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);  	
-	
-	if(ParamSet(servicePtr,"1枪调试停止充电","1")==FALSE)
+
+	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
-		goto DONE; 
+		WarnShow1(0,"无法停止充电！"); 
+		goto DONE;
 	}	
 	
 	//WarnAlert(0,"延时中",30);
 	WarnShow1(0,"下一步测试");
 	
-	if(OpenDo(eut.relayConfig,28)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
-	}
-	if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
+	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(29) | RELAY(30)| RELAY(2)))
 	{
 		goto DONE;
+	}
+	
+	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
+	{
+		WarnShow1(0,"无法启动充电！");
+		flag=FALSE; 
+		goto DONE;
 	}	
-	onStubDisConnected(servicePtr);	
+
 	if(AlertDialogWithRet(0,"枪检查","请确认充电功能异常","错误","正确")==FALSE)
 	{
 		flag=FALSE;
 	}
-	servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);	
-	if(ParamSet(servicePtr,"1枪调试停止充电","1")==FALSE)
+	
+	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
-		goto DONE; 
+		WarnShow1(0,"无法停止充电！"); 
+		goto DONE;
 	}	
 DONE:	
-	if(CloseDo(eut.relayConfig,29)==FALSE)
+	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(2)))
 	{
-		return TEST_RESULT_ERROR;
-	}
-	if(CloseDo(eut.relayConfig,28)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
 	}
 	
 	RESULT itemResult={0};
@@ -914,47 +891,65 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	BOOL flag=TRUE;
-	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 	{
 		return 	TEST_RESULT_ERROR;
-	}
+	}*/
 	//充电模块确认
 	TestItem item1;
 	ListGetItem(group.subItems,&item1,1);
+	char startChargeCmd[20]={0};
+	char stopChargeCMD[20]={0};
+	if(strcmp(group.groupName,"枪1充电功能")==0)
+	{
+		sprintf(startChargeCmd,"%s","1枪调试启动充电");		
+		sprintf(stopChargeCMD,"%s","1枪调试停止充电");
+	}else if(strcmp(group.groupName,"枪2充电功能")==0){
+		sprintf(startChargeCmd,"%s","2枪调试启动充电");		
+		sprintf(stopChargeCMD,"%s","2枪调试停止充电");	
+	}	
+	
 	RESULT itemResult1={0};
 	itemResult1.index=item1.itemId;
-	itemResult1.pass=1; 
-	if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
+	itemResult1.pass=1;
+	
+	/*if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
 	{
 		goto DONE;
 	}
-	onStubDisConnected(servicePtr);	
+	onStubDisConnected(servicePtr);*/
+	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
+	{
+		WarnShow1(0,"无法启动充电");
+		return TEST_RESULT_ALLPASS;
+	}
+	
 	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动,点击确认加负载","错误","正确")==FALSE)
 	{
 		flag=FALSE;
 		itemResult1.pass=0;
 		saveResult(hashTable,&itemResult1);
+		//return TEST_RESULT_ALLPASS;
+		ParamSetDepend(eut,stopChargeCMD,"1");	
 		return TEST_RESULT_ALLPASS;
 	}
-	servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
-	{
-		return 	TEST_RESULT_ERROR;
-	}
+	saveResult(hashTable,&itemResult1);
 	
-	saveResult(hashTable,&itemResult1);	
-	
-
-
-	WarnShow1(0,"按下确定开始读数");
-	
+	//加负载
 	if(OpenDo(eut.relayConfig,31)==FALSE)
 	{
 		return 	TEST_RESULT_ERROR;
 	}	
 	
-	ListType paramsToGet=ListCreate(sizeof(PARAMETER));
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+	{
+		return 	TEST_RESULT_ERROR;
+	}
+
+	WarnShow1(0,"按下确定开始读数");
+
 	ListType paramsToSet=ListCreate(sizeof(PARAMETER));
 	for(int i=2;i<=4;i++)
 	{
@@ -962,23 +957,30 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		ListGetItem(group.subItems,&item,i);
 
 		PARAMETER param={0};
-		
+		ListInsertItem(paramsToSet,&param,END_OF_LIST); 
+		/*
 		if(FALSE==getParameter(item.itemName_,&param))
 		{
 			WarnShow1(0,"无该参数配置");
 			goto DONE;
 		}
-		ListInsertItem(paramsToSet,&param,END_OF_LIST);
+		
 		if(GetParameter(servicePtr,&param)<0)
 		{	
 			WarnShow1(0,"获取失败");
 			goto DONE;
 		}			
 		//printf("----------------------------%s\n",param.value);
-		ListInsertItem(paramsToGet,&param,END_OF_LIST);
+		ListInsertItem(paramsToGet,&param,END_OF_LIST);*/
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
-		sprintf(itemResult.recvString,"%s",param.value);
+		//sprintf(itemResult.recvString,"%s",param.value);
+		if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)==FALSE)
+		{
+			 itemResult.pass=0;
+			 saveResult(hashTable,&itemResult);
+			 continue;
+		}
 		float strValue=atof(param.value);
 		if(i==3)
 		{
@@ -1027,18 +1029,24 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}
 		saveResult(hashTable,&itemResult);			
 	}
-	if(ParamSet(servicePtr,"1枪调试停止充电","1")==FALSE)
-	{
-		goto DONE;
-	}	
+	
+	
+	
 DONE:
-	//ListDispose(paramsToSet);
+	ListDispose(paramsToSet);
 	//ListDispose(paramsToGet);
+	
+	if(ParamSet(servicePtr,stopChargeCMD,"1")==FALSE)
+	{
+		
+	}
 	
 	if(CloseDo(eut.relayConfig,31)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
-	}	
+	}
+	
+	onStubDisConnected(servicePtr);	
 	return ret;
 }
 

@@ -254,6 +254,7 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 			_obj->seq.beginGroup = testGroupIndex;	
 			ENUMTestResult ret = onObjectGroupTest(group,_obj,TYPE_AUTO); 
 			engine->currentCollect = collectId;
+			engine->testState = TEST_IDLE;
 			
 			if(ret != TEST_RESULT_QUIT)
 				objectResultShow(_obj,group,testGroupIndex,&testItemIndex);

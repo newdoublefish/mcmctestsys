@@ -24,6 +24,8 @@ void WarnShow1(int panel,char *meesage);
 
 BOOL AlertDialogWithRet(int panel,char *title,char *lableMessage,char *lableNegative,char *lablePositive);
 
+BOOL AlertDialogWithRetAutoClose(int panel,char *title,char *lableMessage,char *lableNegative,char *lablePositive,int closeTime);
+
 
 int displaySlideProgress(char *title);  
 

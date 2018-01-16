@@ -317,7 +317,6 @@ void onStubTimeOut(tNET_SERVICE *servicePtr)
 
 tNET_SERVICE *getStubNetService(char *ip,int port)
 {
-	ProcessTCPEvents();
 	if(gServicePtr==NULL)
 	{
 		 gServicePtr =(tNET_SERVICE*)malloc(sizeof(tNET_SERVICE));
@@ -354,7 +353,7 @@ tNET_SERVICE *getStubNetService(char *ip,int port)
 	
 	if(gServicePtr==NULL)
 	{
-		if(TRUE==AlertDialogWithRet(0,"网络故障","重连网络？","不重连","重连"))
+		if(TRUE==AlertDialogWithRetAutoClose(0,"网络故障","重连网络？","不重连","重连",5))
 		{
 			getStubNetService(ip,port);
 		}

@@ -16,6 +16,7 @@
 #include "relayHelper.h"
 #include "crcCalc.h"
 #include "common.h"
+#include "settingEntity.h"
 //#define DEBUG
 
 /*
@@ -89,6 +90,9 @@ BOOL getResult(int comPort,RelayBuf *recvBuf)
 
 BOOL operateDo(RSCONFIG config,RelayBuf *bufPtr)
 {
+	SETTING s=getSetting();
+	if(s.relayEnable==FALSE)
+		return TRUE;
 	if(OpenComConfig (config.portNum, NULL, config.baudRate,config.parity,config.dataBit,config.stopBit, 1024, 1024)<0)
 	{
 		WarnShow1(0,"打开继电器串口失败");
@@ -128,12 +132,12 @@ ERROR:
 
 BOOL OpenDo(RSCONFIG config,int doMask){
 	RelayBuf buf={0};
-	buildDoPacket(&buf,doMask,1);
+	buildDoPacket(&buf,(unsigned char)doMask,1);
 	return operateDo(config,&buf);
 }
 BOOL CloseDo(RSCONFIG config,int doMask){
 	RelayBuf buf={0};
-	buildDoPacket(&buf,doMask,0);
+	buildDoPacket(&buf,(unsigned char)doMask,0);
 	return operateDo(config,&buf);
 }
 

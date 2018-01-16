@@ -38,6 +38,8 @@
 #define  PANEL2_CANCEL                    3       /* control type: command, callback function: (none) */
 #define  PANEL2_TEXTMSG_2                 4       /* control type: textMsg, callback function: (none) */
 #define  PANEL2_TEXTMSG                   5       /* control type: textMsg, callback function: (none) */
+#define  PANEL2_TIMER                     6       /* control type: timer, callback function: (none) */
+#define  PANEL2_TimeDisplay               7       /* control type: textMsg, callback function: (none) */
 
 #define  PANEL_WARN                       4
 #define  PANEL_WARN_COMMANDBUTTON         2       /* control type: command, callback function: (none) */

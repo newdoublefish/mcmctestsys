@@ -189,6 +189,16 @@ int CVICALLBACK AlertDialogCtrlCallBack (int panel, int control, int event,
 	
 	switch (event)
 	{
+		case EVENT_TIMER_TICK:
+			
+			char temp[30]={0};			
+			int *closeTimePtr=(int *)callbackData;
+			*closeTimePtr=*closeTimePtr-1;
+			sprintf(temp,"%d",*closeTimePtr);
+			SetCtrlVal(panel,PANEL2_TimeDisplay,temp);
+			if(*closeTimePtr<=0)
+			 	QuitUserInterface(1); 
+			break;			
 		case EVENT_COMMIT:
 			BOOL *ret=(BOOL *)callbackData;
         	if (control == PANEL2_SURE) {
@@ -219,6 +229,27 @@ BOOL AlertDialogWithRet(int panel,char *title,char *lableMessage,char *lableNega
 	DiscardPanel(testPanel);
 	return ret;
 }
+
+BOOL AlertDialogWithRetAutoClose(int panel,char *title,char *lableMessage,char *lableNegative,char *lablePositive,int closeTime)
+{
+	BOOL ret=TRUE;
+    int ctrl=0, quit=0;
+	int testPanel;
+	testPanel=LoadPanel (0, "WarnPanel.uir", PANEL2);  
+	SetPanelAttribute(testPanel,ATTR_TITLE,title);
+	SetCtrlVal(testPanel,PANEL2_TEXTMSG,lableMessage);
+	SetCtrlAttribute(testPanel,PANEL2_CANCEL,ATTR_LABEL_TEXT,lableNegative);
+	SetCtrlAttribute(testPanel,PANEL2_SURE,ATTR_LABEL_TEXT,lablePositive);
+	InstallCtrlCallback(testPanel,PANEL2_SURE,AlertDialogCtrlCallBack,&ret);
+	InstallCtrlCallback(testPanel,PANEL2_CANCEL,AlertDialogCtrlCallBack,&ret);
+	if(closeTime > 0)
+		InstallCtrlCallback (testPanel,PANEL2_TIMER,AlertDialogCtrlCallBack,&closeTime);
+	DisplayPanel(testPanel);
+	RunUserInterface();
+	DiscardPanel(testPanel);
+	return ret;
+}
+
 
 BOOL GetConfigWarnPanelRetWithQuitFlag(int panel,char *title,char *lableMessage,char *lableNegative,char *lablePositive,int *flag)
 {

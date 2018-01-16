@@ -42,6 +42,7 @@ typedef struct{
 	int port;
 	unsigned int connectHandler;
 	int connected;
+	int reConnectCnt;
 	char *packetPtr;
 	char buffer[MAX_NET_RECV_BUFFER];
 	char packet[MAX_NET_RECV_BUFFER];

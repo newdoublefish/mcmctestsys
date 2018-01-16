@@ -7,6 +7,11 @@
     extern "C" {
 #endif
 #include "eutEntity.h"
+
+//#define RELAY_1 (1<<0)
+//#define RELAY_2 (1<<0) 
+#define RELAY(x) (1<<(x-1)) 		
+		
 typedef struct
 {
     int len;
