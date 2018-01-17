@@ -314,7 +314,7 @@ TPS registerParamTemperatureTps(void)
 	return tps;			
 }
 
-#define BIBO_DEBUG
+//#define BIBO_DEBUG
 METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
@@ -380,8 +380,9 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}
 #endif
 		//PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
+		PRINT("%x\n",itemResult1.recvString);
 		unsigned int standard= HexStrToUnsignedInt(item1.inputValue_);
-		unsigned int bi = HexStrToUnsignedInt(itemResult1.recvString);
+		unsigned int bi = atoi(itemResult1.recvString);
 		unsigned int result = bi & standard;
 
 		if(result == standard)
@@ -851,7 +852,6 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 	if(FALSE==ParamGetDepend(eut,isolateCMD,inSoResult1))
 	{
 		WarnShow1(0,"获取绝缘检测结果失败"); 
-		goto DONE;
 	}
 	
 	printf("%s\n",inSoResult1);	
