@@ -7,6 +7,7 @@
 #include <userint.h>
 #include "StubNetService.h"
 #include "common.h"
+#include "Log.h"
 #define tcpChk(f) if ((tcpErr=(f))<0) {ReportTCPError(tcpErr); goto Done;} else    
 #define DEBUG	
 tNET_SERVICE *gServicePtr=NULL;	
@@ -252,6 +253,7 @@ void connectToStub(tNET_SERVICE *servicePtr)
 {
 	if(ConnectToTCPServer (&(servicePtr->connectHandler), servicePtr->port, servicePtr->ip, 
 		TCPCallback, servicePtr, 500)>=0){	
+		LOG_EVENT(LOG_INFO,"success connect to sub");	
 		servicePtr->connected=1;
 		if(servicePtr->onConnect!=NULL)
 			(*(ON_NET_CONNECTED)(servicePtr->onConnect))(servicePtr);
@@ -287,6 +289,8 @@ void onStubConnected(tNET_SERVICE *servicePtr)
 	}else{
 		return;
 	}
+	
+	LOG_EVENT(LOG_INFO,"on login success");
 }
 
 void ReleaseStubNetService()
@@ -303,14 +307,18 @@ void ReleaseStubNetService()
 void onStubDisConnected(tNET_SERVICE *servicePtr)
 {
 	//MessagePopup("warning","diconnect from server");
-	if(servicePtr!=NULL)
+	if(servicePtr!=NULL){
+		LOG_EVENT(LOG_INFO,"on stub disconnected");
 		disConnectFromStub(servicePtr);
+	
+	}
 	//ReleaseStubNetService();
 }
 
 void onStubTimeOut(tNET_SERVICE *servicePtr)
 {
 	//MessagePopup("warning","time out");
+	LOG_EVENT(LOG_INFO,"on stub timeout"); 
 	onStubDisConnected(servicePtr);
 }
 

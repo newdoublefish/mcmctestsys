@@ -222,3 +222,15 @@ int Oct2Hex(int a)
 	}	
 	return ret;
 }
+
+unsigned HexStrToUnsignedInt(char *str)
+{
+	char data[4]={0};
+	unsigned int res=0;
+	int len=String2ByteArray(str,data);
+	for(int i=0;i<len;i++)
+	{
+		res=res<<8 | data[i];
+	}
+	return res;
+}

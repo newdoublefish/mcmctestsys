@@ -3,5 +3,5 @@
 	<StrategyName>策略1</StrategyName>
 	<StrategyTestType>Serial</StrategyTestType>
 	<Collects>
-		<Collect><CollectName>测试</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>1</GroupId><GroupId>2</GroupId><GroupId>14</GroupId><GroupId>47</GroupId><GroupId>15</GroupId><GroupId>16</GroupId><GroupId>19</GroupId><GroupId>20</GroupId><GroupId>21</GroupId><GroupId>23</GroupId><GroupId>24</GroupId><GroupId>22</GroupId><GroupId>25</GroupId><GroupId>26</GroupId><GroupId>27</GroupId><GroupId>29</GroupId><GroupId>30</GroupId><GroupId>31</GroupId><GroupId>32</GroupId><GroupId>33</GroupId><GroupId>34</GroupId><GroupId>35</GroupId><GroupId>36</GroupId><GroupId>37</GroupId><GroupId>38</GroupId><GroupId>39</GroupId><GroupId>40</GroupId><GroupId>41</GroupId><GroupId>42</GroupId><GroupId>43</GroupId><GroupId>44</GroupId><GroupId>45</GroupId><GroupId>46</GroupId><GroupId>49</GroupId><GroupId>48</GroupId><GroupId>49</GroupId></Groups></Collect></Collects>
+		<Collect><CollectName>11</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><Groups><GroupId>48</GroupId><GroupId>28</GroupId><GroupId>50</GroupId></Groups></Collect></Collects>
 </Strategy>

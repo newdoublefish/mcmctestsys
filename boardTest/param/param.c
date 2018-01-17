@@ -302,6 +302,7 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable)
 	}	
 DONE:	
 	ListDispose(paramsToFetch);
+	onStubDisConnected(servicePtr);	
 	return ret;
 }
 
@@ -313,20 +314,96 @@ TPS registerParamTemperatureTps(void)
 	return tps;			
 }
 
-
+#define BIBO_DEBUG
 METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
-	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;
-	*/
-	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
+	char startChargeCmd[20]={0};
+	char stopChargeCMD[20]={0};
+	if(strcmp(group.groupName,"枪1功率分配")==0)
 	{
-		return 	TEST_RESULT_ERROR;
-	};	
+		sprintf(startChargeCmd,"%s","1枪调试启动充电");		
+		sprintf(stopChargeCMD,"%s","1枪调试停止充电");
+	}else if(strcmp(group.groupName,"枪2功率分配")==0){
+		sprintf(startChargeCmd,"%s","2枪调试启动充电");		
+		sprintf(stopChargeCMD,"%s","2枪调试停止充电");	
+	}
+	
+		
+#ifndef BIBO_DEBUG	
+	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
+	{
+		WarnShow1(0,"无法启动充电！");
+		return ret;
+	}
+#endif	
+	//60A需求
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item1={0};
+		ListGetItem(group.subItems,&item1,i);
+		RESULT itemResult1={0}; 
+		itemResult1.index = item1.itemId;
+		itemResult1.pass=0;		
+		if(i==1)
+		{
+			WarnShow1(0,"设置电流为60A"); //后续可以用485控制来操作
+			if(FALSE==AlertDialogWithRet(0,"waring","电源模块1，2启动","错误","正确"))
+			{
+			//getStubNetService(ip,port);
+				goto ERROR;
+			}
+		}else if(i==2){
+		
+			WarnShow1(0,"设置电流为100A"); //后续可以用485控制来操作
+			if(FALSE==AlertDialogWithRet(0,"waring","电源模块1，2启动","错误","正确"))
+			{
+			//getStubNetService(ip,port);
+				goto ERROR;
+			}			
+		}else if(i==3){
+		
+			WarnShow1(0,"设置电流为120A"); //后续可以用485控制来操作
+			if(FALSE==AlertDialogWithRet(0,"waring","电源模块1，2启动","错误","正确"))
+			{
+			//getStubNetService(ip,port);
+				goto ERROR;
+			}			
+		}
+	
+		//char BI[10]={0};
 
+#ifndef BIBO_DEBUG	
+		if(FALSE==ParamGetDepend(eut,"BI",itemResult1.recvString ))
+		{
+			
+		}
+#endif
+		PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
+		unsigned int standard= HexStrToUnsignedInt(item1.inputValue_);
+		unsigned int bi = HexStrToUnsignedInt(itemResult1.recvString);
+		unsigned int result = bi & standard;
+
+		if(result == standard)
+		{
+			itemResult1.pass=1; 		
+		}else{
+			itemResult1.pass=0;
+		}
+ERROR:		
+		//sprintf(itemResult1.recvString,"%s",BI);
+		saveResult(hashTable,&itemResult1);
+	}		
+	
+	//100A需求
+
+#ifndef BIBO_DEBUG	
+	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
+	{
+		WarnShow1(0,"无法启动充电！");
+	}
+#endif	
+	
 	return ret;
 }
 

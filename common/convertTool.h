@@ -33,6 +33,8 @@ void HexString2UpperCase(char *str);
 
 int OctToHex(int a);
 
+unsigned HexStrToUnsignedInt(char *str);
+
 #ifdef __cplusplus
    }
 #endif	   
