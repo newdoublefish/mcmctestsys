@@ -9,7 +9,8 @@
 #include "common.h"
 #include "Log.h"
 #define tcpChk(f) if ((tcpErr=(f))<0) {ReportTCPError(tcpErr); goto Done;} else    
-#define DEBUG	
+//#define DEBUG	
+
 tNET_SERVICE *gServicePtr=NULL;	
 	
 char *getCompletePacket(char *str)
@@ -83,13 +84,15 @@ static int CVICALLBACK TCPCallback (unsigned int handle, int xType,
 			break;
 		case TCP_DATAREADY:
 			//DisableBreakOnLibraryErrors ();
-			char buffer[4096]={0};
+			static char buffer[4096]={0};
 			int bytesRead=0;
 			//do{
-			bytesRead = ClientTCPRead (handle, buffer, 4096, 5);
+			memset(buffer,0,4096);
+			bytesRead = ClientTCPRead (handle, buffer, 4095, 5);
 #ifdef DEBUG
 			printf("recv :%s",buffer);
 #endif			
+			LOG_EVENT_FORMAT(LOG_INFO,"recv:%s",buffer);
 			if(servicePtr->setFlag==1)
 			{
 				processRecvData(servicePtr,buffer,bytesRead);
@@ -171,7 +174,8 @@ int sendTcpData(const char *buffer,tNET_SERVICE *servicePtr,float timeOutSec)
 	}
 #ifdef DEBUG	
 	printf("send:%s",buffer);
-#endif	
+#endif
+	LOG_EVENT_FORMAT(LOG_INFO,"send:%s",buffer);
 	baseTime = Timer();
 	while(servicePtr!=NULL && servicePtr->setFlag==1)
 	{

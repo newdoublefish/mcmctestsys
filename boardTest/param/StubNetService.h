@@ -35,7 +35,7 @@
 // Global functions
 		
 #define MAX_NET_RECV_BUFFER 4096
-#define TIME_OUT 5
+#define TIME_OUT 15
 #define TCP_CLIENT_SYNC
 typedef struct{
 	char ip[20];

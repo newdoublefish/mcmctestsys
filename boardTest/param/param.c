@@ -379,7 +379,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 			
 		}
 #endif
-		PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
+		//PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
 		unsigned int standard= HexStrToUnsignedInt(item1.inputValue_);
 		unsigned int bi = HexStrToUnsignedInt(itemResult1.recvString);
 		unsigned int result = bi & standard;
@@ -781,31 +781,23 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 	ListGetItem(group.subItems,&item,1);
 	char startChargeCmd[20]={0};
 	char stopChargeCMD[20]={0};
+	char isolateCMD[20]={0};
 	if(strcmp(item.itemName_,"枪1绝缘检测")==0)
 	{
 		sprintf(startChargeCmd,"%s","1枪调试启动充电");		
 		sprintf(stopChargeCMD,"%s","1枪调试停止充电");
+		sprintf(isolateCMD,"%s","1枪绝缘检测结果");
 	}else if(strcmp(item.itemName_,"枪2绝缘检测")==0){
 		sprintf(startChargeCmd,"%s","2枪调试启动充电");		
-		sprintf(stopChargeCMD,"%s","2枪调试停止充电");	
+		sprintf(stopChargeCMD,"%s","2枪调试停止充电");
+		sprintf(isolateCMD,"%s","2枪绝缘检测结果");
 	}
-	//step1
-	/*if(OpenDo(eut.relayConfig,29)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
-	}
-	if(CloseDo(eut.relayConfig,28)==FALSE)
-	{
-		return TEST_RESULT_ERROR;
-	}*/
+
 	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(30)|RELAY(2)))
 	{
 		goto DONE;
 	}
-	/*if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
-	{
-		goto DONE;
-	}*/
+
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
 		WarnShow1(0,"无法启动充电！");
@@ -818,10 +810,20 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 		flag=FALSE;
 		goto DONE;
 	}
+	
+	//读取结果
+	char inSoResult[10]={0};
+	if(FALSE==ParamGetDepend(eut,isolateCMD,inSoResult))
+	{
+		WarnShow1(0,"获取绝缘检测结果失败"); 
+	}
+	
+	printf("%s\n",inSoResult);
+	
 
 	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
-		WarnShow1(0,"无法停止充电！"); 
+		WarnShow1(0,"无法停止充电！请按急停停止"); 
 		goto DONE;
 	}	
 	
@@ -845,9 +847,18 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 		flag=FALSE;
 	}
 	
+	char inSoResult1[10]={0};
+	if(FALSE==ParamGetDepend(eut,isolateCMD,inSoResult1))
+	{
+		WarnShow1(0,"获取绝缘检测结果失败"); 
+		goto DONE;
+	}
+	
+	printf("%s\n",inSoResult1);	
+	
 	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
-		WarnShow1(0,"无法停止充电！"); 
+		WarnShow1(0,"无法停止充电！请按急停停止"); 
 		goto DONE;
 	}	
 DONE:	
