@@ -24,7 +24,9 @@
 static char logFileName[MAX_PATHNAME_LEN]={0}; 
 static int logFile=-1;
 static int logLock=0; 
-static BOOL muti=FALSE;
+static BOOL muti=TRUE;
+
+//#define REC_LOG
 
 char LOG_NAME[][6]=
 {

@@ -84,11 +84,11 @@ static int CVICALLBACK TCPCallback (unsigned int handle, int xType,
 			break;
 		case TCP_DATAREADY:
 			//DisableBreakOnLibraryErrors ();
-			static char buffer[4096]={0};
+			static char buffer[2048]={0};
 			int bytesRead=0;
 			//do{
-			memset(buffer,0,4096);
-			bytesRead = ClientTCPRead (handle, buffer, 4095, 5);
+			memset(buffer,0,2048);
+			bytesRead = ClientTCPRead (handle, buffer, 2048, 10);
 #ifdef DEBUG
 			printf("recv :%s",buffer);
 #endif			
@@ -262,6 +262,7 @@ void connectToStub(tNET_SERVICE *servicePtr)
 		if(servicePtr->onConnect!=NULL)
 			(*(ON_NET_CONNECTED)(servicePtr->onConnect))(servicePtr);
 	}else{
+		LOG_EVENT(LOG_INFO,"can not connect to sub");
 		servicePtr->connected=-1;
 	}
 	return;	

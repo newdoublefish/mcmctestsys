@@ -297,7 +297,7 @@ static int CVICALLBACK DoTestFunction(void * data)
 		ListGetItem(collect.groups,&groupIndex,obj->seq.beginGroup);//获取组的ID号
 		ListGetItem(((TESTengine *)(obj->enginePtr))->itemList,&testItem,groupIndex);//获取组
 		obj->totalFinishedTestGroupCount+=1;  //已完成测试组数量加1
-		LOG_EVENT_FORMAT(LOG_INFO,"Start test Group:%s",testItem.groupName);
+		LOG_EVENT_FORMAT(LOG_INFO,"Enter GroupTest:%s",testItem.groupName);
 		//int retryCount=0;
 		do
 		{	
@@ -354,7 +354,7 @@ static int CVICALLBACK DoTestFunction(void * data)
 			       retryFlag=! (*(ON_RESULT_SHOW_LISTENER)(obj->onResultShowListener))(obj,testItem,obj->seq.beginGroup,&itemIndex);
 			  
 		}while(retryFlag);
-		LOG_EVENT_FORMAT(LOG_INFO,"Finish test Group:%s",testItem.groupName);  
+		LOG_EVENT_FORMAT(LOG_INFO,"Leave GroupTest:%s",testItem.groupName);  
 		
 	}
 Done:	
