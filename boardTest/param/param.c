@@ -174,7 +174,7 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 		{
 			goto DONE;
 		}
-		if(strcmp(group.groupName,"硬件自检")==0)
+		/*if(strcmp(group.groupName,"硬件自检")==0)
 		{
 			if(strcmp("true",itemResult.recvString)==0)
 			{
@@ -182,6 +182,23 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 			}else{
 				itemResult.pass=0;
 			}		
+		}*/
+		if(strcmp(item.standard_,"NA")!=0)
+		{
+			/*if(strcmp(item.standard_,itemResult.recvString)==0)
+			{
+				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
+			}*/
+			if(strstr(item.standard_,itemResult.recvString)!=NULL)
+			{
+				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
+			}
+		}else{
+			itemResult.pass=1;
 		}
 		saveResult(hashTable,&itemResult);
 	}
@@ -361,11 +378,11 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}else{
 			itemResult1.pass=0;
 		}
-ERROR:		
+		
 		//sprintf(itemResult1.recvString,"%s",BI);
 		saveResult(hashTable,&itemResult1);
 	}		
-	
+ERROR:	
 	//100A需求
 
 #ifndef BIBO_DEBUG	
@@ -857,7 +874,7 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 		goto DONE;
 	}	
 
-	if(AlertDialogWithRet(0,"枪检查","请确认充电功能异常","错误","正确")==FALSE)
+	if(AlertDialogWithRet(0,"枪检查","请确认充电功能异常,应该自动停止充电","错误","正确")==FALSE)
 	{
 		flag=FALSE;
 	}
@@ -1236,34 +1253,36 @@ TPS registerStubCmdTestTps(void)
 METHODRET StubIoTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
-	char temp[20]={0};
-	if(FALSE==ParamGetDepend(eut,"BI",temp))
+	char startChargeCmd[20]={0};
+	char stopChargeCMD[20]={0};
+	if(strcmp(group.groupName,"枪1手动解锁功能")==0)
 	{
-		return ret;			
+		sprintf(startChargeCmd,"%s","1枪调试启动充电");		
+		sprintf(stopChargeCMD,"%s","1枪调试停止充电");
+	}else if(strcmp(group.groupName,"枪2手动解锁功能")==0){
+		sprintf(startChargeCmd,"%s","2枪调试启动充电");		
+		sprintf(stopChargeCMD,"%s","2枪调试停止充电");	
+	}
+	TestItem item={0};
+	ListGetItem(group.subItems,&item,END_OF_LIST);
+	RESULT result={0};
+	result.index = item.itemId;
+	result.pass = 0;
+	
+	if(ParamSetDepend(eut,startChargeCmd,"1")==FALSE)
+	{
+		WarnShow1(0,"无法启动充电");
+		goto DONE;
 	}
 	
-	unsigned int bi = atoi(temp); 
-	
-	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	if(AlertDialogWithRet(0,"请选择","请确认能够手动解锁,充电停止","错误","正确")==TRUE)
 	{
-		TestItem item={0};
-		ListGetItem(group.subItems,&item,i);
-		RESULT itemResult={0}; 
-		unsigned int standard= HexStrToUnsignedInt(item.inputValue_);
-		itemResult.index = item.itemId;
-		itemResult.pass = 1;
-		
-		unsigned int result = standard & bi;
-		if(result > 0)
-		{
-			sprintf(itemResult.recvString,"%s","TRUE");
-		}else{
-			sprintf(itemResult.recvString,"%s","FALSE");
-		
-		}
-		saveResult(hashTable,&itemResult);
+		result.pass=1;	
 	}
-		
+	
+	WarnShow1(0,"请确保充电流程结束，如果没有，按下急停");
+DONE:	
+	saveResult(hashTable,&result); 		
 	return ret;
 	
 }
@@ -1271,7 +1290,7 @@ METHODRET StubIoTest(TestGroup group,EUT eut,HashTableType hashTable)
 
 TPS registerStubIoTestTps(void)
 {
-	TPS tps=newTps("IO");
+	TPS tps=newTps("unlock");
 	tps.autoTestFunction=StubIoTest;
 	return tps;	
 }

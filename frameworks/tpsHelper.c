@@ -49,7 +49,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerParamTestTPS,
 	registerParamsCheckTps,
 	registerParamTemperatureTps,
-	registerBiboTestTps,
+	registerBiboTestTps,	 //功率分配
 	registerScanTestTps,	  //扫码测试
 	registerInverseWarnTestTps,//反接告警
 	registerInsulationTestTestTps,//绝缘检测
@@ -57,7 +57,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerTimeSetTestTps,//时间设置
 	registerRelayTestTPS,
 	registerStubCmdTestTps,
-	registerStubIoTestTps,
+	registerStubIoTestTps,//手动解锁
 };
 
 

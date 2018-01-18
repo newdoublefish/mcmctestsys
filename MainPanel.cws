@@ -15,11 +15,11 @@ Project 0001 = "MainPanel.prj"
 Project 0001 Folder Instrument Files Collapsed = True
 Project 0001 FolderId 1 Collapsed = True
 Drag Bar Left = 268
-Window Top = 87
-Window Left = 266
-Window Bottom = 644
-Window Right = 1040
-Maximized = False
+Window Top = 67
+Window Left = 311
+Window Bottom = 624
+Window Right = 1085
+Maximized = True
 Maximized Children = True
 Max32 Number Of Errors = 20
 Track Include File Dependencies = True
@@ -32,7 +32,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 5
+Number of Opened Files = 8
 Window Confinement Region Enabled = True
 MainColumnWidth = 251
 FileDateColumnWidth = 70
@@ -117,12 +117,14 @@ Breakpoint 0001 = "156,0,enabled,"
 [File 0010]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/param.c"
 File Type = "CSource"
-Disk Date = 3599087768
+Disk Date = 3599102829
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 3
-Source Window State = "1,1249,1249,1249,41,52,52,0,0,80,0,279,0,279,0,18,1234,0,1249,42,239,517,1,29,"
+Window Z-Order = 1
+Source Window State = "1,1282,1309,1309,0,13,13,0,0,163,0,911,0,296,0,27,1274,0,1282,55,239,517,1,0,"
+Breakpoint 0001 = "391,0,enabled,"
+Tracepoint 0001 = "0,0,392,1,"
 
 [File 0011]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/StubNetService.c"
@@ -131,18 +133,18 @@ Disk Date = 3599045098
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 2
+Window Z-Order = 4
 Source Window State = "1,177,177,177,4,49,49,0,0,80,0,0,0,0,0,18,143,0,159,23,239,517,1,0,"
 
 [File 0012]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
 File Type = "CSource"
-Disk Date = 3599087642
+Disk Date = 3599101074
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Window Z-Order = 4
-Source Window State = "1,37,37,37,11,32,32,0,0,105,0,0,0,0,0,25,146,0,60,152,323,665,1,0,"
+Window Z-Order = 2
+Source Window State = "1,59,59,59,4,25,25,0,3,105,0,0,0,0,0,25,41,0,59,4,323,665,1,0,"
 
 [File 0013]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/ParamSetGet.c"
@@ -151,7 +153,8 @@ Disk Date = 3599048614
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Source Window State = "1,39,39,39,5,19,19,0,0,80,0,1,0,1,0,16,40,0,47,60,215,517,1,0,"
+Window Z-Order = 3
+Source Window State = "1,8,8,8,5,19,19,0,0,80,0,1,0,1,0,16,9,0,16,68,215,517,1,0,"
 
 [File 0014]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
@@ -325,7 +328,7 @@ Disk Date = 3597037446
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 5
+Window Z-Order = 8
 Source Window State = "1,18,20,20,0,43,43,0,3,80,0,59,0,59,0,16,33,0,18,0,215,517,1,0,"
 
 [File 0032]
@@ -335,8 +338,8 @@ Disk Date = 3598956992
 In Projects = "1,"
 Window Top = 192
 Window Left = 106
-Window Z-Order = 1
-Source Window State = "1,214,214,214,5,23,23,0,0,163,0,88,0,0,0,27,45,0,63,88,323,605,1,0,"
+Window Z-Order = 7
+Source Window State = "1,214,214,214,5,23,23,0,0,95,0,88,0,0,0,25,69,0,80,32,323,605,1,0,"
 
 [File 0033]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/convertTool.c"
@@ -759,7 +762,8 @@ Disk Date = 3598957057
 In Projects = "1,"
 Window Top = 152
 Window Left = 74
-Source Window State = "1,24,24,24,5,23,23,0,0,0,0,0,0,0,0,0,20,0,24,0,251,605,1,0,"
+Window Z-Order = 6
+Source Window State = "1,24,24,24,5,106,106,0,3,95,0,0,0,0,0,19,18,0,24,5,251,605,1,0,"
 
 [File 0080]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/configPath.h"
@@ -1054,7 +1058,8 @@ Disk Date = 3598094846
 In Projects = "1,"
 Window Top = 92
 Window Left = 42
-Source Window State = "1,9,9,9,8,26,26,0,0,0,0,0,0,0,0,0,0,0,10,75,323,605,1,0,"
+Window Z-Order = 5
+Source Window State = "1,9,9,9,8,26,26,0,0,95,0,0,0,0,0,25,0,0,24,47,323,605,1,0,"
 
 [File 0113]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/scpiHelper.h"
@@ -1359,6 +1364,9 @@ Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/canTest.c"
 Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
 Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/StubNetService.c"
 Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/common.c"
+Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/common.h"
+Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/resultUtil.h"
+Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/ParamSetGet.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
