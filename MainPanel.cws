@@ -19,7 +19,7 @@ Window Top = 87
 Window Left = 266
 Window Bottom = 644
 Window Right = 1040
-Maximized = True
+Maximized = False
 Maximized Children = True
 Max32 Number Of Errors = 20
 Track Include File Dependencies = True
@@ -32,7 +32,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 4
+Number of Opened Files = 5
 Window Confinement Region Enabled = True
 MainColumnWidth = 251
 FileDateColumnWidth = 70
@@ -121,7 +121,7 @@ Disk Date = 3599087768
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 2
+Window Z-Order = 3
 Source Window State = "1,1249,1249,1249,41,52,52,0,0,80,0,279,0,279,0,18,1234,0,1249,42,239,517,1,29,"
 
 [File 0011]
@@ -131,8 +131,8 @@ Disk Date = 3599045098
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 1
-Source Window State = "1,177,177,177,4,49,49,0,0,163,0,0,0,0,0,27,143,0,159,23,239,517,1,0,"
+Window Z-Order = 2
+Source Window State = "1,177,177,177,4,49,49,0,0,80,0,0,0,0,0,18,143,0,159,23,239,517,1,0,"
 
 [File 0012]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
@@ -141,7 +141,7 @@ Disk Date = 3599087642
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Window Z-Order = 3
+Window Z-Order = 4
 Source Window State = "1,37,37,37,11,32,32,0,0,105,0,0,0,0,0,25,146,0,60,152,323,665,1,0,"
 
 [File 0013]
@@ -325,7 +325,7 @@ Disk Date = 3597037446
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 4
+Window Z-Order = 5
 Source Window State = "1,18,20,20,0,43,43,0,3,80,0,59,0,59,0,16,33,0,18,0,215,517,1,0,"
 
 [File 0032]
@@ -335,7 +335,8 @@ Disk Date = 3598956992
 In Projects = "1,"
 Window Top = 192
 Window Left = 106
-Source Window State = "1,214,214,214,5,23,23,0,0,95,0,88,0,0,0,25,45,0,60,83,323,605,1,0,"
+Window Z-Order = 1
+Source Window State = "1,214,214,214,5,23,23,0,0,163,0,88,0,0,0,27,45,0,63,88,323,605,1,0,"
 
 [File 0033]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/convertTool.c"
@@ -1357,6 +1358,7 @@ Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/param.c"
 Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/canTest.c"
 Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
 Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/StubNetService.c"
+Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/common.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
