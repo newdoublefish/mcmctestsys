@@ -60,7 +60,7 @@ static HRESULT onCellListenerGetTips(VARIANT *MyVariant,int row,int column)
 static HRESULT onStartGetTips(VARIANT *MyVariant,int row,int column)				
 {
 	//istList=ListCreate(sizeof(INSTRUCTION));
-	HashTableCreate(10,C_STRING_KEY,0,80,&tipsHashTable);
+	HashTableCreate(10,C_STRING_KEY,0,256,&tipsHashTable);
     return 0;	
 }
 

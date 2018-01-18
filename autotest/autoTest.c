@@ -940,6 +940,32 @@ int CVICALLBACK STARTTEST (int panel, int control, int event,
 	return 0;
 }
 
+void resetResult(TESTengine *engine)
+{
+	int groupCnt=0;
+	int itemCnt=0;
+	TestGroup testGroup={0};
+	TestItem testItem={0};
+	groupCnt = ListNumItems(engine->itemList);
+	for(int i=1;i<=groupCnt;i++)
+	{
+		ListGetItem(engine->itemList,&testGroup,i);
+		itemCnt = ListNumItems(testGroup.subItems);
+		for(int j=1;j<=itemCnt;j++)
+		{
+			ListGetItem(testGroup.subItems,&testItem,j);
+			RESULT result = {0};
+			result.index = testItem.itemId;
+			result.pass = 0;
+			for(int z=0;z<engine->totalTestObject;z++)
+			{
+				saveResult(engine->objectArray[z].resultHashTable,&result); 
+			}
+						
+		}
+	}
+}
+
 
 int CVICALLBACK RESET (int panel, int control, int event,
 		void *callbackData, int eventData1, int eventData2)
@@ -951,9 +977,11 @@ int CVICALLBACK RESET (int panel, int control, int event,
 		case EVENT_COMMIT:
 			operateTimer(0);
 			reSetEngine(engine);
+			resetResult(engine);
 			setButtonState(3);
 			SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0时0分0秒");    
 		    SetCtrlAttribute (autoPanelHandle, PANEL_AUTO_TEST, ATTR_DIMMED ,0); 
+			WarnShow1(0,"重置完成");
 	}
 	return 0;
 }
