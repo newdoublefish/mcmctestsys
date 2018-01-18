@@ -22,6 +22,7 @@
 #include "log.h"
 #include "reportDb.h"
 
+
 #define DEBUG
 
 HRESULT EnterAppInit()

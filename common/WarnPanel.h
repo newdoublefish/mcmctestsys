@@ -13,7 +13,15 @@
 
      /* Panels and Controls: */
 
-#define  MANUALTIPS                       1
+#define  LOGINPANEL                       1
+#define  LOGINPANEL_PASSWORD              2       /* control type: string, callback function: (none) */
+#define  LOGINPANEL_USERNAME              3       /* control type: string, callback function: (none) */
+#define  LOGINPANEL_COMMANDBUTTON         4       /* control type: command, callback function: (none) */
+#define  LOGINPANEL_TEXTMSG               5       /* control type: textMsg, callback function: (none) */
+#define  LOGINPANEL_TEXTMSG_2             6       /* control type: textMsg, callback function: (none) */
+#define  LOGINPANEL_ERRORMSG              7       /* control type: textMsg, callback function: (none) */
+
+#define  MANUALTIPS                       2
 #define  MANUALTIPS_SURE                  2       /* control type: command, callback function: (none) */
 #define  MANUALTIPS_TEXTMSG_2             3       /* control type: textMsg, callback function: (none) */
 #define  MANUALTIPS_GRROUPNAME_2          4       /* control type: textMsg, callback function: (none) */
@@ -27,13 +35,13 @@
 #define  MANUALTIPS_CANCEL                12      /* control type: command, callback function: (none) */
 #define  MANUALTIPS_TEXTBOX               13      /* control type: textMsg, callback function: (none) */
 
-#define  NAMEPANEL                        2
+#define  NAMEPANEL                        3
 #define  NAMEPANEL_PICTURE                2       /* control type: picture, callback function: (none) */
 #define  NAMEPANEL_FILENAMESTRING         3       /* control type: string, callback function: (none) */
 #define  NAMEPANEL_TEXTMSG_3              4       /* control type: textMsg, callback function: (none) */
 #define  NAMEPANEL_FILENAMEBT             5       /* control type: command, callback function: (none) */
 
-#define  PANEL2                           3
+#define  PANEL2                           4
 #define  PANEL2_SURE                      2       /* control type: command, callback function: (none) */
 #define  PANEL2_CANCEL                    3       /* control type: command, callback function: (none) */
 #define  PANEL2_TEXTMSG_2                 4       /* control type: textMsg, callback function: (none) */
@@ -41,18 +49,18 @@
 #define  PANEL2_TIMER                     6       /* control type: timer, callback function: (none) */
 #define  PANEL2_TimeDisplay               7       /* control type: textMsg, callback function: (none) */
 
-#define  PANEL_WARN                       4
+#define  PANEL_WARN                       5
 #define  PANEL_WARN_COMMANDBUTTON         2       /* control type: command, callback function: (none) */
 #define  PANEL_WARN_TEXTMSG_2             3       /* control type: textMsg, callback function: (none) */
 #define  PANEL_WARN_TEXTMSG               4       /* control type: textMsg, callback function: (none) */
 #define  PANEL_WARN_TIMER                 5       /* control type: timer, callback function: (none) */
 #define  PANEL_WARN_TimeDisplayTM         6       /* control type: textMsg, callback function: (none) */
 
-#define  PROGRESS                         5
+#define  PROGRESS                         6
 #define  PROGRESS_RINGSLIDE               2       /* control type: slide, callback function: (none) */
 #define  PROGRESS_TEXTMSG                 3       /* control type: textMsg, callback function: (none) */
 
-#define  PROGRESS_2                       6
+#define  PROGRESS_2                       7
 #define  PROGRESS_2_RINGSLIDE             2       /* control type: slide, callback function: (none) */
 #define  PROGRESS_2_TEXTMSG               3       /* control type: textMsg, callback function: (none) */
 #define  PROGRESS_2_TEXTBOX               4       /* control type: textBox, callback function: (none) */

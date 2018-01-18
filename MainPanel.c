@@ -27,6 +27,7 @@
 #include "ftpConfigView.h"
 #include "testInit.h"
 #include "log.h"
+#include "login.h"    
 
 #define COPY_RIGHT "CopyRight 2017  GuangDong Thousands of Cities & Charging Stations E-Vehicles Operating Co., Ltd."
 
@@ -200,12 +201,17 @@ int main (int argc, char *argv[])
                                       VAL_MODE_IN_QUEUE,
                                       NULL, &g_mainHWND);
 	EnterAppInit();
+	
+		
 	//登入界面
 	//DisplayLoginPanel();
-	DisplaySutConfigPanel();
-	
-	RunUserInterface ();
+	if(DisplayLoginPanel()==TRUE)
+	{
+		DisplaySutConfigPanel();
+		RunUserInterface ();
+	}
 	DiscardPanel(panelMain);
+	AppDeInit();//这里可能会影响程序关闭     	
 	
 	return 0;
 }
@@ -359,7 +365,7 @@ int CVICALLBACK QUITAPP (int panel, int control, int event,
 			
 			
 			LOG_EVENT(LOG_INFO,"quit app!");  
-			AppDeInit();//这里可能会影响程序关闭
+			
 			
 
 			QuitUserInterface(0); 
