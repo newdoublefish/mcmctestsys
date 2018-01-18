@@ -1,7 +1,8 @@
 #include <ansi_c.h>
 #include "ParamRuleParse.h"
 #include "StubNetService.h"
-#include "regexpr.h"   
+#include "regexpr.h" 
+#include "Log.h"
 //#define DEBUG
 #define RETRY_CNT 3
 
@@ -120,6 +121,8 @@ int GetParameter(tNET_SERVICE *servicePtr,PARAMETER *para)
 	//printf("-----%s\n",servicePtr->packet);
 	if(SearchAndParse(servicePtr->packet,para)<0)
 		return -2;
+	
+	LOG_EVENT_FORMAT(LOG_INFO,"recv:%s",para->value);
 	return 0;	
 }
 

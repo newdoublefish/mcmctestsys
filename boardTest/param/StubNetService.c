@@ -92,7 +92,7 @@ static int CVICALLBACK TCPCallback (unsigned int handle, int xType,
 #ifdef DEBUG
 			printf("recv :%s",buffer);
 #endif			
-			LOG_EVENT_FORMAT(LOG_INFO,"recv:%s",buffer);
+			//LOG_EVENT_FORMAT(LOG_INFO,"recv:%s",buffer);
 			if(servicePtr->setFlag==1)
 			{
 				processRecvData(servicePtr,buffer,bytesRead);
@@ -256,7 +256,7 @@ void connectToStubSync(tNET_SERVICE *servicePtr)
 void connectToStub(tNET_SERVICE *servicePtr)
 {
 	if(ConnectToTCPServer (&(servicePtr->connectHandler), servicePtr->port, servicePtr->ip, 
-		TCPCallback, servicePtr, 500)>=0){	
+		TCPCallback, servicePtr, 5000)>=0){	
 		LOG_EVENT(LOG_INFO,"success connect to sub");	
 		servicePtr->connected=1;
 		if(servicePtr->onConnect!=NULL)

@@ -153,33 +153,11 @@ TPS registerParamTestTPS(void)
 METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
-	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;
-	*/
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 	{
 		return 	TEST_RESULT_ERROR;
 	}
-	ListType paramsToFetch=ListCreate(sizeof(PARAMETER));
-
-	
-	for(int i=1;i<=ListNumItems(group.subItems);i++)
-	{
-		TestItem item;
-		ListGetItem(group.subItems,&item,i);
-		PARAMETER param={0};
-		if(FALSE==getParameter(item.itemName_,&param))
-		{
-			WarnShow1(0,"无该参数配置");
-			goto DONE;
-		}
-		ListInsertItem(paramsToFetch,&param,END_OF_LIST);
-	}
-	//TODO:读回参数
-	//showParamSetPanel(paramsToFetch);
-	//设置参数
 	//发送自检命令
 	if(startCommand(servicePtr,"product self_test\r\n")<0)
 		goto DONE;
@@ -191,43 +169,24 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 		ListGetItem(group.subItems,&item,i);
 		RESULT itemResult;
 		itemResult.index=item.itemId;		
-#if 0		
-		PARAMETER paramGet={0};
-		ListGetItem(paramsToFetch,&paramGet,i); 
-		///printfParam(paramGet);
-		
-		if(GetParameter(servicePtr,&paramGet)<0)
-		{	
-			WarnShow1(0,"获取失败");
+		itemResult.pass=1;
+		if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)<0)
+		{
 			goto DONE;
 		}
-
 		if(strcmp(group.groupName,"硬件自检")==0)
 		{
-			if(strcmp("true",paramGet.value)==0)
+			if(strcmp("true",itemResult.recvString)==0)
 			{
 				itemResult.pass=1;
 			}else{
 				itemResult.pass=0;
-			}
-		}else if(strcmp(group.groupName,"电表时间")==0)
-		{
-			itemResult.pass=1;
-		}else{
-			itemResult.pass=1;	
+			}		
 		}
-		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
-		//printf("----------%s\n",paramGet.value);
-		sprintf(itemResult.recvString,"%s",paramGet.value);
-#else	
-		itemResult.pass=1;
-		ParamGet(servicePtr,item.itemName_,itemResult.recvString);
-		//ParamGetDepend(eut,item.itemName_,itemResult.recvString);
-#endif		
 		saveResult(hashTable,&itemResult);
-	}	
+	}
+	return ret;
 DONE:	
-	ListDispose(paramsToFetch);
 	onStubDisConnected(servicePtr);	
 	return ret;
 }
@@ -320,13 +279,22 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	char startChargeCmd[20]={0};
 	char stopChargeCMD[20]={0};
+	char tips60A[20]={0};
+	char tips100A[20]={0};
+	char tips120A[30]={0};
 	if(strcmp(group.groupName,"枪1功率分配")==0)
 	{
 		sprintf(startChargeCmd,"%s","1枪调试启动充电");		
 		sprintf(stopChargeCMD,"%s","1枪调试停止充电");
+		sprintf(tips60A,"%s","电源模块1，2启动");
+		sprintf(tips100A,"%s","电源模块1，2，3启动");
+		sprintf(tips120A,"%s","电源模块1，2，3，6 启动");
 	}else if(strcmp(group.groupName,"枪2功率分配")==0){
 		sprintf(startChargeCmd,"%s","2枪调试启动充电");		
-		sprintf(stopChargeCMD,"%s","2枪调试停止充电");	
+		sprintf(stopChargeCMD,"%s","2枪调试停止充电");
+		sprintf(tips60A,"%s","电源模块4，5启动");
+		sprintf(tips100A,"%s","电源模块4，5，6启动");
+		sprintf(tips120A,"%s","电源模块3，4，5，6 启动");	
 	}
 	
 		
@@ -348,7 +316,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		if(i==1)
 		{
 			WarnShow1(0,"设置电流为60A"); //后续可以用485控制来操作
-			if(FALSE==AlertDialogWithRet(0,"waring","电源模块1，2启动","错误","正确"))
+			if(FALSE==AlertDialogWithRet(0,"waring",tips60A,"错误","正确"))
 			{
 			//getStubNetService(ip,port);
 				goto ERROR;
@@ -356,7 +324,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}else if(i==2){
 		
 			WarnShow1(0,"设置电流为100A"); //后续可以用485控制来操作
-			if(FALSE==AlertDialogWithRet(0,"waring","电源模块1，2启动","错误","正确"))
+			if(FALSE==AlertDialogWithRet(0,"waring",tips100A,"错误","正确"))
 			{
 			//getStubNetService(ip,port);
 				goto ERROR;
@@ -364,7 +332,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}else if(i==3){
 		
 			WarnShow1(0,"设置电流为120A"); //后续可以用485控制来操作
-			if(FALSE==AlertDialogWithRet(0,"waring","电源模块1，2启动","错误","正确"))
+			if(FALSE==AlertDialogWithRet(0,"waring",tips120A,"错误","正确"))
 			{
 			//getStubNetService(ip,port);
 				goto ERROR;
@@ -380,10 +348,12 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}
 #endif
 		//PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
-		PRINT("%x\n",itemResult1.recvString);
+		//PRINT("%x\n",itemResult1.recvString);
 		unsigned int standard= HexStrToUnsignedInt(item1.inputValue_);
 		unsigned int bi = atoi(itemResult1.recvString);
 		unsigned int result = bi & standard;
+		memset(itemResult1.recvString,0,RESULT_RECEIVE_LEN);
+		sprintf(itemResult1.recvString,"0x%x",bi);
 
 		if(result == standard)
 		{
@@ -401,7 +371,7 @@ ERROR:
 #ifndef BIBO_DEBUG	
 	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
-		WarnShow1(0,"无法启动充电！");
+		WarnShow1(0,"无法停止充电,请按急停按钮");
 	}
 #endif	
 	
@@ -422,7 +392,7 @@ TPS registerBiboTestTps(void)
 
 BOOL checkScanResult(int panel)
 {
-	char gun1[20]={0},gun2[20]={0},biao1[20]={0},biao2[20]={0};
+	char gun1[128]={0},gun2[128]={0},biao1[128]={0},biao2[128]={0};
 	GetCtrlVal(panel,SCANPANEL_SCAN1,gun1);
 	GetCtrlVal(panel,SCANPANEL_SCAN2,gun2);
 	GetCtrlVal(panel,SCANPANEL_SCAN3,biao1); 
@@ -436,6 +406,18 @@ BOOL checkScanResult(int panel)
 	{
 		SetCtrlVal(panel,SCANPANEL_TEXTMSG_2,"错误:表1表2地址一致");
 		return FALSE;
+	}
+	
+	if((strlen(gun1)!=strlen(gun2)) | (strlen(gun1)!=12))
+	{
+		SetCtrlVal(panel,SCANPANEL_TEXTMSG_2,"错误:枪1枪2地址设置错误");
+		return FALSE;		
+	}
+	
+	if((strlen(biao1)!=strlen(biao2)) | (strlen(biao2)!=12)) 
+	{
+		SetCtrlVal(panel,SCANPANEL_TEXTMSG_2,"错误:表1表2地址设置错误");
+		return FALSE;		
 	}	
 	return TRUE;
 }
@@ -513,7 +495,6 @@ int CVICALLBACK ParamScanCtrlCallback (int panel, int control, int event,
 				GetCtrlVal(panel,control,temp);
 				if(strlen(temp)>=16){
 					SetCtrlVal(panel,control,temp+4);
-					//QuitUserInterface(1);
 				}				
 			 }
 		     break;
@@ -533,7 +514,7 @@ int CVICALLBACK ParaPanelCallback (int panelHandle, int event, void *callbackDat
 	return 0;
 }
 
-#define DEBUG_PARAM_SCAN_TEST
+//#define DEBUG_PARAM_SCAN_TEST
 METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
@@ -542,7 +523,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 	{
-		return 	TEST_RESULT_ERROR;
+		return ret;
 	}
 #endif	
 	
@@ -573,14 +554,14 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 		itemResult.pass=0;
 		if(stubNameLen>0)
 			itemResult.pass=1;
-		if(i==1)
+		if(1==i)
 		{
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN1,itemResult.recvString); 
-		}else if(i==2){
+		}else if(2==i){
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN2,itemResult.recvString);
-		}else if(i==3)
+		}else if(3==i)
 		{
-			if(FALSE==getParameter(item.itemName_,&param))
+			/*if(FALSE==getParameter(item.itemName_,&param))
 			{
 				WarnShow1(0,"无该参数配置");
 				continue;
@@ -599,12 +580,28 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 			}else{
 				itemResult.pass=0;
 			}
-			sprintf(itemResult.recvString,"%s",param.value);			
+			sprintf(itemResult.recvString,"%s",param.value);*/
+			char setValue[20]={0};
+			sprintf(setValue,"00000%s",stubName);
+			if(ParamSet(servicePtr,item.itemName_,setValue)<0)
+			{
+				goto DONE;
+			}
+			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)<0)
+			{
+				goto DONE;
+			}
+			if(strcmp(itemResult.recvString,setValue)==0)
+			{
+				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
+			}			
 			
 			
 		}else if(i==4)
 		{
-			if(FALSE==getParameter(item.itemName_,&param))
+			/*if(FALSE==getParameter(item.itemName_,&param))
 			{
 				WarnShow1(0,"无该参数配置");
 				continue;
@@ -623,44 +620,56 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 			}else{
 				itemResult.pass=0;
 			}
-			sprintf(itemResult.recvString,"%s",param.value);
+			sprintf(itemResult.recvString,"%s",param.value);*/
+			
+			char setValue[20]={0};
+			GetCtrlVal(panelHandle,SCANPANEL_SCAN3,setValue);
+			if(ParamSet(servicePtr,item.itemName_,setValue)<0)
+			{
+				goto DONE;
+			}
+			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)<0)
+			{
+				goto DONE;
+			}
+			if(strcmp(itemResult.recvString,setValue)==0)
+			{
+				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
+			}			
 			
 						
 	
 		}else if(i==5)
 		{
-			if(FALSE==getParameter(item.itemName_,&param))
+			char setValue[20]={0};
+			GetCtrlVal(panelHandle,SCANPANEL_SCAN4,setValue);
+			if(ParamSet(servicePtr,item.itemName_,setValue)<0)
 			{
-				WarnShow1(0,"无该参数配置");
-				continue;
+				goto DONE;
 			}
-						
-			GetCtrlVal(panelHandle,SCANPANEL_SCAN4,itemResult.recvString);
-			sprintf(param.value,"%s",itemResult.recvString);
-			if(ConfigParameter(servicePtr,param)<0)
-				continue;
-			if(GetParameter(servicePtr,&param)<0){
-				continue;
+			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)<0)
+			{
+				goto DONE;
 			}
-			
-			if(strcmp(itemResult.recvString,param.value)==0)
+			if(strcmp(itemResult.recvString,setValue)==0)
 			{
 				itemResult.pass=1;
 			}else{
 				itemResult.pass=0;
-			}
-			sprintf(itemResult.recvString,"%s",param.value);			
+			}			
 		}
 		saveResult(hashTable,&itemResult);
 	}
+	DiscardPanel(panelHandle); 
+	return ret;
 #endif	
 DONE:	
-	
 	DiscardPanel(panelHandle);
-	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;*/	
-
+#ifndef DEBUG_PARAM_SCAN_TEST	
+	onStubDisConnected(servicePtr);
+#endif	
 	return ret;
 }
 
@@ -751,7 +760,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 		flag3=0;
 	}
 	
-DONE:	
+	
 	RESULT itemResult={0};
 	itemResult.index=item.itemId;
 	itemResult.pass = flag1 & flag2 & flag3;
@@ -761,7 +770,13 @@ DONE:
 	if(OperatDoSet(eut.relayConfig,RELAY(2))==FALSE)
 	{
 		
-	}		
+	}
+	return ret;
+DONE:
+	if(OperatDoSet(eut.relayConfig,RELAY(2))==FALSE)
+	{
+		
+	}	
 	onStubDisConnected(servicePtr);
 	return ret;
 }
@@ -775,7 +790,6 @@ TPS registerInverseWarnTestTps(void)
 
 METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
-#if 1
 	BOOL flag=TRUE; 
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	TestItem item;
@@ -819,7 +833,7 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 		WarnShow1(0,"获取绝缘检测结果失败"); 
 	}
 	
-	printf("%s\n",inSoResult);
+	//printf("%s\n",inSoResult);
 	
 
 	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
@@ -854,7 +868,7 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 		WarnShow1(0,"获取绝缘检测结果失败"); 
 	}
 	
-	printf("%s\n",inSoResult1);	
+	//printf("%s\n",inSoResult1);	
 	
 	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
@@ -871,100 +885,6 @@ DONE:
 	itemResult.pass=flag;
 	saveResult(hashTable,&itemResult);
 	return ret;	
-#else	
-	METHODRET ret = TEST_RESULT_ALLPASS;
-	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
-	{
-		return 	TEST_RESULT_ERROR;
-	}	
-	TestItem item;
-	ListGetItem(group.subItems,&item,1);
-	//step1  合上继电器30，断开29，保持电源打开 
-	if(OperatDoSet(eut.relayConfig,0x20000002)==FALSE)
-	{
-		goto DONE;
-	}
-	//step2 等待10S
-	WarnAlert(0,"延时中",10);
-
-	//step3 启动充电流程 
-	if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
-	{
-		goto DONE;
-	}
-	//step4 等待确认
-	onStubDisConnected(servicePtr); 
-	WarnShow1(0,"请确认开始下一步");
-	servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
-	{
-		goto DONE;
-	}		
-	//step5 读取绝缘检测结果
-	char resistentStr[20]={0};
-	ParamGet(servicePtr,"1枪绝缘电阻正",resistentStr);
-	int resistent1=atoi(resistentStr);
-	
-	memset(resistentStr,0,20);
-	ParamGet(servicePtr,"1枪绝缘电阻负",resistentStr);
-	int resistent2=atoi(resistentStr);
-	int resistentJudge=0;
-	if(resistent1<resistent2)
-	{
-		//TODO:计算结果
-	}else{
-		//TODO:
-	}
-	PRINT("--------------------%d,%d\n",resistent1,resistent2);
-
-	//step6 关闭充电 
-	if(ParamSet(servicePtr,"1枪调试停止充电","1")==FALSE)
-	{
-		goto DONE; 
-	}
-	
-	//step1  合上继电器30，合上29,保持电源打开
-	if(OperatDoSet(eut.relayConfig,0x30000002)==FALSE)
-	{
-		goto DONE; 
-	}
-/*	
-	//step2 启动充电流程 
-	if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
-	{
-		goto DONE;
-	}
-	//step2 人工判断能否正常充电 
-	if(AlertDialogWithRet(0,"枪检查","请确认不能正常启动充电","错误","正确")==FALSE)
-	{
-		//flag=0;
-	}
-	
-	if(ParamSet(servicePtr,"1枪调试停止充电","1")==FALSE)
-	{
-		goto DONE;
-	}	
-	
-*/	
-DONE:
-	onStubDisConnected(servicePtr); 
-	if(ParamSet(servicePtr,"1枪调试停止充电","1")==FALSE)
-	{
-		//goto DONE; 
-	}
-
-	if(OperatDoSet(eut.relayConfig,0x00000002)==FALSE)
-	{
-		//return TEST_RESULT_ERROR; 
-	}
-	WarnAlert(0,"延时中",10);
-	RESULT itemResult={0};
-	itemResult.index=item.itemId;
-	//itemResult.pass=flag;
-	saveResult(hashTable,&itemResult);
-	return ret;
-#endif	
 }
 
 
@@ -1030,11 +950,11 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		return 	TEST_RESULT_ERROR;
 	}	
 	
-	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 	{
 		return 	TEST_RESULT_ERROR;
-	}
+	}*/
 
 	WarnShow1(0,"按下确定开始读数");
 
@@ -1045,6 +965,7 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		ListGetItem(group.subItems,&item,i);
 
 		PARAMETER param={0};
+		sprintf(param.paramName,"%s",item.itemName_);
 		ListInsertItem(paramsToSet,&param,END_OF_LIST); 
 		/*
 		if(FALSE==getParameter(item.itemName_,&param))
@@ -1062,14 +983,15 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		ListInsertItem(paramsToGet,&param,END_OF_LIST);*/
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
+		itemResult.pass=0;
 		//sprintf(itemResult.recvString,"%s",param.value);
-		if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)==FALSE)
+		if(ParamGetDepend(eut,item.itemName_,itemResult.recvString)==FALSE)
 		{
 			 itemResult.pass=0;
 			 saveResult(hashTable,&itemResult);
-			 continue;
+			 goto DONE;
 		}
-		float strValue=atof(param.value);
+		float strValue=atof(itemResult.recvString);
 		if(i==3)
 		{
 			if(strValue<352 && strValue>348)
@@ -1101,18 +1023,22 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		itemResult.index=item.itemId;
 		sprintf(itemResult.recvString,"%s",param.value);
 		float strValue=atof(param.value);
-		itemResult.pass=1;
+		itemResult.pass=1; 
 		if(i==2)
 		{
 			if(strValue<352 && strValue>348)
 			{
 				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
 			}
 		}else if(i==1)
 		{
 			if(strValue<2.87 && strValue>2.67)
 			{
 				itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
 			}
 		}
 		saveResult(hashTable,&itemResult);			
@@ -1124,17 +1050,17 @@ DONE:
 	ListDispose(paramsToSet);
 	//ListDispose(paramsToGet);
 	
-	if(ParamSet(servicePtr,stopChargeCMD,"1")==FALSE)
+	if(ParamSetDepend(eut,stopChargeCMD,"1")==FALSE)
 	{
-		
+		WarnShow1(0,"不能停止充电,请按下急停按钮");		
 	}
+	
+	WarnShow1(0,"请确保已经停止充电");
 	
 	if(CloseDo(eut.relayConfig,31)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
-	
-	onStubDisConnected(servicePtr);	
 	return ret;
 }
 
@@ -1304,6 +1230,49 @@ TPS registerStubCmdTestTps(void)
 {
 	TPS tps=newTps("StubCmd");
 	tps.autoTestFunction=StubCmdTest;
+	return tps;	
+}
+
+METHODRET StubIoTest(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	char temp[20]={0};
+	if(FALSE==ParamGetDepend(eut,"BI",temp))
+	{
+		return ret;			
+	}
+	
+	unsigned int bi = atoi(temp); 
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0}; 
+		unsigned int standard= HexStrToUnsignedInt(item.inputValue_);
+		itemResult.index = item.itemId;
+		itemResult.pass = 1;
+		
+		unsigned int result = standard & bi;
+		if(result > 0)
+		{
+			sprintf(itemResult.recvString,"%s","TRUE");
+		}else{
+			sprintf(itemResult.recvString,"%s","FALSE");
+		
+		}
+		saveResult(hashTable,&itemResult);
+	}
+		
+	return ret;
+	
+}
+
+
+TPS registerStubIoTestTps(void)
+{
+	TPS tps=newTps("IO");
+	tps.autoTestFunction=StubIoTest;
 	return tps;	
 }
 

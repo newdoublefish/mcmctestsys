@@ -4,6 +4,7 @@
 #include "common.h"
 #include "ParamExcelParse.h"
 #include "EutEntity.h"
+#include "Log.h"
 
 BOOL ParamSetDepend(EUT eut,char *paramName,char *paramValue)
 {
@@ -19,6 +20,7 @@ BOOL ParamSetDepend(EUT eut,char *paramName,char *paramValue)
 	{
 		
 		sprintf(temp,"%s:%s",paramName,"无该参数配置");
+		LOG_EVENT_FORMAT(LOG_INFO,"%s",temp); 
 		WarnShow1(0,temp);
 		ret = FALSE;
 	}
@@ -26,11 +28,13 @@ BOOL ParamSetDepend(EUT eut,char *paramName,char *paramValue)
 	if(ConfigParameter(servicePtr,param)<0)
 	{	
 		sprintf(temp,"%s:%s",paramName,"设置失败");
+		LOG_EVENT_FORMAT(LOG_INFO,"%s",temp); 
 		WarnShow1(0,temp);
+		onStubDisConnected(servicePtr);
 		ret = FALSE;
 	}
 	
-	onStubDisConnected(servicePtr);
+	
 	return TRUE;
 }
 BOOL ParamGetDepend(EUT eut,char *paramName,char *paramValue)
@@ -46,6 +50,7 @@ BOOL ParamGetDepend(EUT eut,char *paramName,char *paramValue)
 	if(FALSE==getParameter(paramName,&param))
 	{
 		sprintf(temp,"%s:%s",paramName,"无该参数配置");
+		LOG_EVENT_FORMAT(LOG_INFO,"%s",temp); 
 		WarnShow1(0,temp);
 		ret=FALSE;
 	}
@@ -54,12 +59,14 @@ BOOL ParamGetDepend(EUT eut,char *paramName,char *paramValue)
 	if(GetParameter(servicePtr,&param)<0)
 	{	
 		sprintf(temp,"%s:%s",paramName,"获取失败");
+		LOG_EVENT_FORMAT(LOG_INFO,"%s",temp); 
 		WarnShow1(0,temp);
+		onStubDisConnected(servicePtr);
+		ReleaseStubNetService();		
 		ret=FALSE;
 	}
 	sprintf(paramValue,"%s",param.value);
-	onStubDisConnected(servicePtr);
-	ReleaseStubNetService();
+
 	return ret;
 }
 
