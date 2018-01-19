@@ -183,6 +183,8 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 				itemResult.pass=0;
 			}		
 		}*/
+		itemResult.pass=1;
+		
 		if(strcmp(item.standard_,"NA")!=0)
 		{
 			/*if(strcmp(item.standard_,itemResult.recvString)==0)
@@ -197,8 +199,16 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 			}else{
 				itemResult.pass=0;
 			}
-		}else{
-			itemResult.pass=1;
+		}
+		
+		if(atof(item.standard_)>0.0001)
+		{
+			if(atof(itemResult.recvString)>(atof(item.standard_)-0.5))
+			{
+				 itemResult.pass=1;
+			}else{
+				itemResult.pass=0;
+			}
 		}
 		saveResult(hashTable,&itemResult);
 	}
@@ -322,6 +332,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		return ret;
 	}
 #endif	
+	WarnShow1(0,"请确保充电流程已经开始并且BMS电压稳定");
 	//60A需求
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -390,6 +401,7 @@ ERROR:
 	{
 		WarnShow1(0,"无法停止充电,请按急停按钮");
 	}
+	WarnShow1(0,"请等待并确保充电流程已经停止");
 #endif	
 	
 	return ret;
@@ -524,8 +536,10 @@ int CVICALLBACK ParaPanelCallback (int panelHandle, int event, void *callbackDat
 	switch (event)
 	{
 		case EVENT_CLOSE:
-			if(checkScanResult(panelHandle)==TRUE) 
-			 	QuitUserInterface(1);
+			//if(checkScanResult(panelHandle)==TRUE) 
+			 BOOL *operateFlag = (BOOL *)callbackData;
+			 *operateFlag = FALSE;
+			 QuitUserInterface(1);
 		     break;
 	}
 	return 0;
@@ -535,6 +549,7 @@ int CVICALLBACK ParaPanelCallback (int panelHandle, int event, void *callbackDat
 METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
+	BOOL operateFlag = TRUE;
 	char stubName[20]={0};
 #ifndef DEBUG_PARAM_SCAN_TEST	
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
@@ -546,7 +561,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 	
 	int panelHandle=LoadPanel(0,"ParamPanel.uir",SCANPANEL);
 	
-	InstallPanelCallback(panelHandle,ParaPanelCallback,NULL);
+	InstallPanelCallback(panelHandle,ParaPanelCallback,&operateFlag);
 	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN1,ParamScanCtrlCallback,stubName);
 	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN2,ParamScanCtrlCallback,stubName);
 	InstallCtrlCallback(panelHandle,SCANPANEL_SCAN3,ParamScanCtrlCallback,stubName);
@@ -556,6 +571,11 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 	DisplayPanel(panelHandle); 
 	RunUserInterface();
 	HidePanel(panelHandle);
+	if(FALSE == operateFlag)
+	{
+		DiscardPanel(panelHandle);
+		return ret;
+	}
 #ifdef DEBUG_PARAM_SCAN_TEST	
 	goto DONE;
 #else	
@@ -901,6 +921,7 @@ DONE:
 	itemResult.index=item.itemId;
 	itemResult.pass=flag;
 	saveResult(hashTable,&itemResult);
+	WarnShow1(0,"请确保充电流程已经停止");	
 	return ret;	
 }
 
@@ -1278,6 +1299,12 @@ METHODRET StubIoTest(TestGroup group,EUT eut,HashTableType hashTable)
 	if(AlertDialogWithRet(0,"请选择","请确认能够手动解锁,充电停止","错误","正确")==TRUE)
 	{
 		result.pass=1;	
+	}else{
+		if(ParamSetDepend(eut,stopChargeCMD,"1")==FALSE)
+		{
+			WarnShow1(0,"无法停止充电流程");
+			goto DONE;
+		}		
 	}
 	
 	WarnShow1(0,"请确保充电流程结束，如果没有，按下急停");
