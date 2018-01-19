@@ -754,7 +754,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	}
 	
 	//WarnAlert(0,);
-	WarnAlert(0,"延时中",30);
+	WarnAlert(0,"延时中",8);
 	
 	memset(queryResult,0,20);
 	if(ParamGet(servicePtr,item.itemName_,queryResult)<0)
@@ -780,7 +780,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 		goto DONE;
 	}
 	
-	WarnAlert(0,"延时中",30); 
+	WarnAlert(0,"延时中",8); 
 	
 	memset(queryResult,0,20);
 	if(ParamGet(servicePtr,item.itemName_,queryResult)<0)
@@ -1235,7 +1235,7 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 			}
 			onStubDisConnected(servicePtr);
 			servicePtr=NULL;
-			WarnAlert(0,"请稍后！！！",30);
+			WarnAlert(0,"请稍后！！！",25);
 			servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 			if(servicePtr==NULL)
 			{
