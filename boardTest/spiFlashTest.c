@@ -39,6 +39,6 @@ TPS registerSpiFlashTestTPS(void)
 {
 	TPS tps=newTps("spiflash");
 	tps.autoTestFunction=spiFlashTest;
-	tps.manualTestFunction=spiFlashTest;
+//	tps.manualTestFunction=spiFlashTest;
 	return tps;
 }

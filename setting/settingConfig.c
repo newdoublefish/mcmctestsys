@@ -38,6 +38,7 @@ HRESULT  ShowSettingInfo(SETTING s)
    SetCtrlVal(settingPanel,SET_PANEL_CBCOLLECTMENTION,s.collectTestMention); 
    SetCtrlVal(settingPanel,SET_PANEL_AUTOSAVE,s.autoSave); 
    SetCtrlVal(settingPanel,SET_PANEL_RELAY_ENABLE,s.relayEnable); 
+   SetCtrlVal(settingPanel,SET_PANEL_SHOWPROCESS,s.showProcess);
    SetCtrlVal(settingPanel,SET_PANEL_RING_CLOSETIME,s.mentionAutoCloseTime);
    SetCtrlVal(settingPanel,SET_PANEL_FRONT_SIZE,s.frontSize);  
    SetCtrlVal(settingPanel,SET_PANEL_RETESTNUM,s.reTestCnt);
@@ -81,7 +82,9 @@ int CVICALLBACK SETTINGSAVECALLBACK (int panel, int control, int event,
 			GetCtrlVal(settingPanel,SET_PANEL_AUTOSAVE,&flag);
 		    gSetting.autoSave=flag;
 			GetCtrlVal(settingPanel,SET_PANEL_RELAY_ENABLE,&flag);
-		    gSetting.relayEnable=flag;			
+		    gSetting.relayEnable=flag;
+			GetCtrlVal(settingPanel,SET_PANEL_SHOWPROCESS,&flag);
+		    gSetting.showProcess=flag;				
 			GetCtrlVal(settingPanel,SET_PANEL_CBLOG,&flag);
 		    gSetting.saveLog=flag;
 			GetCtrlVal(settingPanel,SET_PANEL_SIMUTESTCB,&flag);

@@ -38,6 +38,7 @@
 #include "mediaHelper.h"
 #include "relayProtocol.h"
 #include "relayHelper.h"
+#include "TpsDefaultPanel.h"
 //#include "StubNetService.h"
 
 static int autoPanelHandle=0;
@@ -666,6 +667,9 @@ void SetActiveTestGroup(TESTobject *_obj)
 	}
 }
 
+
+
+
 extern METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable);
 ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type)
 {
@@ -729,27 +733,51 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		METHODRET testRet= (*method)(testItem,_obj->device,_obj->resultHashTable);*/
 		TPS tps;
 		//memset(&tps,0,sizeof(tps));
+		 
 		if(getTps(testItem.type,&tps))
 		{
 			//printf("%s",tps.tpsName);
 			
-			if(type == TYPE_AUTO){
-				if(tps.autoTestFunction==NULL)
+			if(set.showProcess){
+				if(tps.createTpsPanel!=NULL)
 				{
-					WarnShow1(0,"没有定义自动测试的方法"); 
-				}else{
+					 tps.tpsPanelHandle = (*(tps.createTpsPanel))(testItem.groupName);
+				}
+			
+				if(tps.tpsPanelHandle>0)
+				{
+					DisplayPanel(tps.tpsPanelHandle);
+				}
+			}
+
+			if(type == TYPE_AUTO){
+				
+				if(tps.testFunction!=NULL)
+				{
+					testRet = (*(TEST_FUNCTION)(tps.testFunction))(testItem,_obj->device,_obj->resultHashTable,tps.tpsPanelHandle); 
+				}else if(tps.autoTestFunction!=NULL)
+				{
+				
 					testRet = (*(TEST_METHOD)(tps.autoTestFunction))(testItem,_obj->device,_obj->resultHashTable);
 				}
 			}else{
-				if(tps.manualTestFunction==NULL)
+				/*if(tps.manualTestFunction==NULL)
 				{
 					//WarnShow1(0,"没有定义手动测试的方法");
 					testRet =manualTest(testItem,_obj->device,_obj->resultHashTable);
 				}else{
 					testRet = (*(TEST_METHOD)(tps.manualTestFunction))(testItem,_obj->device,_obj->resultHashTable); 
 					//PRINT("%d\n",testRet);
-				}
+				}*/
+				testRet =manualTest(testItem,_obj->device,_obj->resultHashTable); 
 				
+			}
+			if(set.showProcess){   			
+				if(tps.tpsPanelHandle > 0)
+				{
+					RunUserInterface();
+					DiscardPanel(tps.tpsPanelHandle);
+				}
 			}
 			
 		   	if(testRet==TEST_RESULT_ALLPASS)

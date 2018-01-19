@@ -16,6 +16,7 @@
 #include "settingConfig.h"
 #include "resultUtil.h" 
 #include "testGroupInit.h"
+#include "TpsDefaultPanel.h"
 static ListType tpsList;
 extern TPS registerDemoTestTPS(void);
 extern TPS registerframeTestTPS(void);
@@ -90,8 +91,24 @@ TEST_METHOD tpsSimuTest(TestGroup group,EUT eut,HashTableType hashTable)
 		  ListGetItem(group.subItems,&subItem,k); 
 		  itemResult.pass=1;
 
-		  
-		  
+		  memset(itemResult.recvString,0,20);
+		  sprintf(itemResult.recvString,"%s","pass");
+		  HexString2UpperCase(itemResult.recvString); //转换大小写 
+		  itemResult.index=subItem.itemId;
+		  saveResult(hashTable,&itemResult);
+	   }	 
+	 return TEST_RESULT_ALLPASS;
+}
+
+TEST_METHOD tpsSimuFunction(TestGroup group,EUT eut,HashTableType hashTable,int panelHandle)
+{
+	   for(int k=1;k<=ListNumItems(group.subItems);k++)
+	   {
+		  RESULT itemResult;
+		  TestItem subItem;
+		  ListGetItem(group.subItems,&subItem,k); 
+		  itemResult.pass=1;
+
 		  memset(itemResult.recvString,0,20);
 		  sprintf(itemResult.recvString,"%s","pass");
 		  HexString2UpperCase(itemResult.recvString); //转换大小写 
@@ -115,7 +132,8 @@ int getTps(char *tpsName,TPS *tpsPtr)
 		 {
 			 if(st.simuTest>0){
 			   tpsPtr->autoTestFunction=(TEST_METHOD)tpsSimuTest;
-			   tpsPtr->manualTestFunction=(TEST_METHOD)tpsSimuTest;			 
+			    tpsPtr->testFunction=(TEST_FUNCTION)tpsSimuFunction;
+//			   tpsPtr->manualTestFunction=(TEST_METHOD)tpsSimuTest;			 
 			 }
 		     return 1;
 		 }
@@ -155,17 +173,44 @@ void TpsInitProtocol()
 	}	
 }
 
+void AppendInfo(int tpsPanelHandle,char *msg)
+{
+	if(tpsPanelHandle > 0)
+		SetCtrlVal(tpsPanelHandle,PANEL_TEXTBOX,msg);	
+}
+
+int CVICALLBACK oTpsPanelCallBack (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			 QuitUserInterface(1);
+		     break;
+	}
+	return 0;
+}
+
+int CreateTpsPanel(char *groupName)
+{
+	int panelHandle =  LoadPanel(0,"TpsDefaultPanel.uir",PANEL);
+	SetCtrlVal(panelHandle,PANEL_TITLE,groupName);
+	InstallPanelCallback(panelHandle,oTpsPanelCallBack,NULL);  
+	return panelHandle;
+}
+
+
 TPS newTps(char *name)
 {
-	
 	TPS tps;
 	memset(&tps,0,sizeof(TPS));
 	sprintf(tps.tpsName,"%s",name);
 	tps.autoTestFunction=NULL;
-	tps.manualTestFunction=NULL;
 	tps.protocolInit=NULL;
 	tps.testPrepare=NULL;
 	tps.onTestFinish=NULL;
+	tps.createTpsPanel=CreateTpsPanel;
+	tps.testFunction=NULL;
+	tps.tpsPanelHandle=-1;
 	return tps;    
 }
 

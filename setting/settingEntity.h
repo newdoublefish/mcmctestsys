@@ -35,6 +35,7 @@ typedef struct
 	int simuTest;//模拟测试
 	int frontSize;
 	int saveToDb; //保存到数据库
+	int showProcess;//显示测试过程信息
 }SETTING;
  
 

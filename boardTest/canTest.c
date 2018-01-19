@@ -54,6 +54,6 @@ TPS registerCanTestTPS(void)
 {
 	TPS tps=newTps("can");
 	tps.autoTestFunction=CanTest;
-	tps.manualTestFunction=CanTest;
+//	tps.manualTestFunction=CanTest;
 	return tps;
 }

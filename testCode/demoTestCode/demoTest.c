@@ -14,13 +14,14 @@
 #include "tpsHelper.h"
 #include "resultSave.h"
 
-METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item;
 		ListGetItem(group.subItems,&item,i);
+		APPEND_INFO_FORMAT(msgPanel,"ÕýÔÚ²âÊÔ×é:%s",item.itemName_); 
 		RESULT itemResult;
 		itemResult.index=item.itemId;
 		itemResult.pass=1%2;
@@ -38,7 +39,8 @@ METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable)
 TPS registerDemoTestTPS(void)
 {
 	TPS tps=newTps("demo");
-	tps.autoTestFunction=DemoTest;
+	//tps.autoTestFunction=DemoTest;
+	tps.testFunction=DemoTest;
 	//tps.manualTestFunction=DemoTest;
 	return tps;
 }

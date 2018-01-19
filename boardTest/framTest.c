@@ -39,6 +39,6 @@ TPS registerframeTestTPS(void)
 {
 	TPS tps=newTps("fram");
 	tps.autoTestFunction=frameTest;
-	tps.manualTestFunction=frameTest;
+//	tps.manualTestFunction=frameTest;
 	return tps;
 }

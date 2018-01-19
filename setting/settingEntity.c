@@ -53,7 +53,8 @@ HRESULT saveSetting(SETTING gSetting)
 	 //Ini_PutInt (g_myInifile,"Setting","MethodToGetdirFile ",gSetting.methodToGetdirFile); 
 	 Ini_PutBoolean (g_myInifile,"Setting","CollectTestMention ",gSetting.collectTestMention);
 	 Ini_PutBoolean (g_myInifile,"Setting","AutoSave ",gSetting.autoSave); 
-	 Ini_PutBoolean (g_myInifile,"Setting","RelayEnable ",gSetting.relayEnable);    
+	 Ini_PutBoolean (g_myInifile,"Setting","RelayEnable ",gSetting.relayEnable);
+	 Ini_PutBoolean (g_myInifile,"Setting","ShowProcess ",gSetting.showProcess); 
 	 Ini_PutInt (g_myInifile,"Setting","MentionAutoCloseTime",gSetting.mentionAutoCloseTime); 
 	 Ini_PutInt (g_myInifile,"Setting","FrontSize",gSetting.frontSize);
 	 Ini_PutInt (g_myInifile,"Setting","ReTestCnt",gSetting.reTestCnt);
@@ -258,14 +259,24 @@ SETTING getSetting(void)
 						     gSetting.relayEnable=0;
 						}
 							
-					 }else if(strcmp(itemName,"MentionAutoCloseTime")==0)
+					 }else if(strcmp(itemName,"RelayEnable")==0)
 					 {
-                        if (Ini_GetInt(g_myInifile, sectionName, itemName,
+                        if (Ini_GetBoolean (g_myInifile, sectionName, itemName,
                                             &booleanValue) > 0)
 						{
-							 gSetting.mentionAutoCloseTime=booleanValue;
+							 gSetting.relayEnable=booleanValue;
 						}else{
-						     gSetting.mentionAutoCloseTime=0;
+						     gSetting.relayEnable=0;
+						}
+							
+					 }else if(strcmp(itemName,"ShowProcess")==0)
+					 {
+                        if (Ini_GetBoolean(g_myInifile, sectionName, itemName,
+                                            &booleanValue) > 0)
+						{
+							 gSetting.showProcess=booleanValue;
+						}else{
+						     gSetting.showProcess=0;
 						}
 							
 					 }else if(strcmp(itemName,"FrontSize")==0)

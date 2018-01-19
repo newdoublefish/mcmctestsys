@@ -31,6 +31,7 @@
 #define  SET_PANEL_RPINFOCB               16      /* control type: radioButton, callback function: (none) */
 #define  SET_PANEL_SIMUTESTCB             17      /* control type: radioButton, callback function: (none) */
 #define  SET_PANEL_FRONT_SIZE             18      /* control type: ring, callback function: (none) */
+#define  SET_PANEL_SHOWPROCESS            19      /* control type: radioButton, callback function: (none) */
 
 
      /* Control Arrays: */
