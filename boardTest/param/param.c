@@ -331,8 +331,13 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		WarnShow1(0,"无法启动充电！");
 		return ret;
 	}
+	
+	if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
+	{
+			//getStubNetService(ip,port);
+		return ret;
+	}	
 #endif	
-	WarnShow1(0,"请确保充电流程已经开始并且BMS电压稳定");
 	//60A需求
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -661,11 +666,11 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 			
 			char setValue[20]={0};
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN3,setValue);
-			if(ParamSet(servicePtr,item.itemName_,setValue)<0)
+			if(ParamSet(servicePtr,item.itemName_,setValue)==FALSE)
 			{
 				goto DONE;
 			}
-			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)<0)
+			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)==FALSE)
 			{
 				goto DONE;
 			}
@@ -676,17 +681,15 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 				itemResult.pass=0;
 			}			
 			
-						
-	
 		}else if(i==5)
 		{
 			char setValue[20]={0};
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN4,setValue);
-			if(ParamSet(servicePtr,item.itemName_,setValue)<0)
+			if(ParamSet(servicePtr,item.itemName_,setValue)==FALSE)
 			{
 				goto DONE;
 			}
-			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)<0)
+			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)==FALSE)
 			{
 				goto DONE;
 			}
@@ -970,6 +973,12 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		WarnShow1(0,"无法启动充电");
 		return TEST_RESULT_ALLPASS;
 	}
+	
+	if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
+	{
+			//getStubNetService(ip,port);
+		return TEST_RESULT_ALLPASS;
+	}	
 	
 	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动,点击确认加负载","错误","正确")==FALSE)
 	{
