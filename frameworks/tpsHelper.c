@@ -45,7 +45,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	//registerframeTestTPS,
 	//registerCanTestTPS,
 	//registerSpiFlashTestTPS,
-	/*registerResistanceTestTPS,
+	registerResistanceTestTPS,
 	registerRs232TestTPS,
 	registerParamTestTPS,
 	registerParamsCheckTps,
@@ -58,7 +58,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerTimeSetTestTps,//时间设置
 	registerRelayTestTPS,
 	registerStubCmdTestTps,
-	registerStubIoTestTps,//手动解锁*/
+	registerStubIoTestTps,//手动解锁
 };
 
 

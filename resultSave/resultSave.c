@@ -478,6 +478,18 @@ void getResultSet(char *writeStr,char *temp,HashTableType hashTable)
 	 
 }
 
+static void getResultRecordTime(char *timeBuffer)
+{
+	unsigned int year, month, day, hour, min, sec, weekDay;
+	CVIAbsoluteTime absTime;
+	GetCurrentCVIAbsoluteTime(&absTime);
+    CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
+                &min, &sec, 0, &weekDay);
+	//sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d",year-2000,month,day,hour,min,sec);
+	sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d",year-2000,month,day,hour,min,sec);
+
+}
+
 void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable)
 {
 	HRESULT error = 0;
@@ -493,6 +505,8 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 	int empty=0;
 	int testCaseCnt=ListNumItems(getTestCaseList());
 	int currentSaveCnt=0;
+	char date[30]={0};
+	getResultRecordTime(date);
 	while(1)
 	{
 		int index=-1;
@@ -553,6 +567,11 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 							//printf("%s",tempBuffer);
 							getResultSet(writeStr,tempBuffer,hashTable);
 							//sprintf(writeStr,"%s","ºÏ¸ñ");
+							writeFlag=TRUE; 
+						}else if(0==strcmp(temp,"time"))
+						{
+							//getResultRecordTime(writeStr);
+							sprintf(writeStr,"%s",date);
 							writeFlag=TRUE; 
 						}
 					
