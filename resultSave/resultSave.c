@@ -380,8 +380,9 @@ void saveTestResult(char *time,char *dirName,HashTableType hashTable)
 void parseExcelCell(char *writeStr,char *temp,HashTableType hashTable)
 {
 	 RESULT itemResult;
-	 int matched,position,matchedLen;
 	 char tempBuffer[100]={0};
+	 int matched,position,matchedLen;
+	 
 	 RegExpr_FindPatternInText("[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
 	 memcpy(tempBuffer,temp+position,matchedLen);
 	 int id=atoi(tempBuffer);
@@ -410,6 +411,70 @@ void parseExcelCell(char *writeStr,char *temp,HashTableType hashTable)
 	 	//填写实测值
 		 sprintf(writeStr,"%s",itemResult.recvString);
 	 }
+}
+
+void getResultSet(char *writeStr,char *temp,HashTableType hashTable)
+{
+	char delims[] = ",";
+  	char *result = NULL;
+   	result = strtok( temp, delims );
+	BOOL resultSet=TRUE;
+	RESULT itemResult;
+	int id;
+   	while( result != NULL ) {
+      	 //printf("%s\n",result);
+		 id=atoi(result);
+		 HashTableGetItem(hashTable,&id,&itemResult,sizeof(RESULT));
+		 if(itemResult.index==id)
+		 {
+		 	 if(0==itemResult.pass)
+			 {
+			 	resultSet=FALSE;
+				break;
+			 }
+		 }		 
+       	 result = strtok( NULL, delims );
+ 	}
+	
+	if(resultSet==FALSE)
+	{
+		 sprintf(writeStr,"%s","不合格");
+	}else
+	{
+		 sprintf(writeStr,"%s","合格"); 
+	}	
+	 /*RESULT itemResult;
+	 char tempBuffer[100]={0};
+	 int matched,position,matchedLen;
+	 
+	 RegExpr_FindPatternInText("[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
+	 memcpy(tempBuffer,temp+position,matchedLen);
+	 int id=atoi(tempBuffer);
+	 HashTableGetItem(hashTable,&id,&itemResult,sizeof(RESULT)); 
+	 RegExpr_FindPatternInText("{result}",1,temp,-1,1,1,&matched,&position,&matchedLen);
+	//printf("result:%d,recvString:%s",itemResult.pass,itemResult.recvString);
+	 TestItem item;
+	 ListType itemList=getTestCaseList();
+	 ListGetItem(itemList,&item,id);
+	 
+	 //printf("id:%d,item.itemId:%d,itemName:%s,itemType:%s\n",id,item.itemId,item.itemName_,item.itemType_);
+	 
+	 if(matched==1)
+	 {
+	 	//填写结果
+		 if(itemResult.pass==0)
+		 {
+		 	sprintf(writeStr,"%s","不合格");
+		 }else
+		 {
+		 	sprintf(writeStr,"%s","合格"); 
+		 }
+		 
+	 }else
+	 {
+	 	//填写实测值
+		 sprintf(writeStr,"%s",itemResult.recvString);
+	 }*/
 	 
 }
 
@@ -467,21 +532,41 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 			    CA_VariantGetCString(&MyVariant, &temp);
 				if((temp[0]>='a') && (temp[0]<='z'))   //为了减少错误判断,加快存储速度
 				{
+					char writeStr[100]={0};
+					BOOL writeFlag =FALSE;
 					RegExpr_FindPatternInText("{value}|{result}[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
 					if(matched==1)
 					{
 						//memcpy(valueStr,temp+position,matchedLen);  
 					
-						char writeStr[100]={0};
+						
 						parseExcelCell(writeStr,temp,hashTable);
+						writeFlag=TRUE;
+
+						//printf("%d,%d\n",currentSaveCnt/2,testCaseCnt);
+					}else{
+						RegExpr_FindPatternInText("result\{.*\}",1,temp,-1,1,1,&matched,&position,&matchedLen);
+						if(matched==1)
+						{
+							char tempBuffer[100]={0};
+							memcpy(tempBuffer,temp+position+7,matchedLen-8);
+							//printf("%s",tempBuffer);
+							getResultSet(writeStr,tempBuffer,hashTable);
+							//sprintf(writeStr,"%s","合格");
+							writeFlag=TRUE; 
+						}
+					
+					}
+					
+					if(TRUE==writeFlag)
+					{
 						VARIANT vTemp; 
 						CA_VariantSetCString(&vTemp,writeStr); 
 						Excel_RangeSetItem (rangeHandler, &ErrorInfo, CA_VariantInt (i+1), CA_VariantInt (j+1),vTemp);
 						CA_VariantClear(&vTemp);
-						currentSaveCnt++;
-						//printf("%d,%d\n",currentSaveCnt/2,testCaseCnt);
+						currentSaveCnt++;					
+						CA_FreeMemory(temp);
 					}
-					CA_FreeMemory(temp); 
 				}
 			}else
 			{
@@ -535,7 +620,7 @@ void saveTestResult(char *time,char *dirName,HashTableType hashTable,char *fileN
 	SUT system=GetSeletedSut();
 	generateReportFilePath(time,dirName,temp);
 	saveStep=SAVE_STEP_TABLE_TITLE;
-	LOG_EVENT_FORMAT(LOG_INFO,"save eut %s test result start!\n",dirName);
+	//LOG_EVENT_FORMAT(LOG_INFO,"save eut %s test result start!\n",dirName);
 	ExcelObj_Worksheet sheetHandle=GetWorkingSheet(system.reportFilePath,"Sheet1");//获得sheet句柄,打开模板路劲的文档
 	ExcelObj_Range rangeHandler=InitExcelRangeHandle(sheetHandle,SAVE_RANGE);
 	
@@ -546,7 +631,7 @@ void saveTestResult(char *time,char *dirName,HashTableType hashTable,char *fileN
     SaveWorkingSheet(temp);//保存更改内容 //保存在目标路径	
 	ClearObjHandler (&rangeHandler); //清除句柄  
 	ClearWorkingSheet (&sheetHandle);//清除句柄，/ 
-	LOG_EVENT_FORMAT(LOG_INFO,"save %s test result finshed!\n",dirName);  
+	//LOG_EVENT_FORMAT(LOG_INFO,"save %s test result finshed!\n",dirName);  
 	if(fileName!=NULL)
 		sprintf(fileName,"%s",temp);
    
