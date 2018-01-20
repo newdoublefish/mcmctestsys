@@ -625,11 +625,11 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 			sprintf(itemResult.recvString,"%s",param.value);*/
 			char setValue[20]={0};
 			sprintf(setValue,"00000%s",stubName);
-			if(ParamSet(servicePtr,item.itemName_,setValue)<0)
+			if(FALSE==ParamSet(servicePtr,item.itemName_,setValue))
 			{
 				goto DONE;
 			}
-			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)<0)
+			if(FALSE==ParamGet(servicePtr,item.itemName_,itemResult.recvString))
 			{
 				goto DONE;
 			}

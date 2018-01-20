@@ -13,24 +13,30 @@
  //-------------------------------------------------------------------------*/
 #include "tpsHelper.h"
 #include "resultSave.h"
+#include "common.h"
 
 METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item;
 		ListGetItem(group.subItems,&item,i);
-		APPEND_INFO_FORMAT(msgPanel,"正在测试组:%s",item.itemName_); 
 		RESULT itemResult;
 		itemResult.index=item.itemId;
-		itemResult.pass=1%2;
+		if(AlertDialogWithRet(0,"请选择","请确认结果是否正确","错误","正确")==TRUE)
+		{
+			itemResult.pass=1;	
+		}else
+			itemResult.pass=0;
+		APPEND_INFO_FORMAT(msgPanel,"测试条例:%s的测试结果为：%s",item.itemName_,(itemResult.pass==1)?"合格":"不合格");
 		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
 		sprintf(itemResult.recvString,"%s","helloworld");
 		saveResult(hashTable,&itemResult);
 		
 	}
-		
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);		
 	return ret;
 }
 
@@ -38,7 +44,7 @@ METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 
 TPS registerDemoTestTPS(void)
 {
-	TPS tps=newTps("demo");
+	TPS tps=newTps("demoType");
 	//tps.autoTestFunction=DemoTest;
 	tps.testFunction=DemoTest;
 	//tps.manualTestFunction=DemoTest;

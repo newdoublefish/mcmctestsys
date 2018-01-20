@@ -206,6 +206,13 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 									void *callbackData)
 {
 	
+	if(engine->testState==TEST_RUN)
+	{
+       WarnShow1(panel,"ÕýÔÚ²âÊÔÖÐ");
+	   return;
+		
+	} 
+	engine->testState=TEST_RUN;
 	char groupTag[32]={0}; 
 	int selected=0;
 	int numDescendents=0;
@@ -261,6 +268,7 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 				objectResultShow(_obj,group,testGroupIndex,&testItemIndex);
 		}
 	}
+	engine->testState=TEST_IDLE;
 	//printf("-------tag:%d,numDescendents:%d,numParents:%d\n",getNumFromTag(tag),numDescendents,numParents); 
 }
 
