@@ -227,7 +227,6 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 		}
 		saveResult(hashTable,&itemResult);
 	}
-	return ret;
 DONE:	
 	//onStubDisConnected(servicePtr);
 	APPEND_INFO(masgHandle,"ÍË³ö²âÊÔ");

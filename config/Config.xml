@@ -9,9 +9,9 @@
   </Project>    
   <Project>
     <ProjectName>整机测试</ProjectName>
-    <ConfigPath>整机测试\demo配置表.xlsx</ConfigPath>
-    <StrategyPath>整机测试\Strategy.xml</StrategyPath>	
-    <ReportPath>整机测试\报表模板.xlsx</ReportPath>	
+    <ConfigPath>Integrate\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>Integrate\Strategy.xml</StrategyPath>	
+    <ReportPath>Integrate\IntegrateReport.xlsx</ReportPath>	
   </Project>   
   <Project>
     <ProjectName>板级测试</ProjectName>
