@@ -279,6 +279,16 @@ SETTING getSetting(void)
 						     gSetting.showProcess=0;
 						}
 							
+					 }else if(strcmp(itemName,"MentionAutoCloseTime")==0)
+					 {
+                        if (Ini_GetInt(g_myInifile, sectionName, itemName,
+                                            &booleanValue) > 0)
+						{
+							 gSetting.mentionAutoCloseTime=booleanValue;
+						}else{
+						     gSetting.mentionAutoCloseTime=0;
+						}
+							
 					 }else if(strcmp(itemName,"FrontSize")==0)
 					 {
                         if (Ini_GetInt(g_myInifile, sectionName, itemName,
