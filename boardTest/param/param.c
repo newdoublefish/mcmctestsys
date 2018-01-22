@@ -150,17 +150,29 @@ TPS registerParamTestTPS(void)
 }
 
 
-METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
-	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	APPEND_INFO(masgHandle,"进入测试"); 
+	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 	{
 		return 	TEST_RESULT_ERROR;
 	}
 	//发送自检命令
 	if(startCommand(servicePtr,"product self_test\r\n")<0)
-		goto DONE;
+		goto DONE;  */
+	
+	if(strcmp("硬件自检",group.groupName)==0)
+	{
+		if(FALSE==CommandSend(eut,"product self_test\r\n"))
+		{
+			APPEND_INFO(masgHandle,"自检命令发送失败");
+			return ret;				
+		}else{
+			APPEND_INFO(masgHandle,"自检命令发送成功");
+		}
+	}
 	
 
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
@@ -170,9 +182,12 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 		RESULT itemResult;
 		itemResult.index=item.itemId;		
 		itemResult.pass=1;
-		if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)<0)
+		if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult.recvString))
 		{
+			APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_);
 			goto DONE;
+		}else{
+			APPEND_INFO_FORMAT(masgHandle,"%s,%s:获取成功",item.itemName_,itemResult.recvString); 
 		}
 		/*if(strcmp(group.groupName,"硬件自检")==0)
 		{
@@ -214,7 +229,8 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 	}
 	return ret;
 DONE:	
-	onStubDisConnected(servicePtr);	
+	//onStubDisConnected(servicePtr);
+	APPEND_INFO(masgHandle,"退出测试");
 	return ret;
 }
 
@@ -223,12 +239,12 @@ DONE:
 TPS registerParamsCheckTps(void)
 {
 	TPS tps=newTps("paramCheck");
-	tps.autoTestFunction=ParamCheckTest;
+	tps.testFunction=ParamCheckTest;
 	tps.protocolInit=ParamProtocolInit;
 	return tps;			
 }
 
-METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
@@ -238,9 +254,11 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable)
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 	{
+		APPEND_INFO(msgPanel,"网络连接失败,退出测试");
 		return 	TEST_RESULT_ERROR;
-	}	
-	ListType paramsToFetch=ListCreate(sizeof(PARAMETER));
+	}
+	APPEND_INFO(msgPanel,"网络连接成功");
+/*	ListType paramsToFetch=ListCreate(sizeof(PARAMETER));
 
 	
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
@@ -251,10 +269,13 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable)
 		if(FALSE==getParameter(item.itemName_,&param))
 		{
 			WarnShow1(0,"无该参数配置");
+		
 			goto DONE;
+		}else{
+		
 		}
 		ListInsertItem(paramsToFetch,&param,END_OF_LIST);
-	}
+	}*/
 	//TODO:读回参数
 	//showParamSetPanel(paramsToFetch);
 	//设置参数
@@ -262,18 +283,27 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable)
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item;
-		ListGetItem(group.subItems,&item,i);
-		PARAMETER paramGet={0};
-		ListGetItem(paramsToFetch,&paramGet,i); 
+		RESULT itemResult;
+		ListGetItem(group.subItems,&item,i);  
+		itemResult.index=item.itemId;		
+		
+		/*PARAMETER paramGet={0};
+		//ListGetItem(paramsToFetch,&paramGet,i); 
 		///printfParam(paramGet);
 		
 		if(GetParameter(servicePtr,&paramGet)<0)
 		{	
 			WarnShow1(0,"获取失败");
 			goto DONE;
+		}*/
+		
+		if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult.recvString))
+		{
+			APPEND_INFO_FORMAT(msgPanel,"%s:获取失败",msgPanel);		
+		}else{
+			APPEND_INFO_FORMAT(msgPanel,"%s:获取成功，值为%s",msgPanel,itemResult.recvString);			
 		}
-		RESULT itemResult;
-		itemResult.index=item.itemId;
+
 		/*if(strcmp("true",paramGet.value)==0)
 		{
 			itemResult.pass=1;
@@ -281,13 +311,13 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable)
 			itemResult.pass=0;
 		}*/
 		itemResult.pass=1;
-		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
+		//memset(itemResult.recvString,0,sizeof(itemResult.recvString));
 		//printf("----------%s\n",paramGet.value);
-		sprintf(itemResult.recvString,"%s",paramGet.value);
+		//sprintf(itemResult.recvString,"%s",paramGet.value);
 		saveResult(hashTable,&itemResult);
 	}	
 DONE:	
-	ListDispose(paramsToFetch);
+	//ListDispose(paramsToFetch);
 	onStubDisConnected(servicePtr);	
 	return ret;
 }
@@ -295,7 +325,7 @@ DONE:
 TPS registerParamTemperatureTps(void)
 {
 	TPS tps=newTps("temperature");
-	tps.autoTestFunction=ParamTemperatureTest;
+	tps.testFunction=ParamTemperatureTest;
 	tps.protocolInit=ParamProtocolInit;
 	return tps;			
 }
@@ -1222,6 +1252,17 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 		itemResult.index=item.itemId;
 		itemResult.pass=1;
 		if(strcmp(item.itemName_,"参数校正")==0){
+			char voltage[10]={0};
+			if(FALSE==ParamGet(servicePtr,"枪1插枪链接电压",voltage))
+			{
+																												
+			}
+			
+			if(FALSE==ParamGet(servicePtr,"枪2插枪链接电压",voltage))
+			{
+																												
+			}			
+			
 			if(startCommand(servicePtr,"prd coeff ins\r\n")<0)
 			{
 				WarnShow1(0,"参数校正失败");

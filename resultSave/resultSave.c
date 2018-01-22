@@ -32,7 +32,7 @@
 #include "settingConfig.h"
 #include "regexpr.h" 
 
-#define SAVE_RANGE "A1:J1" 
+#define SAVE_RANGE "A1:K1" 
 
 #define SAVE_STEP_TABLE_TITLE   1
 #define SAVE_STEP_TABLE_CONTENT  2
@@ -511,7 +511,7 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 	{
 		int index=-1;
 		RESULT itemResult;
-        for (j=0;j<10;j++)
+        for (j=0;j<11;j++)
 		{
             error = Excel_RangeGetItem (rangeHandler, &ErrorInfo, CA_VariantInt (i+1), CA_VariantInt (j+1), &MyVariant);
             if (error<0) 

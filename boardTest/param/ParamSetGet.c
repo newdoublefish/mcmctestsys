@@ -62,7 +62,7 @@ BOOL ParamGetDepend(EUT eut,char *paramName,char *paramValue)
 		LOG_EVENT_FORMAT(LOG_INFO,"%s",temp); 
 		WarnShow1(0,temp);
 		onStubDisConnected(servicePtr);
-		ReleaseStubNetService();		
+		//ReleaseStubNetService();		
 		ret=FALSE;
 	}
 	sprintf(paramValue,"%s",param.value);
@@ -112,4 +112,27 @@ BOOL ParamGet(tNET_SERVICE *servicePtr,char *paramName,char *paramValue)
 	sprintf(paramValue,"%s",param.value);
 	return TRUE;
 }
+
+BOOL CommandSend(EUT eut,char *command)
+{
+	BOOL ret=TRUE; 
+	PARAMETER param={0};
+	char temp[30]={0};
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+	{
+		return 	FALSE;
+	}		
+								  
+	if(startCommand(servicePtr,"product self_test\r\n")<0)
+	{
+		onStubDisConnected(servicePtr);
+		WarnShow1(0,"ÃüÁî·¢ËÍÊ§°Ü!");
+		return FALSE;
+	}
+				
+	
+	return ret;	
+}
+
 

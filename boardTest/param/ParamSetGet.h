@@ -10,6 +10,7 @@ BOOL ParamSet(tNET_SERVICE *servicePtr,char *paramName,char *paramValue);
 BOOL ParamGet(tNET_SERVICE *servicePtr,char *paramName,char *paramValue); 
 BOOL ParamGetDepend(EUT eut,char *paramName,char *paramValue);
 BOOL ParamSetDepend(EUT eut,char *paramName,char *paramValue);
+BOOL CommandSend(EUT eut,char *command);
 #ifdef __cplusplus
     }
 #endif
