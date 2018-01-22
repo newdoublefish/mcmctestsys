@@ -22,6 +22,36 @@
 #include "relayHelper.h"
 #include "ParamSetGet.h"
 
+
+BOOL CheckGunPlugined(EUT eut,int gunIndex,int *result)
+{
+	char voltage[10]={0};
+	char gunVoltage[20]={0};
+	if(gunIndex==1)
+	{
+		sprintf(gunVoltage,"%s","枪1插枪链接电压");
+	}else if(gunIndex==2) {
+		sprintf(gunVoltage,"%s","枪2插枪链接电压"); 
+	}else{
+		return FALSE;
+	}
+	if(FALSE==ParamGetDepend(eut,gunVoltage,voltage))
+	{
+		return FALSE;
+	}
+	float vol = atof(voltage);
+	if(vol>3.5 && vol < 4)
+	{
+		*result=1;
+	}else{
+		*result=0;
+	}
+	
+	//if(vol
+	return TRUE;	
+}
+
+
 static void getSysTime(char *timeBuffer)
 {
 	unsigned int year, month, day, hour, min, sec, weekDay;
@@ -357,9 +387,10 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 				}
 			}									
 		}else if(strstr(item.itemName_,"插枪链接电压")!=NULL){
+			int vol = atof(itemResult.recvString);
 			if(atof(item.standard_)>0.0001)
 			{
-				if(atof(itemResult.recvString)>(atof(item.standard_)-0.5))
+				if(vol>(atof(item.standard_)-0.5) && vol <atof(item.standard_))
 				{
 					 itemResult.pass=1;
 				}else{
@@ -489,6 +520,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 	char tips60A[20]={0};
 	char tips100A[20]={0};
 	char tips120A[30]={0};
+	char voltage[20]={0};
 	if(strcmp(group.groupName,"枪1功率分配")==0)
 	{
 		sprintf(startChargeCmd,"%s","1枪调试启动充电");		
@@ -504,7 +536,6 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		sprintf(tips120A,"%s","电源模块3，4，5，6 启动");	
 	}
 	
-		
 #ifndef BIBO_DEBUG	
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
@@ -900,12 +931,40 @@ TPS registerScanTestTps(void)
 	return tps;	
 }
 
-METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHandle)
 {
+	APPEND_INFO(msgHandle,"进入反接告警测试");
 	METHODRET ret = TEST_RESULT_ALLPASS;
+	
 	int flag1=-1;
 	int flag2=-1;
 	int flag3=-1;
+	int gunIndex=0;
+	int plugined=0;
+	
+	if(strcmp(group.groupName,"枪1电池反接告警")==0)
+	{
+		gunIndex=1;
+	}else if(strcmp(group.groupName,"枪2电池反接告警")==0)
+	{
+		gunIndex=2;	
+	}else{
+		return ret;
+	}
+	
+	if(FALSE==CheckGunPlugined(eut,gunIndex,&plugined))
+	{
+		return  TEST_RESULT_ALLPASS;
+	}
+											 
+	if(plugined==0)
+	{
+		APPEND_INFO(msgHandle,"检测到未插入枪");
+		WarnShow1(0,"未插入枪");
+		//return TEST_RESULT_ALLPASS;
+	}else{
+		APPEND_INFO(msgHandle,"检测到枪已经插入");
+	}
 	
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
@@ -918,7 +977,10 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	char queryResult[20]={0};
 	if(ParamGet(servicePtr,item.itemName_,queryResult)<0)
 	{
+		APPEND_INFO_FORMAT(msgHandle,"%s:获取失败",item.itemName_); 
 		goto DONE;
+	}else{
+		APPEND_INFO_FORMAT(msgHandle,"%s:获取成功:%s",item.itemName_,queryResult);
 	}
 	
 	if(strcmp(queryResult,"false")==0)
@@ -927,10 +989,13 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	}else{
 		flag1=0;
 	}
+	APPEND_INFO_FORMAT(msgHandle,"flag1:%d",flag1);
 	
 	if(OperatDoSet(eut.relayConfig,RELAY(31)|RELAY(3)|RELAY(4)|RELAY(2))==FALSE)
 	{
 		goto DONE;
+	}else{
+		APPEND_INFO(msgHandle,"继电器操作成功,闭合2，3，4，31继电器");	
 	}
 	
 	//WarnAlert(0,);
@@ -939,7 +1004,10 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	memset(queryResult,0,20);
 	if(ParamGet(servicePtr,item.itemName_,queryResult)<0)
 	{
+		APPEND_INFO_FORMAT(msgHandle,"%s:获取失败",item.itemName_);
 		goto DONE;
+	}else{
+		APPEND_INFO_FORMAT(msgHandle,"%s:获取成功:%s",item.itemName_,queryResult); 		
 	}
 
 	if(strcmp(queryResult,"true")==0)
@@ -953,11 +1021,15 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	{
 		flag2=0;
 	}
+														 
+	APPEND_INFO_FORMAT(msgHandle,"flag2:%d",flag2); 
 	
 
 	if(OperatDoSet(eut.relayConfig,RELAY(2))==FALSE)
 	{
 		goto DONE;
+	}else{
+		APPEND_INFO(msgHandle,"继电器操作成功,闭合2继电器");	
 	}
 	
 	WarnAlert(0,"延时中",8); 
@@ -965,7 +1037,10 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	memset(queryResult,0,20);
 	if(ParamGet(servicePtr,item.itemName_,queryResult)<0)
 	{
+		APPEND_INFO_FORMAT(msgHandle,"%s:获取失败",item.itemName_);
 		goto DONE;
+	}else{
+		APPEND_INFO_FORMAT(msgHandle,"%s:获取成功:%s",item.itemName_,queryResult); 		
 	}
 	
 	if(strcmp(queryResult,"false")==0)
@@ -980,6 +1055,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 		flag3=0;
 	}
 	
+	APPEND_INFO_FORMAT(msgHandle,"flag3:%d",flag3); 	
 	
 	RESULT itemResult={0};
 	itemResult.index=item.itemId;
@@ -987,24 +1063,26 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable)
 	sprintf(itemResult.recvString,"{%d,%d,%d}",flag1,flag2,flag3);
 	saveResult(hashTable,&itemResult);
 	
-	if(OperatDoSet(eut.relayConfig,RELAY(2))==FALSE)
+	if(OperatDoSet(eut.relayConfig,RELAY(2))==TRUE)
 	{
-		
+		 APPEND_INFO(msgHandle,"继电器操作成功,闭合2继电器");
 	}
+	APPEND_INFO(msgHandle,"退出测试");
 	return ret;
 DONE:
-	if(OperatDoSet(eut.relayConfig,RELAY(2))==FALSE)
+	if(OperatDoSet(eut.relayConfig,RELAY(2))==TRUE)
 	{
-		
+		 APPEND_INFO(msgHandle,"继电器操作成功,闭合2继电器");
 	}	
 	onStubDisConnected(servicePtr);
+	APPEND_INFO(msgHandle,"退出测试"); 
 	return ret;
 }
 
 TPS registerInverseWarnTestTps(void)
 {
 	TPS tps=newTps("inverseWarn");
-	tps.autoTestFunction=InverseWarnTest;
+	tps.testFunction=InverseWarnTest;
 	return tps;	
 }
 
