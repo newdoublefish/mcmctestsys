@@ -183,8 +183,8 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 		itemResult.index=item.itemId;		
 		itemResult.pass=1;
 		if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult.recvString))
-		{
-			APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_);
+		{													  APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_); 
+			
 			goto DONE;
 		}else{
 			APPEND_INFO_FORMAT(masgHandle,"%s,%s:获取成功",item.itemName_,itemResult.recvString); 
@@ -1159,40 +1159,145 @@ static void getSysTime(char *timeBuffer)
 
 }
 
-METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable)
+static BOOL getYearMonthDay(char *temp,unsigned int *yearPtr,unsigned int*month,unsigned int *day)
 {
-	METHODRET ret = TEST_RESULT_ALLPASS;
-	PARAMETER param={0};
-	RESULT itemResult={0};
-	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
+		char delims[] = "-";
+  		char *result = NULL;
+   		result = strtok(temp, delims );
+		int cnt=0;
+   		while( result != NULL ) {
+      	 	//printf("%s\n",result);
+			if(cnt==0)
+			{
+				*yearPtr=atoi(result)+2000;
+			}else if(cnt==1)
+			{
+				*month=atoi(result);
+			}else if(cnt==2)
+			{
+				 *day=atoi(result);
+			}
+       	 	result = strtok( NULL, delims );
+			cnt++;
+ 		}
+		if(cnt!=3)
+			return FALSE;
+		return TRUE;
+}
+
+static BOOL getHourMinSec(char *temp,unsigned int *hourPtr,unsigned int*minPtr,unsigned int *secPtr)
+{
+		char delims[] = ":";
+  		char *result = NULL;
+   		result = strtok(temp, delims );
+		int cnt=0;
+   		while( result != NULL ) {
+			if(cnt==0)
+			{
+				*hourPtr=atoi(result);
+			}else if(cnt==1)
+			{
+				*minPtr=atoi(result);
+			}else if(cnt==2)
+			{
+				 *secPtr=atoi(result);
+			}
+       	 	result = strtok( NULL, delims );
+			cnt++;
+	
+ 		}
+		if(cnt!=4)
+			return FALSE;
+		return TRUE;
+}
+
+
+static BOOL timeStrToCviTime(const char *time,CVIAbsoluteTime *absTime)
+{
+		unsigned int year=0, month=0, day=0, hour=0, min=0, sec=0, weekDay=0;
+		char yearMonthDay[20]={0};
+		char hourMinSec[20]={0};
+		char delims[] = " ";
+  		char *result = NULL;
+   		result = strtok(time, delims );
+   		while( result != NULL ) {
+      	 	
+			if(strstr(result,"-")!=NULL)
+			{
+				sprintf(yearMonthDay,"%s",result);
+			}else if(strstr(result,":")!=NULL)
+			{
+				sprintf(hourMinSec,"%s",result);
+			} 
+       	 	result = strtok( NULL, delims );
+ 		}
+		if(FALSE==getYearMonthDay(yearMonthDay,&year, &month, &day))
+		{
+			return FALSE;
+		}
+		if(FALSE==getHourMinSec(hourMinSec,&hour, &min, &sec))
+		{
+			return FALSE;
+		}
+		if(CVIAbsoluteTimeFromLocalCalendar(year,month,day,hour,min,sec,0,absTime)<0)
+		{
+			return FALSE;
+		}
+		return TRUE;
+}
+
+static BOOL compareTimeWithTolerance(char *time1,char *time2,double intrv,int *result)
+{
+	char temp1[30]={0};
+	char temp2[30]={0};
+	sprintf(temp1,"%s",time1);
+	sprintf(temp2,"%s",time2);
+	CVIAbsoluteTime absTime1; 
+	CVIAbsoluteTime absTime2;
+	if(FALSE==timeStrToCviTime(temp1,&absTime1))
 	{
-		return 	TEST_RESULT_ERROR;
-	}	
+		return FALSE;
+	}
+	if(FALSE==timeStrToCviTime(temp2,&absTime2))
+	{
+		return FALSE;
+	}
+	CVITimeInterval interval;
+	CVITimeIntervalFromSeconds(intrv,&interval);
+	if(CompareCVIAbsoluteTimesWithTolerance(absTime1,absTime2,interval,result)<0)
+		return FALSE;
+	return TRUE;
+}
+
+
+
+METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	APPEND_INFO(masgHandle,"进入测试"); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	RESULT itemResult={0};
 	TestItem item;
 	ListGetItem(group.subItems,&item,1);
-	if(FALSE==getParameter(item.itemName_,&param))
-	{
-		WarnShow1(0,"无该参数配置");
-	}
-	char tempStr[50]={0};
-	//printf("%s\n",item.inputValue_);
+	itemResult.index = item.itemId;
 	if(strcmp("NA",item.inputValue_)!=0){
-		sprintf(tempStr,"%s",item.inputValue_);			
+		sprintf(itemResult.recvString,"%s",item.inputValue_);			
 	}else{
-		getSysTime(tempStr);
+		getSysTime(itemResult.recvString);
 	}
-	sprintf(param.value,"%s",tempStr);
-	itemResult.index=item.itemId;
-	if(ConfigParameter(servicePtr,param)>=0)
+	
+	if(FALSE==ParamSetDepend(eut,item.itemName_,itemResult.recvString))
 	{
-		 itemResult.pass =1;
+		itemResult.pass =0; 
+		APPEND_INFO_FORMAT(masgHandle,"%s:设置失败",item.itemName_); 
+		return ret;
 	}else{
-		itemResult.pass=0;
+		itemResult.pass =1; 
+		APPEND_INFO_FORMAT(masgHandle,"%s:设置成功:%s",item.itemName_,itemResult.recvString); 		
 	}
-	sprintf(itemResult.recvString,"%s",param.value);
+
 	saveResult(hashTable,&itemResult);
-	onStubDisConnected(servicePtr);
+	APPEND_INFO(masgHandle,"主动断开网络"); 
+	ReleaseStubNetService();
 	if(CloseDo(eut.relayConfig,1)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
@@ -1209,29 +1314,49 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable)
 	
 	
 	WarnAlert(0,"请确认设备已经器动",30);
-	
-	//printf("-------------------------set:%s\n",param.value);
 	TestItem item2;
 	RESULT itemResult2={0};
 	ListGetItem(group.subItems,&item2,2);	
-	memset(param.value,0,128);
-	servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
+	itemResult2.index = item2.itemId;  
+	if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult2.recvString))
 	{
-		return 	TEST_RESULT_ERROR;
-	}	
-	GetParameter(servicePtr,&param);
+		itemResult2.pass =0; 
+		APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_); 
+		return ret;
+	}else{
+		itemResult2.pass =1; 
+		APPEND_INFO_FORMAT(masgHandle,"%s:获取成功:%s",item.itemName_,itemResult2.recvString); 		
+	}
+	int compareResult=0;
+	int tolerance = atoi(item2.standard_);
+	APPEND_INFO_FORMAT(masgHandle,"时间误差范围为:%d",tolerance);
+	char sysTime[30]={0};
+	getSysTime(sysTime);
+	APPEND_INFO_FORMAT(masgHandle,"当前系统时间:%s",sysTime);
+	if(FALSE==compareTimeWithTolerance(itemResult.recvString,itemResult2.recvString,tolerance,&compareResult))
+	{
+		APPEND_INFO(masgHandle,"时间格式错误！");
+		itemResult2.pass=0;
+	}else{
+		if(compareResult==0)
+		{
+			APPEND_INFO(masgHandle,"时间在误差范围内");
+			itemResult2.pass=1;
+		}else{
+			APPEND_INFO(masgHandle,"时间不在误差范围内"); 
+			itemResult2.pass=0;
+		}
+	}
 	itemResult2.index = item2.itemId;
-	itemResult2.pass = 1;
-	sprintf(itemResult2.recvString,"%s",param.value);
-	saveResult(hashTable,&itemResult2); 	
+	saveResult(hashTable,&itemResult2); 
+	APPEND_INFO(masgHandle,"退出测试");	
 	return ret;
 }
 
 TPS registerTimeSetTestTps(void)
 {
 	TPS tps=newTps("timeSet");
-	tps.autoTestFunction=TimeSetTest;
+	tps.testFunction=TimeSetTest;
 	return tps;	
 }
 
