@@ -783,7 +783,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 			if(set.showProcess){   			
 				if(tps.tpsPanelHandle > 0)
 				{
-					//RunUserInterface();
+					RunUserInterface();
 					DiscardPanel(tps.tpsPanelHandle);
 				}
 			}

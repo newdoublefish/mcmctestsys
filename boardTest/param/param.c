@@ -22,6 +22,128 @@
 #include "relayHelper.h"
 #include "ParamSetGet.h"
 
+static void getSysTime(char *timeBuffer)
+{
+	unsigned int year, month, day, hour, min, sec, weekDay;
+	CVIAbsoluteTime absTime;
+	GetCurrentCVIAbsoluteTime(&absTime);
+    CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
+                &min, &sec, 0, &weekDay);
+	//sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d",year-2000,month,day,hour,min,sec);
+	sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d:0000",year-2000,month,day,hour,min,sec);
+
+}
+
+static BOOL getYearMonthDay(char *temp,unsigned int *yearPtr,unsigned int*month,unsigned int *day)
+{
+		char delims[] = "-";
+  		char *result = NULL;
+   		result = strtok(temp, delims );
+		int cnt=0;
+   		while( result != NULL ) {
+      	 	//printf("%s\n",result);
+			if(cnt==0)
+			{
+				*yearPtr=atoi(result)+2000;
+			}else if(cnt==1)
+			{
+				*month=atoi(result);
+			}else if(cnt==2)
+			{
+				 *day=atoi(result);
+			}
+       	 	result = strtok( NULL, delims );
+			cnt++;
+ 		}
+		if(cnt!=3)
+			return FALSE;
+		return TRUE;
+}
+
+static BOOL getHourMinSec(char *temp,unsigned int *hourPtr,unsigned int*minPtr,unsigned int *secPtr)
+{
+		char delims[] = ":";
+  		char *result = NULL;
+   		result = strtok(temp, delims );
+		int cnt=0;
+   		while( result != NULL ) {
+			if(cnt==0)
+			{
+				*hourPtr=atoi(result);
+			}else if(cnt==1)
+			{
+				*minPtr=atoi(result);
+			}else if(cnt==2)
+			{
+				 *secPtr=atoi(result);
+			}
+       	 	result = strtok( NULL, delims );
+			cnt++;
+	
+ 		}
+		if(cnt!=4)
+			return FALSE;
+		return TRUE;
+}
+
+
+static BOOL timeStrToCviTime(const char *time,CVIAbsoluteTime *absTime)
+{
+		unsigned int year=0, month=0, day=0, hour=0, min=0, sec=0, weekDay=0;
+		char yearMonthDay[20]={0};
+		char hourMinSec[20]={0};
+		char delims[] = " ";
+  		char *result = NULL;
+   		result = strtok(time, delims );
+   		while( result != NULL ) {
+      	 	
+			if(strstr(result,"-")!=NULL)
+			{
+				sprintf(yearMonthDay,"%s",result);
+			}else if(strstr(result,":")!=NULL)
+			{
+				sprintf(hourMinSec,"%s",result);
+			} 
+       	 	result = strtok( NULL, delims );
+ 		}
+		if(FALSE==getYearMonthDay(yearMonthDay,&year, &month, &day))
+		{
+			return FALSE;
+		}
+		if(FALSE==getHourMinSec(hourMinSec,&hour, &min, &sec))
+		{
+			return FALSE;
+		}
+		if(CVIAbsoluteTimeFromLocalCalendar(year,month,day,hour,min,sec,0,absTime)<0)
+		{
+			return FALSE;
+		}
+		return TRUE;
+}
+
+static BOOL compareTimeWithTolerance(char *time1,char *time2,double intrv,int *result)
+{
+	char temp1[30]={0};
+	char temp2[30]={0};
+	sprintf(temp1,"%s",time1);
+	sprintf(temp2,"%s",time2);
+	CVIAbsoluteTime absTime1; 
+	CVIAbsoluteTime absTime2;
+	if(FALSE==timeStrToCviTime(temp1,&absTime1))
+	{
+		return FALSE;
+	}
+	if(FALSE==timeStrToCviTime(temp2,&absTime2))
+	{
+		return FALSE;
+	}
+	CVITimeInterval interval;
+	CVITimeIntervalFromSeconds(intrv,&interval);
+	if(CompareCVIAbsoluteTimesWithTolerance(absTime1,absTime2,interval,result)<0)
+		return FALSE;
+	return TRUE;
+}
+
 int CVICALLBACK showPramSetCtrlCallback (int panel, int control, int event,
 		void *callbackData, int eventData1, int eventData2)
 {
@@ -183,8 +305,8 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 		itemResult.index=item.itemId;		
 		itemResult.pass=1;
 		if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult.recvString))
-		{													  APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_); 
-			
+		{	
+			APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_); 
 			goto DONE;
 		}else{
 			APPEND_INFO_FORMAT(masgHandle,"%s,%s:获取成功",item.itemName_,itemResult.recvString); 
@@ -200,14 +322,52 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 		}*/
 		itemResult.pass=1;
 		
-		if(strcmp(item.standard_,"NA")!=0)
-		{
-			/*if(strcmp(item.standard_,itemResult.recvString)==0)
+
+		if(strcmp(group.groupName,"软件版本检查")==0){
+			
+			if(strcmp(item.standard_,"NA")!=0)
 			{
-				itemResult.pass=1;
-			}else{
+				if(strcmp(item.standard_,itemResult.recvString)==0)
+				{
+					itemResult.pass=1;
+				}else{
+					itemResult.pass=0;
+				}
+			}			
+		}else if(strcmp(group.groupName,"电表时间")==0)
+		{
+			char sysTime[30]={0};
+			getSysTime(sysTime);
+			int compareResult=0;
+			int tolerance=atoi(item.standard_);
+			APPEND_INFO_FORMAT(masgHandle,"%s：时间为:%s",item.itemName_,itemResult.recvString);
+			APPEND_INFO_FORMAT(masgHandle,"当前系统时间:%s",sysTime);
+			if(FALSE==compareTimeWithTolerance(sysTime,itemResult.recvString,tolerance,&compareResult))
+			{
+				APPEND_INFO(masgHandle,"时间格式错误！");
 				itemResult.pass=0;
-			}*/
+			}else{
+				if(compareResult==0)
+				{
+					APPEND_INFO(masgHandle,"时间在误差范围内");
+					itemResult.pass=1;
+				}else{
+					APPEND_INFO(masgHandle,"时间不在误差范围内"); 
+					itemResult.pass=0;
+				}
+			}									
+		}else if(strstr(item.itemName_,"插枪链接电压")!=NULL){
+			if(atof(item.standard_)>0.0001)
+			{
+				if(atof(itemResult.recvString)>(atof(item.standard_)-0.5))
+				{
+					 itemResult.pass=1;
+				}else{
+					itemResult.pass=0;
+				}
+			}					
+		}else if(strcmp(item.standard_,"NA")!=0)
+		{
 			if(strstr(item.standard_,itemResult.recvString)!=NULL)
 			{
 				itemResult.pass=1;
@@ -215,16 +375,7 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 				itemResult.pass=0;
 			}
 		}
-		
-		if(atof(item.standard_)>0.0001)
-		{
-			if(atof(itemResult.recvString)>(atof(item.standard_)-0.5))
-			{
-				 itemResult.pass=1;
-			}else{
-				itemResult.pass=0;
-			}
-		}
+
 		saveResult(hashTable,&itemResult);
 	}
 DONE:	
@@ -1147,127 +1298,7 @@ TPS registerChargingTestTestTps(void)
 	return tps;	
 }
 
-static void getSysTime(char *timeBuffer)
-{
-	unsigned int year, month, day, hour, min, sec, weekDay;
-	CVIAbsoluteTime absTime;
-	GetCurrentCVIAbsoluteTime(&absTime);
-    CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
-                &min, &sec, 0, &weekDay);
-	//sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d",year-2000,month,day,hour,min,sec);
-	sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d:0000",year-2000,month,day,hour,min,sec);
 
-}
-
-static BOOL getYearMonthDay(char *temp,unsigned int *yearPtr,unsigned int*month,unsigned int *day)
-{
-		char delims[] = "-";
-  		char *result = NULL;
-   		result = strtok(temp, delims );
-		int cnt=0;
-   		while( result != NULL ) {
-      	 	//printf("%s\n",result);
-			if(cnt==0)
-			{
-				*yearPtr=atoi(result)+2000;
-			}else if(cnt==1)
-			{
-				*month=atoi(result);
-			}else if(cnt==2)
-			{
-				 *day=atoi(result);
-			}
-       	 	result = strtok( NULL, delims );
-			cnt++;
- 		}
-		if(cnt!=3)
-			return FALSE;
-		return TRUE;
-}
-
-static BOOL getHourMinSec(char *temp,unsigned int *hourPtr,unsigned int*minPtr,unsigned int *secPtr)
-{
-		char delims[] = ":";
-  		char *result = NULL;
-   		result = strtok(temp, delims );
-		int cnt=0;
-   		while( result != NULL ) {
-			if(cnt==0)
-			{
-				*hourPtr=atoi(result);
-			}else if(cnt==1)
-			{
-				*minPtr=atoi(result);
-			}else if(cnt==2)
-			{
-				 *secPtr=atoi(result);
-			}
-       	 	result = strtok( NULL, delims );
-			cnt++;
-	
- 		}
-		if(cnt!=4)
-			return FALSE;
-		return TRUE;
-}
-
-
-static BOOL timeStrToCviTime(const char *time,CVIAbsoluteTime *absTime)
-{
-		unsigned int year=0, month=0, day=0, hour=0, min=0, sec=0, weekDay=0;
-		char yearMonthDay[20]={0};
-		char hourMinSec[20]={0};
-		char delims[] = " ";
-  		char *result = NULL;
-   		result = strtok(time, delims );
-   		while( result != NULL ) {
-      	 	
-			if(strstr(result,"-")!=NULL)
-			{
-				sprintf(yearMonthDay,"%s",result);
-			}else if(strstr(result,":")!=NULL)
-			{
-				sprintf(hourMinSec,"%s",result);
-			} 
-       	 	result = strtok( NULL, delims );
- 		}
-		if(FALSE==getYearMonthDay(yearMonthDay,&year, &month, &day))
-		{
-			return FALSE;
-		}
-		if(FALSE==getHourMinSec(hourMinSec,&hour, &min, &sec))
-		{
-			return FALSE;
-		}
-		if(CVIAbsoluteTimeFromLocalCalendar(year,month,day,hour,min,sec,0,absTime)<0)
-		{
-			return FALSE;
-		}
-		return TRUE;
-}
-
-static BOOL compareTimeWithTolerance(char *time1,char *time2,double intrv,int *result)
-{
-	char temp1[30]={0};
-	char temp2[30]={0};
-	sprintf(temp1,"%s",time1);
-	sprintf(temp2,"%s",time2);
-	CVIAbsoluteTime absTime1; 
-	CVIAbsoluteTime absTime2;
-	if(FALSE==timeStrToCviTime(temp1,&absTime1))
-	{
-		return FALSE;
-	}
-	if(FALSE==timeStrToCviTime(temp2,&absTime2))
-	{
-		return FALSE;
-	}
-	CVITimeInterval interval;
-	CVITimeIntervalFromSeconds(intrv,&interval);
-	if(CompareCVIAbsoluteTimesWithTolerance(absTime1,absTime2,interval,result)<0)
-		return FALSE;
-	return TRUE;
-}
 
 
 
@@ -1333,7 +1364,7 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 	char sysTime[30]={0};
 	getSysTime(sysTime);
 	APPEND_INFO_FORMAT(masgHandle,"当前系统时间:%s",sysTime);
-	if(FALSE==compareTimeWithTolerance(itemResult.recvString,itemResult2.recvString,tolerance,&compareResult))
+	if(FALSE==compareTimeWithTolerance(sysTime,itemResult2.recvString,tolerance,&compareResult))
 	{
 		APPEND_INFO(masgHandle,"时间格式错误！");
 		itemResult2.pass=0;
