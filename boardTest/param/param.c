@@ -298,6 +298,7 @@ TPS registerParamTestTPS(void)
 	TPS tps=newTps("param");
 	tps.autoTestFunction=ParamTest;
 	tps.protocolInit=ParamProtocolInit;
+	tps.createTpsPanel=NULL;
 	return tps;
 }
 
@@ -387,7 +388,7 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 				}
 			}									
 		}else if(strstr(item.itemName_,"插枪链接电压")!=NULL){
-			int vol = atof(itemResult.recvString);
+			float vol = atof(itemResult.recvString);
 			if(atof(item.standard_)>0.0001)
 			{
 				if(vol>(atof(item.standard_)-0.5) && vol <atof(item.standard_))
@@ -629,6 +630,7 @@ TPS registerBiboTestTps(void)
 	TPS tps=newTps("BIBO");
 	tps.autoTestFunction=ParamBiboTest;
 	tps.protocolInit=BiboProtocolInit;
+	tps.createTpsPanel=NULL;
 	return tps;			
 }
 
@@ -762,8 +764,9 @@ int CVICALLBACK ParaPanelCallback (int panelHandle, int event, void *callbackDat
 }
 
 //#define DEBUG_PARAM_SCAN_TEST
-METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandler)
 {
+	APPEND_INFO_FORMAT(masgHandler,"进入%s测试",group.groupName);
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	BOOL operateFlag = TRUE;
 	char stubName[20]={0};
@@ -807,6 +810,8 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 		itemResult.pass=0;
 		if(stubNameLen>0)
 			itemResult.pass=1;
+		
+		APPEND_INFO_FORMAT(masgHandler,"----------%s 设置------------------",item.itemName_);
 		if(1==i)
 		{
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN1,itemResult.recvString); 
@@ -836,13 +841,21 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 			sprintf(itemResult.recvString,"%s",param.value);*/
 			char setValue[20]={0};
 			sprintf(setValue,"00000%s",stubName);
+			
 			if(FALSE==ParamSet(servicePtr,item.itemName_,setValue))
 			{
 				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(masgHandler,"%s 设置成功，值为%s",item.itemName_,setValue);
 			}
-			if(FALSE==ParamGet(servicePtr,item.itemName_,itemResult.recvString))
+			APPEND_INFO(masgHandler,"延时2s"); 
+			Delay(2);
+			if(FALSE == ParamGetDependWithRetry(eut,item.itemName_,itemResult.recvString,3))
 			{
+				APPEND_INFO_FORMAT(masgHandler,"%s 获取失败",item.itemName_);
 				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(masgHandler,"%s 获取成功，值为%s",item.itemName_,itemResult.recvString);	
 			}
 			if(strcmp(itemResult.recvString,setValue)==0)
 			{
@@ -877,13 +890,27 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 			
 			char setValue[20]={0};
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN3,setValue);
-			if(ParamSet(servicePtr,item.itemName_,setValue)==FALSE)
+			if(FALSE==ParamSet(servicePtr,item.itemName_,setValue))
 			{
+				APPEND_INFO_FORMAT(masgHandler,"%s 设置失败",item.itemName_); 
 				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(masgHandler,"%s 设置成功，值为%s",item.itemName_,setValue);
 			}
-			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)==FALSE)
+			APPEND_INFO(masgHandler,"延时2s"); 
+			Delay(2);
+			/*if(FALSE==ParamGet(servicePtr,item.itemName_,itemResult.recvString))
 			{
 				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(masgHandler,"%s 获取成功，值为%s",item.itemName_,itemResult.recvString);	
+			}*/
+			if(FALSE == ParamGetDependWithRetry(eut,item.itemName_,itemResult.recvString,3))
+			{
+				APPEND_INFO_FORMAT(masgHandler,"%s 获取失败",item.itemName_);
+				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(masgHandler,"%s 获取成功，值为%s",item.itemName_,itemResult.recvString);	
 			}
 			if(strcmp(itemResult.recvString,setValue)==0)
 			{
@@ -896,13 +923,20 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 		{
 			char setValue[20]={0};
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN4,setValue);
-			if(ParamSet(servicePtr,item.itemName_,setValue)==FALSE)
+			if(FALSE==ParamSet(servicePtr,item.itemName_,setValue))
 			{
 				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(masgHandler,"%s 设置成功，值为%s",item.itemName_,setValue);
 			}
-			if(ParamGet(servicePtr,item.itemName_,itemResult.recvString)==FALSE)
+			APPEND_INFO(masgHandler,"延时2s");
+			Delay(2);
+			if(FALSE == ParamGetDependWithRetry(eut,item.itemName_,itemResult.recvString,3))
 			{
+				APPEND_INFO_FORMAT(masgHandler,"%s 获取失败",item.itemName_);
 				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(masgHandler,"%s 获取成功，值为%s",item.itemName_,itemResult.recvString);	
 			}
 			if(strcmp(itemResult.recvString,setValue)==0)
 			{
@@ -914,6 +948,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable)
 		saveResult(hashTable,&itemResult);
 	}
 	DiscardPanel(panelHandle); 
+	APPEND_INFO_FORMAT(masgHandler,"离开%s测试",group.groupName); 
 	return ret;
 #endif	
 DONE:	
@@ -921,13 +956,14 @@ DONE:
 #ifndef DEBUG_PARAM_SCAN_TEST	
 	onStubDisConnected(servicePtr);
 #endif	
+	APPEND_INFO_FORMAT(masgHandler,"离开%s测试",group.groupName); 
 	return ret;
 }
 
 TPS registerScanTestTps(void)
 {
 	TPS tps=newTps("scan");
-	tps.autoTestFunction=ParaScanTest;
+	tps.testFunction=ParaScanTest;
 	return tps;	
 }
 
@@ -1191,11 +1227,13 @@ TPS registerInsulationTestTestTps(void)
 {
 	TPS tps=newTps("insulation");
 	tps.autoTestFunction=InsulationTest;
+	tps.createTpsPanel=NULL;
 	return tps;	
 }
 
-METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHandler)
 {
+	APPEND_INFO_FORMAT(msgHandler,"进入%s",group.groupName);
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	BOOL flag=TRUE;
 	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
@@ -1229,14 +1267,19 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
 		WarnShow1(0,"无法启动充电");
+		APPEND_INFO(msgHandler,"无法启动充电");
+		APPEND_INFO_FORMAT(msgHandler,"离开%s",group.groupName);
 		return TEST_RESULT_ALLPASS;
 	}
 	
 	if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
 	{
 			//getStubNetService(ip,port);
+		//APPEND_INFO(msgHandler,"无法启动充电");
+		APPEND_INFO_FORMAT(msgHandler,"离开%s",group.groupName);			
 		return TEST_RESULT_ALLPASS;
-	}	
+	}
+	APPEND_INFO(msgHandler,"已启动充电流程，并且电压已经稳定");
 	
 	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动,点击确认加负载","错误","正确")==FALSE)
 	{
@@ -1253,6 +1296,8 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 	if(OpenDo(eut.relayConfig,31)==FALSE)
 	{
 		return 	TEST_RESULT_ERROR;
+	}else{
+		APPEND_INFO(msgHandler,"闭合继电器31，负载加载成功");
 	}	
 	
 	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
@@ -1262,6 +1307,7 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 	}*/
 
 	WarnShow1(0,"按下确定开始读数");
+	APPEND_INFO(msgHandler,"开始读数"); 
 
 	ListType paramsToSet=ListCreate(sizeof(PARAMETER));
 	for(int i=2;i<=4;i++)
@@ -1292,9 +1338,12 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		//sprintf(itemResult.recvString,"%s",param.value);
 		if(ParamGetDepend(eut,item.itemName_,itemResult.recvString)==FALSE)
 		{
+			 APPEND_INFO_FORMAT(msgHandler,"%s获取失败功",item.itemName_);
 			 itemResult.pass=0;
 			 saveResult(hashTable,&itemResult);
 			 goto DONE;
+		}else{
+			APPEND_INFO_FORMAT(msgHandler,"%s获取成功，值为%s",item.itemName_,itemResult.recvString); 	
 		}
 		float strValue=atof(itemResult.recvString);
 		if(i==3)
@@ -1312,12 +1361,15 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}else{
 			itemResult.pass=1; 
 		}
+		
+		APPEND_INFO_FORMAT(msgHandler,"%s 测试结果为 %d",item.itemName_,itemResult.pass);
+		
 		saveResult(hashTable,&itemResult);			
 	}
 		
 	//ListType paramsToSet=ListCopy(paramsToGet);
 	showParamSetPanel(paramsToSet);
-	
+	APPEND_INFO(msgHandler,"开始读数面板数值");	
 	for(int i=1;i<=ListNumItems(paramsToSet);i++)
 	{
 		TestItem item;
@@ -1346,6 +1398,7 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable)
 				itemResult.pass=0;
 			}
 		}
+		APPEND_INFO_FORMAT(msgHandler,"%s 值为 %s，测试结果为 %d",item.itemName_,itemResult.recvString,itemResult.pass);
 		saveResult(hashTable,&itemResult);			
 	}
 	
@@ -1358,6 +1411,8 @@ DONE:
 	if(ParamSetDepend(eut,stopChargeCMD,"1")==FALSE)
 	{
 		WarnShow1(0,"不能停止充电,请按下急停按钮");		
+	}else{
+		APPEND_INFO(msgHandler,"已经停止充电流程");
 	}
 	
 	WarnShow1(0,"请确保已经停止充电");
@@ -1365,14 +1420,17 @@ DONE:
 	if(CloseDo(eut.relayConfig,31)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
+	}else{
+		APPEND_INFO(msgHandler,"断开继电器31成功");
 	}
+	APPEND_INFO(msgHandler,"离开测试");
 	return ret;
 }
 
 TPS registerChargingTestTestTps(void)
 {
 	TPS tps=newTps("charging");
-	tps.autoTestFunction=ChargingTest;
+	tps.testFunction=ChargingTest;
 	return tps;	
 }
 
@@ -1551,6 +1609,7 @@ TPS registerStubCmdTestTps(void)
 {
 	TPS tps=newTps("StubCmd");
 	tps.autoTestFunction=StubCmdTest;
+	tps.createTpsPanel=NULL;
 	return tps;	
 }
 
@@ -1602,6 +1661,7 @@ TPS registerStubIoTestTps(void)
 {
 	TPS tps=newTps("unlock");
 	tps.autoTestFunction=StubIoTest;
+	tps.createTpsPanel=NULL;
 	return tps;	
 }
 

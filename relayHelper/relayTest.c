@@ -41,6 +41,7 @@ TPS registerRelayTestTPS(void)
 {
 	TPS tps=newTps("Relay");
 	tps.autoTestFunction=RelayTest;
+	tps.createTpsPanel=NULL;
 	//tps.manualTestFunction=DemoTest;
 	return tps;
 }

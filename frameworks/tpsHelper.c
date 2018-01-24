@@ -194,7 +194,7 @@ int CreateTpsPanel(char *groupName)
 {
 	int panelHandle =  LoadPanel(0,"TpsDefaultPanel.uir",PANEL);
 	SetCtrlVal(panelHandle,PANEL_TITLE,groupName);
-	InstallPanelCallback(panelHandle,oTpsPanelCallBack,NULL);  
+	//InstallPanelCallback(panelHandle,oTpsPanelCallBack,NULL);  
 	return panelHandle;
 }
 

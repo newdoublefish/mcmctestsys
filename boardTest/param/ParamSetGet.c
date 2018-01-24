@@ -70,6 +70,47 @@ BOOL ParamGetDepend(EUT eut,char *paramName,char *paramValue)
 	return ret;
 }
 
+BOOL ParamGetDependWithRetry(EUT eut,char *paramName,char *paramValue,int retryCnt)
+{
+	BOOL ret=TRUE; 
+	PARAMETER param={0};
+	char temp[30]={0};
+	do{
+		tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+		if(servicePtr==NULL)
+		{
+			return 	FALSE;
+		}		
+		if(FALSE==getParameter(paramName,&param))
+		{
+			sprintf(temp,"%s:%s",paramName,"无该参数配置");
+			LOG_EVENT_FORMAT(LOG_INFO,"%s",temp); 
+			WarnShow1(0,temp);
+			
+			ret=FALSE;
+			break; 
+		}
+	
+		//printfParam(param);
+		if(GetParameter(servicePtr,&param)<0)
+		{	
+			sprintf(temp,"%s:%s",paramName,"获取失败");
+			LOG_EVENT_FORMAT(LOG_INFO,"%s",temp); 
+			//WarnShow1(0,temp);
+			onStubDisConnected(servicePtr);
+			//ReleaseStubNetService();		
+			ret=FALSE;
+		}else{
+			sprintf(paramValue,"%s",param.value);
+			ret=TRUE;
+			break;
+		}
+		
+	}while(retryCnt--);
+
+	return ret;
+}
+
 
 BOOL ParamSet(tNET_SERVICE *servicePtr,char *paramName,char *paramValue)
 {
@@ -112,6 +153,7 @@ BOOL ParamGet(tNET_SERVICE *servicePtr,char *paramName,char *paramValue)
 	sprintf(paramValue,"%s",param.value);
 	return TRUE;
 }
+
 
 BOOL CommandSend(EUT eut,char *command)
 {
