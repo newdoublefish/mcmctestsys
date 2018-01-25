@@ -716,14 +716,14 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		}		
 		
 		//¼ÌµçÆ÷²Ù×÷
-		unsigned int mask=0;
+		RelayOperate operate={0};
 		if(set.relayEnable)
 		{
-			if(getRelayMask(testItem.groupName,&mask)){
+			if(getRelayMask(testItem.groupName,&operate)){
 		
 			//PRINT("%x\n",mask);
 			//OperatDoSet(_obj->device.testInstrument
-				if(OperatDoSet(_obj->device.relayConfig,mask)==FALSE)
+				if(OperatDoSet(_obj->device.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
 				{
 					WarnShow1(0,"²Ù×÷¼ÌµçÆ÷Ê§°Ü");
 					((TESTengine*)_obj->enginePtr)->testState=TEST_STOP;
@@ -807,6 +807,22 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 	     	else if(testRet=TEST_RESULT_SOMEPASS)
 		    	ret=TEST_RESULT_SOME_PASS; 			
 		}
+		
+		if(set.relayEnable)
+		{
+			if(getRelayMask(testItem.groupName,&operate)){
+				if(OperatDoSet(_obj->device.relayConfig,operate.afterTestMask,operate.mask)==FALSE)
+				{
+					WarnShow1(0,"²Ù×÷¼ÌµçÆ÷Ê§°Ü");
+					((TESTengine*)_obj->enginePtr)->testState=TEST_STOP;
+				}
+			}
+		}
+		
+		if(((TESTengine*)_obj->enginePtr)->testState==TEST_STOP){
+			 return TEST_ERROR;
+		}		
+		
 		return ret;
 }
 

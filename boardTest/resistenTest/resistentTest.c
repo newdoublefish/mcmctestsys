@@ -263,6 +263,7 @@ void resistanceTestCallback(TestItem item,RESULT *resultPtr,int comPort)
 
 METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
+	
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	char buffer[512]={0};
 	int RS232Error=0;
@@ -285,11 +286,17 @@ METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
 		tTEST_RESULT tTestResult={0};
 		
 		ListGetItem(group.subItems,&tTestResult.item,i);
+		float delayTime=atof(tTestResult.item.inputValue_);
+		//printf("---------delayTime---:%f",delayTime);
+		Delay(delayTime);
+		//Delay(delayTime);
 		tTestResult.res.index=tTestResult.item.itemId;
 		tTestResult.res.pass=-1;
 		InstallComCallback(eut.matainConfig.portNum,eventMask,0,eventChar,ComCallback, &tTestResult);
 		resistanceTestCallback(tTestResult.item,&tTestResult.res,eut.matainConfig.portNum);
 		saveResult(hashTable,&tTestResult.res);
+		//Delay(delayTime);
+		Delay(delayTime);
 	}
 	
 	CloseCom(eut.matainConfig.portNum);
@@ -303,6 +310,7 @@ TPS registerResistanceTestTPS(void)
 	TPS tps=newTps("resistance");
 	tps.autoTestFunction=resistanceTest;
 	tps.protocolInit=resisProtocolInit;
+	tps.createTpsPanel=NULL;
 	//tps.manualTestFunction=resistanceTest;
 	return tps;
 }

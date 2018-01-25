@@ -513,8 +513,9 @@ TPS registerParamTemperatureTps(void)
 }
 
 //#define BIBO_DEBUG
-METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
+	APPEND_INFO(masgHandle,"进入测试");
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	char startChargeCmd[20]={0};
 	char stopChargeCMD[20]={0};
@@ -540,8 +541,11 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 #ifndef BIBO_DEBUG	
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
-		WarnShow1(0,"无法启动充电！");
+		APPEND_INFO(masgHandle,"发送启动充电命令失败"); 
+		WarnShow1(0,"发送启动充电命令失败！");
 		return ret;
+	}else{
+		APPEND_INFO(masgHandle,"已成功发送启动充电命令");
 	}
 	
 	if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
@@ -561,6 +565,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		if(i==1)
 		{
 			WarnShow1(0,"设置电流为60A"); //后续可以用485控制来操作
+			APPEND_INFO(masgHandle,"设置电流为60A");
 			if(FALSE==AlertDialogWithRet(0,"waring",tips60A,"错误","正确"))
 			{
 			//getStubNetService(ip,port);
@@ -569,6 +574,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}else if(i==2){
 		
 			WarnShow1(0,"设置电流为100A"); //后续可以用485控制来操作
+			APPEND_INFO(masgHandle,"设置电流为100A");
 			if(FALSE==AlertDialogWithRet(0,"waring",tips100A,"错误","正确"))
 			{
 			//getStubNetService(ip,port);
@@ -577,19 +583,23 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable)
 		}else if(i==3){
 		
 			WarnShow1(0,"设置电流为120A"); //后续可以用485控制来操作
+			APPEND_INFO(masgHandle,"设置电流为120A"); 
 			if(FALSE==AlertDialogWithRet(0,"waring",tips120A,"错误","正确"))
 			{
 			//getStubNetService(ip,port);
 				goto ERROR;
 			}			
 		}
-	
+ 	
 		//char BI[10]={0};
 
 #ifndef BIBO_DEBUG	
 		if(FALSE==ParamGetDepend(eut,"BI",itemResult1.recvString ))
 		{
-			
+			APPEND_INFO_FORMAT(masgHandle,"%s 获取到绝缘检测反馈失败 %s");
+			goto ERROR;			
+		}else{
+			APPEND_INFO_FORMAT(masgHandle,"%s 获取到绝缘检测反馈 %s",item1.itemName_,itemResult1.recvString);		
 		}
 #endif
 		//PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
@@ -620,7 +630,7 @@ ERROR:
 	}
 	WarnShow1(0,"请等待并确保充电流程已经停止");
 #endif	
-	
+	APPEND_INFO(masgHandle,"退出测试");	
 	return ret;
 }
 
@@ -628,9 +638,8 @@ ERROR:
 TPS registerBiboTestTps(void)
 {
 	TPS tps=newTps("BIBO");
-	tps.autoTestFunction=ParamBiboTest;
+	tps.testFunction=ParamBiboTest;
 	tps.protocolInit=BiboProtocolInit;
-	tps.createTpsPanel=NULL;
 	return tps;			
 }
 
@@ -1027,7 +1036,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int ms
 	}
 	APPEND_INFO_FORMAT(msgHandle,"flag1:%d",flag1);
 	
-	if(OperatDoSet(eut.relayConfig,RELAY(31)|RELAY(3)|RELAY(4)|RELAY(2))==FALSE)
+	if(OperatDoSet(eut.relayConfig,RELAY(31)|RELAY(3)|RELAY(4)|RELAY(2),MASK32)==FALSE)
 	{
 		goto DONE;
 	}else{
@@ -1061,7 +1070,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int ms
 	APPEND_INFO_FORMAT(msgHandle,"flag2:%d",flag2); 
 	
 
-	if(OperatDoSet(eut.relayConfig,RELAY(2))==FALSE)
+	if(OperatDoSet(eut.relayConfig,RELAY(2),MASK32)==FALSE)
 	{
 		goto DONE;
 	}else{
@@ -1099,14 +1108,14 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int ms
 	sprintf(itemResult.recvString,"{%d,%d,%d}",flag1,flag2,flag3);
 	saveResult(hashTable,&itemResult);
 	
-	if(OperatDoSet(eut.relayConfig,RELAY(2))==TRUE)
+	if(OperatDoSet(eut.relayConfig,RELAY(2),MASK32)==TRUE)
 	{
 		 APPEND_INFO(msgHandle,"继电器操作成功,闭合2继电器");
 	}
 	APPEND_INFO(msgHandle,"退出测试");
 	return ret;
 DONE:
-	if(OperatDoSet(eut.relayConfig,RELAY(2))==TRUE)
+	if(OperatDoSet(eut.relayConfig,RELAY(2),MASK32)==TRUE)
 	{
 		 APPEND_INFO(msgHandle,"继电器操作成功,闭合2继电器");
 	}	
@@ -1122,8 +1131,9 @@ TPS registerInverseWarnTestTps(void)
 	return tps;	
 }
 
-METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHander)
 {
+	APPEND_INFO_FORMAT(msgHander,"进入：%s",group.groupName);
 	BOOL flag=TRUE; 
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	TestItem item;
@@ -1142,24 +1152,31 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 		sprintf(isolateCMD,"%s","2枪绝缘检测结果");
 	}
 
-	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(30)|RELAY(2)))
+	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(30)|RELAY(2),MASK32))
 	{
+		APPEND_INFO(msgHander,"继电器操作失败！！");
 		goto DONE;
+	}else{
+	    APPEND_INFO(msgHander,"继电器操作成功，闭合2，30继电器！！");
 	}
 
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
 		WarnShow1(0,"无法启动充电！");
+		APPEND_INFO(msgHander,"无法发送启动充电！"); 
 		flag=FALSE; 
 		goto DONE;
+	}else{
+		APPEND_INFO(msgHander,"已成功发送启动命令！");
 	}
 	
 	if(AlertDialogWithRet(0,"枪检查","请确认充电功能正常","错误","正确")==FALSE)
 	{
+		WarnShow1(0,"充电功能不正常！"); 
 		flag=FALSE;
 		goto DONE;
 	}
-	
+	APPEND_INFO(msgHander,"充电功能正常！");
 	//读取结果
 	char inSoResult[10]={0};
 	if(FALSE==ParamGetDepend(eut,isolateCMD,inSoResult))
@@ -1173,22 +1190,31 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
 		WarnShow1(0,"无法停止充电！请按急停停止"); 
+		APPEND_INFO(msgHander,"发送充电停止命令失败"); 
 		goto DONE;
+	}else{
+		APPEND_INFO(msgHander,"发送充电停止命令成功"); 
 	}	
 	
 	//WarnAlert(0,"延时中",30);
 	WarnShow1(0,"下一步测试");
 	
-	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(29) | RELAY(30)| RELAY(2)))
+	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(29) | RELAY(30)| RELAY(2),MASK32))
 	{
+		APPEND_INFO(msgHander,"继电器操作失败！！");
 		goto DONE;
+	}else{
+	    APPEND_INFO(msgHander,"继电器操作成功，闭合2，29,30继电器！！");
 	}
 	
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
 		WarnShow1(0,"无法启动充电！");
+		APPEND_INFO(msgHander,"无法发送启动充电！"); 
 		flag=FALSE; 
 		goto DONE;
+	}else{
+		APPEND_INFO(msgHander,"已成功发送启动命令！");
 	}	
 
 	if(AlertDialogWithRet(0,"枪检查","请确认充电功能异常,应该自动停止充电","错误","正确")==FALSE)
@@ -1206,11 +1232,14 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable)
 	
 	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
+		APPEND_INFO(msgHander,"发送充电停止命令失败");
 		WarnShow1(0,"无法停止充电！请按急停停止"); 
 		goto DONE;
+	}else{
+		APPEND_INFO(msgHander,"发送充电停止命令成功"); 
 	}	
 DONE:	
-	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(2)))
+	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(2),MASK32))
 	{
 	}
 	
@@ -1218,7 +1247,8 @@ DONE:
 	itemResult.index=item.itemId;
 	itemResult.pass=flag;
 	saveResult(hashTable,&itemResult);
-	WarnShow1(0,"请确保充电流程已经停止");	
+	WarnShow1(0,"请确保充电流程已经停止");
+	APPEND_INFO(msgHander,"退出测试");
 	return ret;	
 }
 
@@ -1226,8 +1256,7 @@ DONE:
 TPS registerInsulationTestTestTps(void)
 {
 	TPS tps=newTps("insulation");
-	tps.autoTestFunction=InsulationTest;
-	tps.createTpsPanel=NULL;
+	tps.testFunction=InsulationTest;
 	return tps;	
 }
 

@@ -12,7 +12,13 @@
     <ConfigPath>Integrate\IntegrateConfig.xlsx</ConfigPath>
     <StrategyPath>Integrate\Strategy.xml</StrategyPath>	
     <ReportPath>Integrate\IntegrateReport.xlsx</ReportPath>	
-  </Project>   
+  </Project> 
+  <Project>
+    <ProjectName>可靠性测试</ProjectName>
+    <ConfigPath>reliability\reliabilityConfig.xlsx</ConfigPath>
+    <StrategyPath>reliability\Strategy.xml</StrategyPath>	
+    <ReportPath>reliability\reliabilityReport.xlsx</ReportPath>	
+  </Project>    
   <Project>
     <ProjectName>板级测试</ProjectName>
     <ConfigPath>板级测试\demo配置表.xlsx</ConfigPath>

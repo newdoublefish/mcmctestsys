@@ -1,3 +1,16 @@
+/*---------------------------------------------------------------------------
+ // 版权声明：本文件由广东万城万充电动车运营股份有限公司版权所有，未经授权，
+ // 禁止第三方进行拷贝和使用。
+ //
+ // 文件名：
+ // 文件功能描述: 
+ //
+ // 
+ // 创建标识：曾衍仁 
+ //
+ // 修改标识：
+ // 修改描述：
+ //-------------------------------------------------------------------------*/
 #include <formatio.h>
 #include "toolbox.h"
 #include "ParamSetGet.h"
@@ -113,9 +126,10 @@ BOOL ParamGetDepend(EUT eut,char *paramName,char *paramValue)
 BOOL ParamGetDependWithRetry(EUT eut,char *paramName,char *paramValue,int retryCnt)
 {
 	BOOL ret=TRUE; 
-	PARAMETER param={0};
-	char temp[30]={0};
+
 	do{
+		PARAMETER param={0};
+		char temp[30]={0};
 		tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 		if(servicePtr==NULL)
 		{

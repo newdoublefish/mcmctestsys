@@ -10,7 +10,10 @@
 
 //#define RELAY_1 (1<<0)
 //#define RELAY_2 (1<<0) 
-#define RELAY(x) (1<<(x-1)) 		
+#define RELAY(x) (1<<(x-1)) 
+		
+#define MASK32 0xFFFFFFFF
+#define MASK16 0xFFFF
 		
 typedef struct
 {
@@ -21,7 +24,8 @@ typedef struct
 BOOL OpenDo(RSCONFIG config,int doMask);
 BOOL CloseDo(RSCONFIG config,int doMask);
 
-BOOL OperatDoSet(RSCONFIG config,unsigned int mask);
+//BOOL OperatDoSet(RSCONFIG config,unsigned int mask);
+BOOL OperatDoSet(RSCONFIG config,unsigned int doMask,unsigned int mask);
 
 
 #ifdef __cplusplus

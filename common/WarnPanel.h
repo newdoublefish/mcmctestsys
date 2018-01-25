@@ -36,10 +36,10 @@
 #define  MANUALTIPS_TEXTBOX               13      /* control type: textMsg, callback function: (none) */
 
 #define  NAMEPANEL                        3
-#define  NAMEPANEL_PICTURE                2       /* control type: picture, callback function: (none) */
-#define  NAMEPANEL_FILENAMESTRING         3       /* control type: string, callback function: (none) */
-#define  NAMEPANEL_TEXTMSG_3              4       /* control type: textMsg, callback function: (none) */
-#define  NAMEPANEL_FILENAMEBT             5       /* control type: command, callback function: (none) */
+#define  NAMEPANEL_FILENAMESTRING         2       /* control type: string, callback function: (none) */
+#define  NAMEPANEL_TEXTMSG_3              3       /* control type: textMsg, callback function: (none) */
+#define  NAMEPANEL_FILENAMEBT             4       /* control type: command, callback function: (none) */
+#define  NAMEPANEL_TEXTMSG                5       /* control type: textMsg, callback function: (none) */
 
 #define  PANEL2                           4
 #define  PANEL2_SURE                      2       /* control type: command, callback function: (none) */

@@ -28,8 +28,8 @@
 #define  AT9220_lower                     13      /* control type: textMsg, callback function: (none) */
 #define  AT9220_type                      14      /* control type: textMsg, callback function: (none) */
 #define  AT9220_RESULT                    15      /* control type: textMsg, callback function: (none) */
-#define  AT9220_TIME_LEFT                 16      /* control type: textMsg, callback function: (none) */
-#define  AT9220_TEXTMSG_4                 17      /* control type: textMsg, callback function: (none) */
+#define  AT9220_TEXTMSG_4                 16      /* control type: textMsg, callback function: (none) */
+#define  AT9220_TIME_LEFT                 17      /* control type: textMsg, callback function: (none) */
 
 
      /* Control Arrays: */
