@@ -520,11 +520,17 @@ ERROR:
 }
 
 BOOL OpenDo(RSCONFIG config,int doMask){
+	SETTING s=getSetting();
+	if(s.relayEnable==FALSE)
+		return TRUE;	
 	RelayBuf buf={0};
 	buildDoPacket(&buf,doMask,1);
 	return operateDo(config,&buf);
 }
 BOOL CloseDo(RSCONFIG config,int doMask){
+	SETTING s=getSetting();
+	if(s.relayEnable==FALSE)
+		return TRUE;	
 	RelayBuf buf={0};
 	buildDoPacket(&buf,doMask,0);
 	return operateDo(config,&buf);
@@ -532,7 +538,9 @@ BOOL CloseDo(RSCONFIG config,int doMask){
 
 BOOL OperatDoSet(RSCONFIG config,unsigned int doMask,unsigned int mask)
 {
-	
+	SETTING s=getSetting();
+	if(s.relayEnable==FALSE)
+		return TRUE;	
 	RelayBuf buf={0};
 	buildALLDoPacket(&buf,doMask,mask);
 	if(FALSE==operateDo(config,&buf))

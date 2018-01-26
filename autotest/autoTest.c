@@ -714,7 +714,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		if(((TESTengine*)_obj->enginePtr)->testState==TEST_STOP){
 			 return TEST_RESULT_QUIT;
 		}		
-		
+		LOG_EVENT_FORMAT(LOG_INFO,"-----Enter GroupTest:%s-----",testItem.groupName);  		
 		//¼ÌµçÆ÷²Ù×÷
 		RelayOperate operate={0};
 		if(set.relayEnable)
@@ -732,7 +732,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		}
 		
 		if(((TESTengine*)_obj->enginePtr)->testState==TEST_STOP){
-			 return TEST_ERROR;
+			 goto DONE;
 		}
 		
 		
@@ -818,6 +818,8 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 				}
 			}
 		}
+DONE:		
+		LOG_EVENT_FORMAT(LOG_INFO,"-----Leave GroupTest:%s-----",testItem.groupName);   		
 		
 		if(((TESTengine*)_obj->enginePtr)->testState==TEST_STOP){
 			 return TEST_ERROR;
