@@ -187,10 +187,12 @@ tSCPICMD getResisiProc(char *itemName)
 	return tpro;
 }
 
-int loadAt9220Panel(tSCPICMD proc)
+int loadAt9220Panel(tSCPICMD proc,char *itemName)
 {
 	char temp[20]={0};
 	int panel = LoadPanel(0,"AT9220Panel.uir",AT9220);
+	SetCtrlVal(panel,AT9220_TITLE,itemName);
+	
 	SetCtrlVal(panel,AT9220_type,proc.type);
 	sprintf(temp,"%.2f kv",proc.volt);
 	SetCtrlVal(panel,AT9220_voltage,temp);
@@ -241,7 +243,7 @@ void resistanceTestCallback(TestItem item,RESULT *resultPtr,int comPort)
 {
 	
 	tSCPICMD proc=getResisiProc(item.itemName_);
-	int panel = loadAt9220Panel(proc);
+	int panel = loadAt9220Panel(proc,item.itemName_);
 	InstallPanelCallback(panel,At9220PanelCallback,resultPtr);
 	scpiDispPage(comPort,MSETUP);
 	Delay(0.2);
@@ -280,6 +282,13 @@ void resistanceTestCallback(TestItem item,RESULT *resultPtr,int comPort)
 	return;
 }
 
+void resistentDelay(double interval)
+{
+   double mark;
+   mark = Timer();
+   SyncWait (mark, interval);
+}
+
 METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
 {
 	
@@ -305,17 +314,15 @@ METHODRET resistanceTest(TestGroup group,EUT eut,HashTableType hashTable)
 		tTEST_RESULT tTestResult={0};
 		
 		ListGetItem(group.subItems,&tTestResult.item,i);
-		float delayTime=atof(tTestResult.item.inputValue_);
-		//printf("---------delayTime---:%f",delayTime);
-		Delay(delayTime);
-		//Delay(delayTime);
+		int delayTime=atoi(tTestResult.item.inputValue_);
+		WarnAlert(0,"延时中",delayTime);
 		tTestResult.res.index=tTestResult.item.itemId;
 		tTestResult.res.pass=-1;
 		InstallComCallback(eut.matainConfig.portNum,eventMask,0,eventChar,ComCallback, &tTestResult);
 		resistanceTestCallback(tTestResult.item,&tTestResult.res,eut.matainConfig.portNum);
 		saveResult(hashTable,&tTestResult.res);
 		//Delay(delayTime);
-		Delay(delayTime);
+		WarnAlert(0,"延时中",delayTime);
 	}
 	
 	CloseCom(eut.matainConfig.portNum);

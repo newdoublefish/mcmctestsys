@@ -486,7 +486,8 @@ static void getResultRecordTime(char *timeBuffer)
     CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
                 &min, &sec, 0, &weekDay);
 	//sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d",year-2000,month,day,hour,min,sec);
-	sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d",year-2000,month,day,hour,min,sec);
+	//sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d",year-2000,month,day,hour,min,sec);
+	sprintf(timeBuffer,"%02d-%02d-%02d",year-2000,month,day);
 
 }
 
