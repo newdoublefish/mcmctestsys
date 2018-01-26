@@ -599,7 +599,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masg
 			APPEND_INFO_FORMAT(masgHandle,"%s 获取到绝缘检测反馈失败 %s");
 			goto ERROR;			
 		}else{
-			APPEND_INFO_FORMAT(masgHandle,"%s 获取到绝缘检测反馈 %s",item1.itemName_,itemResult1.recvString);		
+					
 		}
 #endif
 		//PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
@@ -609,6 +609,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masg
 		unsigned int result = bi & standard;
 		memset(itemResult1.recvString,0,RESULT_RECEIVE_LEN);
 		sprintf(itemResult1.recvString,"0x%x",bi);
+		APPEND_INFO_FORMAT(masgHandle,"%s 获取到绝缘检测反馈 %s",item1.itemName_,itemResult1.recvString);
 
 		if(result == standard)
 		{
