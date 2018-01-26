@@ -30,6 +30,7 @@
 #define  AT9220_RESULT                    15      /* control type: textMsg, callback function: (none) */
 #define  AT9220_TEXTMSG_4                 16      /* control type: textMsg, callback function: (none) */
 #define  AT9220_TIME_LEFT                 17      /* control type: textMsg, callback function: (none) */
+#define  AT9220_TIMER                     18      /* control type: timer, callback function: (none) */
 
 
      /* Control Arrays: */

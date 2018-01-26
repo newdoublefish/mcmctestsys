@@ -213,7 +213,7 @@ int loadAt9220Panel(tSCPICMD proc)
 	return panel;
 }
 
-void refreshAt9220Panel(int panel,int time)
+void refreshAt9220Panel(int panel,double time)
 {
 		char temp[10]={0};
 		if(time<0)
@@ -221,8 +221,20 @@ void refreshAt9220Panel(int panel,int time)
 			SetCtrlAttribute(panel,AT9220_TEXTMSG_4,ATTR_VISIBLE,1);
 			return;
 		}
-		sprintf(temp,"%d s",time);
+		sprintf(temp,"%0.2f s",time);
 		SetCtrlVal(panel,AT9220_TIME_LEFT,temp);
+}
+
+static int CVICALLBACK At9220PanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			RESULT *result = (RESULT*)callbackData;	
+			result->pass=0;
+		     break;
+	}
+	return 0;
 }
 
 void resistanceTestCallback(TestItem item,RESULT *resultPtr,int comPort)
@@ -230,24 +242,31 @@ void resistanceTestCallback(TestItem item,RESULT *resultPtr,int comPort)
 	
 	tSCPICMD proc=getResisiProc(item.itemName_);
 	int panel = loadAt9220Panel(proc);
+	InstallPanelCallback(panel,At9220PanelCallback,resultPtr);
 	scpiDispPage(comPort,MSETUP);
 	Delay(0.2);
 	scpiSendCmd(comPort,proc);
 	scpiDispPage(comPort,MEASUREMENT);
 	Delay(0.2);
 	scpiStartTest(comPort);
-	int outTime = proc.ttim+5;
+	//int outTime = proc.ttim+5;
+	double elapsed = proc.ttim+5;
+	double outTime = Timer(); 
 	while(resultPtr->pass==-1)
 	{
 
-		refreshAt9220Panel(panel,outTime-5);
-		Delay(1);
-		ProcessSystemEvents ();
-		outTime--;
-		if(outTime<=0)
+		double currentTime = Timer();	
+		
+		//Delay(1);
+		
+		//outTime--;
+		if(currentTime-outTime > elapsed)
 		{
 			resultPtr->pass=0;
+		}else{
+			refreshAt9220Panel(panel,elapsed-(currentTime-outTime)-5);
 		}
+		ProcessSystemEvents (); 
 	}
 	scpiStopTest(comPort);
 	if(resultPtr->pass==1)

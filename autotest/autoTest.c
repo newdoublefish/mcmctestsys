@@ -1072,6 +1072,11 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
 	{
 		case EVENT_COMMIT:
 			//ReleaseStubNetService();//断开与充电桩的连接
+			if(engine->testState == TEST_RUN)
+			{
+				WarnShow1(0,"正在测试中！稍后再试");
+				return 0;
+			}
 			releaseTestEngine(engine);
 			DiscardPanel(panel); 
 			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);  
