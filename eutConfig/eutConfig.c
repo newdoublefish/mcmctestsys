@@ -25,13 +25,14 @@
 #include "EutPanel.h"
 #include "MainPanel.h"
 #include "debug.h"
+#include "EutManage.h"
 //#define EUT_CONFIG_DEBUG
 
 static int eutConfigPanelHandle;  //面板panel，有可能是外部传入
 static int currentEutIndex=0;	   //当前选中的的EUT
 static int isAddAction=0;		   //当前操作是否为增加UUT的操作
 
-static ListType eutList;  //设备链表
+static ListType eutList=0;  //设备链表
 
 
 #define EUT_SETTING_TAB_BASIC 0
@@ -61,16 +62,19 @@ static void ShowEutListByTree(ListType eutList)
 	  SetActiveTreeItem(eutConfigPanelHandle,EUTPANEL_EUT_TREE,0,VAL_REPLACE_SELECTION_WITH_ITEM);  	
 }
 
-
+extern void DisplayEutManagePanel(int panel);
 void DisplayEutPanelAsTabPanel(int panel)
 {
-
+#if 0
 	eutConfigPanelHandle=LoadPanel(panel, "EutPanel.uir", EUTPANEL);
 
 	DisplayPanel(eutConfigPanelHandle);//创建并显示面板
 	eutList = getEutListFromXmlFile(); //从xml文件中获取eut链表
 	ClearListCtrl(eutConfigPanelHandle,EUTPANEL_EUT_TREE);//清空面板显示空间   
 	ShowEutListByTree(eutList);//显示eut链表
+#else
+	DisplayEutManagePanel(panel);   	
+#endif	
 }
 
 static void ShowEutDetail(int panel,int index)
@@ -468,7 +472,52 @@ int CVICALLBACK EUTCONFIG_CALLBACK (int panel, int control, int event,
 
 ListType getEutList(void)
 {
-     return eutList;
+/*	if(eutList!=0)
+	{
+		ListDispose(eutList);
+		eutList=0;
+	}
+	eutList = ListCreate(sizeof(EUT));
+	ListType list=getEEutList();
+	for(int i=1;i<=ListNumItems(list);i++)
+	{
+		EEUT eeut={0};
+		EUT eut={0};
+		ListGetItem(list,&eeut,i);
+		
+		for(int j=1;j<=ListNumItems(eeut.configList);j++)
+		{
+			ConfigItem configItem={0};
+			ListGetItem(eeut.configList,&configItem,j);
+			if(strcmp(configItem.tagName,"基本配置")==0)
+			{
+				EutBasicInfo *info=(EutBasicInfo *)configItem.configPtrHandle;
+				eut.index = info->id;
+				sprintf(eut.eutName,"%s",info->eutName);
+				eut.enable=info->enable;
+			}else if(strcmp(configItem.tagName,"安规测量仪")==0)
+			{
+				RSCONFIG *config=(RSCONFIG *)configItem.configPtrHandle;
+				memcpy(&eut.matainConfig,config,sizeof(RSCONFIG));
+			}else if(strcmp(configItem.tagName,"继电器")==0)
+			{
+				RSCONFIG *config=(RSCONFIG *)configItem.configPtrHandle;
+				memcpy(&eut.relayConfig,config,sizeof(RSCONFIG));
+			}else if(strcmp(configItem.tagName,"BMS模拟器")==0)
+			{
+				RSCONFIG *config=(RSCONFIG *)configItem.configPtrHandle;
+				memcpy(&eut.bmsConfig,config,sizeof(RSCONFIG));
+			}else if(strcmp(configItem.tagName,"充电桩网络")==0)
+			{
+				NETCONFIG *config=(NETCONFIG *)configItem.configPtrHandle;
+				memcpy(&eut.chargingPile,config,sizeof(NETCONFIG));
+			}
+		}
+		ListInsertItem(eutList,&eut,END_OF_LIST);
+	}
+    return eutList;
+*/
+	return getGenerteEutList();
 }
 
 int CVICALLBACK OnSaveEut (int panel, int control, int event,

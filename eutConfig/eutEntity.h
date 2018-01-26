@@ -37,14 +37,20 @@ typedef struct
 	int port;
 }NETCONFIG;
 
-
+typedef struct
+{
+	char eutName[20];
+	int id;
+	int enable;
+}EutBasicInfo;
 
 typedef struct
 {
     int index;
 	char eutName[MAX_EUTNAME_LEN];
 	RSCONFIG matainConfig;
-	RSCONFIG relayConfig; 
+	RSCONFIG relayConfig;
+	RSCONFIG bmsConfig; 
 	NETCONFIG chargingPile;
 	NETCONFIG testInstrument;
 	int enable;

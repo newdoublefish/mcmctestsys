@@ -248,8 +248,6 @@ int CVICALLBACK PICTUREBUTTON_AUTO (int panel, int control, int event,
 }
 
 
-
-//extern 
 int CVICALLBACK MainPnlMsgCallback (int panelHandle, int message,
                                     unsigned int* wParam, unsigned int* lParam,
                                     void* callbackData)
