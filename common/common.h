@@ -47,7 +47,7 @@ BOOL getUserCustiomName(char *fileName);
 
 void alignToParentPanel(int parent,int ctrl);
 
-BOOL showTips(int panel,char *title,char *tip,int *flag);
+BOOL showTips(int panel,char *title,char *tip,int *flag,int closeTime);
 void WarnAlert(int panel,char *meesage,int closeTime);
 
 

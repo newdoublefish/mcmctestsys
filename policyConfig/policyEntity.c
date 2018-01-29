@@ -40,6 +40,8 @@ static char *xmlCollect="Collect";
 static char *xmlCollectName="CollectName";
 static char *xmlType="Type";
 static char *xmlTestType="TestType";
+static char *xmlTipFlag="TipsFlag"; 
+static char *xmlTipCloseTime="TipsCloseTime"; 
 static char *xmlMaxTestDevice="MaxTestDevice";
 static char *xmlRetryCount="RetryCount";
 static char *xmlGroups="Groups";
@@ -95,8 +97,14 @@ static int ProcessXMLElement (CVIXMLElement element,ListType collectList)
 		}else if(strcmp(elemName,xmlTestType)==0) 
 		{
 			 tempCollect.testType=atoi(elemValue);
-			
-		}else if(strcmp(elemName,xmlMaxTestDevice)==0) 
+		}else if(strcmp(elemName,xmlTipFlag)==0) 
+		{
+			 tempCollect.tipFlag=atoi(elemValue);
+		}else if(strcmp(elemName,xmlTipCloseTime)==0) 
+		{
+			 tempCollect.tipsCloseTime=atoi(elemValue);
+		}
+		else if(strcmp(elemName,xmlMaxTestDevice)==0) 
 		{
 			tempCollect.maxParallelDevice=atoi(elemValue);
 			//ListInsertItem(collectList,&tempCollect,END_OF_LIST);
@@ -255,40 +263,52 @@ static void strategyToXmlElement(CVIXMLElement element,ListType collectList)
 	for(int index=1;index<=ListNumItems(collectList);index++)
 	{
 	        ListGetItem(collectList,&tempInfo,index);
-	    	CVIXMLNewElement(element,collectCount++,"Collect", &currElem);
+	    	CVIXMLNewElement(element,-1,"Collect", &currElem);
 	    	//д  CollectName
-	    	CVIXMLNewElement(currElem,0,"CollectName",&currChildElem);
+	    	CVIXMLNewElement(currElem,-1,"CollectName",&currChildElem);
 	    	CVIXMLSetElementValue (currChildElem, tempInfo.name_);
 	    	//д   ResultFrom
 	    	sprintf(temp,"%d",tempInfo.tType);
-	    	CVIXMLNewElement(currElem,1,"Type",&currChildElem);
+	    	CVIXMLNewElement(currElem,-1,"Type",&currChildElem);
 	    	CVIXMLSetElementValue (currChildElem, temp);
 	    	memset(temp,100,0);
 		    //д   TestType  
 	    	sprintf(temp,"%d",tempInfo.testType);
-	    	CVIXMLNewElement(currElem,2,"TestType",&currChildElem);
+	    	CVIXMLNewElement(currElem,-1,"TestType",&currChildElem);
 	    	CVIXMLSetElementValue (currChildElem, temp);
 	    	memset(temp,100,0);   
 	    	//д   MaxTestDevice  
 	    	sprintf(temp,"%d",tempInfo.maxParallelDevice);
-	    	CVIXMLNewElement(currElem,3,"MaxTestDevice",&currChildElem);
+	    	CVIXMLNewElement(currElem,-1,"MaxTestDevice",&currChildElem);
 	    	CVIXMLSetElementValue (currChildElem, temp);
 	    	memset(temp,100,0);		//
 
 	    	//д   RetryCount  
 	    	sprintf(temp,"%d",tempInfo.retryCount);
-	    	CVIXMLNewElement(currElem,4,"RetryCount",&currChildElem);
+	    	CVIXMLNewElement(currElem,-1,"RetryCount",&currChildElem);
 	    	CVIXMLSetElementValue (currChildElem, temp);
-	    	memset(temp,100,0);		//			
+	    	memset(temp,100,0);		//	
 			
-			CVIXMLNewElement(currElem,5,"Groups",&currChildElem); 	
+	    	//д   TipFlag  
+	    	sprintf(temp,"%d",tempInfo.tipFlag);
+	    	CVIXMLNewElement(currElem,-1,xmlTipFlag,&currChildElem);
+	    	CVIXMLSetElementValue (currChildElem, temp);
+	    	memset(temp,100,0);		//	
+			
+	    	//д   TipCloseTime  
+	    	sprintf(temp,"%d",tempInfo.tipsCloseTime);
+	    	CVIXMLNewElement(currElem,-1,xmlTipCloseTime,&currChildElem);
+	    	CVIXMLSetElementValue (currChildElem, temp);
+	    	memset(temp,100,0);		//				
+			
+			CVIXMLNewElement(currElem,-1,"Groups",&currChildElem); 	
 			for(int groupIndex=1;groupIndex<=ListNumItems(tempInfo.groups);groupIndex++)
 			{
 				int groupId=0;
 				ListGetItem(tempInfo.groups,&groupId,groupIndex);
 				memset(temp,100,0);
 		        sprintf(temp,"%d",groupId);
-			    CVIXMLNewElement(currChildElem,groupIndex-1,"GroupId",&currSuperChildElem);
+			    CVIXMLNewElement(currChildElem,-1,"GroupId",&currSuperChildElem);
 	            CVIXMLSetElementValue (currSuperChildElem, temp);
 			}	
 	}	

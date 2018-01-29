@@ -203,6 +203,8 @@ static ListType refreshCollectList()
 		   newCollect.testType=tempCollect.testType;
 		   newCollect.maxParallelDevice=tempCollect.maxParallelDevice;
 		   newCollect.retryCount=tempCollect.retryCount;
+		   newCollect.tipFlag = tempCollect.tipFlag;
+		   newCollect.tipsCloseTime=tempCollect.tipsCloseTime;
 	   }else{
 	       //添加组ID到集合里面
 		   if(newCollect.groups!=0)
@@ -267,7 +269,17 @@ static void AddCollect(int panel)
 	//重测次数
    	GetCtrlVal(panel,COL_DETAIL_RETRYSTRING,temp);																													  
 	collect.retryCount=atoi(temp);
-	memset(temp,100,0);	
+	//tipFlag	
+	//memset(temp,100,0);	
+	GetCtrlVal(panel,COL_DETAIL_TIP_MENTION,&collect.tipFlag);
+	//collect.tipFlag = atoi(temp);
+	
+	//tipCloseTime
+	GetCtrlVal(panel,COL_DETAIL_TIP_CLOSE_TIME,&collect.tipsCloseTime);
+	
+	
+	
+	
 	collect.groups=ListCreate(sizeof(TestItem));
 	//CollectListInsertItem(&collect); 
 	ListInsertItem(gCollectList,&collect,END_OF_LIST);
@@ -427,6 +439,13 @@ static void SaveCollectInfo(int panel)
 	memset(temp,100,0); 
    	GetCtrlVal(panel,COL_DETAIL_RETRYSTRING,temp);
 	collect.retryCount=atoi(temp);	
+	
+	//memset(temp,100,0);	
+	GetCtrlVal(panel,COL_DETAIL_TIP_MENTION,&collect.tipFlag);
+	//collect.tipFlag = atoi(temp);
+	
+	//tipCloseTime
+	GetCtrlVal(panel,COL_DETAIL_TIP_CLOSE_TIME,&collect.tipsCloseTime);	
 	//替换更改后的集合
 	//CollectListReplaceItem(&collect,selectedIndex);
 	ListReplaceItem(gCollectList,&collect,selectedIndex);		
@@ -456,12 +475,22 @@ static void ShowCollectInfo(Collect collect)
 	 memset(temp,0,100);
 	 sprintf(temp,"%d",collect.retryCount);
 	 SetCtrlVal(testPanel,COL_DETAIL_RETRYSTRING,temp);	 
+	 
+	 //memset(temp,0,100);
+	 //sprintf(temp,"%d",collect.tipFlag);
+	 SetCtrlVal(testPanel,COL_DETAIL_TIP_MENTION,collect.tipFlag);	 
+	 
+	 //memset(temp,0,100);
+	 //sprintf(temp,"%d",collect.tipsCloseTime);
+	 SetCtrlVal(testPanel,COL_DETAIL_TIP_CLOSE_TIME,collect.tipsCloseTime);	 	 
 
      SetCtrlAttribute(testPanel,COL_DETAIL_NAME,ATTR_DIMMED,1);
 	 SetCtrlAttribute(testPanel,COL_DETAIL_TESTTYPE,ATTR_DIMMED,1);
 	 SetCtrlAttribute(testPanel,COL_DETAIL_DERIVETYPE,ATTR_DIMMED,1);
 	 SetCtrlAttribute(testPanel,COL_DETAIL_MAXRUNDEVICE,ATTR_DIMMED,1);
-	 SetCtrlAttribute(testPanel,COL_DETAIL_RETRYSTRING,ATTR_DIMMED,1); 
+	 SetCtrlAttribute(testPanel,COL_DETAIL_RETRYSTRING,ATTR_DIMMED,1);
+	 SetCtrlAttribute(testPanel,COL_DETAIL_TIP_MENTION,ATTR_DIMMED,1); 
+	 SetCtrlAttribute(testPanel,COL_DETAIL_TIP_CLOSE_TIME,ATTR_DIMMED,1); 	 
 	 
 	 SetCtrlAttribute (testPanel, COL_DETAIL_NEWUUTSURE, ATTR_LABEL_TEXT ,"修改"); 
 	 InstallPopup(testPanel);
@@ -478,6 +507,8 @@ static void ShowCollectInfo(Collect collect)
 				
 	            SetCtrlAttribute(testPanel,COL_DETAIL_MAXRUNDEVICE,ATTR_DIMMED,0);
 				SetCtrlAttribute(testPanel,COL_DETAIL_RETRYSTRING,ATTR_DIMMED,0); 
+				SetCtrlAttribute(testPanel,COL_DETAIL_TIP_MENTION,ATTR_DIMMED,0); 
+	 			SetCtrlAttribute(testPanel,COL_DETAIL_TIP_CLOSE_TIME,ATTR_DIMMED,0); 
 	 
 	            SetCtrlAttribute (testPanel, COL_DETAIL_NEWUUTSURE, ATTR_LABEL_TEXT ,"确定"); 
 			}else if(buttonFlag==1)//确定
@@ -494,6 +525,8 @@ static void ShowCollectInfo(Collect collect)
 	           SetCtrlAttribute(testPanel,COL_DETAIL_DERIVETYPE,ATTR_DIMMED,1);
 	           SetCtrlAttribute(testPanel,COL_DETAIL_MAXRUNDEVICE,ATTR_DIMMED,1);
 			   SetCtrlAttribute(testPanel,COL_DETAIL_RETRYSTRING,ATTR_DIMMED,1); 
+			   SetCtrlAttribute(testPanel,COL_DETAIL_TIP_MENTION,ATTR_DIMMED,1); 
+	 		   SetCtrlAttribute(testPanel,COL_DETAIL_TIP_CLOSE_TIME,ATTR_DIMMED,1); 			   
 	 
 	           SetCtrlAttribute (testPanel, COL_DETAIL_NEWUUTSURE, ATTR_LABEL_TEXT ,"修改"); 
 			   

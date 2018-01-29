@@ -22,7 +22,9 @@
 #define  COL_DETAIL_NEWUUTSURE            7       /* control type: command, callback function: (none) */
 #define  COL_DETAIL_DECORATION            8       /* control type: deco, callback function: (none) */
 #define  COL_DETAIL_RETRYSTRING           9       /* control type: string, callback function: (none) */
-#define  COL_DETAIL_TEXTMSG               10      /* control type: textMsg, callback function: (none) */
+#define  COL_DETAIL_TIP_MENTION           10      /* control type: radioButton, callback function: (none) */
+#define  COL_DETAIL_TIP_CLOSE_TIME        11      /* control type: ring, callback function: (none) */
+#define  COL_DETAIL_TEXTMSG               12      /* control type: textMsg, callback function: (none) */
 
 #define  PANEL                            2
 #define  PANEL_TREE                       2       /* control type: tree, callback function: (none) */

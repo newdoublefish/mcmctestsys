@@ -43,6 +43,8 @@ typedef struct
    int maxParallelDevice; //最大并行测试设备数
    int retryCount;//重测次数
    ListType groups; //条例组链表
+   int tipFlag;
+   int tipsCloseTime;
 }Collect;
 		
 ListType getStrategy(void);

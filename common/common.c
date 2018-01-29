@@ -152,7 +152,7 @@ int CVICALLBACK tipTimerCallback (int panel, int control, int event,
 }
 
 
-BOOL showTips(int panel,char *title,char *tip,int *flag)
+BOOL showTips(int panel,char *title,char *tip,int *flag,int closeTime)
 {
 	BOOL ret=1;
 	int testPanel;
@@ -164,7 +164,7 @@ BOOL showTips(int panel,char *title,char *tip,int *flag)
 	
 	//if(s.mentionAutoCloseTime>0)
 	tDialogTime tt={0};
-	tt.closeTime = s.mentionAutoCloseTime;
+	tt.closeTime = closeTime;
 	tt.currentTime=0;
 	tt.buttonDimmedTimer = 0;
 	InstallCtrlCallback (testPanel,MANUALTIPS_TIMER,tipTimerCallback,&tt);

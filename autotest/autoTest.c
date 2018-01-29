@@ -700,10 +700,12 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		       sprintf(temp,"%s:%s,准备测试!",_obj->device.eutName,testItem.groupName);
 		   }
 		   //WarnShow1(0,temp);
-		   //TESTengine *engine = (TESTengine*)_obj->enginePtr;
+		   TESTengine *engine = (TESTengine*)_obj->enginePtr;
 		   //ShowManualTip(0,testItem.groupName,temp1);
 		   //提示面板可以控制是否进行下一项测试
-		   testFlag=showTips(0,testItem.groupName,temp1,&((TESTengine*)_obj->enginePtr)->testState);
+		   Collect collect={0};
+		   ListGetItem(engine->collectList,&collect,engine->currentCollect); 
+		   testFlag=showTips(0,testItem.groupName,temp1,&((TESTengine*)_obj->enginePtr)->testState,collect.tipsCloseTime);
 		} 
 		
 
