@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 7
+Number of Opened Files = 8
 Window Confinement Region Enabled = True
 MainColumnWidth = 251
 FileDateColumnWidth = 70
@@ -266,7 +266,7 @@ Window Top = 182
 Window Left = 90
 Window Height = 323
 Window Width = 605
-Window Z-Order = 6
+Window Z-Order = 7
 
 [File 0027]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/reportManager/reportManagerPanel.uir"
@@ -287,12 +287,13 @@ In Projects = "1,"
 [File 0029]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/setting/SettingPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3599221803
+Disk Date = 3600049700
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
 Window Height = 323
 Window Width = 605
+Window Z-Order = 1
 
 [File 0030]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/SutPanel.uir"
@@ -330,7 +331,7 @@ Disk Date = 3600049456
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 2
+Window Z-Order = 3
 Source Window State = "1,707,707,707,107,109,107,0,0,80,0,828,0,0,0,21,683,0,707,120,275,517,1,59,"
 
 [File 0034]
@@ -608,8 +609,8 @@ Disk Date = 3600049527
 In Projects = "1,"
 Window Top = 32
 Window Left = 10
-Window Z-Order = 1
-Source Window State = "1,273,273,273,53,56,53,0,0,163,0,113,0,0,0,27,261,0,275,77,323,605,1,22,"
+Window Z-Order = 2
+Source Window State = "1,273,273,273,53,56,53,0,0,95,0,113,0,0,0,25,261,0,279,118,323,605,1,22,"
 
 [File 0065]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/policyConfig/policyEntity.c"
@@ -618,7 +619,7 @@ Disk Date = 3600041224
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 4
+Window Z-Order = 5
 Source Window State = "1,323,323,323,8,28,28,0,3,95,0,0,0,0,0,25,307,0,323,8,323,605,1,0,"
 
 [File 0066]
@@ -763,7 +764,7 @@ Disk Date = 3599798025
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 5
+Window Z-Order = 6
 Source Window State = "1,371,371,371,5,20,20,0,3,95,0,403,0,0,0,25,400,0,371,5,323,605,1,0,"
 
 [File 0082]
@@ -1143,7 +1144,7 @@ Disk Date = 3600040984
 In Projects = "1,"
 Window Top = 92
 Window Left = 42
-Window Z-Order = 3
+Window Z-Order = 4
 Source Window State = "1,47,47,47,1,8,8,0,0,95,0,0,0,0,0,25,22,0,34,71,323,605,1,0,"
 
 [File 0125]
@@ -1153,7 +1154,7 @@ Disk Date = 3600041366
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Window Z-Order = 7
+Window Z-Order = 8
 Source Window State = "1,25,25,25,9,34,34,0,0,95,0,0,0,0,0,22,19,0,27,94,287,605,1,0,"
 
 [File 0126]
@@ -1550,6 +1551,7 @@ Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/policyConfig/policyPanel.uir"
 Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
 Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/testFramework.c"
 Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/policyConfig/policyEntity.h"
+Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/setting/SettingPanel.uir"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
