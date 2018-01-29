@@ -1774,3 +1774,52 @@ TPS registerStubIoTestTps(void)
 	return tps;	
 }
 
+METHODRET ParamEutCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS; 
+	//检查继电器口
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem testItem={0};
+		RESULT testResult={0};
+		ListGetItem(group.subItems,&testItem,i);
+		testResult.index=testItem.itemId;
+		
+		if(strcmp(testItem.itemName_,"继电器")==0)
+		{
+			if(FALSE==OperatDoSet(eut.relayConfig,RELAY(30)|RELAY(2),MASK16))
+			{
+				//APPEND_INFO(msgHander,"继电器操作失败！！");
+				WarnShow1(0,"继电器通信失败");
+			}					
+		}else if(strcmp(testItem.itemName_,"安规测试仪")==0)
+		{
+		
+		
+		}else if(strcmp(testItem.itemName_,"BMS模拟器")==0)
+		{
+				tBmsItem item={
+					0x120B,
+					1,
+				};			
+				if(BmsGetItem(eut.bmsConfig,&item)==FALSE)
+				{
+					WarnShow1(0,"BMS模拟器通信失败");  
+				}			
+			
+		}else if(strcmp(testItem.itemName_,"充电桩网口")==0)
+		{
+			
+		}
+	}
+	return ret;
+}
+
+TPS registerParamEutCheckTestTps(void)
+{
+	TPS tps=newTps("unlock");
+	tps.autoTestFunction=ParamEutCheckTest;
+	tps.createTpsPanel=NULL;
+	return tps;	
+}
+
