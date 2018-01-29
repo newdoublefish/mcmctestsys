@@ -24,6 +24,7 @@
 #include "testGroupInit.h"
 #include "common.h"
 #include "policyPanel.h"
+#include "debug.h"
 
 static int needToSave=0;//默认不需要保存
 
@@ -351,13 +352,18 @@ int CVICALLBACK OnAddTestItemToCollect (int panel, int control, int event,
 			GetActiveTreeItem(stategyPanel,PLCYPANEL_ITEMTREE,&sourceIndex);
 			GetActiveTreeItem(stategyPanel,PLCYPANEL_COLLECTTREE,&destinationIndex);
 			GetTreeItemParent(stategyPanel,PLCYPANEL_COLLECTTREE,destinationIndex,&parent); 
+//			PRINT("destinationIndex:%d,parent:%d",destinationIndex,parent);
 			if(parent!=-1)
 			{
-			     destinationIndex=parent;
+//			     destinationIndex=parent;
+				CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
+                	VAL_SIBLING, destinationIndex, VAL_NEXT);					
+			}else{
+				CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
+                	VAL_CHILD, destinationIndex, VAL_LAST);				
 			}
-			//printf("%d\n",parent);
-			CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
-                 VAL_CHILD, destinationIndex, VAL_LAST);
+
+
 			}else
 			{
 			    MessagePopup("警告","当前没有可用的集合！");
