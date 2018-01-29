@@ -3,6 +3,7 @@
 #include <ansi_c.h>
 #include "BmsHelper.h"
 #include "CrcCalc.h"
+#include "common.h"
 
 #define DEBUG
 
@@ -63,6 +64,7 @@ BOOL operateBms(RSCONFIG config,BmsBuf *bufPtr)
 {
 	if(OpenComConfig (config.portNum, NULL, config.baudRate,config.parity,config.dataBit,config.stopBit, 1024, 1024)<0)
 	{
+		WarnShow1(0,"´®¿Ú´ò¿ªÊ§°Ü");
 	     return FALSE;
 	}
 

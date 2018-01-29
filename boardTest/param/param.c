@@ -21,6 +21,7 @@
 #include "BiboExcelParse.h"
 #include "relayHelper.h"
 #include "ParamSetGet.h"
+#include "BmsHelper.h"
 
 
 BOOL CheckGunPlugined(EUT eut,int gunIndex,int *result)
@@ -512,7 +513,8 @@ TPS registerParamTemperatureTps(void)
 	return tps;			
 }
 
-//#define BIBO_DEBUG
+//#define BMS_CTRL
+
 METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
 	APPEND_INFO(masgHandle,"进入测试");
@@ -538,7 +540,6 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masg
 		sprintf(tips120A,"%s","电源模块3，4，5，6 启动");	
 	}
 	
-#ifndef BIBO_DEBUG	
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
 		APPEND_INFO(masgHandle,"发送启动充电命令失败"); 
@@ -553,7 +554,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masg
 			//getStubNetService(ip,port);
 		return ret;
 	}	
-#endif	
+	
 	//60A需求
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -564,6 +565,32 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masg
 		itemResult1.pass=0;		
 		if(i==1)
 		{
+
+#ifdef BMS_CTRL			
+			tBmsItem item={
+				0x120B,
+				600,
+			};
+			if(FALSE == BmsSetItem(eut.bmsConfig,item))
+			{
+				WarnShow1(0,"请手动设置电流为60A");				
+			}else{
+				tBmsItem item={
+					0x120B,
+					1,
+				};
+				if(BmsGetItem(eut.bmsConfig,&item)==TRUE)
+				{
+					 //printf("Get true:%d!!!\n",item.value);
+					 if(item.value != 600)
+					 {
+					 	WarnShow1(0,"请手动设置电流为60A");	
+					 }else{
+					 	APPEND_INFO(masgHandle,"设置电流为60A成功"); 
+					 }
+				}			
+			}
+#else
 			WarnShow1(0,"设置电流为60A"); //后续可以用485控制来操作
 			APPEND_INFO(masgHandle,"设置电流为60A");
 			if(FALSE==AlertDialogWithRet(0,"waring",tips60A,"错误","正确"))
@@ -571,37 +598,91 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masg
 			//getStubNetService(ip,port);
 				goto ERROR;
 			}
+#endif			
 		}else if(i==2){
 		
+#ifdef BMS_CTRL			
+			tBmsItem item={
+				0x120B,
+				1000,
+			};
+			if(FALSE == BmsSetItem(eut.bmsConfig,item))
+			{
+				WarnShow1(0,"请手动设置电流为100A");				
+			}else{
+				tBmsItem item={
+					0x120B,
+					1,
+				};
+				if(BmsGetItem(eut.bmsConfig,&item)==TRUE)
+				{
+					 //printf("Get true:%d!!!\n",item.value);
+					 if(item.value != 1000)
+					 {
+					 	WarnShow1(0,"请手动设置电流为100A");	
+					 }else{
+					 	APPEND_INFO(masgHandle,"设置电流为100A成功"); 
+					 }
+				}			
+			}
+			
+#else			
 			WarnShow1(0,"设置电流为100A"); //后续可以用485控制来操作
 			APPEND_INFO(masgHandle,"设置电流为100A");
 			if(FALSE==AlertDialogWithRet(0,"waring",tips100A,"错误","正确"))
 			{
 			//getStubNetService(ip,port);
 				goto ERROR;
-			}			
+			}
+#endif			
 		}else if(i==3){
 		
+
+#ifdef BMS_CTRL			
+			tBmsItem item={
+				0x120B,
+				1200,
+			};
+			if(FALSE == BmsSetItem(eut.bmsConfig,item))
+			{
+				WarnShow1(0,"请手动设置电流为120A");				
+			}else{
+				tBmsItem item={
+					0x120B,
+					1,
+				};
+				if(BmsGetItem(eut.bmsConfig,&item)==TRUE)
+				{
+					 //printf("Get true:%d!!!\n",item.value);
+					 if(item.value != 1200)
+					 {
+					 	WarnShow1(0,"请手动设置电流为120A");	
+					 }else{
+					 	APPEND_INFO(masgHandle,"设置电流为120A成功"); 
+					 }
+				}			
+			}
+#else	
 			WarnShow1(0,"设置电流为120A"); //后续可以用485控制来操作
 			APPEND_INFO(masgHandle,"设置电流为120A"); 
 			if(FALSE==AlertDialogWithRet(0,"waring",tips120A,"错误","正确"))
 			{
 			//getStubNetService(ip,port);
 				goto ERROR;
-			}			
+			}
+#endif			
 		}
  	
 		//char BI[10]={0};
 
-#ifndef BIBO_DEBUG	
 		if(FALSE==ParamGetDepend(eut,"BI",itemResult1.recvString ))
 		{
-			APPEND_INFO_FORMAT(masgHandle,"%s 获取到绝缘检测反馈失败 %s");
+			APPEND_INFO_FORMAT(masgHandle,"%s 获取到功率分配反馈失败 %s");
 			goto ERROR;			
 		}else{
 					
 		}
-#endif
+
 		//PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
 		//PRINT("%x\n",itemResult1.recvString);
 		unsigned int standard= HexStrToUnsignedInt(item1.inputValue_);
@@ -609,7 +690,7 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masg
 		unsigned int result = bi & standard;
 		memset(itemResult1.recvString,0,RESULT_RECEIVE_LEN);
 		sprintf(itemResult1.recvString,"0x%x",bi);
-		APPEND_INFO_FORMAT(masgHandle,"%s 获取到绝缘检测反馈 %s",item1.itemName_,itemResult1.recvString);
+		APPEND_INFO_FORMAT(masgHandle,"%s 获取到功率分配反馈 %s",item1.itemName_,itemResult1.recvString);
 
 		if(result == standard)
 		{
@@ -624,13 +705,11 @@ METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masg
 ERROR:	
 	//100A需求
 
-#ifndef BIBO_DEBUG	
 	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
 		WarnShow1(0,"无法停止充电,请按急停按钮");
 	}
 	WarnShow1(0,"请等待并确保充电流程已经停止");
-#endif	
 	APPEND_INFO(masgHandle,"退出测试");	
 	return ret;
 }
