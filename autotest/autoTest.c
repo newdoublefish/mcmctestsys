@@ -705,7 +705,10 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 		   //提示面板可以控制是否进行下一项测试
 		   Collect collect={0};
 		   ListGetItem(engine->collectList,&collect,engine->currentCollect); 
-		   testFlag=showTips(0,testItem.groupName,temp1,&((TESTengine*)_obj->enginePtr)->testState,collect.tipsCloseTime);
+		   if(collect.tipFlag==1)
+		   {
+		   		testFlag=showTips(0,testItem.groupName,temp1,&((TESTengine*)_obj->enginePtr)->testState,collect.tipsCloseTime);
+		   }
 		} 
 		
 

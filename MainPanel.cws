@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 8
+Number of Opened Files = 10
 Window Confinement Region Enabled = True
 MainColumnWidth = 251
 FileDateColumnWidth = 70
@@ -89,7 +89,8 @@ Disk Date = 3597902402
 In Projects = "1,"
 Window Top = 152
 Window Left = 74
-Source Window State = "1,429,429,429,15,35,35,0,0,0,0,228,0,0,0,0,86,0,95,4,251,605,1,114,"
+Window Z-Order = 3
+Source Window State = "1,429,429,429,15,35,35,0,0,95,0,228,0,0,0,19,86,0,95,4,251,605,1,114,"
 Breakpoint 0001 = "147,0,disabled,"
 
 [File 0008]
@@ -266,7 +267,7 @@ Window Top = 182
 Window Left = 90
 Window Height = 323
 Window Width = 605
-Window Z-Order = 7
+Window Z-Order = 9
 
 [File 0027]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/reportManager/reportManagerPanel.uir"
@@ -293,7 +294,7 @@ Window Top = 122
 Window Left = 58
 Window Height = 323
 Window Width = 605
-Window Z-Order = 1
+Window Z-Order = 4
 
 [File 0030]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/SutPanel.uir"
@@ -327,12 +328,12 @@ Source Window State = "1,23,23,23,0,22,22,0,0,0,0,0,0,0,0,0,6,0,15,65,323,605,1,
 [File 0033]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
 File Type = "CSource"
-Disk Date = 3600049456
+Disk Date = 3600049873
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 3
-Source Window State = "1,707,707,707,107,109,107,0,0,80,0,828,0,0,0,21,683,0,707,120,275,517,1,59,"
+Window Z-Order = 2
+Source Window State = "1,710,710,710,12,21,12,0,0,80,0,828,0,0,0,21,692,0,710,12,275,517,1,59,"
 
 [File 0034]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/eut/BasicInfoConfig.c"
@@ -409,11 +410,12 @@ Source Window State = "1,444,444,444,21,37,37,0,0,95,0,0,0,0,0,22,433,0,441,70,2
 [File 0042]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/testCode/demoTestCode/demoTest.c"
 File Type = "CSource"
-Disk Date = 3599225174
+Disk Date = 3600049905
 In Projects = "1,"
 Window Top = 242
 Window Left = 122
-Source Window State = "1,17,17,17,68,79,68,0,3,0,0,0,0,0,0,0,5,0,17,79,323,725,1,0,"
+Window Z-Order = 1
+Source Window State = "1,49,49,49,8,9,8,0,0,163,0,0,0,0,0,27,26,0,49,28,323,725,1,0,"
 
 [File 0043]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/eutConfig/eutConfig.c"
@@ -609,7 +611,7 @@ Disk Date = 3600049527
 In Projects = "1,"
 Window Top = 32
 Window Left = 10
-Window Z-Order = 2
+Window Z-Order = 5
 Source Window State = "1,273,273,273,53,56,53,0,0,95,0,113,0,0,0,25,261,0,279,118,323,605,1,22,"
 
 [File 0065]
@@ -619,7 +621,7 @@ Disk Date = 3600041224
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 5
+Window Z-Order = 7
 Source Window State = "1,323,323,323,8,28,28,0,3,95,0,0,0,0,0,25,307,0,323,8,323,605,1,0,"
 
 [File 0066]
@@ -764,7 +766,7 @@ Disk Date = 3599798025
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 6
+Window Z-Order = 8
 Source Window State = "1,371,371,371,5,20,20,0,3,95,0,403,0,0,0,25,400,0,371,5,323,605,1,0,"
 
 [File 0082]
@@ -1144,7 +1146,7 @@ Disk Date = 3600040984
 In Projects = "1,"
 Window Top = 92
 Window Left = 42
-Window Z-Order = 4
+Window Z-Order = 6
 Source Window State = "1,47,47,47,1,8,8,0,0,95,0,0,0,0,0,25,22,0,34,71,323,605,1,0,"
 
 [File 0125]
@@ -1154,7 +1156,7 @@ Disk Date = 3600041366
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Window Z-Order = 8
+Window Z-Order = 10
 Source Window State = "1,25,25,25,9,34,34,0,0,95,0,0,0,0,0,22,19,0,27,94,287,605,1,0,"
 
 [File 0126]
@@ -1552,6 +1554,8 @@ Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
 Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/testFramework.c"
 Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/policyConfig/policyEntity.h"
 Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/setting/SettingPanel.uir"
+Tab 0009 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/excelHelper/excelHelper.c"
+Tab 0010 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/testCode/demoTestCode/demoTest.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

@@ -47,6 +47,7 @@ TPS registerDemoTestTPS(void)
 	TPS tps=newTps("demoType");
 	//tps.autoTestFunction=DemoTest;
 	tps.testFunction=DemoTest;
+	tps.createTpsPanel=NULL;
 	//tps.manualTestFunction=DemoTest;
 	return tps;
 }
