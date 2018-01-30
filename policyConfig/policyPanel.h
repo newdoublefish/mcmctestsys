@@ -37,6 +37,8 @@
 #define  PLCYPANEL_COLLECTTREE            5       /* control type: tree, callback function: OnCollectClick */
 #define  PLCYPANEL_ADDTOCOLLECT           6       /* control type: command, callback function: OnAddTestItemToCollect */
 #define  PLCYPANEL_DELETE                 7       /* control type: command, callback function: OnDelete */
+#define  PLCYPANEL_BTN_BELOW              8       /* control type: command, callback function: OnAddTestItemToCollect */
+#define  PLCYPANEL_BTN_ABOVE              9       /* control type: command, callback function: OnAddTestItemToCollect */
 
 
      /* Control Arrays: */

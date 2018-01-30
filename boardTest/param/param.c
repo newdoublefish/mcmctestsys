@@ -515,7 +515,7 @@ TPS registerParamTemperatureTps(void)
 
 //#define BMS_CTRL
 
-METHODRET ParamBiboTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
 	APPEND_INFO(masgHandle,"进入测试");
 	METHODRET ret = TEST_RESULT_ALLPASS;
@@ -715,11 +715,11 @@ ERROR:
 }
 
 
-TPS registerBiboTestTps(void)
+TPS registerPowerDistributeTestTps(void)
 {
-	TPS tps=newTps("BIBO");
-	tps.testFunction=ParamBiboTest;
-	tps.protocolInit=BiboProtocolInit;
+	TPS tps=newTps("PowerDistribute");
+	tps.testFunction=PowerDistributeTest;
+	//tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }
 
@@ -1817,9 +1817,64 @@ METHODRET ParamEutCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 
 TPS registerParamEutCheckTestTps(void)
 {
-	TPS tps=newTps("unlock");
+	TPS tps=newTps("CommunicationCheck");
 	tps.autoTestFunction=ParamEutCheckTest;
 	tps.createTpsPanel=NULL;
 	return tps;	
+}
+
+METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	APPEND_INFO(masgHandle,"进入测试");
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT result={0};
+		tBIBO bibo={0};
+		result.index = item.itemId;
+		if(FALSE==getBibo(item.itemName_,&bibo))
+		{
+			goto DONE;
+		}
+		APPEND_INFO_FORMAT(masgHandle,"itemName:%s,BI:%x,BO:%x",item.itemName_,bibo.maskBi,bibo.maskBo); 
+		char value[30]={0};
+		sprintf(value,"%d",bibo.maskBo);
+		if(FALSE==ParamSetDepend(eut,"BO",value))
+		{
+			APPEND_INFO(masgHandle,"设置数据池BO失败");
+			goto DONE;
+		}
+		APPEND_INFO_FORMAT(masgHandle,"设置数据池BO成功:%s",value);
+		memset(value,0,30);
+		if(FALSE==ParamGetDepend(eut,"BI",result.recvString))
+		{
+			APPEND_INFO(masgHandle,"获取数据池BI失败"); 
+			goto DONE;
+		}
+		APPEND_INFO_FORMAT(masgHandle,"获取数据池BO成功:%s",result.recvString); 
+		unsigned int valueUi= HexStrToUnsignedInt(result.recvString);
+		if(bibo.maskBi&valueUi == bibo.maskBi)
+		{
+			result.pass = 1;			
+		}
+		
+		saveResult(hashTable,&result);
+		
+		
+	}
+	APPEND_INFO(masgHandle,"退出测试");	
+DONE:	
+	return ret;
+}
+
+
+TPS registerBIBOTestTps(void)
+{
+	TPS tps=newTps("BIBO");
+	tps.testFunction=BIBOTest;
+	tps.protocolInit=BiboProtocolInit;
+	return tps;			
 }
 

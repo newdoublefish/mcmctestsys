@@ -39,6 +39,7 @@
 #include "relayProtocol.h"
 #include "relayHelper.h"
 #include "TpsDefaultPanel.h"
+#include "sutCommon.h"
 //#include "StubNetService.h"
 
 static int autoPanelHandle=0;
@@ -108,17 +109,80 @@ static void setButtonState(int state)
 	 }	 
 }
 
-static void saveRecordToDb(TESTobject obj,char *startTime,char *reportFilePath)
+static void saveRecordToDb(TESTobject obj,char *productId,char *startTime,char *reportFilePath)
 {
 
 	tAutoTestRecord record={0};
-	sprintf(record.ProductId,"%s",obj.device.eutName);
+	if(0==strlen(productId))
+		sprintf(record.ProductId,"%s",obj.device.eutName);
+	else
+		sprintf(record.ProductId,"%s",productId);
 	sprintf(record.m_date,"%s",startTime);
 	sprintf(record.FtpAddress,"%s",reportFilePath);
 	record.Result=1;
 	record.m_update=0;
 	sprintf(record.m_name,"%s","ray");
 	insertReportRecord(record);	
+}
+
+void CreateReportFilePath(char *customName,char *fileName,TESTobject testObj)
+{
+	//char fileName[MAX_PATHNAME_LEN]={0};   
+	int fileSize;
+	SETTING s=GetSetting();
+	if(FileExists(s.saveDir,&fileSize)==0)
+	{	
+	    MakeDir(s.saveDir);
+	}
+
+    sprintf(fileName,"%s\\%s",s.saveDir,testObj.device.eutName); 	
+	if(FileExists(fileName,&fileSize)==0) //不存在
+	{	
+	    MakeDir(fileName);
+	}
+	
+	SUT sut=GetSeletedSut();
+	if(customName!=NULL)
+	{
+		sprintf(fileName,"%s\\%s_%s_%s%s",fileName,customName,sut.systemName,startTime,".xlsx");		
+	}else{
+		sprintf(fileName,"%s\\%s_%s%s",fileName,sut.systemName,startTime,".xlsx");	
+	}
+	//printf("%d\n",s.reportInfoCustom);
+/*	
+	SUT sut=GetSeletedSut();
+	if(s.reportInfoCustom)
+	{	
+	   getUserCustiomName(fileName);
+	   sprintf(temp,"%s\\%s\\%s_%s_%s%s",s.saveDir,dirName,fileName,sut.systemName,time,".xlsx");
+	}else
+	{
+	   sprintf(temp,"%s\\%s\\%s_%s%s",s.saveDir,dirName,sut.systemName,time,".xlsx"); 
+	}
+	ValidateFile(temp);	*/  
+}
+
+
+void saveResultToFile(TESTobject testObj)
+{
+	char filePath[MAX_PATHNAME_LEN]={0};
+	char stubNum[20] = {0};
+	SETTING set=GetSetting();
+	if(set.reportInfoCustom)
+	{			
+		getUserCustiomName(stubNum);
+		CreateReportFilePath(stubNum,filePath,testObj);
+	}else{
+		CreateReportFilePath(NULL,filePath,testObj); 
+	}
+	saveResultToExcelFile(filePath,testObj.resultHashTable);
+	if(set.saveToDb)
+	{
+		//if(strlen(stubNum)>0)
+			saveRecordToDb(testObj,stubNum,startTime,filePath);	
+		//else
+		//	saveRecordToDb(testObj,NULL,startTime,filePath);	
+	}
 }
 
 static void saveAutoTestResult(TESTengine *t)
@@ -135,9 +199,19 @@ static void saveAutoTestResult(TESTengine *t)
 		 	 memset(temp,0,100);
 		 	 sprintf(temp,"%d/%d",i+1,t->totalTestObject);
 			SetCtrlVal(panelHandle,PANEL_WA_2_TEXTMSG_2,temp);
+			/*if(set.reportInfoCustom)
+			{			
+				memset(temp,0,100);
+				getUserCustiomName(temp);
+				CreateReportFilePath(temp,filePath,t->objectArray[i]);
+			}else{
+				CreateReportFilePath(NULL,filePath,t->objectArray[i]); 
+			}
+			
 	     	 saveTestResult(startTime,t->objectArray[i].device.eutName,t->objectArray[i].resultHashTable,filePath);
 			 if(set.saveToDb)    
-			 	saveRecordToDb(t->objectArray[i],startTime,filePath);
+			 	saveRecordToDb(t->objectArray[i],startTime,filePath);*/
+			saveResultToFile(t->objectArray[i]);
 	  
 	 }
 	 DiscardPanel(panelHandle);
@@ -607,11 +681,12 @@ static void objectTestFinish(TESTobject *_obj)
 	SETTING set=getSetting();
 	if(set.autoSave)
 	{
-	   char temp[MAX_PATHNAME_LEN]={0}; 
+	   /*char temp[MAX_PATHNAME_LEN]={0}; 
 	   //TODO:后续要加上
 	   saveTestResult(startTime,_obj->device.eutName,_obj->resultHashTable,temp);
 	   if(set.saveToDb)
-	   	saveRecordToDb(*_obj,startTime,temp);
+	   	saveRecordToDb(*_obj,startTime,temp);*/
+	   saveResultToFile(*_obj);
 	}
 }
 

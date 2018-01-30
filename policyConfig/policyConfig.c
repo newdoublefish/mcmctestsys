@@ -345,29 +345,58 @@ int CVICALLBACK OnAddTestItemToCollect (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			needToSave=1;
-			GetNumTreeItems(stategyPanel,PLCYPANEL_COLLECTTREE,VAL_ALL,0,VAL_FIRST,VAL_NEXT_PLUS_SELF,0,&destinationCount);
-			if(destinationCount!=0)
-			{	
-			GetActiveTreeItem(stategyPanel,PLCYPANEL_ITEMTREE,&sourceIndex);
-			GetActiveTreeItem(stategyPanel,PLCYPANEL_COLLECTTREE,&destinationIndex);
-			GetTreeItemParent(stategyPanel,PLCYPANEL_COLLECTTREE,destinationIndex,&parent); 
+			if(control ==  PLCYPANEL_BTN_BELOW)
+			{
+				needToSave=1;
+				GetNumTreeItems(stategyPanel,PLCYPANEL_COLLECTTREE,VAL_ALL,0,VAL_FIRST,VAL_NEXT_PLUS_SELF,0,&destinationCount);
+				if(destinationCount!=0)
+				{	
+					GetActiveTreeItem(stategyPanel,PLCYPANEL_ITEMTREE,&sourceIndex);
+					GetActiveTreeItem(stategyPanel,PLCYPANEL_COLLECTTREE,&destinationIndex);
+					GetTreeItemParent(stategyPanel,PLCYPANEL_COLLECTTREE,destinationIndex,&parent); 
 //			PRINT("destinationIndex:%d,parent:%d",destinationIndex,parent);
-			if(parent!=-1)
-			{
+					if(parent!=-1)
+					{
 //			     destinationIndex=parent;
-				CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
-                	VAL_SIBLING, destinationIndex, VAL_NEXT);					
-			}else{
-				CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
-                	VAL_CHILD, destinationIndex, VAL_LAST);				
-			}
+						CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
+                		VAL_SIBLING, destinationIndex, VAL_NEXT);					
+					}else{
+						CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
+                			VAL_CHILD, destinationIndex, VAL_LAST);				
+					}
 
 
-			}else
-			{
+				}else
+				{
 			    MessagePopup("警告","当前没有可用的集合！");
-			}	
+				}
+			}else if(control ==  PLCYPANEL_BTN_ABOVE)
+			{
+			
+				needToSave=1;
+				GetNumTreeItems(stategyPanel,PLCYPANEL_COLLECTTREE,VAL_ALL,0,VAL_FIRST,VAL_NEXT_PLUS_SELF,0,&destinationCount);
+				if(destinationCount!=0)
+				{	
+					GetActiveTreeItem(stategyPanel,PLCYPANEL_ITEMTREE,&sourceIndex);
+					GetActiveTreeItem(stategyPanel,PLCYPANEL_COLLECTTREE,&destinationIndex);
+					GetTreeItemParent(stategyPanel,PLCYPANEL_COLLECTTREE,destinationIndex,&parent); 
+//			PRINT("destinationIndex:%d,parent:%d",destinationIndex,parent);
+					if(parent!=-1)
+					{
+//			     destinationIndex=parent;
+						CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
+                		VAL_SIBLING, destinationIndex, VAL_PREV);					
+					}else{
+						CopyTreeItem (stategyPanel, PLCYPANEL_ITEMTREE,sourceIndex,stategyPanel, PLCYPANEL_COLLECTTREE,
+                			VAL_CHILD, destinationIndex, VAL_LAST);				
+					}
+
+
+				}else
+				{
+			    MessagePopup("警告","当前没有可用的集合！");
+				}			
+			}
 			break;
 	}
 	return 0;

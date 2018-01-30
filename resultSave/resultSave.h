@@ -9,6 +9,7 @@
 	   
 //void saveTestResult(char *time,char *dirName,HashTableType hashTable);
 void saveTestResult(char *time,char *dirName,HashTableType hashTable,char *fileName); 
+void saveResultToExcelFile(char *fileName,HashTableType hashTable);
 
 #ifdef __cplusplus
    }

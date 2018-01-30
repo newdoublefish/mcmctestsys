@@ -4,6 +4,7 @@
 #include "BiboExcelParse.h"
 #include "sutCommon.h" 
 #include "debug.h"
+#include "convertTool.h"
 
 #define SHEET_RANGE_TIPS "A2:C2" 
 ListType gBiboList;
@@ -31,7 +32,8 @@ static HRESULT onCellListenerGetBibo(VARIANT *MyVariant,int row,int column)
 		 if(CA_VariantHasCString(MyVariant))
 	     {
 		    CA_VariantGetCString(MyVariant, &temp); 
-		    //tempInstruction.operation.testType=(unsigned char)StrToUnsignedLong(temp);   
+		    //tempInstruction.operation.testType=(unsigned char)StrToUnsignedLong(temp); 
+			bibo.maskBi=HexStrToUnsignedInt(temp);
 			//printf("%s\n",temp); 
 			CA_FreeMemory(temp);
 		 }
@@ -41,6 +43,7 @@ static HRESULT onCellListenerGetBibo(VARIANT *MyVariant,int row,int column)
 	     {
 		    CA_VariantGetCString(MyVariant, &temp); 
 		    //tempInstruction.operation.testType=(unsigned char)StrToUnsignedLong(temp);   
+			bibo.maskBo=HexStrToUnsignedInt(temp); 
 			if(gBiboList!=0)
 			{
 			   ListInsertItem(gBiboList,&bibo,END_OF_LIST);
@@ -62,7 +65,7 @@ static HRESULT onStartGetTips(VARIANT *MyVariant,int row,int column)
 
 BOOL getBibo(char *paramName,tBIBO *biboPtr)
 {
-	for(int i=1;i<ListNumItems(gBiboList);i++)
+	for(int i=1;i<=ListNumItems(gBiboList);i++)
 	{
 		ListGetItem(gBiboList,biboPtr,i);
 		if(strcmp(paramName,biboPtr->paramName)==0)

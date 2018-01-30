@@ -131,7 +131,7 @@ BOOL ParamProtocolInit(char *sheetName)
 
 BOOL getParameter(char *paramName,PARAMETER *paramPtr)
 {
-	for(int i=1;i<ListNumItems(paramList);i++)
+	for(int i=1;i<=ListNumItems(paramList);i++)
 	{
 		ListGetItem(paramList,paramPtr,i);
 		if(strcmp(paramName,paramPtr->paramName)==0)

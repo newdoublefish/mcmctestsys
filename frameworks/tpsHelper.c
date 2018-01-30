@@ -28,7 +28,8 @@ extern TPS registerRs232TestTPS(void);
 extern TPS registerParamTestTPS(void);  
 extern TPS registerParamsCheckTps(void);
 extern TPS registerParamTemperatureTps(void);
-extern TPS registerBiboTestTps(void);
+extern TPS registerBIBOTestTps(void);
+extern TPS registerPowerDistributeTestTps(void);
 extern TPS registerScanTestTps(void);
 extern TPS registerInverseWarnTestTps(void);
 extern TPS registerInsulationTestTestTps(void);
@@ -50,7 +51,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerParamTestTPS,
 	registerParamsCheckTps,
 	registerParamTemperatureTps,
-	registerBiboTestTps,	 //功率分配
+	registerPowerDistributeTestTps,	 //功率分配
 	registerScanTestTps,	  //扫码测试
 	registerInverseWarnTestTps,//反接告警
 	registerInsulationTestTestTps,//绝缘检测
@@ -59,6 +60,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerRelayTestTPS,
 	registerStubCmdTestTps,
 	registerStubIoTestTps,//手动解锁
+	registerBIBOTestTps,//BIBO
 };
 
 
@@ -131,8 +133,9 @@ int getTps(char *tpsName,TPS *tpsPtr)
 		 if(strcmp(tpsName,tpsPtr->tpsName)==0)
 		 {
 			 if(st.simuTest>0){
-			   tpsPtr->autoTestFunction=(TEST_METHOD)tpsSimuTest;
+			   //tpsPtr->autoTestFunction=(TEST_METHOD)tpsSimuTest;
 			    tpsPtr->testFunction=(TEST_FUNCTION)tpsSimuFunction;
+				tpsPtr->createTpsPanel=NULL;
 //			   tpsPtr->manualTestFunction=(TEST_METHOD)tpsSimuTest;			 
 			 }
 		     return 1;

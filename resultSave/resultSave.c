@@ -623,13 +623,15 @@ void generateReportFilePath(char *time,char *dirName,char *temp)
 	    MakeDir(temp);
 	}
 	//printf("%d\n",s.reportInfoCustom);
+	
+	SUT sut=GetSeletedSut();
 	if(s.reportInfoCustom)
 	{	
 	   getUserCustiomName(fileName);
-	   sprintf(temp,"%s\\%s\\%s_%s_%s%s",s.saveDir,dirName,dirName,time,fileName,".xlsx");
+	   sprintf(temp,"%s\\%s\\%s_%s_%s%s",s.saveDir,dirName,fileName,sut.systemName,time,".xlsx");
 	}else
 	{
-	   sprintf(temp,"%s\\%s\\%s_%s%s",s.saveDir,dirName,dirName,time,".xlsx"); 
+	   sprintf(temp,"%s\\%s\\%s_%s%s",s.saveDir,dirName,sut.systemName,time,".xlsx"); 
 	}
 	ValidateFile(temp);	
 }
@@ -655,6 +657,17 @@ void saveTestResult(char *time,char *dirName,HashTableType hashTable,char *fileN
 	if(fileName!=NULL)
 		sprintf(fileName,"%s",temp);
    
+}
+
+void saveResultToExcelFile(char *fileName,HashTableType hashTable)
+{
+	SUT system=GetSeletedSut();
+	ExcelObj_Worksheet sheetHandle=GetWorkingSheet(system.reportFilePath,"Sheet1");//获得sheet句柄,打开模板路劲的文档
+	ExcelObj_Range rangeHandler=InitExcelRangeHandle(sheetHandle,SAVE_RANGE);
+	writeResultToExcelSheet(rangeHandler,hashTable);
+    SaveWorkingSheet(fileName);//保存更改内容 //保存在目标路径	
+	ClearObjHandler (&rangeHandler); //清除句柄  
+	ClearWorkingSheet (&sheetHandle);//清除句柄，/ 
 }
 #endif
 
