@@ -5,7 +5,7 @@
 #include "CrcCalc.h"
 #include "common.h"
 
-#define DEBUG
+//#define DEBUG
 
 typedef struct
 {
@@ -171,7 +171,7 @@ BOOL BmsSetItem(RSCONFIG config,tBmsItem item)
 	buildSetPacket(&buf,item);
 	if(FALSE==operateBms(config,&buf))
 		return FALSE;
-	if(FALSE==ParseResponse(buf,&item))  	
-		return FALSE;	
+	/*if(FALSE==ParseResponse(buf,&item))  	
+		return FALSE;*/	
 	return TRUE;
 }

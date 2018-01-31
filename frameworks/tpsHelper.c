@@ -38,6 +38,7 @@ extern TPS registerTimeSetTestTps(void);
 extern TPS registerRelayTestTPS(void);
 extern TPS registerStubCmdTestTps(void);
 extern TPS registerStubIoTestTps(void);
+extern TPS registerCtrlBoxSetTestTps(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
@@ -61,6 +62,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerStubCmdTestTps,
 	registerStubIoTestTps,//手动解锁
 	registerBIBOTestTps,//BIBO
+	registerCtrlBoxSetTestTps,//控制盒编号设置
 };
 
 

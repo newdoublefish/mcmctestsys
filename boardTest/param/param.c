@@ -336,6 +336,26 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 		RESULT itemResult;
 		itemResult.index=item.itemId;		
 		itemResult.pass=1;
+		
+		if(strcmp(item.itemName_,"铭牌编号")==0)
+		{
+		
+			if(FALSE==ParamGetDepend(eut,"装置编号",itemResult.recvString))
+			{	
+				APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_); 
+				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"%s,%s:获取成功",item.itemName_,itemResult.recvString); 
+			}
+			char minPai[20]={0};
+			memcpy(minPai,itemResult.recvString+10,7);
+			memset(itemResult.recvString,0,RESULT_RECEIVE_LEN); 
+			sprintf(itemResult.recvString,"%s%s","ZB",minPai);
+			APPEND_INFO_FORMAT(masgHandle,"铭牌编号位:%s",itemResult.recvString);
+			saveResult(hashTable,&itemResult);  
+			continue;
+		}
+		
 		if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult.recvString))
 		{	
 			APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_); 
@@ -513,11 +533,17 @@ TPS registerParamTemperatureTps(void)
 	return tps;			
 }
 
-//#define BMS_CTRL
+#define BMS_CTRL
 
 METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
 	APPEND_INFO(masgHandle,"进入测试");
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+	{
+		APPEND_INFO(masgHandle,"网络连接失败,退出测试");
+		return 	TEST_RESULT_ERROR;
+	}	
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	char startChargeCmd[20]={0};
 	char stopChargeCMD[20]={0};
@@ -567,29 +593,22 @@ METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,in
 		{
 
 #ifdef BMS_CTRL			
-			tBmsItem item={
+			tBmsItem itemSet={
 				0x120B,
 				600,
 			};
-			if(FALSE == BmsSetItem(eut.bmsConfig,item))
+			if(FALSE == BmsSetItem(eut.bmsConfig,itemSet))
 			{
+				APPEND_INFO(masgHandle,"BMS 需求电流设置失败"); 
 				WarnShow1(0,"请手动设置电流为60A");				
-			}else{
-				tBmsItem item={
-					0x120B,
-					1,
-				};
-				if(BmsGetItem(eut.bmsConfig,&item)==TRUE)
-				{
-					 //printf("Get true:%d!!!\n",item.value);
-					 if(item.value != 600)
-					 {
-					 	WarnShow1(0,"请手动设置电流为60A");	
-					 }else{
-					 	APPEND_INFO(masgHandle,"设置电流为60A成功"); 
-					 }
-				}			
 			}
+			APPEND_INFO(masgHandle,"BMS 需求电流已经成功设置为60A");
+			if(FALSE==AlertDialogWithRet(0,"waring",tips60A,"错误","正确"))
+			{
+			//getStubNetService(ip,port);
+				goto ERROR;
+			}			
+			
 #else
 			WarnShow1(0,"设置电流为60A"); //后续可以用485控制来操作
 			APPEND_INFO(masgHandle,"设置电流为60A");
@@ -602,29 +621,21 @@ METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,in
 		}else if(i==2){
 		
 #ifdef BMS_CTRL			
-			tBmsItem item={
+			tBmsItem itemSet={
 				0x120B,
 				1000,
 			};
-			if(FALSE == BmsSetItem(eut.bmsConfig,item))
+			if(FALSE == BmsSetItem(eut.bmsConfig,itemSet))
 			{
+				APPEND_INFO(masgHandle,"BMS 需求电流设置失败"); 
 				WarnShow1(0,"请手动设置电流为100A");				
-			}else{
-				tBmsItem item={
-					0x120B,
-					1,
-				};
-				if(BmsGetItem(eut.bmsConfig,&item)==TRUE)
-				{
-					 //printf("Get true:%d!!!\n",item.value);
-					 if(item.value != 1000)
-					 {
-					 	WarnShow1(0,"请手动设置电流为100A");	
-					 }else{
-					 	APPEND_INFO(masgHandle,"设置电流为100A成功"); 
-					 }
-				}			
 			}
+			APPEND_INFO(masgHandle,"BMS 需求电流已经成功设置为100A");
+			if(FALSE==AlertDialogWithRet(0,"waring",tips100A,"错误","正确"))
+			{
+			//getStubNetService(ip,port);
+				goto ERROR;
+			}			
 			
 #else			
 			WarnShow1(0,"设置电流为100A"); //后续可以用485控制来操作
@@ -639,29 +650,38 @@ METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,in
 		
 
 #ifdef BMS_CTRL			
-			tBmsItem item={
+			tBmsItem itemSet={
 				0x120B,
 				1200,
 			};
-			if(FALSE == BmsSetItem(eut.bmsConfig,item))
+			if(FALSE == BmsSetItem(eut.bmsConfig,itemSet))
 			{
+				APPEND_INFO(masgHandle,"BMS 需求电流设置失败"); 
 				WarnShow1(0,"请手动设置电流为120A");				
-			}else{
-				tBmsItem item={
-					0x120B,
-					1,
-				};
-				if(BmsGetItem(eut.bmsConfig,&item)==TRUE)
-				{
-					 //printf("Get true:%d!!!\n",item.value);
-					 if(item.value != 1200)
-					 {
-					 	WarnShow1(0,"请手动设置电流为120A");	
-					 }else{
-					 	APPEND_INFO(masgHandle,"设置电流为120A成功"); 
-					 }
-				}			
 			}
+			APPEND_INFO(masgHandle,"BMS 需求电流已经成功设置为120A");
+			
+			if(FALSE==AlertDialogWithRet(0,"waring",tips120A,"错误","正确"))
+			{
+			//getStubNetService(ip,port);
+				goto ERROR;
+			}			
+			/*tBmsItem itemGet={
+				0x120B,
+				1,
+			};
+			
+			if(BmsGetItem(eut.bmsConfig,&itemGet)==FALSE)
+			{
+					
+			}
+			APPEND_INFO_FORMAT(masgHandle,"当前需求电流为%d",itemGet.value/10);							
+			if(itemGet.value!=itemSet.value)
+			{
+
+			}else{
+				APPEND_INFO(masgHandle,"BMS 需求电流已经成功设置为120A");
+			}*/  
 #else	
 			WarnShow1(0,"设置电流为120A"); //后续可以用485控制来操作
 			APPEND_INFO(masgHandle,"设置电流为120A"); 
@@ -672,33 +692,45 @@ METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,in
 			}
 #endif			
 		}
+		WarnShow1(0,"按下确定后读书");
+		
+		WarnAlert(0,"请稍后,等待继电器闭合",20);
  	
 		//char BI[10]={0};
 
-		if(FALSE==ParamGetDepend(eut,"BI",itemResult1.recvString ))
-		{
-			APPEND_INFO_FORMAT(masgHandle,"%s 获取到功率分配反馈失败 %s");
-			goto ERROR;			
-		}else{
-					
-		}
-
-		//PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
-		//PRINT("%x\n",itemResult1.recvString);
-		unsigned int standard= HexStrToUnsignedInt(item1.inputValue_);
-		unsigned int bi = atoi(itemResult1.recvString);
-		unsigned int result = bi & standard;
-		memset(itemResult1.recvString,0,RESULT_RECEIVE_LEN);
-		sprintf(itemResult1.recvString,"0x%x",bi);
-		APPEND_INFO_FORMAT(masgHandle,"%s 获取到功率分配反馈 %s",item1.itemName_,itemResult1.recvString);
-
-		if(result == standard)
-		{
-			itemResult1.pass=1; 		
-		}else{
-			itemResult1.pass=0;
-		}
 		
+		int reTryCnt=0;
+		while(reTryCnt++<3)
+		{
+			memset(itemResult1.recvString,0,RESULT_RECEIVE_LEN);
+			if(FALSE==ParamGetDepend(eut,"BI",itemResult1.recvString ))
+			{
+				APPEND_INFO_FORMAT(masgHandle,"%s 获取到功率分配反馈失败 %s");
+				goto ERROR;			
+			}else{
+					
+			}
+
+			//PRINT("INPUTVALUE:%x\n",HexStrToUnsignedInt(item1.inputValue_));
+			//PRINT("%x\n",itemResult1.recvString);
+			unsigned int standard= HexStrToUnsignedInt(item1.inputValue_);
+			unsigned int bi = atoi(itemResult1.recvString);
+			unsigned int result = bi & standard;
+			memset(itemResult1.recvString,0,RESULT_RECEIVE_LEN);
+			sprintf(itemResult1.recvString,"0x%x",bi);
+		
+
+			if(result == standard)
+			{
+				itemResult1.pass=1; 		
+			}else{
+				itemResult1.pass=0;
+			}
+			APPEND_INFO_FORMAT(masgHandle,"%s 获取到功率分配反馈 %s,结果为%d 获取次数:%d",item1.itemName_,itemResult1.recvString,itemResult1.pass,reTryCnt);
+			if(itemResult1.pass>0)
+				break;
+			WarnAlert(0,"请等待",10);
+		}		
 		//sprintf(itemResult1.recvString,"%s",BI);
 		saveResult(hashTable,&itemResult1);
 	}		
@@ -738,17 +770,19 @@ BOOL checkScanResult(int panel)
 		SetCtrlVal(panel,SCANPANEL_TEXTMSG_2,"错误:枪1枪2地址一致");
 		return FALSE;
 	}
-	if(strcmp(biao1,biao2)==0)
-	{
-		SetCtrlVal(panel,SCANPANEL_TEXTMSG_2,"错误:表1表2地址一致");
-		return FALSE;
-	}
+
 	
 	if((strlen(gun1)!=strlen(gun2)) | (strlen(gun1)!=12))
 	{
 		SetCtrlVal(panel,SCANPANEL_TEXTMSG_2,"错误:枪1枪2地址设置错误");
 		return FALSE;		
 	}
+	
+	if(strcmp(biao1,biao2)==0)
+	{
+		SetCtrlVal(panel,SCANPANEL_TEXTMSG_2,"错误:表1表2地址一致");
+		return FALSE;
+	}	
 	
 	if((strlen(biao1)!=strlen(biao2)) | (strlen(biao2)!=12)) 
 	{
@@ -1343,6 +1377,11 @@ TPS registerInsulationTestTestTps(void)
 METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHandler)
 {
 	APPEND_INFO_FORMAT(msgHandler,"进入%s",group.groupName);
+	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+	{
+		return TEST_RESULT_ERROR;
+	}	
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	BOOL flag=TRUE;
 	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
@@ -1787,10 +1826,11 @@ METHODRET ParamEutCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 		
 		if(strcmp(testItem.itemName_,"继电器")==0)
 		{
-			if(FALSE==OperatDoSet(eut.relayConfig,RELAY(30)|RELAY(2),MASK16))
+			if(FALSE==OperatDoSet(eut.relayConfig,0,MASK16))
 			{
 				//APPEND_INFO(msgHander,"继电器操作失败！！");
 				WarnShow1(0,"继电器通信失败");
+				return TEST_RESULT_ERROR;
 			}					
 		}else if(strcmp(testItem.itemName_,"安规测试仪")==0)
 		{
@@ -1804,7 +1844,8 @@ METHODRET ParamEutCheckTest(TestGroup group,EUT eut,HashTableType hashTable)
 				};			
 				if(BmsGetItem(eut.bmsConfig,&item)==FALSE)
 				{
-					WarnShow1(0,"BMS模拟器通信失败");  
+					WarnShow1(0,"BMS模拟器通信失败"); 
+					return TEST_RESULT_ERROR; 
 				}			
 			
 		}else if(strcmp(testItem.itemName_,"充电桩网口")==0)
@@ -1875,6 +1916,94 @@ TPS registerBIBOTestTps(void)
 	TPS tps=newTps("BIBO");
 	tps.testFunction=BIBOTest;
 	tps.protocolInit=BiboProtocolInit;
+	return tps;			
+}
+
+int CVICALLBACK CtrlBoxCallback (int panel, int control, int event,
+		void *callbackData, int eventData1, int eventData2)
+{
+	
+	switch (event)
+	{
+		case EVENT_COMMIT:
+			if(control == BOXCODE_COMMANDBUTTON)
+			 {
+				char temp[30]={0};
+				char *code = (char *)callbackData;
+				GetCtrlVal(panel,BOXCODE_CODE,temp);
+				if(strlen(temp)!=12)
+				{
+					SetCtrlVal(panel,BOXCODE_ERRORINFO,"格式不对！");				
+				}else{
+				
+					sprintf(code,"%s",temp);
+					QuitUserInterface(1);
+				}
+			 }
+			 break;
+	}
+	return 0;
+}
+
+
+METHODRET CtrlBoxSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	APPEND_INFO(masgHandle,"进入测试"); 
+	METHODRET ret = TEST_RESULT_ALLPASS; 
+	char code[20]={0};
+	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	if(servicePtr==NULL)
+	{
+		return 	TEST_RESULT_ERROR;
+	}*/
+	int panelHandle = LoadPanel(0,"ParamPanel.uir",BOXCODE);
+	InstallCtrlCallback(panelHandle,BOXCODE_COMMANDBUTTON,CtrlBoxCallback,code);
+	DisplayPanel(panelHandle);
+	RunUserInterface();
+	DiscardPanel(panelHandle);
+	
+	APPEND_INFO_FORMAT(masgHandle,"控制盒编号是：%s",code);
+	
+	TestItem item={0};
+	RESULT result={0};
+	ListGetItem(group.subItems,&item,1);
+	result.index = item.itemId;
+	
+	if(FALSE==ParamSetDepend(eut,item.itemName_,code))
+	{
+	
+		APPEND_INFO(masgHandle,"数据盒操作失败"); 
+		goto DONE;
+	}
+	
+	APPEND_INFO(masgHandle,"控制盒编号设置成功"); 	
+	if(FALSE==ParamGetDepend(eut,item.itemName_,result.recvString))
+	{
+	
+		APPEND_INFO(masgHandle,"数据盒操作失败");
+		goto DONE;
+	}
+	APPEND_INFO_FORMAT(masgHandle,"控制盒读回成功编号是：%s",result.recvString);
+	
+	
+	if(strcmp(code,result.recvString)==0)
+	{
+		result.pass=1;
+	}
+	
+
+	saveResult(hashTable,&result); 
+		
+	APPEND_INFO(masgHandle,"退出测试");	
+DONE:	
+	return ret;
+}
+
+
+TPS registerCtrlBoxSetTestTps(void)
+{
+	TPS tps=newTps("CtrlBoxSet");
+	tps.testFunction=CtrlBoxSetTest;
 	return tps;			
 }
 

@@ -13,11 +13,17 @@
 
      /* Panels and Controls: */
 
-#define  PANEL                            1
+#define  BOXCODE                          1
+#define  BOXCODE_CODE                     2       /* control type: string, callback function: (none) */
+#define  BOXCODE_COMMANDBUTTON            3       /* control type: command, callback function: (none) */
+#define  BOXCODE_TEXTMSG                  4       /* control type: textMsg, callback function: (none) */
+#define  BOXCODE_ERRORINFO                5       /* control type: textMsg, callback function: (none) */
+
+#define  PANEL                            2
 #define  PANEL_TABLE                      2       /* control type: table, callback function: (none) */
 #define  PANEL_COMMANDBUTTON              3       /* control type: command, callback function: (none) */
 
-#define  SCANPANEL                        2
+#define  SCANPANEL                        3
 #define  SCANPANEL_SCAN4                  2       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN3                  3       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN2                  4       /* control type: string, callback function: (none) */
