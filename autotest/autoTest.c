@@ -176,6 +176,10 @@ void saveResultToFile(TESTobject testObj)
 		CreateReportFilePath(NULL,filePath,testObj); 
 	}
 	saveResultToExcelFile(filePath,testObj.resultHashTable);
+	if(0==FileExists(filePath,0))
+	{
+		WarnShow1(0,"文件保存失败");
+	}
 	if(set.saveToDb)
 	{
 		//if(strlen(stubNum)>0)
@@ -1209,7 +1213,7 @@ int CVICALLBACK genReport (int panel, int control, int event,
 		     saveAutoTestResult(engine);
 			 //soundFinish();
 			 
-		     LOG_EVENT(LOG_INFO,"保存结果完成"); 
+		     LOG_EVENT(LOG_INFO,"完成"); 
 	     }
 				 
 		break;
