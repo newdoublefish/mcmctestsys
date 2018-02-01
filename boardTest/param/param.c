@@ -1863,7 +1863,7 @@ TPS registerParamEutCheckTestTps(void)
 	tps.createTpsPanel=NULL;
 	return tps;	
 }
-
+#if 0
 METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
 	APPEND_INFO(masgHandle,"进入测试");
@@ -1909,13 +1909,243 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 DONE:	
 	return ret;
 }
+#else
+METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	APPEND_INFO(masgHandle,"进入测试");
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT result={0};
+		result.index = item.itemId;
+		APPEND_INFO_FORMAT(masgHandle,"测试继电器%s",item.itemName_);
+		if(strcmp(item.itemName_,"枪1K1K2")==0)
+		{
+			if(FALSE==ParamSetDependWithRetry(eut,"1枪K1K2控制","1",3))
+			{
+				APPEND_INFO(masgHandle,"闭合继电器 1枪K1K2 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"闭合继电器 1枪K1K2 成功"); 
+			}
+			
+			char flag1[10]={0};
+			char flag2[10]={0};
+			if(FALSE==ParamGetDependWithRetry(eut,"1枪K1反馈",flag1,3))
+			{
+				APPEND_INFO(masgHandle,"获取继电器 1枪K1反馈 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"获取继电器 1枪K1反馈 成功 值为：%s",flag1); 
+			}
+			
+			if(FALSE==ParamGetDependWithRetry(eut,"1枪K2反馈",flag2,3))
+			{
+				APPEND_INFO(masgHandle,"获取继电器 1枪K2反馈 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"获取继电器 1枪K2反馈 成功 值为：%s",flag2); 
+			}
+			
+			if(strcmp(flag1,"true")==0 &&  strcmp(flag2,"true")==0)
+			{
+				
+				result.pass=1;
+				//APPEND_INFO(masgHandle,"测试结果合格"); 
+			}else{
+				APPEND_INFO(masgHandle,"测试结果失败");  
+				result.pass=0;	
+				continue;
+			}
+			
+			if(FALSE==ParamSetDependWithRetry(eut,"1枪K1K2控制","0",3))
+			{
+				APPEND_INFO(masgHandle,"断开继电器 1枪K1K2 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"断开继电器 1枪K1K2 成功"); 
+			}
+			
+			if(FALSE==ParamGetDependWithRetry(eut,"1枪K1反馈",flag1,3))
+			{
+				APPEND_INFO(masgHandle,"获取继电器 1枪K1反馈 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"获取继电器 1枪K1反馈 成功 值为：%s",flag1); 
+			}
+			
+			if(FALSE==ParamGetDependWithRetry(eut,"1枪K2反馈",flag2,3))
+			{
+				APPEND_INFO(masgHandle,"获取继电器 1枪K2反馈 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"获取继电器 1枪K2反馈 成功 值为：%s",flag2); 
+			}
+			
+			if(strcmp(flag1,"false")==0 &&  strcmp(flag2,"false")==0)
+			{
+				
+				result.pass=1;
+				//APPEND_INFO(masgHandle,"测试结果合格"); 
+			}else{
+				APPEND_INFO(masgHandle,"测试结果失败");  
+				result.pass=0;	
+			}			
+			WarnAlert(0,"请稍后",30);
+		}else if(strcmp(item.itemName_,"枪2K1K2")==0)
+		{
+			if(FALSE==ParamSetDependWithRetry(eut,"2枪K1K2控制","1",3))
+			{
+				APPEND_INFO(masgHandle,"闭合继电器 2枪K1K2 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"闭合继电器 2枪K1K2 成功"); 
+			}
+			
+			char flag1[10]={0};
+			char flag2[10]={0};
+			if(FALSE==ParamGetDependWithRetry(eut,"2枪K1反馈",flag1,3))
+			{
+				APPEND_INFO(masgHandle,"获取继电器 2枪K1反馈 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"获取继电器 2枪K1反馈 成功 值为：%s",flag1); 
+			}
+			
+			if(FALSE==ParamGetDependWithRetry(eut,"2枪K2反馈",flag2,3))
+			{
+				APPEND_INFO(masgHandle,"获取继电器 2枪K2反馈 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"获取继电器 2枪K2反馈 成功 值为：%s",flag2); 
+			}
+			
+			if(strcmp(flag1,"true")==0 &&  strcmp(flag2,"true")==0)
+			{
+				result.pass=1;
+			}
+			
+			if(FALSE==ParamSetDependWithRetry(eut,"2枪K1K2控制","1",3))
+			{
+				APPEND_INFO(masgHandle,"断开继电器 2枪K1K2 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"断开继电器 2枪K1K2 成功"); 
+			}			
+			WarnAlert(0,"请稍后",30);
+		}else if(strcmp(item.itemName_,"K5K6")==0)
+		{
+			if(FALSE==ParamSetDependWithRetry(eut,"1枪K5K6控制","1",3))
+			{
+				APPEND_INFO(masgHandle,"闭合继电器 1枪K5K6控制 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"闭合继电器 1枪K5K6控制 成功"); 
+			}	
+			
+			if(FALSE==ParamGetDependWithRetry(eut,"K5K6反馈",result.recvString,3))
+			{
+				APPEND_INFO(masgHandle,"获取继电器 K5K6反馈 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"获取继电器 K5K6反馈 成功 值为：%s",result.recvString); 
+			}
+			
+			if(strcmp(result.recvString,"true")==0)
+			{
+				result.pass=1;
+			}
+			
+			if(FALSE==ParamSetDependWithRetry(eut,"1枪K5K6控制","0",3))
+			{
+				APPEND_INFO(masgHandle,"断开继电器 1枪K5K6控制 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"断开继电器 1枪K5K6控制 成功"); 
+			}
+			WarnAlert(0,"请稍后",30);  
+		}else if(strcmp(item.itemName_,"K7K8")==0)
+		{
+			if(FALSE==ParamSetDependWithRetry(eut,"K7K8控制","1",3))
+			{
+				APPEND_INFO(masgHandle,"闭合继电器 K7K8控制 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"闭合继电器 K7K8控制 成功"); 
+			}	
+			
+			if(FALSE==ParamGetDependWithRetry(eut,"K7K8反馈",result.recvString,3))
+			{
+				APPEND_INFO(masgHandle,"获取继电器 K7K8反馈 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"获取继电器 K7K8反馈 成功 值为：%s",result.recvString); 
+			}
+			
+			if(strcmp(result.recvString,"true")==0)
+			{
+				result.pass=1;
+			}
+			
+			if(FALSE==ParamSetDependWithRetry(eut,"K7K8控制","0",3))
+			{
+				APPEND_INFO(masgHandle,"断开继电器 K7K8控制 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"断开继电器 K7K8控制 成功"); 
+			}
+			WarnAlert(0,"请稍后",30);  
+		}else if(strcmp(item.itemName_,"K9K10")==0)
+		{
+			if(FALSE==ParamSetDependWithRetry(eut,"2枪K9K10控制","1",3))
+			{
+				APPEND_INFO(masgHandle,"闭合继电器 2枪K9K10控制 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"闭合继电器 2枪K9K10控制 成功"); 
+			}	
+			
+			if(FALSE==ParamGetDependWithRetry(eut,"K9K10反馈",result.recvString,3))
+			{
+				APPEND_INFO(masgHandle,"获取继电器 K9K10反馈 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO_FORMAT(masgHandle,"获取继电器 K9K10反馈 成功 值为：%s",result.recvString); 
+			}
+			
+			if(strcmp(result.recvString,"true")==0)
+			{
+				result.pass=1;
+			}
+			
+			if(FALSE==ParamSetDependWithRetry(eut,"2枪K9K10控制","0",3))
+			{
+				APPEND_INFO(masgHandle,"断开继电器 2枪K9K10控制 失败");
+				return TEST_RESULT_SOMEPASS;
+			}else{
+				APPEND_INFO(masgHandle,"断开继电器 2枪K9K10控制 成功"); 
+			}
+			WarnAlert(0,"请稍后",30);  
+		}
+		
+		
+		saveResult(hashTable,&result); 
+
+	}
+	APPEND_INFO(masgHandle,"退出测试");	
+DONE:	
+	return ret;
+}
+#endif
 
 
 TPS registerBIBOTestTps(void)
 {
 	TPS tps=newTps("BIBO");
 	tps.testFunction=BIBOTest;
-	tps.protocolInit=BiboProtocolInit;
+	//tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }
 
