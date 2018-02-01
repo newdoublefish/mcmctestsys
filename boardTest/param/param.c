@@ -692,15 +692,15 @@ METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,in
 			}
 #endif			
 		}
-		WarnShow1(0,"按下确定后读书");
+		//WarnShow1(0,"听到继电器跳后,点确定开始读书");
 		
-		WarnAlert(0,"请稍后,等待继电器闭合",20);
+		//WarnAlert(0,"请稍后,等待继电器闭合",20);
  	
 		//char BI[10]={0};
 
 		
 		int reTryCnt=0;
-		while(reTryCnt++<3)
+		while(reTryCnt++<5)
 		{
 			memset(itemResult1.recvString,0,RESULT_RECEIVE_LEN);
 			if(FALSE==ParamGetDepend(eut,"BI",itemResult1.recvString ))
@@ -729,7 +729,11 @@ METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,in
 			APPEND_INFO_FORMAT(masgHandle,"%s 获取到功率分配反馈 %s,结果为%d 获取次数:%d",item1.itemName_,itemResult1.recvString,itemResult1.pass,reTryCnt);
 			if(itemResult1.pass>0)
 				break;
-			WarnAlert(0,"请等待",10);
+			//WarnAlert(0,"请等待",10);
+			if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",10))
+			{
+				break;
+			}
 		}		
 		//sprintf(itemResult1.recvString,"%s",BI);
 		saveResult(hashTable,&itemResult1);
