@@ -56,9 +56,9 @@ METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable)
 		GetTableCellVal(panelHandle,PANEL_TABLE,MakePoint(4,i),temp);				
 		if(strcmp("ºÏ¸ñ",temp)==0)
 		{
-			res.pass=1;
+			res.pass=RESULT_PASS;
 		}else{
-			res.pass=0;
+			res.pass=RESULT_FAIL;
 			ret = TEST_RESULT_SOMEPASS;
 		}
 		//printf("%s,%d\n",res.recvString,res.pass);

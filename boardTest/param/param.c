@@ -278,9 +278,9 @@ METHODRET ParamTest(TestGroup group,EUT eut,HashTableType hashTable)
 		itemResult.index=item.itemId;
 		if(strcmp(paramSet.value,paramGet.value)==0)
 		{
-			itemResult.pass=1;
+			itemResult.pass=RESULT_PASS;
 		}else{
-			itemResult.pass=0;
+			itemResult.pass=RESULT_FAIL;
 		}
 		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
 		sprintf(itemResult.recvString,"%s",paramGet.value);
@@ -335,7 +335,45 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 		ListGetItem(group.subItems,&item,i);
 		RESULT itemResult;
 		itemResult.index=item.itemId;		
-		itemResult.pass=1;
+		itemResult.pass=RESULT_PASS;
+		
+		if(strcmp(item.itemName_,"门节点")==0 || strcmp(item.itemName_,"防雷器")==0 || strcmp(item.itemName_,"急停按钮")==0)
+		{
+			
+			double elapsed = 10;
+			double outTime = Timer();
+			itemResult.pass=RESULT_FAIL;
+			while(itemResult.pass!=RESULT_PASS)
+			{
+				double currentTime = Timer();	
+				if(currentTime-outTime > elapsed)
+				{
+					itemResult.pass=RESULT_FAIL;
+					break;
+				}				
+				memset(itemResult.recvString,0,RESULT_RECEIVE_LEN);
+				if(ParamGetDependWithRetry(eut,item.itemName_,itemResult.recvString,3)==FALSE)
+				{
+					APPEND_INFO(masgHandle,"获取结果失败");				
+					goto DONE;
+				}else{
+					APPEND_INFO_FORMAT(masgHandle,"%s",itemResult.recvString);
+			
+				}
+			
+				if(strstr(item.standard_,itemResult.recvString)!=NULL)
+				{
+					itemResult.pass=RESULT_PASS;
+				}else{
+					itemResult.pass=RESULT_FAIL;
+				}
+				
+				ProcessSystemEvents ();
+			}
+			
+			saveResult(hashTable,&itemResult);   			
+			continue;					
+		}
 		
 		if(strcmp(item.itemName_,"铭牌编号")==0)
 		{
@@ -372,7 +410,7 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 				itemResult.pass=0;
 			}		
 		}*/
-		itemResult.pass=1;
+		itemResult.pass=RESULT_PASS;
 		
 
 		if(strcmp(group.groupName,"软件版本检查")==0){
@@ -381,9 +419,9 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 			{
 				if(strcmp(item.standard_,itemResult.recvString)==0)
 				{
-					itemResult.pass=1;
+					itemResult.pass=RESULT_PASS;
 				}else{
-					itemResult.pass=0;
+					itemResult.pass=RESULT_FAIL;
 				}
 			}			
 		}else if(strcmp(group.groupName,"电表时间")==0)
@@ -397,15 +435,15 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 			if(FALSE==compareTimeWithTolerance(sysTime,itemResult.recvString,tolerance,&compareResult))
 			{
 				APPEND_INFO(masgHandle,"时间格式错误！");
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}else{
 				if(compareResult==0)
 				{
 					APPEND_INFO(masgHandle,"时间在误差范围内");
-					itemResult.pass=1;
+					itemResult.pass=RESULT_PASS;
 				}else{
 					APPEND_INFO(masgHandle,"时间不在误差范围内"); 
-					itemResult.pass=0;
+					itemResult.pass=RESULT_FAIL;
 				}
 			}									
 		}else if(strstr(item.itemName_,"插枪链接电压")!=NULL){
@@ -414,18 +452,18 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 			{
 				if(vol>(atof(item.standard_)-0.5) && vol <atof(item.standard_))
 				{
-					 itemResult.pass=1;
+					 itemResult.pass=RESULT_PASS;
 				}else{
-					itemResult.pass=0;
+					itemResult.pass=RESULT_FAIL;
 				}
 			}					
 		}else if(strcmp(item.standard_,"NA")!=0)
 		{
 			if(strstr(item.standard_,itemResult.recvString)!=NULL)
 			{
-				itemResult.pass=1;
+				itemResult.pass=RESULT_PASS;
 			}else{
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}
 		}
 
@@ -513,7 +551,7 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		}else{
 			itemResult.pass=0;
 		}*/
-		itemResult.pass=1;
+		itemResult.pass=RESULT_PASS;
 		//memset(itemResult.recvString,0,sizeof(itemResult.recvString));
 		//printf("----------%s\n",paramGet.value);
 		//sprintf(itemResult.recvString,"%s",paramGet.value);
@@ -588,7 +626,7 @@ METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,in
 		ListGetItem(group.subItems,&item1,i);
 		RESULT itemResult1={0}; 
 		itemResult1.index = item1.itemId;
-		itemResult1.pass=0;		
+		itemResult1.pass=RESULT_FAIL;		
 		if(i==1)
 		{
 
@@ -718,9 +756,9 @@ METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,in
 
 			if(result == standard)
 			{
-				itemResult1.pass=1; 		
+				itemResult1.pass=RESULT_PASS; 		
 			}else{
-				itemResult1.pass=0;
+				itemResult1.pass=RESULT_FAIL;
 			}
 			
 			
@@ -933,9 +971,9 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 		
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
-		itemResult.pass=0;
+		itemResult.pass=RESULT_FAIL;
 		if(stubNameLen>0)
-			itemResult.pass=1;
+			itemResult.pass=RESULT_PASS;
 		
 		APPEND_INFO_FORMAT(masgHandler,"----------%s 设置------------------",item.itemName_);
 		if(1==i)
@@ -960,7 +998,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 			
 			if(strcmp(itemResult.recvString,param.value)==0)
 			{
-				itemResult.pass=1;
+				itemResult.pass=RESULT_PASS;
 			}else{
 				itemResult.pass=0;
 			}
@@ -985,9 +1023,9 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 			}
 			if(strcmp(itemResult.recvString,setValue)==0)
 			{
-				itemResult.pass=1;
+				itemResult.pass=RESULT_PASS;
 			}else{
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}			
 			
 			
@@ -1040,9 +1078,9 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 			}
 			if(strcmp(itemResult.recvString,setValue)==0)
 			{
-				itemResult.pass=1;
+				itemResult.pass=RESULT_PASS;
 			}else{
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}			
 			
 		}else if(i==5)
@@ -1066,9 +1104,9 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 			}
 			if(strcmp(itemResult.recvString,setValue)==0)
 			{
-				itemResult.pass=1;
+				itemResult.pass=RESULT_PASS;
 			}else{
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}			
 		}
 		saveResult(hashTable,&itemResult);
@@ -1408,7 +1446,7 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 	
 	RESULT itemResult1={0};
 	itemResult1.index=item1.itemId;
-	itemResult1.pass=1;
+	itemResult1.pass=RESULT_PASS;
 	
 	/*if(ParamSet(servicePtr,"1枪调试启动充电","1")==FALSE)
 	{
@@ -1435,7 +1473,7 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动,点击确认加负载","错误","正确")==FALSE)
 	{
 		flag=FALSE;
-		itemResult1.pass=0;
+		itemResult1.pass=RESULT_FAIL;
 		saveResult(hashTable,&itemResult1);
 		//return TEST_RESULT_ALLPASS;
 		ParamSetDepend(eut,stopChargeCMD,"1");	
@@ -1485,12 +1523,12 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		ListInsertItem(paramsToGet,&param,END_OF_LIST);*/
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
-		itemResult.pass=0;
+		itemResult.pass=RESULT_FAIL;
 		//sprintf(itemResult.recvString,"%s",param.value);
 		if(ParamGetDepend(eut,item.itemName_,itemResult.recvString)==FALSE)
 		{
 			 APPEND_INFO_FORMAT(msgHandler,"%s获取失败功",item.itemName_);
-			 itemResult.pass=0;
+			 itemResult.pass=RESULT_FAIL;
 			 saveResult(hashTable,&itemResult);
 			 goto DONE;
 		}else{
@@ -1501,16 +1539,16 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		{
 			if(strValue<352 && strValue>348)
 			{
-				itemResult.pass=1;
+				itemResult.pass=RESULT_PASS;
 			}
 		}else if(i==2)
 		{
 			if(strValue<2.87 && strValue>2.67)
 			{
-				itemResult.pass=1;
+				itemResult.pass=RESULT_PASS;
 			}
 		}else{
-			itemResult.pass=1; 
+			itemResult.pass=RESULT_PASS; 
 		}
 		
 		APPEND_INFO_FORMAT(msgHandler,"%s 测试结果为 %d",item.itemName_,itemResult.pass);
@@ -1531,22 +1569,22 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		itemResult.index=item.itemId;
 		sprintf(itemResult.recvString,"%s",param.value);
 		float strValue=atof(param.value);
-		itemResult.pass=1; 
+		itemResult.pass=RESULT_PASS; 
 		if(i==2)
 		{
 			if(strValue<352 && strValue>348)
 			{
-				itemResult.pass=1;
+				itemResult.pass=RESULT_PASS;
 			}else{
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}
 		}else if(i==1)
 		{
 			if(strValue<2.87 && strValue>2.67)
 			{
-				itemResult.pass=1;
+				itemResult.pass=RESULT_PASS;
 			}else{
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}
 		}
 		APPEND_INFO_FORMAT(msgHandler,"%s 值为 %s，测试结果为 %d",item.itemName_,itemResult.recvString,itemResult.pass);
@@ -1605,11 +1643,11 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 	
 	if(FALSE==ParamSetDepend(eut,item.itemName_,itemResult.recvString))
 	{
-		itemResult.pass =0; 
+		itemResult.pass =RESULT_FAIL; 
 		APPEND_INFO_FORMAT(masgHandle,"%s:设置失败",item.itemName_); 
 		return ret;
 	}else{
-		itemResult.pass =1; 
+		itemResult.pass =RESULT_PASS; 
 		APPEND_INFO_FORMAT(masgHandle,"%s:设置成功:%s",item.itemName_,itemResult.recvString); 		
 	}
 
@@ -1638,11 +1676,11 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 	itemResult2.index = item2.itemId;  
 	if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult2.recvString))
 	{
-		itemResult2.pass =0; 
+		itemResult2.pass =RESULT_FAIL; 
 		APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_); 
 		return ret;
 	}else{
-		itemResult2.pass =1; 
+		itemResult2.pass =RESULT_PASS; 
 		APPEND_INFO_FORMAT(masgHandle,"%s:获取成功:%s",item.itemName_,itemResult2.recvString); 		
 	}
 	int compareResult=0;
@@ -1654,15 +1692,15 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 	if(FALSE==compareTimeWithTolerance(sysTime,itemResult2.recvString,tolerance,&compareResult))
 	{
 		APPEND_INFO(masgHandle,"时间格式错误！");
-		itemResult2.pass=0;
+		itemResult2.pass=RESULT_FAIL;
 	}else{
 		if(compareResult==0)
 		{
 			APPEND_INFO(masgHandle,"时间在误差范围内");
-			itemResult2.pass=1;
+			itemResult2.pass=RESULT_PASS;
 		}else{
 			APPEND_INFO(masgHandle,"时间不在误差范围内"); 
-			itemResult2.pass=0;
+			itemResult2.pass=RESULT_FAIL;
 		}
 	}
 	itemResult2.index = item2.itemId;
@@ -1692,7 +1730,7 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 		ListGetItem(group.subItems,&item,i);
 		RESULT itemResult;
 		itemResult.index=item.itemId;
-		itemResult.pass=1;
+		itemResult.pass=RESULT_PASS;
 		if(strcmp(item.itemName_,"参数校正")==0){
 			char voltage[10]={0};
 			if(FALSE==ParamGet(servicePtr,"枪1插枪链接电压",voltage))
@@ -1708,13 +1746,13 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 			if(startCommand(servicePtr,"prd coeff ins\r\n")<0)
 			{
 				WarnShow1(0,"参数校正失败");
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}
 		}else if(strcmp(item.itemName_,"看门狗检查")==0){ 
 			if(startCommand(servicePtr,"product watch_dog\r\n")<0)
 			{
 				WarnShow1(0,"看门狗检查");
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}
 			onStubDisConnected(servicePtr);
 			servicePtr=NULL;
@@ -1722,7 +1760,7 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 			servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 			if(servicePtr==NULL)
 			{
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 				return 	TEST_RESULT_ERROR;
 			}			
 		}else if(strcmp(item.itemName_,"交流复位")==0){
@@ -1734,9 +1772,9 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 			sprintf(param.value,"%s","1");
 			if(ConfigParameter(servicePtr,param)>=0)
 			{
-		 		itemResult.pass =1;
+		 		itemResult.pass =RESULT_PASS;
 			}else{
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 			}
 			onStubDisConnected(servicePtr);
 			servicePtr=NULL;
@@ -1744,7 +1782,7 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 			servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 			if(servicePtr==NULL)
 			{
-				itemResult.pass=0;
+				itemResult.pass=RESULT_FAIL;
 				return 	TEST_RESULT_ERROR;
 			}			
 		}
@@ -1781,7 +1819,7 @@ METHODRET StubIoTest(TestGroup group,EUT eut,HashTableType hashTable)
 	ListGetItem(group.subItems,&item,END_OF_LIST);
 	RESULT result={0};
 	result.index = item.itemId;
-	result.pass = 0;
+	result.pass = RESULT_FAIL;
 	
 	if(ParamSetDepend(eut,startChargeCmd,"1")==FALSE)
 	{
@@ -1791,7 +1829,7 @@ METHODRET StubIoTest(TestGroup group,EUT eut,HashTableType hashTable)
 	
 	if(AlertDialogWithRet(0,"请选择","请确认能够手动解锁,充电停止","错误","正确")==TRUE)
 	{
-		result.pass=1;	
+		result.pass=RESULT_PASS;	
 	}else{
 		if(ParamSetDepend(eut,stopChargeCMD,"1")==FALSE)
 		{
@@ -1901,7 +1939,7 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 		unsigned int valueUi= HexStrToUnsignedInt(result.recvString);
 		if(bibo.maskBi&valueUi == bibo.maskBi)
 		{
-			result.pass = 1;			
+			result.pass = RESULT_PASS;			
 		}
 		
 		saveResult(hashTable,&result);
@@ -2009,16 +2047,16 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 			{
 				if(resultUi == standard)
 				{
-					result.pass=1; 		
+					result.pass=RESULT_PASS; 		
 				}else{
-					result.pass=0;
+					result.pass=RESULT_FAIL;
 				}
 			}else{
 				if(resultUi == 0)
 				{
-					result.pass=1; 		
+					result.pass=RESULT_PASS; 		
 				}else{
-					result.pass=0;
+					result.pass=RESULT_FAIL;
 				}
 			}
 
@@ -2118,7 +2156,7 @@ METHODRET CtrlBoxSetTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 	
 	if(strcmp(code,result.recvString)==0)
 	{
-		result.pass=1;
+		result.pass=RESULT_PASS;
 	}
 	
 

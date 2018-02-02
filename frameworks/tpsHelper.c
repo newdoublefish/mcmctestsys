@@ -93,7 +93,7 @@ TEST_METHOD tpsSimuTest(TestGroup group,EUT eut,HashTableType hashTable)
 		  RESULT itemResult;
 		  TestItem subItem;
 		  ListGetItem(group.subItems,&subItem,k); 
-		  itemResult.pass=1;
+		  itemResult.pass=RESULT_PASS;
 
 		  memset(itemResult.recvString,0,20);
 		  sprintf(itemResult.recvString,"%s","pass");
@@ -111,7 +111,7 @@ TEST_METHOD tpsSimuFunction(TestGroup group,EUT eut,HashTableType hashTable,int 
 		  RESULT itemResult;
 		  TestItem subItem;
 		  ListGetItem(group.subItems,&subItem,k); 
-		  itemResult.pass=1;
+		  itemResult.pass=RESULT_PASS;
 
 		  memset(itemResult.recvString,0,20);
 		  sprintf(itemResult.recvString,"%s","pass");
