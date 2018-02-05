@@ -9,7 +9,7 @@
 	   
 //void saveTestResult(char *time,char *dirName,HashTableType hashTable);
 BOOL loadResultInfo(HashTableType hashTable); 
-BOOL saveResultInfo(char *fileName,HashTableType hashTable);
+BOOL saveResultInfo(char *deviceName,HashTableType hashTable);
 
 #ifdef __cplusplus
    }

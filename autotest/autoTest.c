@@ -40,6 +40,7 @@
 #include "relayHelper.h"
 #include "TpsDefaultPanel.h"
 #include "sutCommon.h"
+#include "resultInfo.h"
 //#include "StubNetService.h"
 
 static int autoPanelHandle=0;
@@ -1162,6 +1163,10 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
 				return 0;
 			}
 			//saveTestInfo(engine);
+			for(int i = 0;i<engine->totalTestObject;i++)
+			{
+				saveResultInfo(engine->objectArray[i].device.eutName,engine->objectArray[i].resultHashTable);
+			}
 			releaseTestEngine(engine);
 			DiscardPanel(panel); 
 			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);  
