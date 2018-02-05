@@ -2332,7 +2332,7 @@ METHODRET PowerModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int ma
 			standardF=atof(item.standard_);
 		
 		
-			
+						
 		
 			if(getValF>standardF-5 && getValF<standardF+5)
 			{
@@ -2341,6 +2341,9 @@ METHODRET PowerModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int ma
 			}else{
 				result.pass=RESULT_FAIL;
 			}
+			
+			memset(result.recvString,0,RESULT_RECEIVE_LEN);
+			sprintf(result.recvString,"%f",getValF);
 			
 			APPEND_INFO_FORMAT(masgHandle,"电压值为:%f,测试结果为:%d",getValF,result.pass);
 			if(result.pass == RESULT_PASS)
