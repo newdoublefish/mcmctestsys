@@ -39,6 +39,7 @@ extern TPS registerRelayTestTPS(void);
 extern TPS registerStubCmdTestTps(void);
 extern TPS registerStubIoTestTps(void);
 extern TPS registerCtrlBoxSetTestTps(void);
+extern TPS registerPowerModuleTestTps(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
@@ -47,7 +48,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	//registerframeTestTPS,
 	//registerCanTestTPS,
 	//registerSpiFlashTestTPS,
-	registerResistanceTestTPS,
+	registerResistanceTestTPS,  //可靠性，安规仪
 	registerRs232TestTPS,
 	registerParamTestTPS,
 	registerParamsCheckTps,
@@ -63,6 +64,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerStubIoTestTps,//手动解锁
 	registerBIBOTestTps,//BIBO
 	registerCtrlBoxSetTestTps,//控制盒编号设置
+	registerPowerModuleTestTps,//电源模块测试
 };
 
 

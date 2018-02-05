@@ -1,0 +1,17 @@
+#ifndef __RESULT_INFO_H__
+#define __RESULT_INFO_H__
+#include <stdlib.h> 
+#include "toolbox.h"
+
+#ifdef __cplusplus
+   extern "C" {
+#endif
+	   
+//void saveTestResult(char *time,char *dirName,HashTableType hashTable);
+BOOL loadResultInfo(HashTableType hashTable); 
+BOOL saveResultInfo(char *fileName,HashTableType hashTable);
+
+#ifdef __cplusplus
+   }
+#endif
+#endif

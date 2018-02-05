@@ -1161,6 +1161,7 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
 				WarnShow1(0,"正在测试中！稍后再试");
 				return 0;
 			}
+			//saveTestInfo(engine);
 			releaseTestEngine(engine);
 			DiscardPanel(panel); 
 			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);  

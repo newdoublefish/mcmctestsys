@@ -230,7 +230,7 @@ unsigned HexStrToUnsignedInt(char *str)
 	int len=String2ByteArray(str,data);
 	for(int i=0;i<len;i++)
 	{
-		res=res<<8 | data[i];
+		res=res<<8 | data[i]&0xFF;
 	}
 	return res;
 }

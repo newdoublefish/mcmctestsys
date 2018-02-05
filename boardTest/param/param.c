@@ -401,15 +401,6 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 		}else{
 			APPEND_INFO_FORMAT(masgHandle,"%s,%s:获取成功",item.itemName_,itemResult.recvString); 
 		}
-		/*if(strcmp(group.groupName,"硬件自检")==0)
-		{
-			if(strcmp("true",itemResult.recvString)==0)
-			{
-				itemResult.pass=1;
-			}else{
-				itemResult.pass=0;
-			}		
-		}*/
 		itemResult.pass=RESULT_PASS;
 		
 
@@ -545,16 +536,7 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable,i
 			APPEND_INFO_FORMAT(msgPanel,"%s:获取成功，值为%s",msgPanel,itemResult.recvString);			
 		}
 
-		/*if(strcmp("true",paramGet.value)==0)
-		{
-			itemResult.pass=1;
-		}else{
-			itemResult.pass=0;
-		}*/
 		itemResult.pass=RESULT_PASS;
-		//memset(itemResult.recvString,0,sizeof(itemResult.recvString));
-		//printf("----------%s\n",paramGet.value);
-		//sprintf(itemResult.recvString,"%s",paramGet.value);
 		saveResult(hashTable,&itemResult);
 	}	
 DONE:	
@@ -764,7 +746,7 @@ METHODRET PowerDistributeTest(TestGroup group,EUT eut,HashTableType hashTable,in
 			
 			
 			APPEND_INFO_FORMAT(masgHandle,"%s 获取到功率分配反馈 %s,结果为%d 获取次数:%d",item1.itemName_,itemResult1.recvString,itemResult1.pass,reTryCnt);
-			if(itemResult1.pass>0)
+			if(itemResult1.pass==RESULT_PASS)
 				break;
 			//WarnAlert(0,"请等待",10);
 			if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",10))
@@ -2061,7 +2043,7 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 			}
 
 			APPEND_INFO_FORMAT(masgHandle,"%s 获取到继电器反馈失败 %s,结果为%d 获取次数:%d",item.itemName_,result.recvString,result.pass,reTryCnt);
-			if(result.pass>0)
+			if(result.pass==RESULT_PASS)
 				break;
 			//WarnAlert(0,"请等待",10);
 			if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",10))
@@ -2083,7 +2065,7 @@ TPS registerBIBOTestTps(void)
 {
 	TPS tps=newTps("BIBO");
 	tps.testFunction=BIBOTest;
-	//tps.protocolInit=BiboProtocolInit;
+	tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }
 
@@ -2172,6 +2154,235 @@ TPS registerCtrlBoxSetTestTps(void)
 {
 	TPS tps=newTps("CtrlBoxSet");
 	tps.testFunction=CtrlBoxSetTest;
+	return tps;			
+}
+
+#if 0
+METHODRET PowerModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	APPEND_INFO(masgHandle,"进入测试"); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		RESULT result={0};
+		ListGetItem(group.subItems,&item,i);
+		result.index=item.itemId;
+		unsigned int input = HexStrToUnsignedInt(item.inputValue_);
+		APPEND_INFO_FORMAT(masgHandle,"%s 测试",item.itemName_); 
+		tBIBO bibo={0};
+		if(FALSE==getBibo(item.itemName_,&bibo))
+		{
+			APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",item.itemName_);
+			continue;
+		}
+		char setVal[20]={0}; 
+		sprintf(setVal,"%d",bibo.maskBo);
+		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
+		{
+			APPEND_INFO(masgHandle,"操作BO失败");
+			goto DONE; 
+		}else{
+			APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBo);
+			
+		}
+		
+		char getVal[20]={0};
+		float getValF=0;
+		float standardF=0;
+		
+		int retryCnt = 5;
+		while(retryCnt-- >=0 )
+		{
+			if(strcmp(item.itemName_,"电源模块1")==0 || strcmp(item.itemName_,"电源模块2")==0 || strcmp(item.itemName_,"电源模块3")==0 || strcmp(item.itemName_,"电源模块6_1")==0)
+			{
+				if(FALSE == ParamGetDependWithRetry(eut,"枪1电表电压",getVal,3))
+				{
+					APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					goto DONE;		
+				}
+			}else{
+				if(FALSE == ParamGetDependWithRetry(eut,"枪2电表电压",getVal,3))
+				{
+					APPEND_INFO(masgHandle,"获取枪2电压失败");  
+					goto DONE;		
+				}				
+			}
+			
+			getValF= atof(getVal);
+		
+			standardF=atof(item.standard_);
+		
+		
+			
+		
+			if(getValF>standardF-5 && getValF<standardF+5)
+			{
+				result.pass=RESULT_PASS;
+				//break;
+			}else{
+				result.pass=RESULT_FAIL;
+			}
+			
+			APPEND_INFO_FORMAT(masgHandle,"电压值为:%f,测试结果为:%d",getValF,result.pass);
+			if(result.pass == RESULT_PASS)
+				break;
+			
+			if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",10))
+			{
+				break;
+			}
+			
+		}
+		
+		//断开所有及短期
+		memset(setVal,0,20);
+		sprintf(setVal,"%d",bibo.maskBi);
+		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
+		{
+			APPEND_INFO(masgHandle,"操作BO失败");
+			goto DONE; 
+		}else{
+			APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBi);
+		}		
+		saveResult(hashTable,&result);				
+	}
+DONE:
+	if(FALSE==ParamSetDependWithRetry(eut,"BO","1",3))
+	{
+		APPEND_INFO(masgHandle,"操作BO失败");
+		WarnShow1(0,"请按下急停");
+	}else{
+		APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%s","1");
+	}
+	return ret;
+}
+#else
+METHODRET PowerModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	APPEND_INFO(masgHandle,"进入测试"); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	if(FALSE==ParamSetDependWithRetry(eut,"DO单一控制标志","0",3))
+	{
+		APPEND_INFO(masgHandle,"DO单一控制标志 失败");
+		return TEST_RESULT_SOMEPASS;
+	}else{
+		APPEND_INFO(masgHandle,"DO单一控制标志 成功"); 
+	}
+	
+	
+	//闭合交流接触器
+	if(FALSE==ParamSetDependWithRetry(eut,"KM控制","1",3))
+	{
+		APPEND_INFO(masgHandle,"KM控制 失败");
+		return TEST_RESULT_SOMEPASS;
+	}else{
+		APPEND_INFO(masgHandle,"KM控制 成功"); 
+	}
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		RESULT result={0};
+		ListGetItem(group.subItems,&item,i);
+		result.index=item.itemId;
+		unsigned int input = HexStrToUnsignedInt(item.inputValue_);
+		APPEND_INFO_FORMAT(masgHandle,"%s 测试",item.itemName_); 
+		tBIBO bibo={0};
+		if(FALSE==getBibo(item.itemName_,&bibo))
+		{
+			APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",item.itemName_);
+			continue;
+		}
+		char setVal[20]={0}; 
+		sprintf(setVal,"%d",bibo.maskBo);
+		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
+		{
+			APPEND_INFO(masgHandle,"操作BO失败");
+			goto DONE; 
+		}else{
+			APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBo);
+			
+		}
+		
+		char getVal[20]={0};
+		float getValF=0;
+		float standardF=0;
+		
+		int retryCnt = 5;
+		while(retryCnt-- >=0 )
+		{
+			if(strcmp(item.itemName_,"电源模块1")==0 || strcmp(item.itemName_,"电源模块2")==0 || strcmp(item.itemName_,"电源模块3")==0 || strcmp(item.itemName_,"电源模块6_1")==0)
+			{
+				if(FALSE == ParamGetDependWithRetry(eut,"枪1电表电压",getVal,3))
+				{
+					APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					goto DONE;		
+				}
+			}else{
+				if(FALSE == ParamGetDependWithRetry(eut,"枪2电表电压",getVal,3))
+				{
+					APPEND_INFO(masgHandle,"获取枪2电压失败");  
+					goto DONE;		
+				}				
+			}
+			
+			getValF= atof(getVal);
+		
+			standardF=atof(item.standard_);
+		
+		
+			
+		
+			if(getValF>standardF-5 && getValF<standardF+5)
+			{
+				result.pass=RESULT_PASS;
+				//break;
+			}else{
+				result.pass=RESULT_FAIL;
+			}
+			
+			APPEND_INFO_FORMAT(masgHandle,"电压值为:%f,测试结果为:%d",getValF,result.pass);
+			if(result.pass == RESULT_PASS)
+				break;
+			
+			if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",10))
+			{
+				break;
+			}
+			
+		}
+		
+		//断开所有及短期
+		memset(setVal,0,20);
+		sprintf(setVal,"%d",bibo.maskBi);
+		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
+		{
+			APPEND_INFO(masgHandle,"操作BO失败");
+			goto DONE; 
+		}else{
+			APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBi);
+		}		
+		saveResult(hashTable,&result);				
+	}
+DONE:
+	if(FALSE==ParamSetDependWithRetry(eut,"KM控制","0",3))
+	{
+		APPEND_INFO(masgHandle,"KM控制 失败");
+		return TEST_RESULT_SOMEPASS;
+	}else{
+		APPEND_INFO(masgHandle,"KM控制 成功"); 
+	}
+	return ret;
+}
+#endif
+
+
+TPS registerPowerModuleTestTps(void)
+{
+	TPS tps=newTps("PowerModule");
+	tps.testFunction=PowerModuleTest;
+	//tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }
 
