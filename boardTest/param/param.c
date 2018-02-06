@@ -1389,11 +1389,137 @@ DONE:
 	return ret;	
 }
 
+METHODRET InsulationTest2(TestGroup group,EUT eut,HashTableType hashTable,int msgHander)
+{
+	APPEND_INFO_FORMAT(msgHander,"进入：%s",group.groupName);
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	char insulationResultCmd[20]={0};
+	char insulationResultPos[20]={0};
+	char insulationResultNag[20]={0};
+	char ammeter[20]={0};
+	if(strcmp(group.groupName,"枪1绝缘检测功能")==0)
+	{
+		sprintf(insulationResultCmd,"%s","1枪绝缘检测结果");
+		sprintf(insulationResultPos,"%s","1枪绝缘电阻正");
+		sprintf(insulationResultNag,"%s","1枪绝缘电阻负");
+		sprintf(ammeter,"%s","枪1电表电压");
+	
+	}else if(strcmp(group.groupName,"枪2绝缘检测功能")==0) {
+	
+		sprintf(insulationResultCmd,"%s","2枪绝缘检测结果");
+		sprintf(insulationResultPos,"%s","2枪绝缘电阻正");
+		sprintf(insulationResultNag,"%s","2枪绝缘电阻负");
+		sprintf(ammeter,"%s","枪2电表电压"); 
+	
+	}else{
+	
+		return ret;
+	}
+	if(FALSE==ParamSetDependWithRetry(eut,"DO单一控制标志","0",3))
+	{
+		APPEND_INFO(msgHander,"DO单一控制标志 失败");
+		return TEST_RESULT_SOMEPASS;
+	}else{
+		APPEND_INFO(msgHander,"DO单一控制标志 成功"); 
+	}
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT result={0};
+		result.index=item.itemId;
+		
+		APPEND_INFO_FORMAT(msgHander,"%s 测试",item.itemName_); 
+		tBIBO bibo={0};
+		if(FALSE==getBibo(item.itemName_,&bibo))
+		{
+			APPEND_INFO_FORMAT(msgHander,"%s 无此配置",item.itemName_);
+			continue;
+		}
+		char setVal[20]={0}; 
+		sprintf(setVal,"%d",bibo.maskBo);
+		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
+		{
+			APPEND_INFO(msgHander,"操作BO失败");
+			goto DONE; 
+		}else{
+			APPEND_INFO_FORMAT(msgHander,"操作BO成功：%x",bibo.maskBo);
+			
+		}	
+		int retryCnt =40;
+		result.pass = RESULT_FAIL;
+		double outTime = Timer();
+		while(result.pass == RESULT_FAIL)
+		{
+			//memset(result.recvString,0,RESULT_RECEIVE_LEN);
+			double currentTime = Timer();	
+			if(currentTime-outTime > 15)
+			{
+				break;
+			}
+			char voltage[20]={0};
+			if(FALSE == ParamGetDependWithRetry(eut,ammeter,voltage,3))
+			{
+				APPEND_INFO_FORMAT(msgHander,"获取%s失败",ammeter); 
+				goto DONE;		
+			}
+			APPEND_INFO_FORMAT(msgHander,"%s ：%s",ammeter,voltage);
+			char getVal[20]={0};
+			if(FALSE == ParamGetDependWithRetry(eut,insulationResultCmd,getVal,3))
+			{
+				APPEND_INFO_FORMAT(msgHander,"获取%s失败",insulationResultCmd); 
+				goto DONE;		
+			}
+			APPEND_INFO_FORMAT(msgHander,"获取%s成功,值为:%s",insulationResultCmd,getVal); 
+			if(atoi(getVal) == 0)
+			{
+				result.pass = RESULT_PASS;
+				char valz[20]={0},valf[20]={0};
+				if(FALSE == ParamGetDependWithRetry(eut,insulationResultPos,valz,3))
+				{
+					APPEND_INFO_FORMAT(msgHander,"获取%s失败",insulationResultPos); 
+					goto DONE;		
+				}
+				APPEND_INFO_FORMAT(msgHander,"获取%s成功,值为:%s",insulationResultPos,valz); 	
+				if(FALSE == ParamGetDependWithRetry(eut,insulationResultNag,valf,3))
+				{
+					APPEND_INFO_FORMAT(msgHander,"获取%s失败",insulationResultNag); 
+					goto DONE;		
+				}
+				APPEND_INFO_FORMAT(msgHander,"获取%s成功,值为:%s",insulationResultNag,valf);
+				sprintf(result.recvString,"%s,%s",valz,valf);
+				break;
+			}
+			
+		}
+		saveResult(hashTable,&result);
+		memset(setVal,0,20);
+		sprintf(setVal,"%d",bibo.maskBi);
+		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
+		{
+			APPEND_INFO(msgHander,"操作BO失败");
+			goto DONE; 
+		}else{
+			APPEND_INFO_FORMAT(msgHander,"操作BO成功：%x",bibo.maskBi);
+			
+		}		
+	}
+DONE:
+	if(FALSE==ParamSetDependWithRetry(eut,"BO","1",3))
+	{
+		APPEND_INFO(msgHander,"操作BO失败");
+	}	
+	APPEND_INFO(msgHander,"退出测试");
+	return ret;		
+}	
+
 
 TPS registerInsulationTestTestTps(void)
 {
 	TPS tps=newTps("insulation");
-	tps.testFunction=InsulationTest;
+	//tps.testFunction=InsulationTest;
+	tps.testFunction=InsulationTest2;
 	return tps;	
 }
 

@@ -23,7 +23,9 @@
 #define  PANEL_TABLE                      2       /* control type: table, callback function: (none) */
 #define  PANEL_COMMANDBUTTON              3       /* control type: command, callback function: (none) */
 
-#define  SCANPANEL                        3
+#define  PANEL_2                          3
+
+#define  SCANPANEL                        4
 #define  SCANPANEL_SCAN4                  2       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN3                  3       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN2                  4       /* control type: string, callback function: (none) */
