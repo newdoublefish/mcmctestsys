@@ -1397,6 +1397,28 @@ METHODRET InsulationTest2(TestGroup group,EUT eut,HashTableType hashTable,int ms
 	char insulationResultPos[20]={0};
 	char insulationResultNag[20]={0};
 	char ammeter[20]={0};
+	
+	if(strcmp(group.groupName,"断开交流接触器")==0)
+	{
+		tBIBO bibo={0};
+		if(FALSE==getBibo(group.groupName,&bibo))
+		{
+			APPEND_INFO_FORMAT(msgHander,"%s 无此配置",group.groupName);
+			return ret;
+		}
+		char setVal[20]={0}; 
+		sprintf(setVal,"%d",bibo.maskBo);
+		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
+		{
+			APPEND_INFO(msgHander,"操作BO失败");
+			goto DONE; 
+		}else{
+			APPEND_INFO_FORMAT(msgHander,"操作BO成功：%x",bibo.maskBo);
+			
+		}
+		return ret;
+	}
+	
 	if(strcmp(group.groupName,"枪1绝缘检测功能")==0)
 	{
 		sprintf(insulationResultCmd,"%s","1枪绝缘检测结果");
