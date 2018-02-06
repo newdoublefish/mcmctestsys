@@ -18,8 +18,108 @@
 #include "testGroupInit.h"
 #include "resultUtil.h"
 
-BOOL loadResultInfo(HashTableType hashTable){
 
+void ParseXmlResult(CVIXMLElement currElem,HashTableType hashTable)
+{
+    CVIXMLElement       currChildElem = 0;  
+    int                 len,numChildElems;
+    char                *elemName = NULL, *elemValue = NULL;
+	CVIXMLGetNumChildElements (currElem, &numChildElems);
+	for(int index=0;index<numChildElems;index++){
+		
+		CVIXMLGetChildElementByIndex (currElem, index, &currChildElem);
+		char *childElemName = NULL;
+		CVIXMLGetElementTagLength (currChildElem, &len);
+   		childElemName = malloc (len + 1);
+    	CVIXMLGetElementTag (currChildElem, childElemName);
+		if(strcmp(childElemName,"Result")==0)
+		{
+				int numberAttributes=0;
+				CVIXMLGetNumAttributes(currChildElem,&numberAttributes);
+				RESULT result={0};
+				for(int i=0;i<numberAttributes;i++)
+				{
+					char temp[30]={0},value[50]={0};
+					CVIXMLAttribute attribute;
+					CVIXMLGetAttributeByIndex (currChildElem,i,&attribute);
+					CVIXMLGetAttributeName (attribute,temp);
+					CVIXMLGetAttributeValue (attribute,value); 
+					if(strcmp(temp,"id")==0)
+					{
+						result.index = atoi(value);							
+					}else if(strcmp(temp,"value")==0)
+					{
+						sprintf(result.recvString,"%s",value);
+					}else if(strcmp(temp,"pass")==0)
+					{
+						//result.pass = atoi(value);
+						if(strcmp(value,"ºÏ¸ñ")==0)
+						{
+							result.pass = RESULT_PASS;
+						}else{
+							result.pass = RESULT_FAIL;
+						}
+					}  
+					CVIXMLDiscardAttribute(attribute);
+				}
+				saveResult(hashTable,&result);
+		}
+		CVIXMLDiscardElement (currChildElem);
+	}
+}
+
+BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable){
+    CVIXMLDocument      document = 0;
+    CVIXMLElement       currElem = 0 ,currChildElem = 0;  
+    int                 len,numChildElems;
+    char                *elemName = NULL, *elemValue = NULL;
+    /* Load document and process it */
+    CVIXMLLoadDocument (fileName, &document);
+    CVIXMLGetRootElement (document, &currElem);
+    CVIXMLGetElementTagLength (currElem, &len);
+    elemName = malloc (len + 1);
+    CVIXMLGetElementTag (currElem, elemName);
+    CVIXMLGetElementValueLength (currElem, &len);
+    elemValue = malloc (len + 1);
+	
+    CVIXMLGetElementValue (currElem, elemValue);
+
+	if(strcmp(elemName,"Data")==0)
+	{
+		CVIXMLGetNumChildElements (currElem, &numChildElems); 
+		for(int index=0;index<numChildElems;index++){
+			CVIXMLGetChildElementByIndex (currElem, index, &currChildElem);	
+			char *childElemName = NULL;
+		    CVIXMLGetElementTagLength (currChildElem, &len);
+   			childElemName = malloc (len + 1);
+    		CVIXMLGetElementTag (currChildElem, childElemName);
+			if(strcmp("Device",childElemName)==0)
+			{
+				int numberAttributes=0;
+				CVIXMLGetNumAttributes(currChildElem,&numberAttributes);
+				for(int i=0;i<numberAttributes;i++)
+				{
+					char name[30]={0};
+					CVIXMLAttribute attribute;
+					CVIXMLGetAttributeByIndex (currChildElem,i,&attribute);
+					CVIXMLGetAttributeValue (attribute,name);
+					if(strcmp(name,deviceName)==0)
+					{
+						ParseXmlResult(currChildElem,hashTable);					
+					}
+					CVIXMLDiscardAttribute(attribute);
+				}
+				
+			}
+			free (childElemName);
+			CVIXMLDiscardElement (currChildElem);
+		}
+	}
+	
+    free (elemName);
+    free (elemValue);
+    CVIXMLDiscardElement (currElem);
+    CVIXMLDiscardDocument (document);		
 	return TRUE;
 } 
 

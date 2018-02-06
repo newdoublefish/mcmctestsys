@@ -8,7 +8,7 @@
 #endif
 	   
 //void saveTestResult(char *time,char *dirName,HashTableType hashTable);
-BOOL loadResultInfo(HashTableType hashTable); 
+BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable); 
 BOOL saveResultInfo(char *deviceName,HashTableType hashTable);
 
 #ifdef __cplusplus

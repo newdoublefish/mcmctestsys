@@ -658,6 +658,38 @@ static void objectPanelInit(TESTobject *_obj)
 			   //sprintf(temp,"%f",testItem.input_Value);
 			   SetTreeCellAttribute(panelHandle,P_ITEMSHOW_TREE,index-1,1, ATTR_LABEL_TEXT,testItem.inputValue_);
 			   SetTreeCellAttribute(panelHandle,P_ITEMSHOW_TREE,index-1,2, ATTR_LABEL_TEXT,testItem.standard_); 
+			   int found = 0;
+			   HashTableFindItem(_obj->resultHashTable,&testItem.itemId,&found);
+			   if(found > 0)
+			   {
+			   		RESULT result ={0};
+					HashTableGetItem(_obj->resultHashTable,&testItem.itemId,&result,sizeof(RESULT));
+					if(result.pass)
+		       		{	   
+		          		//SetActiveTreeItem(_obj->panelHandle,P_ITEMSHOW_TREE,j,VAL_REPLACE_SELECTION_WITH_ITEM);  //选中当前测试项
+		          		SetTreeItemAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
+                  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,1,ATTR_LABEL_BGCOLOR ,VAL_GREEN);	
+		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,2,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
+		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,3,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
+		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,4,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
+				  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,3,ATTR_LABEL_TEXT ,result.recvString);
+		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,4,ATTR_LABEL_TEXT ,"合格");
+
+				  
+		      		}else
+		       		{
+		         		//SetActiveTreeItem(_obj->panelHandle,P_ITEMSHOW_TREE,j,VAL_REPLACE_SELECTION_WITH_ITEM);  //选中当前测试项
+		          		SetTreeItemAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,ATTR_LABEL_BGCOLOR ,VAL_RED);
+                  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,1,ATTR_LABEL_BGCOLOR ,VAL_RED);	
+		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,2,ATTR_LABEL_BGCOLOR ,VAL_RED);
+		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,3,ATTR_LABEL_BGCOLOR ,VAL_RED);
+		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,4,ATTR_LABEL_BGCOLOR ,VAL_RED);
+				  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,3,ATTR_LABEL_TEXT ,result.recvString);
+		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,4,ATTR_LABEL_TEXT ,"不合格");
+					
+			   		}
+			   
+				}  			   
 			}  
 		}	
 	}
@@ -993,6 +1025,66 @@ static void adjustPanelSize(int panel)
 }
 
 
+void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,char *dataFileName)
+{
+	
+	int tempPanel=0;
+	if ((autoPanelHandle = LoadPanel (0, "AutoTestPanel.uir", PANEL_AUTO)) < 0)
+		return;
+
+   	if(GetPanelHandleFromTabPage(autoPanelHandle,PANEL_AUTO_TAB_AUTO,0,&tempPanel) < 0)
+  	{
+	        return;
+   	}
+	
+	gTestFlag = type; 
+	if(type == ENUM_TEST_PANEL_MANUAL){
+		
+		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TEST,ATTR_VISIBLE,0);
+		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TEXTMSG,ATTR_VISIBLE,0);		
+		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TEXTMSG_3,ATTR_VISIBLE,0);		
+	}
+	
+	adjustPanelSize(autoPanelHandle);
+	DisplayPanel(autoPanelHandle);	
+#if 0 //协议解析不放到这里，放到tps初始化后面	
+	s=GetSetting();
+	
+	if(s.collectTestMention) //如果允许提示，解析提示
+	{
+		getTipsFromExcel();
+	}
+#endif	
+	engine=createTestEngine(tempPanel,groupList,collectList);//step1 创建基于策略的测试
+	engine->onTestBeginListener=(void *)ontestBeginListener;   //测试启动回调函数
+	engine->onTestFinishListener=(void *)ontestFinishListener; //测试完成后回调函数
+	SETTING s=GetSetting();
+	engine->maxObjectPanelCountPerRow=s.maxComunPerRowInAutoTestPanel;
+	engine->reTestCnt=s.reTestCnt;
+
+
+	for(int eutIndex=1;eutIndex<=ListNumItems(deviceList);eutIndex++)
+	{
+		EUT eut;
+
+		ListGetItem(deviceList,&eut,eutIndex);
+		if(eut.enable==0) //不参与测试的不添加进自动测试里面
+			continue;
+	    TESTobject *obj=createAndaddTestObject(engine,eut);   //step2 创建并且添加测试对象
+		obj->onObjectPanelCreateListener=(void *)objectPanelCreate; //测试对象面板创建
+		obj->onObjectPanelInitListener=(void *)objectPanelInit;   //测试对象面板初始化，主要是显示测试项目
+		obj->onObjectGroupTestListener=(void *)onObjectGroupTest; //测试函数
+		obj->onResultShowListener=(void *)objectResultShow;	   //测试对象结果显示
+		obj->onObjectTestErrorListener=(void *)objectTestError;//测试对象出错
+		obj->onObjectTestFinish=(void *)objectTestFinish;
+		loadResultInfo(dataFileName,obj->device.eutName,obj->resultHashTable);
+	}
+	
+	disPlayTestPanel(engine); //step3 显示测试对象面板
+
+}
+
+
 void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type)
 {
 	
@@ -1051,6 +1143,8 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 	disPlayTestPanel(engine); //step3 显示测试对象面板
 
 }
+
+
 
 
 

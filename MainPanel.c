@@ -225,8 +225,12 @@ int CVICALLBACK PICTUREBUTTON_STATE (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			//DisplayStatusMonitorPanel2();
-			DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_MANUAL);
+			char filePath[MAX_PATHNAME_LEN]={0};
+			if(FileSelectPopup (NULL, "*.xml", "*.xml", "请选择要导入的记录文件", VAL_LOAD_BUTTON, 0, 0, 1,1,filePath)!=VAL_NO_FILE_SELECTED)
+			{
+				WarnShow1(0,filePath);
+				DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,filePath);  
+			}
 			break;
 	}
 	return 0;
