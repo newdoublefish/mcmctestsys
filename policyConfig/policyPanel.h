@@ -33,12 +33,14 @@
 #define  PLCYPANEL                        3
 #define  PLCYPANEL_ITEMTREE               2       /* control type: tree, callback function: ONCLICKITEMTREE */
 #define  PLCYPANEL_SAVESTRATEGY           3       /* control type: command, callback function: OnSaveStrategy */
-#define  PLCYPANEL_ADDCOLLECT             4       /* control type: command, callback function: OnAddCollect */
-#define  PLCYPANEL_COLLECTTREE            5       /* control type: tree, callback function: OnCollectClick */
-#define  PLCYPANEL_ADDTOCOLLECT           6       /* control type: command, callback function: OnAddTestItemToCollect */
-#define  PLCYPANEL_DELETE                 7       /* control type: command, callback function: OnDelete */
-#define  PLCYPANEL_BTN_BELOW              8       /* control type: command, callback function: OnAddTestItemToCollect */
-#define  PLCYPANEL_BTN_ABOVE              9       /* control type: command, callback function: OnAddTestItemToCollect */
+#define  PLCYPANEL_COLLECT_MOVE_DOWN      4       /* control type: command, callback function: OnAddCollect */
+#define  PLCYPANEL_COLLECT_MOVE_UP        5       /* control type: command, callback function: OnAddCollect */
+#define  PLCYPANEL_ADDCOLLECT             6       /* control type: command, callback function: OnAddCollect */
+#define  PLCYPANEL_COLLECTTREE            7       /* control type: tree, callback function: OnCollectClick */
+#define  PLCYPANEL_ADDTOCOLLECT           8       /* control type: command, callback function: OnAddTestItemToCollect */
+#define  PLCYPANEL_DELETE                 9       /* control type: command, callback function: OnDelete */
+#define  PLCYPANEL_BTN_BELOW              10      /* control type: command, callback function: OnAddTestItemToCollect */
+#define  PLCYPANEL_BTN_ABOVE              11      /* control type: command, callback function: OnAddTestItemToCollect */
 
 
      /* Control Arrays: */

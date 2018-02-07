@@ -327,8 +327,50 @@ int CVICALLBACK OnAddCollect (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			
-			ShowAddNewCollect();
+			if(control == PLCYPANEL_ADDCOLLECT)
+			{
+				ShowAddNewCollect();
+			}else if(control == PLCYPANEL_COLLECT_MOVE_UP)
+			{
+				int selectedIndex=0,parent=0;
+				GetActiveTreeItem (panel, PLCYPANEL_COLLECTTREE, &selectedIndex);  
+				GetTreeItemParent(panel,PLCYPANEL_COLLECTTREE,selectedIndex,&parent);
+				if(parent!=-1)
+				{
+			    	selectedIndex=parent;
+				}else
+				{
+			    	parent=selectedIndex;
+				}
+				//printf("selectedIndex:%d,parent:%d\n",selectedIndex,parent);
+				int pre=0;
+				GetTreeItem(panel,PLCYPANEL_COLLECTTREE,VAL_SIBLING,selectedIndex,selectedIndex,VAL_PREV,0,&pre);
+				//printf("%d\n",pre);
+				if(pre!=-1)
+				{
+					MoveTreeItem(panel,PLCYPANEL_COLLECTTREE,selectedIndex,VAL_SIBLING,pre,VAL_PREV);				
+				}			
+			}else if(control == PLCYPANEL_COLLECT_MOVE_DOWN)
+			{
+				int selectedIndex=0,parent=0;
+				GetActiveTreeItem (panel, PLCYPANEL_COLLECTTREE, &selectedIndex);  
+				GetTreeItemParent(panel,PLCYPANEL_COLLECTTREE,selectedIndex,&parent);
+				if(parent!=-1)
+				{
+			    	selectedIndex=parent;
+				}else
+				{
+			    	parent=selectedIndex;
+				}
+				//printf("selectedIndex:%d,parent:%d\n",selectedIndex,parent);
+				int pre=0;
+				GetTreeItem(panel,PLCYPANEL_COLLECTTREE,VAL_SIBLING,selectedIndex,selectedIndex,VAL_PREV,0,&pre);
+				//printf("%d\n",pre);
+				if(pre!=-1)
+				{
+					MoveTreeItem(panel,PLCYPANEL_COLLECTTREE,selectedIndex,VAL_SIBLING,pre,VAL_PREV);				
+				}			
+			}
 			break;
 	}
 	return 0;

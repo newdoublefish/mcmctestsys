@@ -541,10 +541,11 @@ BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *te
 		       {	   
 		          SetActiveTreeItem(obj->panelHandle,P_ITEMSHOW_TREE,j,VAL_REPLACE_SELECTION_WITH_ITEM);  //选中当前测试项
 		          SetTreeItemAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
-                  SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,1,ATTR_LABEL_BGCOLOR ,VAL_GREEN);	
+                  /*SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,1,ATTR_LABEL_BGCOLOR ,VAL_GREEN);	
 		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,2,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
 		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,3,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
-		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,4,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
+		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,4,ATTR_LABEL_BGCOLOR ,VAL_GREEN);*/
+				  SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,VAL_ALL_OBJECTS,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
 				  SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,3,ATTR_LABEL_TEXT ,tempStr);
 		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,4,ATTR_LABEL_TEXT ,"合格");
 
@@ -553,10 +554,10 @@ BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *te
 		       {
 		          SetActiveTreeItem(obj->panelHandle,P_ITEMSHOW_TREE,j,VAL_REPLACE_SELECTION_WITH_ITEM);  //选中当前测试项
 		          SetTreeItemAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,ATTR_LABEL_BGCOLOR ,VAL_RED);
-                  SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,1,ATTR_LABEL_BGCOLOR ,VAL_RED);	
+                  /*SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,1,ATTR_LABEL_BGCOLOR ,VAL_RED);	
 		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,2,ATTR_LABEL_BGCOLOR ,VAL_RED);
-		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,3,ATTR_LABEL_BGCOLOR ,VAL_RED);
-		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,4,ATTR_LABEL_BGCOLOR ,VAL_RED);
+		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,3,ATTR_LABEL_BGCOLOR ,VAL_RED);*/
+		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,VAL_ALL_OBJECTS,ATTR_LABEL_BGCOLOR ,VAL_RED);
 				  SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,3,ATTR_LABEL_TEXT ,tempStr);
 		          SetTreeCellAttribute(obj->panelHandle, P_ITEMSHOW_TREE,j,4,ATTR_LABEL_TEXT ,"不合格");
 				   *testItemIndex=j-groupIndex-1; 
@@ -674,10 +675,7 @@ static void objectPanelInit(TESTobject *_obj)
 		       		{	   
 		          		//SetActiveTreeItem(_obj->panelHandle,P_ITEMSHOW_TREE,j,VAL_REPLACE_SELECTION_WITH_ITEM);  //选中当前测试项
 		          		SetTreeItemAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
-                  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,1,ATTR_LABEL_BGCOLOR ,VAL_GREEN);	
-		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,2,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
-		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,3,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
-		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,4,ATTR_LABEL_BGCOLOR ,VAL_GREEN);
+                  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,VAL_ALL_OBJECTS,ATTR_LABEL_BGCOLOR ,VAL_GREEN);	
 				  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,3,ATTR_LABEL_TEXT ,result.recvString);
 		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,4,ATTR_LABEL_TEXT ,"合格");
 
@@ -686,10 +684,7 @@ static void objectPanelInit(TESTobject *_obj)
 		       		{
 		         		//SetActiveTreeItem(_obj->panelHandle,P_ITEMSHOW_TREE,j,VAL_REPLACE_SELECTION_WITH_ITEM);  //选中当前测试项
 		          		SetTreeItemAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,ATTR_LABEL_BGCOLOR ,VAL_RED);
-                  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,1,ATTR_LABEL_BGCOLOR ,VAL_RED);	
-		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,2,ATTR_LABEL_BGCOLOR ,VAL_RED);
-		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,3,ATTR_LABEL_BGCOLOR ,VAL_RED);
-		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,4,ATTR_LABEL_BGCOLOR ,VAL_RED);
+                  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,VAL_ALL_OBJECTS,ATTR_LABEL_BGCOLOR ,VAL_RED);	
 				  		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,3,ATTR_LABEL_TEXT ,result.recvString);
 		          		SetTreeCellAttribute(_obj->panelHandle, P_ITEMSHOW_TREE,index-1,4,ATTR_LABEL_TEXT ,"不合格");
 					
