@@ -17,6 +17,7 @@
 #include "resultUtil.h" 
 #include "testGroupInit.h"
 #include "TpsDefaultPanel.h"
+#include "ansi_c.h"
 static ListType tpsList;
 extern TPS registerDemoTestTPS(void);
 extern TPS registerframeTestTPS(void);
@@ -112,11 +113,17 @@ TEST_METHOD tpsSimuFunction(TestGroup group,EUT eut,HashTableType hashTable,int 
 	   {
 		  RESULT itemResult;
 		  TestItem subItem;
-		  ListGetItem(group.subItems,&subItem,k); 
-		  itemResult.pass=RESULT_PASS;
+		  ListGetItem(group.subItems,&subItem,k);
+		  int r = rand();
+		  if(r%2==0)
+		  {
+		  	itemResult.pass=RESULT_PASS;
+		  }else{
+		  	itemResult.pass=RESULT_FAIL;
+		  }
 
 		  memset(itemResult.recvString,0,20);
-		  sprintf(itemResult.recvString,"%s","pass");
+		  sprintf(itemResult.recvString,"%s",subItem.itemName_);
 		  HexString2UpperCase(itemResult.recvString); //×ª»»´óÐ¡Ð´ 
 		  itemResult.index=subItem.itemId;
 		  saveResult(hashTable,&itemResult);
@@ -127,21 +134,21 @@ TEST_METHOD tpsSimuFunction(TestGroup group,EUT eut,HashTableType hashTable,int 
 
 int getTps(char *tpsName,TPS *tpsPtr)
 {
-	 SETTING st=GetSetting(); 
+	 SETTING s=GetSetting(); 
 	 int tpsCnt=ListNumItems(tpsList);
 	 memset(tpsPtr,0,sizeof(TPS));
+	if(s.simuTest>0){
+		tpsPtr->testFunction=(TEST_FUNCTION)tpsSimuFunction;
+		tpsPtr->createTpsPanel=NULL;
+		return 1;
+	}
+		     	 
 	 for(int i=1;i<=tpsCnt;i++)
 	 {
 		 ListGetItem(tpsList,tpsPtr,i);
 		 //printf("getTps:current tpsName:%s\n",tpsPtr->tpsName);
 		 if(strcmp(tpsName,tpsPtr->tpsName)==0)
 		 {
-			 if(st.simuTest>0){
-			   //tpsPtr->autoTestFunction=(TEST_METHOD)tpsSimuTest;
-			    tpsPtr->testFunction=(TEST_FUNCTION)tpsSimuFunction;
-				tpsPtr->createTpsPanel=NULL;
-//			   tpsPtr->manualTestFunction=(TEST_METHOD)tpsSimuTest;			 
-			 }
 		     return 1;
 		 }
 	 }

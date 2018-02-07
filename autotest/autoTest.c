@@ -236,7 +236,7 @@ static void ontestFinishListener(TESTengine *t)
 {
 	if(t->testState==TEST_STOP)
 	{
-	   operateTimer(0);	
+	   //operateTimer(0);	
 	   
 	   t->testState=TEST_IDLE;
 	   setButtonState(2); 
@@ -246,7 +246,7 @@ static void ontestFinishListener(TESTengine *t)
 	}else if(t->testState==TEST_FINISH)
 	{	
 	   	
-	   operateTimer(0);	
+	   //operateTimer(0);	
 	   t->testState=TEST_IDLE; 
 	   LOG_EVENT(LOG_INFO,"测试完成");
        WarnShow1(0,"测试完成");
@@ -405,7 +405,7 @@ static void CVICALLBACK onMenuSingleObjectTestCB(int panel, int controlID, int M
 			_obj->seq.beginGroup = testGroupIndex;	
 			setButtonState(1); 
 			SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0时0分0秒"); 
-			operateTimer(1); 			
+			//operateTimer(1); 			
 			runSingleObject(engine,_obj);
 		}
 	}
@@ -514,6 +514,12 @@ BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *te
 				TestItem subItem;
 			
 		    	ListGetItem(group.subItems,&subItem,k++); 
+				
+			   int found = 0;
+			   HashTableFindItem(obj->resultHashTable,&subItem.itemId,&found);
+			   
+			   if(found<=0)
+				   continue;
 				
 				HashTableGetItem(obj->resultHashTable,&(subItem.itemId),&itemResult,sizeof(RESULT));
 				
@@ -1081,6 +1087,7 @@ void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,Lis
 	}
 	
 	disPlayTestPanel(engine); //step3 显示测试对象面板
+	operateTimer(1);
 
 }
 
@@ -1141,6 +1148,7 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 	}
 	
 	disPlayTestPanel(engine); //step3 显示测试对象面板
+	operateTimer(1);
 
 }
 
@@ -1162,7 +1170,7 @@ int CVICALLBACK STARTTEST (int panel, int control, int event,
 				{	
 				  setButtonState(1); 
 				  SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0时0分0秒"); 
-				  operateTimer(1); 
+				  //operateTimer(1); 
 			      runTestEngine(engine);//step4 测试
 				}
 			 }else
@@ -1213,7 +1221,7 @@ int CVICALLBACK RESET (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			operateTimer(0);
+			//operateTimer(0);
 			resetResult(engine);
 			reSetEngine(engine);
 			

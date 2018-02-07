@@ -795,9 +795,15 @@ BOOL checkScanResult(int panel)
 	}
 
 	
-	if((strlen(gun1)!=strlen(gun2)) | (strlen(gun1)!=12))
+	if((strlen(gun1)!=strlen(gun2)) || (strlen(gun1)!=12))
 	{
 		SetCtrlVal(panel,SCANPANEL_TEXTMSG_2,"错误:枪1枪2地址设置错误");
+		return FALSE;		
+	}
+	
+	if(gun1[11]!='1' || gun2[11]!='2')
+	{
+		SetCtrlVal(panel,SCANPANEL_TEXTMSG_2,"错误:枪1枪2地址末尾数字错误");
 		return FALSE;		
 	}
 	
@@ -2026,7 +2032,26 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 		goto DONE;
 	}else{
 		APPEND_INFO(masgHandle,"DO单一控制标志 成功"); 
-	}	
+	}
+	
+	if(strcmp(group.groupName,"断开所有继电器")==0)
+	{
+		tBIBO bibo={0};
+		char value[30]={0};
+		if(FALSE==getBibo(group.groupName,&bibo))
+		{
+			goto DONE;
+		}
+		sprintf(value,"%d",bibo.maskBo);
+		if(FALSE==ParamSetDependWithRetry(eut,"BO",value,3))
+		{
+			APPEND_INFO(masgHandle,"设置数据池BO失败");
+			goto DONE;
+		}
+		APPEND_INFO_FORMAT(masgHandle,"设置数据池BO成功:%s",value);		
+		goto DONE;
+	}
+	
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item={0};
@@ -2045,13 +2070,13 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 			char value[30]={0};
 			memset(result.recvString,0,RESULT_RECEIVE_LEN);
 			sprintf(value,"%d",bibo.maskBo);
-			if(FALSE==ParamSetDepend(eut,"BO",value))
+			if(FALSE==ParamSetDependWithRetry(eut,"BO",value,3))
 			{
 				APPEND_INFO(masgHandle,"设置数据池BO失败");
 				goto DONE;
 			}
 			APPEND_INFO_FORMAT(masgHandle,"设置数据池BO成功:%s",value);
-			if(FALSE==ParamGetDepend(eut,"BI",result.recvString))
+			if(FALSE==ParamGetDependWithRetry(eut,"BI",result.recvString,3))
 			{
 				APPEND_INFO(masgHandle,"获取数据池BI失败"); 
 				goto DONE;

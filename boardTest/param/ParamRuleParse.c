@@ -18,7 +18,7 @@
 #include "Log.h"
 //#define DEBUG
 #define RETRY_CNT 3
-//#define NEW_RULE 
+#define NEW_RULE 
 
 int ConfigParameterWithRetry(tNET_SERVICE *servicePtr,PARAMETER para)
 {
