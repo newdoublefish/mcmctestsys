@@ -167,7 +167,7 @@ void CreateReportFilePath(char *customName,char *fileName,TESTobject testObj)
 void saveResultToFile(TESTobject testObj)
 {
 	char filePath[MAX_PATHNAME_LEN]={0};
-	char stubNum[20] = {0};
+	char stubNum[100] = {0};
 	SETTING set=GetSetting();
 	if(set.reportInfoCustom)
 	{			

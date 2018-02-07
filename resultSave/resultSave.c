@@ -39,6 +39,8 @@
 #define SAVE_STEP_NONE 0
 static int saveStep=SAVE_STEP_TABLE_TITLE;
 
+static void getResultRecordTime(char *timeBuffer);
+
 
 
 
@@ -386,37 +388,51 @@ void parseExcelCell(char *writeStr,char *temp,HashTableType hashTable)
 	 RegExpr_FindPatternInText("[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
 	 memcpy(tempBuffer,temp+position,matchedLen);
 	 int id=atoi(tempBuffer);
+	 int found = 0;
+	  HashTableFindItem(hashTable,&id,&found);
+	 if(found<=0)
+		return;	 
 	 HashTableGetItem(hashTable,&id,&itemResult,sizeof(RESULT)); 
-	 RegExpr_FindPatternInText("{result}",1,temp,-1,1,1,&matched,&position,&matchedLen);
-	//printf("result:%d,recvString:%s",itemResult.pass,itemResult.recvString);
-	 TestItem item;
-	 ListType itemList=getTestCaseList();
-	 ListGetItem(itemList,&item,id);
-	 
-	 //printf("id:%d,item.itemId:%d,itemName:%s,itemType:%s\n",id,item.itemId,item.itemName_,item.itemType_);
-	 
-	 if(matched==1)
+	 if(0==RegExpr_FindPatternInText("{result}",1,temp,-1,1,1,&matched,&position,&matchedLen))
 	 {
-	 	//填写结果
-		 if(itemResult.pass==0)
-		 {
-		 	sprintf(writeStr,"%s","不合格");
-		 }else
-		 {
-		 	sprintf(writeStr,"%s","合格"); 
-		 }
-		 
-	 }else
+	 	if(matched==1)
+	 	{
+	 		//填写结果
+		 	if(itemResult.pass==0)
+		 	{
+		 		sprintf(writeStr,"%s","不合格");
+		 	}else
+		 	{
+		 		sprintf(writeStr,"%s","合格"); 
+		 	}
+		}
+	 }
+	 
+	 if(strstr(temp,"value")!=NULL)
 	 {
+	 	sprintf(writeStr,"%s",itemResult.recvString);
+	 }
+	 
+	 if(strstr(temp,"time")!=NULL)
+	 {
+		char date[30]={0};
+		getResultRecordTime(date);
+		sprintf(writeStr,"%s",date);
+	 }
+	 
+	/*RegExpr_FindPatternInText("{value}",1,temp,-1,1,1,&matched,&position,&matchedLen);	 
+	if(matched==1)
+	{
 	 	//填写实测值
 		 sprintf(writeStr,"%s",itemResult.recvString);
-	 }
+	}*/
 }
 
-void getResultSet(char *writeStr,char *temp,HashTableType hashTable)
+BOOL getResultSet(char *writeStr,char *temp,HashTableType hashTable)
 {
 	char delims[] = ",";
   	char *result = NULL;
+	int atLeastOneResult=0;//至少有一个值
    	result = strtok( temp, delims );
 	BOOL resultSet=TRUE;
 	RESULT itemResult;
@@ -424,58 +440,36 @@ void getResultSet(char *writeStr,char *temp,HashTableType hashTable)
    	while( result != NULL ) {
       	 //printf("%s\n",result);
 		 id=atoi(result);
-		 HashTableGetItem(hashTable,&id,&itemResult,sizeof(RESULT));
-		 if(itemResult.index==id)
+		 int found = 0;
+		 HashTableFindItem(hashTable,&id,&found);
+		 if(found>0)
 		 {
-		 	 if(0==itemResult.pass)
-			 {
-			 	resultSet=FALSE;
-				break;
-			 }
-		 }		 
+			 atLeastOneResult++;
+		 	HashTableGetItem(hashTable,&id,&itemResult,sizeof(RESULT));
+		 	if(itemResult.index==id)
+		 	{
+		 		 if(0==itemResult.pass)
+			 	{
+			 		resultSet=FALSE;
+					break;
+			 	}
+		 	} 
+		 } 		 
        	 result = strtok( NULL, delims );
  	}
 	
-	if(resultSet==FALSE)
+	if(atLeastOneResult>0)
 	{
-		 sprintf(writeStr,"%s","不合格");
-	}else
-	{
-		 sprintf(writeStr,"%s","合格"); 
-	}	
-	 /*RESULT itemResult;
-	 char tempBuffer[100]={0};
-	 int matched,position,matchedLen;
-	 
-	 RegExpr_FindPatternInText("[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
-	 memcpy(tempBuffer,temp+position,matchedLen);
-	 int id=atoi(tempBuffer);
-	 HashTableGetItem(hashTable,&id,&itemResult,sizeof(RESULT)); 
-	 RegExpr_FindPatternInText("{result}",1,temp,-1,1,1,&matched,&position,&matchedLen);
-	//printf("result:%d,recvString:%s",itemResult.pass,itemResult.recvString);
-	 TestItem item;
-	 ListType itemList=getTestCaseList();
-	 ListGetItem(itemList,&item,id);
-	 
-	 //printf("id:%d,item.itemId:%d,itemName:%s,itemType:%s\n",id,item.itemId,item.itemName_,item.itemType_);
-	 
-	 if(matched==1)
-	 {
-	 	//填写结果
-		 if(itemResult.pass==0)
-		 {
-		 	sprintf(writeStr,"%s","不合格");
-		 }else
-		 {
-		 	sprintf(writeStr,"%s","合格"); 
-		 }
-		 
-	 }else
-	 {
-	 	//填写实测值
-		 sprintf(writeStr,"%s",itemResult.recvString);
-	 }*/
-	 
+
+		if(resultSet==FALSE)
+		{
+			sprintf(writeStr,"%s","不合格");
+		}else
+		{
+			sprintf(writeStr,"%s","合格"); 
+		}
+	}
+	return TRUE;
 }
 
 static void getResultRecordTime(char *timeBuffer)
@@ -549,16 +543,11 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 				{
 					char writeStr[100]={0};
 					BOOL writeFlag =FALSE;
-					RegExpr_FindPatternInText("{value}|{result}[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
+					RegExpr_FindPatternInText("{value}|{result}|{time}[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
 					if(matched==1)
 					{
-						//memcpy(valueStr,temp+position,matchedLen);  
-					
-						
 						parseExcelCell(writeStr,temp,hashTable);
 						writeFlag=TRUE;
-
-						//printf("%d,%d\n",currentSaveCnt/2,testCaseCnt);
 					}else{
 						RegExpr_FindPatternInText("result\{.*\}",1,temp,-1,1,1,&matched,&position,&matchedLen);
 						if(matched==1)
@@ -566,15 +555,14 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 							char tempBuffer[100]={0};
 							memcpy(tempBuffer,temp+position+7,matchedLen-8);
 							//printf("%s",tempBuffer);
-							getResultSet(writeStr,tempBuffer,hashTable);
-							//sprintf(writeStr,"%s","合格");
-							writeFlag=TRUE; 
-						}else if(0==strcmp(temp,"time"))
+							if(TRUE==getResultSet(writeStr,tempBuffer,hashTable))
+								writeFlag=TRUE; 
+						}/*else if(0==strcmp(temp,"time"))
 						{
 							//getResultRecordTime(writeStr);
 							sprintf(writeStr,"%s",date);
 							writeFlag=TRUE; 
-						}
+						}*/
 					
 					}
 					
