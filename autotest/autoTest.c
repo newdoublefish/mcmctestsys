@@ -1176,9 +1176,9 @@ int CVICALLBACK STARTTEST (int panel, int control, int event,
 
 void resetResult(TESTengine *engine)
 {
-	int groupCnt=0;
+	/*Tint groupCnt=0;
 	int itemCnt=0;
-	TestGroup testGroup={0};
+	estGroup testGroup={0};
 	TestItem testItem={0};
 	groupCnt = ListNumItems(engine->itemList);
 	for(int i=1;i<=groupCnt;i++)
@@ -1197,6 +1197,10 @@ void resetResult(TESTengine *engine)
 			}
 						
 		}
+	}*/
+	for(int z=0;z<engine->totalTestObject;z++)
+	{
+		HashTableClear(engine->objectArray[z].resultHashTable);	
 	}
 }
 
@@ -1210,8 +1214,9 @@ int CVICALLBACK RESET (int panel, int control, int event,
 	{
 		case EVENT_COMMIT:
 			operateTimer(0);
-			reSetEngine(engine);
 			resetResult(engine);
+			reSetEngine(engine);
+			
 			setButtonState(3);
 			SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0 ±0∑÷0√Î");    
 		    SetCtrlAttribute (autoPanelHandle, PANEL_AUTO_TEST, ATTR_DIMMED ,0); 
