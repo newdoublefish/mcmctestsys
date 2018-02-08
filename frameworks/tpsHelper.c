@@ -41,6 +41,7 @@ extern TPS registerStubCmdTestTps(void);
 extern TPS registerStubIoTestTps(void);
 extern TPS registerCtrlBoxSetTestTps(void);
 extern TPS registerPowerModuleTestTps(void);
+extern TPS registerGunSelectedTestTps(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
@@ -66,6 +67,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerBIBOTestTps,//BIBO
 	registerCtrlBoxSetTestTps,//控制盒编号设置
 	registerPowerModuleTestTps,//电源模块测试
+	registerGunSelectedTestTps,//枪选择
 };
 
 

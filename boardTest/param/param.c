@@ -2036,19 +2036,29 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 	
 	if(strcmp(group.groupName,"断开所有继电器")==0)
 	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,1);
+		RESULT result={0};
+		result.index = item.itemId;
+		result.pass = FALSE;
+		
 		tBIBO bibo={0};
 		char value[30]={0};
 		if(FALSE==getBibo(group.groupName,&bibo))
 		{
+			saveResult(hashTable,&result);
 			goto DONE;
 		}
 		sprintf(value,"%d",bibo.maskBo);
 		if(FALSE==ParamSetDependWithRetry(eut,"BO",value,3))
 		{
 			APPEND_INFO(masgHandle,"设置数据池BO失败");
+			saveResult(hashTable,&result);
 			goto DONE;
 		}
-		APPEND_INFO_FORMAT(masgHandle,"设置数据池BO成功:%s",value);		
+		result.pass = TRUE;
+		APPEND_INFO_FORMAT(masgHandle,"设置数据池BO成功:%s",value);
+		saveResult(hashTable,&result);
 		goto DONE;
 	}
 	
@@ -2440,22 +2450,31 @@ METHODRET PowerModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int ma
 	
 	if(strcmp(group.groupName,"断开交流接触器")==0 || strcmp(group.groupName,"枪1泄放")==0 || strcmp(group.groupName,"枪2泄放")==0)
 	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,1);
+		RESULT result={0};
+		result.index = item.itemId;
+		result.pass = FALSE;
 		tBIBO bibo={0};
 		if(FALSE==getBibo(group.groupName,&bibo))
 		{
 			APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",group.groupName);
-			return ret;
+			saveResult(hashTable,&result);
+			goto DONE;
 		}
 		char setVal[20]={0}; 
 		sprintf(setVal,"%d",bibo.maskBo);
 		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
 		{
 			APPEND_INFO_FORMAT(masgHandle,"%s,操作BO失败",group.groupName);
+			saveResult(hashTable,&result);
 			goto DONE; 
 		}else{
+			result.pass = TRUE; 
 			APPEND_INFO_FORMAT(masgHandle,"%s,操作BO成功：%x",group.groupName,bibo.maskBo);
 			
 		}
+		saveResult(hashTable,&result);
 		return ret;
 	}	
 	
@@ -2569,6 +2588,50 @@ TPS registerPowerModuleTestTps(void)
 {
 	TPS tps=newTps("PowerModule");
 	tps.testFunction=PowerModuleTest;
+	//tps.protocolInit=BiboProtocolInit;
+	return tps;			
+}
+
+int CVICALLBACK GunSelectPanelCallback (int panel, int control, int event,
+		void *callbackData, int eventData1, int eventData2)
+{
+	
+	switch (event)
+	{
+		case EVENT_COMMIT:
+			QuitUserInterface(0);
+			break;
+	}
+	return 0;
+}
+
+METHODRET GunSelectedTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	APPEND_INFO(masgHandle,"进入测试");
+	int panelHandle = LoadPanel(0,"ParamPanel.uir",GUNPANEL);
+	InstallCtrlCallback(panelHandle,GUNPANEL_COMMANDBUTTON,GunSelectPanelCallback,NULL);
+	DisplayPanel(panelHandle);
+	RunUserInterface();
+	TestItem item={0};
+	ListGetItem(group.subItems,&item,1);
+	RESULT result ={0};
+	result.index = item.itemId;
+	result.pass= RESULT_PASS;
+	int ringIdx=0;
+	GetCtrlIndex (panelHandle,GUNPANEL_RING,&ringIdx);
+	GetLabelFromIndex (panelHandle, GUNPANEL_RING, ringIdx, result.recvString);
+	saveResult(hashTable,&result);
+	DiscardPanel(panelHandle);
+	APPEND_INFO(masgHandle,"退出测试"); 
+	return ret;
+}
+
+TPS registerGunSelectedTestTps(void)
+{
+	TPS tps=newTps("gunSelect");
+	tps.testFunction=GunSelectedTest;
+	tps.createTpsPanel=NULL;
 	//tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }
