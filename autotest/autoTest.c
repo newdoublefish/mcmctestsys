@@ -176,7 +176,7 @@ void CreateReportFilePath(char *customName,char *fileName,TESTobject testObj)
 	{
 		sprintf(fileName,"%s\\%s_%s_%s%s",s.saveDir,customName,sut.systemName,startTime,".xlsx");		
 	}else{
-		sprintf(fileName,"%s\\%s%s",s.saveDir,gTestProject.projectName,".xlsx");	
+		sprintf(fileName,"%s\\%s_%s_%s%s",s.saveDir,gTestProject.projectName,sut.systemName,startTime,".xlsx");	
 	}	
 #endif	
 	//printf("%d\n",s.reportInfoCustom);
@@ -970,7 +970,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 				}
 			}
 		}
-		saveResultInfo(gEngine,gTestProject.projectName);
+		saveResultInfo(gEngine,gTestProject.projectName);   //TODO:暂时这样处理，这样操作文件过于频繁
 DONE:		
 		LOG_EVENT_FORMAT(LOG_INFO,"-----Leave GroupTest:%s-----",testItem.groupName);   		
 		

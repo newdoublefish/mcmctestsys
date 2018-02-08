@@ -169,6 +169,7 @@ int main (int argc, char *argv[])
 	if ((panelMain = LoadPanel (0, "MainPanel.uir", PANEL_MAIN)) >= 0)		   //≤‚ ‘÷˜√Ê∞Â
 	{
 		
+		
 		if(GetPanelHandleFromTabPage(panelMain,PANEL_MAIN_TAB_MAIN,1,&tabconfig) == 0)
 		{
 			    		
@@ -191,6 +192,12 @@ int main (int argc, char *argv[])
 		//SetCtrlAttribute(panelMain,ATTR_WIDTH,100);
 		adjustPanelSize(panelMain); 
 		alignToParentPanel(tabconfig,TABPANEL_2_TAB);
+		SetCtrlAttribute (tabAuto, TABPANEL_PICTUREBUTTON_AUTO, ATTR_IMAGE_FILE ,
+                              "NEWTEST.png");  
+		SetCtrlAttribute (tabAuto, TABPANEL_PICTUREBUTTON_MANUAL, ATTR_IMAGE_FILE ,
+                              "LOADTEST.png"); 
+		SetCtrlAttribute (tabAuto, TABPANEL_PICTUREBUTTON_INSTR, ATTR_IMAGE_FILE ,
+                              "TESTRECORD.png"); 
 		adjustTstTab(tabAuto);
 		
 
