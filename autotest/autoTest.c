@@ -22,6 +22,7 @@
 #include <formatio.h>
 #include "testFramework.h"
 #include "AutoTestPanel.h"
+#include "testProject.h" 
 #include "autoTest.h"
 #include "common.h"
 #include "resultSave.h"
@@ -41,7 +42,7 @@
 #include "TpsDefaultPanel.h"
 #include "sutCommon.h"
 #include "resultInfo.h"
-//#include "StubNetService.h"
+
 
 static int autoPanelHandle=0;
 
@@ -63,7 +64,8 @@ static char *startTestImagePath="startTest.png";
 static char *stopImagePath="stop.png"; 
 #endif
 
-static TESTengine *engine;
+static TESTengine *gEngine;
+static tTestProject gTestProject;
 
 static void operateTimer(int on);
 
@@ -72,6 +74,18 @@ static ENUMETestPanel gTestFlag=ENUM_TEST_PANEL_AUTO;
 
 ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType type);
 BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *testItemIndex);
+
+
+static void setPercentage(TESTobject *obj)
+{
+	int size=0;
+	TESTengine *t=obj->enginePtr;
+	HashTableGetAttribute(obj->resultHashTable,ATTR_HT_SIZE,&size);
+	int perc = size*100/(t->totalTestGroupCount);
+	char percStr[30]={0};
+	Fmt(percStr,"%d%%",perc);
+	SetCtrlVal(obj->panelHandle,P_ITEMSHOW_PERCSTR,percStr);
+}
 
 
 static void setButtonState(int state)
@@ -128,7 +142,8 @@ static void saveRecordToDb(TESTobject obj,char *productId,char *startTime,char *
 
 void CreateReportFilePath(char *customName,char *fileName,TESTobject testObj)
 {
-	//char fileName[MAX_PATHNAME_LEN]={0};   
+	//char fileName[MAX_PATHNAME_LEN]={0};  
+#if 0	
 	int fileSize;
 	SETTING s=GetSetting();
 	if(FileExists(s.saveDir,&fileSize)==0)
@@ -149,6 +164,21 @@ void CreateReportFilePath(char *customName,char *fileName,TESTobject testObj)
 	}else{
 		sprintf(fileName,"%s\\%s_%s%s",fileName,sut.systemName,startTime,".xlsx");	
 	}
+#else
+	int fileSize;
+	SETTING s=GetSetting();
+	if(FileExists(s.saveDir,&fileSize)==0)
+	{	
+	    MakeDir(s.saveDir);
+	}
+	SUT sut=GetSeletedSut(); 	
+	if(customName!=NULL)
+	{
+		sprintf(fileName,"%s\\%s_%s_%s%s",s.saveDir,customName,sut.systemName,startTime,".xlsx");		
+	}else{
+		sprintf(fileName,"%s\\%s%s",s.saveDir,gTestProject.projectName,".xlsx");	
+	}	
+#endif	
 	//printf("%d\n",s.reportInfoCustom);
 /*	
 	SUT sut=GetSeletedSut();
@@ -285,13 +315,13 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 									void *callbackData)
 {
 	
-	if(engine->testState==TEST_RUN)
+	if(gEngine->testState==TEST_RUN)
 	{
        WarnShow1(panel,"正在测试中");
 	   return;
 		
 	} 
-	engine->testState=TEST_RUN;
+	gEngine->testState=TEST_RUN;
 	char groupTag[32]={0}; 
 	int selected=0;
 	int numDescendents=0;
@@ -329,10 +359,10 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 		int collectId = getNumFromTag(collectTag);
 		int groupId = getNumFromTag(groupTag);
 		TestGroup group={0}; 
-		ListGetItem(engine->itemList,&group,groupId);
+		ListGetItem(gEngine->itemList,&group,groupId);
 		//printf("groupName:%s\n",group.groupName);
 		//测试单项
-		TESTobject *_obj=getTestObjectByPanelHandle(panel,engine);
+		TESTobject *_obj=getTestObjectByPanelHandle(panel,gEngine);
 		if(_obj!=NULL)
 		{
 			
@@ -340,14 +370,14 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 			_obj->seq.beginCollect = collectId;
 			_obj->seq.beginGroup = testGroupIndex;	
 			ENUMTestResult ret = onObjectGroupTest(group,_obj,TYPE_AUTO); 
-			engine->currentCollect = collectId;
-			engine->testState = TEST_IDLE;
+			gEngine->currentCollect = collectId;
+			gEngine->testState = TEST_IDLE;
 			
 			if(ret != TEST_RESULT_QUIT)
 				objectResultShow(_obj,group,testGroupIndex,&testItemIndex);
 		}
 	}
-	engine->testState=TEST_IDLE;
+	gEngine->testState=TEST_IDLE;
 	//printf("-------tag:%d,numDescendents:%d,numParents:%d\n",getNumFromTag(tag),numDescendents,numParents); 
 }
 
@@ -394,10 +424,10 @@ static void CVICALLBACK onMenuSingleObjectTestCB(int panel, int controlID, int M
 		int collectId = getNumFromTag(collectTag);
 		int groupId = getNumFromTag(groupTag);
 		TestGroup group={0}; 
-		ListGetItem(engine->itemList,&group,groupId);
+		ListGetItem(gEngine->itemList,&group,groupId);
 		//printf("groupName:%s\n",group.groupName);
 		//测试单项
-		TESTobject *_obj=getTestObjectByPanelHandle(panel,engine);
+		TESTobject *_obj=getTestObjectByPanelHandle(panel,gEngine);
 
 		if(_obj!=NULL)
 		{
@@ -406,7 +436,7 @@ static void CVICALLBACK onMenuSingleObjectTestCB(int panel, int controlID, int M
 			setButtonState(1); 
 			SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0时0分0秒"); 
 			//operateTimer(1); 			
-			runSingleObject(engine,_obj);
+			runSingleObject(gEngine,_obj);
 		}
 	}
 	//printf("-------tag:%d,numDescendents:%d,numParents:%d\n",getNumFromTag(tag),numDescendents,numParents); 
@@ -416,7 +446,7 @@ static void CVICALLBACK onMenuSingleObjectTestCB(int panel, int controlID, int M
 
 static void objectPanelCreate(int *panel)
 {
-    *panel=LoadPanel (engine->panelHandle, "AutoTestPanel.uir", P_ITEMSHOW);
+    *panel=LoadPanel (gEngine->panelHandle, "AutoTestPanel.uir", P_ITEMSHOW);
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_EXPAND_SUBTREE); 
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_SEARCH);
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_SORT);  
@@ -455,11 +485,14 @@ BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *te
 	int groupIndex=collectIndex+1;
 	//PRINT("groupIndex=%d\n",groupIndex); 
 	
-	int  perc=(obj->totalFinishedTestGroupCount)*100/(t->totalTestGroupCount);
-	
+	//int  perc=(obj->totalFinishedTestGroupCount)*100/(t->totalTestGroupCount);
+	/*int size=0;
+	HashTableGetAttribute(obj->resultHashTable,ATTR_HT_SIZE,&size);
+	int perc = size*100/(t->totalTestGroupCount);
 	char percStr[30]={0};
 	Fmt(percStr,"%d%%",perc);
-	SetCtrlVal(obj->panelHandle,P_ITEMSHOW_PERCSTR,percStr);
+	SetCtrlVal(obj->panelHandle,P_ITEMSHOW_PERCSTR,percStr); */
+	setPercentage(obj);
 	
 	//PRINT("total:%d,current:%d,%s",t->totalTestGroupCount,obj->totalFinishedTestGroupCount,percStr);
 	
@@ -694,6 +727,7 @@ static void objectPanelInit(TESTobject *_obj)
 			}  
 		}	
 	}
+	setPercentage(_obj);
 	SETTING set=getSetting();
 	SetTreeCellAttribute (panelHandle,P_ITEMSHOW_TREE, VAL_ALL_OBJECTS ,  VAL_ALL_OBJECTS , ATTR_LABEL_POINT_SIZE,set.frontSize);
 		
@@ -1026,9 +1060,10 @@ static void adjustPanelSize(int panel)
 }
 
 
-void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,char *dataFileName)
+void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject testProject)
 {
 	
+	memcpy(&gTestProject,&testProject,sizeof(tTestProject));
 	int tempPanel=0;
 	if ((autoPanelHandle = LoadPanel (0, "AutoTestPanel.uir", PANEL_AUTO)) < 0)
 		return;
@@ -1056,12 +1091,12 @@ void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,Lis
 		getTipsFromExcel();
 	}
 #endif	
-	engine=createTestEngine(tempPanel,groupList,collectList);//step1 创建基于策略的测试
-	engine->onTestBeginListener=(void *)ontestBeginListener;   //测试启动回调函数
-	engine->onTestFinishListener=(void *)ontestFinishListener; //测试完成后回调函数
+	gEngine=createTestEngine(tempPanel,groupList,collectList);//step1 创建基于策略的测试
+	gEngine->onTestBeginListener=(void *)ontestBeginListener;   //测试启动回调函数
+	gEngine->onTestFinishListener=(void *)ontestFinishListener; //测试完成后回调函数
 	SETTING s=GetSetting();
-	engine->maxObjectPanelCountPerRow=s.maxComunPerRowInAutoTestPanel;
-	engine->reTestCnt=s.reTestCnt;
+	gEngine->maxObjectPanelCountPerRow=s.maxComunPerRowInAutoTestPanel;
+	gEngine->reTestCnt=s.reTestCnt;
 
 
 	for(int eutIndex=1;eutIndex<=ListNumItems(deviceList);eutIndex++)
@@ -1071,25 +1106,38 @@ void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,Lis
 		ListGetItem(deviceList,&eut,eutIndex);
 		if(eut.enable==0) //不参与测试的不添加进自动测试里面
 			continue;
-	    TESTobject *obj=createAndaddTestObject(engine,eut);   //step2 创建并且添加测试对象
+	    TESTobject *obj=createAndaddTestObject(gEngine,eut);   //step2 创建并且添加测试对象
 		obj->onObjectPanelCreateListener=(void *)objectPanelCreate; //测试对象面板创建
 		obj->onObjectPanelInitListener=(void *)objectPanelInit;   //测试对象面板初始化，主要是显示测试项目
 		obj->onObjectGroupTestListener=(void *)onObjectGroupTest; //测试函数
 		obj->onResultShowListener=(void *)objectResultShow;	   //测试对象结果显示
 		obj->onObjectTestErrorListener=(void *)objectTestError;//测试对象出错
 		obj->onObjectTestFinish=(void *)objectTestFinish;
-		loadResultInfo(dataFileName,obj->device.eutName,obj->resultHashTable);
+		loadResultInfo(gTestProject.projectPath,obj->device.eutName,obj->resultHashTable,gTestProject.projectName);
 	}
-	
-	disPlayTestPanel(engine); //step3 显示测试对象面板
+	SUT sut=GetSeletedSut();
+	char currentSutName[50]={0};
+	sprintf(currentSutName,"当前测试项目:%s",sut.systemName);
+	SetCtrlVal(autoPanelHandle,PANEL_AUTO_CURRENT_SUT,currentSutName);
+	SetCtrlVal(autoPanelHandle,PANEL_AUTO_TEST_PROJECT,gTestProject.projectName);	
+	disPlayTestPanel(gEngine); //step3 显示测试对象面板
 	operateTimer(1);
 
 }
 
+BOOL createNewTestProject()
+{
+	return TRUE;	
+}
 
-void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type)
+void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject testProject)
 {
 	
+	/*if(FALSE==createNewTestProject())
+	{
+		return;		
+	}*/
+	memcpy(&gTestProject,&testProject,sizeof(tTestProject));	
 	int tempPanel=0;
 	if ((autoPanelHandle = LoadPanel (0, "AutoTestPanel.uir", PANEL_AUTO)) < 0)
 		return;
@@ -1106,7 +1154,11 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TEXTMSG,ATTR_VISIBLE,0);		
 		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TEXTMSG_3,ATTR_VISIBLE,0);		
 	}
-	
+	SUT sut=GetSeletedSut();
+	char currentSutName[50]={0};
+	sprintf(currentSutName,"当前测试项目:%s",sut.systemName);
+	SetCtrlVal(autoPanelHandle,PANEL_AUTO_CURRENT_SUT,currentSutName);	
+	SetCtrlVal(autoPanelHandle,PANEL_AUTO_TEST_PROJECT,testProject.projectName);	
 	adjustPanelSize(autoPanelHandle);
 	DisplayPanel(autoPanelHandle);	
 #if 0 //协议解析不放到这里，放到tps初始化后面	
@@ -1117,12 +1169,12 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 		getTipsFromExcel();
 	}
 #endif	
-	engine=createTestEngine(tempPanel,groupList,collectList);//step1 创建基于策略的测试
-	engine->onTestBeginListener=(void *)ontestBeginListener;   //测试启动回调函数
-	engine->onTestFinishListener=(void *)ontestFinishListener; //测试完成后回调函数
+	gEngine=createTestEngine(tempPanel,groupList,collectList);//step1 创建基于策略的测试
+	gEngine->onTestBeginListener=(void *)ontestBeginListener;   //测试启动回调函数
+	gEngine->onTestFinishListener=(void *)ontestFinishListener; //测试完成后回调函数
 	SETTING s=GetSetting();
-	engine->maxObjectPanelCountPerRow=s.maxComunPerRowInAutoTestPanel;
-	engine->reTestCnt=s.reTestCnt;
+	gEngine->maxObjectPanelCountPerRow=s.maxComunPerRowInAutoTestPanel;
+	gEngine->reTestCnt=s.reTestCnt;
 
 
 	for(int eutIndex=1;eutIndex<=ListNumItems(deviceList);eutIndex++)
@@ -1132,7 +1184,7 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 		ListGetItem(deviceList,&eut,eutIndex);
 		if(eut.enable==0) //不参与测试的不添加进自动测试里面
 			continue;
-	    TESTobject *obj=createAndaddTestObject(engine,eut);   //step2 创建并且添加测试对象
+	    TESTobject *obj=createAndaddTestObject(gEngine,eut);   //step2 创建并且添加测试对象
 		obj->onObjectPanelCreateListener=(void *)objectPanelCreate; //测试对象面板创建
 		obj->onObjectPanelInitListener=(void *)objectPanelInit;   //测试对象面板初始化，主要是显示测试项目
 		obj->onObjectGroupTestListener=(void *)onObjectGroupTest; //测试函数
@@ -1141,8 +1193,8 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 		obj->onObjectTestFinish=(void *)objectTestFinish;
 		//obj->ON_OBJECT_TEST_FINISH_LISTENER
 	}
-	
-	disPlayTestPanel(engine); //step3 显示测试对象面板
+			
+	disPlayTestPanel(gEngine); //step3 显示测试对象面板
 	operateTimer(1);
 
 }
@@ -1159,18 +1211,18 @@ int CVICALLBACK STARTTEST (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			 if(engine->testState==TEST_IDLE)
+			 if(gEngine->testState==TEST_IDLE)
 			 {	   
-				if(engine->totalTestObject!=0)
+				if(gEngine->totalTestObject!=0)
 				{	
 				  setButtonState(1); 
 				  SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0时0分0秒"); 
 				  //operateTimer(1); 
-			      runTestEngine(engine);//step4 测试
+			      runTestEngine(gEngine);//step4 测试
 				}
 			 }else
 			 {
-			    engine->testState=TEST_STOP;
+			    gEngine->testState=TEST_STOP;
 			 } 
 		     break;
 	}
@@ -1201,9 +1253,9 @@ void resetResult(TESTengine *engine)
 						
 		}
 	}*/
-	for(int z=0;z<engine->totalTestObject;z++)
+	for(int z=0;z<gEngine->totalTestObject;z++)
 	{
-		HashTableClear(engine->objectArray[z].resultHashTable);	
+		HashTableClear(gEngine->objectArray[z].resultHashTable);	
 	}
 }
 
@@ -1217,8 +1269,8 @@ int CVICALLBACK RESET (int panel, int control, int event,
 	{
 		case EVENT_COMMIT:
 			//operateTimer(0);
-			resetResult(engine);
-			reSetEngine(engine);
+			resetResult(gEngine);
+			reSetEngine(gEngine);
 			
 			setButtonState(3);
 			SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0时0分0秒");    
@@ -1259,17 +1311,13 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
 	{
 		case EVENT_COMMIT:
 			//ReleaseStubNetService();//断开与充电桩的连接
-			if(engine->testState == TEST_RUN)
+			if(gEngine->testState == TEST_RUN)
 			{
 				WarnShow1(0,"正在测试中！稍后再试");
 				return 0;
 			}
-			//saveTestInfo(engine);
-			for(int i = 0;i<engine->totalTestObject;i++)
-			{
-				saveResultInfo(engine->objectArray[i].device.eutName,engine->objectArray[i].resultHashTable);
-			}
-			releaseTestEngine(engine);
+			saveResultInfo(gEngine,gTestProject.projectName);
+			releaseTestEngine(gEngine);
 			DiscardPanel(panel); 
 			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);  
 			break;
@@ -1281,7 +1329,7 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
 static void reFreshAutoTestPanel(int panel)
 {
 	adjustPanelSize(autoPanelHandle);
-	reSetEngine(engine);
+	reSetEngine(gEngine);
 }
 #endif
 
@@ -1318,7 +1366,7 @@ int CVICALLBACK genReport (int panel, int control, int event,
 				sprintf(startTime,"%d年%02d月%02d日%2d时%02d分%02d秒",year,month,day,hour,min,sec); 
 			 	
 			 }
-		     saveAutoTestResult(engine);
+		     saveAutoTestResult(gEngine);
 			 //soundFinish();
 			 
 		     LOG_EVENT(LOG_INFO,"完成"); 

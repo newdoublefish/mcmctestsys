@@ -13,7 +13,12 @@
 
      /* Panels and Controls: */
 
-#define  PANEL_MAIN                       1
+#define  NEW_TEST                         1
+#define  NEW_TEST_STRING                  2       /* control type: string, callback function: (none) */
+#define  NEW_TEST_SURE                    3       /* control type: command, callback function: (none) */
+#define  NEW_TEST_TEXTMSG                 4       /* control type: textMsg, callback function: (none) */
+
+#define  PANEL_MAIN                       2
 #define  PANEL_MAIN_PICTURE               2       /* control type: picture, callback function: (none) */
 #define  PANEL_MAIN_TAB_MAIN              3       /* control type: tab, callback function: CLICKTAB */
 #define  PANEL_MAIN_QUIT                  4       /* control type: pictButton, callback function: QUITAPP */

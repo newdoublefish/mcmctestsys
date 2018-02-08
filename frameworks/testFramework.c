@@ -266,7 +266,16 @@ TESTengine *createTestEngine(int panelHandle,ListType itemList,ListType collectL
 	 {
 	     Collect collect;
 		 ListGetItem(collectList,&collect,i);
-		 t->totalTestGroupCount+=ListNumItems(collect.groups);
+		 //t->totalTestGroupCount+=ListNumItems(collect.groups);
+		 for(int j=1;j<=ListNumItems(collect.groups);j++)
+		 {
+		 	  int groupIndex=0;
+
+			  ListGetItem(collect.groups,&groupIndex,j);//获取组的ID号
+			  TestGroup testGroup={0};
+		      ListGetItem(t->itemList,&testGroup,groupIndex);//获取组			  
+			  t->totalTestGroupCount+=ListNumItems(testGroup.subItems);
+		 }
 	 }	 
 	 return t;
 }

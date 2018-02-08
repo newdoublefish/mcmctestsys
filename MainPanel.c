@@ -18,7 +18,8 @@
 #include "MainPanel.h"
 #include "sutCommon.h"
 #include "eutConfig.h"
-#include "policyConfig.h"  
+#include "policyConfig.h" 
+#include "testProject.h"  
 #include "autoTest.h"
 #include "common.h"
 #include "appInit.h"
@@ -27,7 +28,8 @@
 #include "ftpConfigView.h"
 #include "testInit.h"
 #include "log.h"
-#include "login.h"    
+#include "login.h"
+
 
 #define COPY_RIGHT "CopyRight 2017  GuangDong Thousands of Cities & Charging Stations E-Vehicles Operating Co., Ltd."
 
@@ -225,11 +227,18 @@ int CVICALLBACK PICTUREBUTTON_STATE (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			char filePath[MAX_PATHNAME_LEN]={0};
+			/*char filePath[MAX_PATHNAME_LEN]={0};
 			if(FileSelectPopup (NULL, "*.xml", "*.xml", "请选择要导入的记录文件", VAL_LOAD_BUTTON, 0, 0, 1,1,filePath)!=VAL_NO_FILE_SELECTED)
 			{
 				WarnShow1(0,filePath);
 				DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,filePath);  
+			}*/
+			tTestProject project={0};
+			if(loadTestProject(&project))
+			{
+				HidePanel(panelMain);
+				//DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,filePath);
+				DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,project);
 			}
 			break;
 	}
@@ -244,8 +253,12 @@ int CVICALLBACK PICTUREBUTTON_AUTO (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			HidePanel(panelMain); 
-			DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO);
+			tTestProject project={0};
+			if(newTestProject(&project))
+			{
+				HidePanel(panelMain);
+				DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,project);
+			}
 			break;
 	}
 	return 0;

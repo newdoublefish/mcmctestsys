@@ -13,10 +13,12 @@
  //-------------------------------------------------------------------------*/
 #include "cvixml.h"
 #include "toolbox.h"
-#include "resultInfo.h"
+
 #include "settingEntity.h" 
 #include "testGroupInit.h"
 #include "resultUtil.h"
+#include "testFramework.h"
+#include "resultInfo.h"   
 
 
 void ParseXmlResult(CVIXMLElement currElem,HashTableType hashTable)
@@ -68,7 +70,7 @@ void ParseXmlResult(CVIXMLElement currElem,HashTableType hashTable)
 	}
 }
 
-BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable){
+BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable,char *testProjectName){
     CVIXMLDocument      document = 0;
     CVIXMLElement       currElem = 0 ,currChildElem = 0;  
     int                 len,numChildElems;
@@ -86,6 +88,9 @@ BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable){
 
 	if(strcmp(elemName,"Data")==0)
 	{
+		CVIXMLAttribute attr;
+		CVIXMLGetAttributeByName(currElem,"testProject",&attr);
+		CVIXMLGetAttributeValue (attr,testProjectName);
 		CVIXMLGetNumChildElements (currElem, &numChildElems); 
 		for(int index=0;index<numChildElems;index++){
 			CVIXMLGetChildElementByIndex (currElem, index, &currChildElem);	
@@ -114,6 +119,7 @@ BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable){
 			free (childElemName);
 			CVIXMLDiscardElement (currChildElem);
 		}
+		CVIXMLDiscardAttribute(attr);
 	}
 	
     free (elemName);
@@ -202,7 +208,7 @@ void saveResultToXml(CVIXMLElement currElem,HashTableType hashTable)
 	}
 }
 
-BOOL saveResultInfo(char *deviceName,HashTableType hashTable){
+BOOL saveResultInfo(TESTengine *gEngine,char *testProjectName){
 	char fileName[MAX_PATHNAME_LEN];
 	int fileSize=0;
 	SETTING s=getSetting();
@@ -213,13 +219,13 @@ BOOL saveResultInfo(char *deviceName,HashTableType hashTable){
 	    MakeDir(s.saveDir);
 	}
 
-    sprintf(fileName,"%s\\%s",s.saveDir,deviceName); 	
+    /*sprintf(fileName,"%s\\%s",s.saveDir,deviceName); 	
 	if(FileExists(fileName,&fileSize)==0) //²»´æÔÚ
 	{	
 	    MakeDir(fileName);
-	}
+	}*/
 	
-	sprintf(fileName,"%s\\%s%s",fileName,deviceName,".xml");
+	sprintf(fileName,"%s\\%s%s",s.saveDir,testProjectName,".xml");
 	
     CVIXMLDocument      document = 0;
     CVIXMLElement       currElem = 0 ,currChildElem = 0;  
@@ -227,13 +233,13 @@ BOOL saveResultInfo(char *deviceName,HashTableType hashTable){
     char                *elemName = NULL, *elemValue = NULL;
 	CVIXMLNewDocument("Data",&document);
     CVIXMLGetRootElement (document, &currElem);
-	CVIXMLNewElement(currElem,-1,"Device", &currChildElem);
-	
-	CVIXMLAddAttribute(currChildElem,"name",deviceName);
-	
-	saveResultToXml(currChildElem,hashTable);
-
-	
+	CVIXMLAddAttribute(currElem,"testProject",testProjectName);
+	for(int i=0;i<gEngine->totalTestObject;i++)
+	{
+		CVIXMLNewElement(currElem,-1,"Device", &currChildElem);
+		CVIXMLAddAttribute(currChildElem,"name",gEngine->objectArray[i].device.eutName);
+		saveResultToXml(currChildElem,gEngine->objectArray[i].resultHashTable);
+	}
     free (elemName);
     free (elemValue);
 	CVIXMLSaveDocument (document, 0, fileName);
