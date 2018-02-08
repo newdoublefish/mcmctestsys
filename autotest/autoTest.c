@@ -970,6 +970,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 				}
 			}
 		}
+		saveResultInfo(gEngine,gTestProject.projectName);
 DONE:		
 		LOG_EVENT_FORMAT(LOG_INFO,"-----Leave GroupTest:%s-----",testItem.groupName);   		
 		
