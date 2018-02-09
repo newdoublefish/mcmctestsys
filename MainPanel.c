@@ -44,6 +44,8 @@ static int tabStrategyConfig;//策略配置tab
 static int tabHardwareConfig;  //硬件配置tab
 static int tabSystemConfig;  //系统配置tab
 
+tTestProject gProject={0};
+
 
 
 //消息传递
@@ -190,6 +192,8 @@ int main (int argc, char *argv[])
 		
 		SetCtrlAttribute(panelMain,PANEL_MAIN_TAB_MAIN,ATTR_TABS_VISIBLE,0);
 		//SetCtrlAttribute(panelMain,ATTR_WIDTH,100);
+		SetCtrlAttribute (panelMain, PANEL_MAIN_BACK, ATTR_IMAGE_FILE ,
+                              "BACKTOTEST.png");  		
 		adjustPanelSize(panelMain); 
 		alignToParentPanel(tabconfig,TABPANEL_2_TAB);
 		SetCtrlAttribute (tabAuto, TABPANEL_PICTUREBUTTON_AUTO, ATTR_IMAGE_FILE ,
@@ -243,9 +247,12 @@ int CVICALLBACK PICTUREBUTTON_STATE (int panel, int control, int event,
 			tTestProject project={0};
 			if(loadTestProject(&project))
 			{
+				SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1); 
+				memcpy(&gProject,&project,sizeof(tTestProject));
 				HidePanel(panelMain);
-				//DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,filePath);
-				DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,project);
+				DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,&gProject);
+				//printf("%s,%s",gProject.projectName,gProject.projectPath);
+				
 			}
 			break;
 	}
@@ -263,8 +270,10 @@ int CVICALLBACK PICTUREBUTTON_AUTO (int panel, int control, int event,
 			tTestProject project={0};
 			if(newTestProject(&project))
 			{
+				SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1);
+				memcpy(&gProject,&project,sizeof(tTestProject));
 				HidePanel(panelMain);
-				DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,project);
+				DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,&gProject);
 			}
 			break;
 	}
@@ -372,7 +381,8 @@ int CVICALLBACK BackMain (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			DisplaySutConfigPanel();
+			//DisplaySutConfigPanel();
+			DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,&gProject);
 			break;
 	}
 	return 0;

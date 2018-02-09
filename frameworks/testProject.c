@@ -44,7 +44,7 @@ BOOL newTestProject(tTestProject *project)
 	{
 		GetCtrlVal(panelHandle,NEW_TEST_STRING,project->projectName);
 		SETTING s=getSetting();
-		sprintf(project->projectPath,"%s",s.saveDir);
+		sprintf(project->projectPath,"%s\\%s%s",s.saveDir,project->projectName,".xml");
 	}
 	DiscardPanel(panelHandle);
 	return ret;

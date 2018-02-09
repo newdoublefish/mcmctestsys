@@ -25,8 +25,8 @@ typedef enum{
 	ENUM_TEST_PANEL_MANUAL=1,
 	ENUM_TEST_PANEL_NONE
 }ENUMETestPanel;
-void DisplayAutoTestPanel(ListType itemList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject testProject);
-void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject testProject);  
+void DisplayAutoTestPanel(ListType itemList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject *testProjectPtr);
+void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject *testProjectPtr);  
 #ifdef __cplusplus
     }
 #endif

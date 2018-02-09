@@ -65,7 +65,7 @@ static char *stopImagePath="stop.png";
 #endif
 
 static TESTengine *gEngine;
-static tTestProject gTestProject;
+static tTestProject *gTestProject;
 
 static void operateTimer(int on);
 
@@ -176,7 +176,7 @@ void CreateReportFilePath(char *customName,char *fileName,TESTobject testObj)
 	{
 		sprintf(fileName,"%s\\%s_%s_%s%s",s.saveDir,customName,sut.systemName,startTime,".xlsx");		
 	}else{
-		sprintf(fileName,"%s\\%s_%s_%s%s",s.saveDir,gTestProject.projectName,sut.systemName,startTime,".xlsx");	
+		sprintf(fileName,"%s\\%s_%s_%s%s",s.saveDir,gTestProject->projectName,sut.systemName,startTime,".xlsx");	
 	}	
 #endif	
 	//printf("%d\n",s.reportInfoCustom);
@@ -970,7 +970,7 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 				}
 			}
 		}
-		saveResultInfo(gEngine,gTestProject.projectName);   //TODO:暂时这样处理，这样操作文件过于频繁
+		saveResultInfo(gEngine,gTestProject->projectName);   //TODO:暂时这样处理，这样操作文件过于频繁
 DONE:		
 		LOG_EVENT_FORMAT(LOG_INFO,"-----Leave GroupTest:%s-----",testItem.groupName);   		
 		
@@ -1061,10 +1061,11 @@ static void adjustPanelSize(int panel)
 }
 
 
-void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject testProject)
+void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject *testProjectPtr)
 {
 	
-	memcpy(&gTestProject,&testProject,sizeof(tTestProject));
+	//memcpy(&gTestProject,&testProject,sizeof(tTestProject));
+	gTestProject=testProjectPtr;
 	int tempPanel=0;
 	if ((autoPanelHandle = LoadPanel (0, "AutoTestPanel.uir", PANEL_AUTO)) < 0)
 		return;
@@ -1114,13 +1115,13 @@ void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,Lis
 		obj->onResultShowListener=(void *)objectResultShow;	   //测试对象结果显示
 		obj->onObjectTestErrorListener=(void *)objectTestError;//测试对象出错
 		obj->onObjectTestFinish=(void *)objectTestFinish;
-		loadResultInfo(gTestProject.projectPath,obj->device.eutName,obj->resultHashTable,gTestProject.projectName);
+		loadResultInfo(gTestProject->projectPath,obj->device.eutName,obj->resultHashTable,gTestProject->projectName);
 	}
 	SUT sut=GetSeletedSut();
 	char currentSutName[50]={0};
 	sprintf(currentSutName,"当前测试项目:%s",sut.systemName);
 	SetCtrlVal(autoPanelHandle,PANEL_AUTO_CURRENT_SUT,currentSutName);
-	SetCtrlVal(autoPanelHandle,PANEL_AUTO_TEST_PROJECT,gTestProject.projectName);	
+	SetCtrlVal(autoPanelHandle,PANEL_AUTO_TEST_PROJECT,gTestProject->projectName);	
 	disPlayTestPanel(gEngine); //step3 显示测试对象面板
 	operateTimer(1);
 
@@ -1131,14 +1132,15 @@ BOOL createNewTestProject()
 	return TRUE;	
 }
 
-void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject testProject)
+void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject *testProjectPtr)
 {
 	
 	/*if(FALSE==createNewTestProject())
 	{
 		return;		
 	}*/
-	memcpy(&gTestProject,&testProject,sizeof(tTestProject));	
+	//memcpy(&gTestProject,&testProject,sizeof(tTestProject));	
+	gTestProject= testProjectPtr;
 	int tempPanel=0;
 	if ((autoPanelHandle = LoadPanel (0, "AutoTestPanel.uir", PANEL_AUTO)) < 0)
 		return;
@@ -1159,7 +1161,7 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 	char currentSutName[50]={0};
 	sprintf(currentSutName,"当前测试项目:%s",sut.systemName);
 	SetCtrlVal(autoPanelHandle,PANEL_AUTO_CURRENT_SUT,currentSutName);	
-	SetCtrlVal(autoPanelHandle,PANEL_AUTO_TEST_PROJECT,testProject.projectName);	
+	SetCtrlVal(autoPanelHandle,PANEL_AUTO_TEST_PROJECT,gTestProject->projectName);	
 	adjustPanelSize(autoPanelHandle);
 	DisplayPanel(autoPanelHandle);	
 #if 0 //协议解析不放到这里，放到tps初始化后面	
@@ -1317,7 +1319,7 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
 				WarnShow1(0,"正在测试中！稍后再试");
 				return 0;
 			}
-			saveResultInfo(gEngine,gTestProject.projectName);
+			saveResultInfo(gEngine,gTestProject->projectName);
 			releaseTestEngine(gEngine);
 			DiscardPanel(panel); 
 			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);  
