@@ -1075,7 +1075,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 		{
 			char setValue[20]={0};
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN4,setValue);
-			if(FALSE==ParamGetDependWithRetry(eut,item.itemName_,setValue,3))
+			if(FALSE==ParamSetDependWithRetry(eut,item.itemName_,setValue,3))
 			{
 				goto DONE;
 			}else{
