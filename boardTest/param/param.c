@@ -378,7 +378,7 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 		if(strcmp(item.itemName_,"ÃúÅÆ±àºÅ")==0)
 		{
 		
-			if(FALSE==ParamGetDepend(eut,"×°ÖÃ±àºÅ",itemResult.recvString))
+			if(FALSE==ParamGetDependWithRetry(eut,"×°ÖÃ±àºÅ",itemResult.recvString,3))
 			{	
 				APPEND_INFO_FORMAT(masgHandle,"%s:»ñÈ¡Ê§°Ü",item.itemName_); 
 				goto DONE;
@@ -394,7 +394,7 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 			continue;
 		}
 		
-		if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult.recvString))
+		if(FALSE==ParamGetDependWithRetry(eut,item.itemName_,itemResult.recvString,3))
 		{	
 			APPEND_INFO_FORMAT(masgHandle,"%s:»ñÈ¡Ê§°Ü",item.itemName_); 
 			goto DONE;
@@ -994,7 +994,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 			char setValue[20]={0};
 			sprintf(setValue,"00000%s",stubName);
 			
-			if(FALSE==ParamSet(servicePtr,item.itemName_,setValue))
+			if(FALSE==ParamSetDependWithRetry(eut,item.itemName_,setValue,3))
 			{
 				goto DONE;
 			}else{
@@ -1042,7 +1042,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 			
 			char setValue[20]={0};
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN3,setValue);
-			if(FALSE==ParamSet(servicePtr,item.itemName_,setValue))
+			if(FALSE==ParamSetDependWithRetry(eut,item.itemName_,setValue,3))
 			{
 				APPEND_INFO_FORMAT(masgHandler,"%s ÉèÖÃÊ§°Ü",item.itemName_); 
 				goto DONE;
@@ -1075,7 +1075,7 @@ METHODRET ParaScanTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 		{
 			char setValue[20]={0};
 			GetCtrlVal(panelHandle,SCANPANEL_SCAN4,setValue);
-			if(FALSE==ParamSet(servicePtr,item.itemName_,setValue))
+			if(FALSE==ParamGetDependWithRetry(eut,item.itemName_,setValue,3))
 			{
 				goto DONE;
 			}else{
@@ -1463,7 +1463,7 @@ METHODRET InsulationTest2(TestGroup group,EUT eut,HashTableType hashTable,int ms
 		{
 			//memset(result.recvString,0,RESULT_RECEIVE_LEN);
 			double currentTime = Timer();	
-			if(currentTime-outTime > 15)
+			if(currentTime-outTime > 30)
 			{
 				break;
 			}
@@ -1515,7 +1515,7 @@ METHODRET InsulationTest2(TestGroup group,EUT eut,HashTableType hashTable,int ms
 		}		
 	}
 DONE:
-	if(FALSE==ParamSetDependWithRetry(eut,"BO","1",3))
+	if(FALSE==ParamSetDependWithRetry(eut,"BO","0",3))
 	{
 		APPEND_INFO(msgHander,"²Ù×÷BOÊ§°Ü");
 	}	
@@ -1758,7 +1758,7 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 		getSysTime(itemResult.recvString);
 	}
 	
-	if(FALSE==ParamSetDepend(eut,item.itemName_,itemResult.recvString))
+	if(FALSE==ParamSetDependWithRetry(eut,item.itemName_,itemResult.recvString,3))
 	{
 		itemResult.pass =RESULT_FAIL; 
 		APPEND_INFO_FORMAT(masgHandle,"%s:ÉèÖÃÊ§°Ü",item.itemName_); 
@@ -1791,7 +1791,7 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 	RESULT itemResult2={0};
 	ListGetItem(group.subItems,&item2,2);	
 	itemResult2.index = item2.itemId;  
-	if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult2.recvString))
+	if(FALSE==ParamGetDependWithRetry(eut,item.itemName_,itemResult2.recvString,3))
 	{
 		itemResult2.pass =RESULT_FAIL; 
 		APPEND_INFO_FORMAT(masgHandle,"%s:»ñÈ¡Ê§°Ü",item.itemName_); 
@@ -1938,7 +1938,7 @@ METHODRET StubIoTest(TestGroup group,EUT eut,HashTableType hashTable)
 	result.index = item.itemId;
 	result.pass = RESULT_FAIL;
 	
-	if(ParamSetDepend(eut,startChargeCmd,"1")==FALSE)
+	if(ParamSetDependWithRetry(eut,startChargeCmd,"1",3)==FALSE)
 	{
 		WarnShow1(0,"ÎŞ·¨Æô¶¯³äµç");
 		goto DONE;
@@ -2541,7 +2541,7 @@ METHODRET PowerModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int ma
 		
 						
 		
-			if(getValF>standardF-5 && getValF<standardF+5)
+			if(getValF>standardF-3 && getValF<standardF+3)
 			{
 				result.pass=RESULT_PASS;
 				//break;
@@ -2631,6 +2631,29 @@ TPS registerGunSelectedTestTps(void)
 {
 	TPS tps=newTps("gunSelect");
 	tps.testFunction=GunSelectedTest;
+	tps.createTpsPanel=NULL;
+	//tps.protocolInit=BiboProtocolInit;
+	return tps;			
+}
+
+METHODRET NetWorkCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	APPEND_INFO(masgHandle,"Ö÷¶¯¶Ï¿ªÍøÂç"); 
+	ReleaseStubNetService();
+	TestItem item={0};
+	ListGetItem(group.subItems,&item,1);
+	RESULT result={0};
+	result.index=item.itemId;
+	result.pass = RESULT_PASS;
+	saveResult(hashTable,&result);
+	return ret;
+}
+
+TPS registerNetWorkCheckTestTps(void)
+{
+	TPS tps=newTps("NetWorkCheck");
+	tps.testFunction=NetWorkCheckTest;
 	tps.createTpsPanel=NULL;
 	//tps.protocolInit=BiboProtocolInit;
 	return tps;			

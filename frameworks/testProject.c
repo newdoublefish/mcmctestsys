@@ -40,9 +40,12 @@ BOOL newTestProject(tTestProject *project)
 	InstallPanelCallback(panelHandle,ProjectPanelCallback,&ret);
 	DisplayPanel(panelHandle);
 	RunUserInterface();
-	GetCtrlVal(panelHandle,NEW_TEST_STRING,project->projectName);
-	SETTING s=getSetting();
-	sprintf(project->projectPath,"%s",s.saveDir);
+	if(ret==TRUE)
+	{
+		GetCtrlVal(panelHandle,NEW_TEST_STRING,project->projectName);
+		SETTING s=getSetting();
+		sprintf(project->projectPath,"%s",s.saveDir);
+	}
 	DiscardPanel(panelHandle);
 	return ret;
 }
