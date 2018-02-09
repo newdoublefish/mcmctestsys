@@ -554,7 +554,7 @@ In Projects = "1,"
 Window Top = 64
 Window Left = 26
 Window Z-Order = 1
-Source Window State = "1,380,380,380,22,36,36,0,0,169,0,212,0,556,0,31,303,0,396,84,239,517,1,0,"
+Source Window State = "1,2094,2094,2094,25,32,32,0,0,169,0,212,0,556,0,31,2019,0,1984,125,239,517,1,0,"
 
 [File 0058]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/ParamExcelParse.c"
@@ -827,7 +827,7 @@ In Projects = "1,"
 Window Top = 122
 Window Left = 58
 Window Z-Order = 2
-Source Window State = "1,56,56,56,4,26,26,0,3,105,0,38,0,0,0,25,51,0,56,4,323,665,1,29,"
+Source Window State = "1,67,67,67,4,23,23,0,3,105,0,38,0,0,0,25,48,0,67,4,323,665,1,29,"
 
 [File 0088]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/contentVerification/verification.c"
