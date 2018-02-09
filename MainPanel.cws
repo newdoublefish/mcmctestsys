@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 6
+Number of Opened Files = 2
 Window Confinement Region Enabled = True
 MainColumnWidth = 215
 FileDateColumnWidth = 70
@@ -40,7 +40,7 @@ FileSizeColumnWidth = 70
 Version = 1700
 Don't Update DistKit = False
 Platform Code = 4
-Build Configuration = "Release"
+Build Configuration = "Debug"
 Warn User If Debugging Release = 0
 Batch Build Release = False
 Batch Build Debug = False
@@ -119,7 +119,6 @@ Disk Date = 3600999821
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 4
 Source Window State = "1,1134,1134,1134,120,134,134,0,0,80,0,0,0,0,0,21,1124,0,1126,109,275,517,1,52,"
 
 [File 0011]
@@ -129,7 +128,6 @@ Disk Date = 3600999355
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 3
 Source Window State = "1,33,33,33,5,19,19,0,0,117,0,0,0,0,0,25,33,0,46,97,323,739,1,0,"
 
 [File 0012]
@@ -149,8 +147,7 @@ Disk Date = 3601000345
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 1
-Source Window State = "1,272,272,272,16,76,76,0,0,169,0,194,0,0,0,31,236,0,249,76,323,605,1,59,"
+Source Window State = "1,272,272,272,16,76,76,0,0,95,0,194,0,0,0,25,236,0,249,76,323,605,1,59,"
 
 [File 0014]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/AppInitSplash.uir"
@@ -401,7 +398,7 @@ Disk Date = 3599792478
 In Projects = "1,"
 Window Top = 32
 Window Left = 10
-Source Window State = "1,475,516,516,0,7,7,0,0,0,0,30,0,0,0,0,191,0,518,60,323,605,0,30,"
+Source Window State = "1,475,516,516,0,7,7,0,0,95,0,30,0,0,0,25,191,0,518,60,323,605,0,30,"
 
 [File 0041]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/eutConfig/eutEntity.c"
@@ -525,7 +522,8 @@ Disk Date = 3600314480
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Source Window State = "1,60,60,60,21,22,21,0,0,0,0,12,0,12,0,0,44,0,60,32,179,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,60,60,60,21,22,21,0,0,169,0,12,0,12,0,27,40,0,61,74,179,517,1,0,"
 
 [File 0055]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/mediaUtil/mediaHelper.c"
@@ -552,7 +550,7 @@ Disk Date = 3600991799
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,1077,1077,1077,22,45,45,0,3,80,0,212,0,556,0,18,750,0,1077,22,239,517,1,0,"
+Source Window State = "1,1760,1760,1760,47,56,56,0,0,80,0,212,0,556,0,18,1767,0,1787,99,239,517,1,0,"
 
 [File 0058]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/ParamExcelParse.c"
@@ -822,7 +820,7 @@ Disk Date = 3600987768
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,59,59,59,4,23,23,0,3,105,0,38,0,0,0,25,48,0,59,4,323,665,1,29,"
+Source Window State = "1,63,63,63,4,26,26,0,3,105,0,38,0,0,0,25,48,0,63,4,323,665,1,29,"
 
 [File 0088]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/contentVerification/verification.c"
@@ -858,7 +856,6 @@ Disk Date = 3600999851
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Window Z-Order = 5
 Source Window State = "1,28,28,28,131,142,142,0,0,95,0,13,0,13,0,23,8,0,28,146,299,605,1,21,"
 
 [File 0092]
@@ -1599,16 +1596,6 @@ Disk Date = 3600953720
 In Projects = "1,"
 
 [File 0185]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.h"
-File Type = "Include"
-Disk Date = 3600952525
-In Projects = ""
-Window Top = 64
-Window Left = 26
-Window Z-Order = 6
-Source Window State = "1,24,24,24,9,24,24,0,3,80,0,0,0,0,0,19,16,0,24,9,251,517,1,0,"
-
-[File 0186]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/resource/image/BACKTOTEST.png"
 File Type = "Unknown"
 Disk Date = 3600992692
@@ -1616,11 +1603,7 @@ In Projects = "1,"
 
 [Tab Order]
 Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.uir"
-Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.c"
-Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.h"
-Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/testProject.c"
-Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
-Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.h"
+Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/manualTest.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
