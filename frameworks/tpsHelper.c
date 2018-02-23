@@ -48,11 +48,9 @@ extern TPS registerNetWorkCheckTestTps(void);
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 {
 	registerDemoTestTPS,
-	//registerframeTestTPS,
-	//registerCanTestTPS,
-	//registerSpiFlashTestTPS,
+	//可靠性
 	registerResistanceTestTPS,  //可靠性，安规仪
-	registerRs232TestTPS,
+	//整机测试
 	registerParamTestTPS,
 	registerParamsCheckTps,
 	registerParamTemperatureTps,
@@ -70,6 +68,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerPowerModuleTestTps,//电源模块测试
 	registerGunSelectedTestTps,//枪选择
 	registerNetWorkCheckTestTps,//网络检查
+	//板级测试
 };
 
 

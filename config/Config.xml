@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Projects>
-  <Version>0.2</Version>
-  <Project>
-    <ProjectName>demo</ProjectName>
-    <ConfigPath>demo\demo配置表.xlsx</ConfigPath>
-    <StrategyPath>demo\Strategy.xml</StrategyPath>	
-    <ReportPath>demo\报表模板.xlsx</ReportPath>	
-  </Project>    
+  <Version>0.2</Version>   
   <Project>
     <ProjectName>整机测试</ProjectName>
     <ConfigPath>Integrate\IntegrateConfig.xlsx</ConfigPath>
@@ -21,8 +15,8 @@
   </Project>    
   <Project>
     <ProjectName>板级测试</ProjectName>
-    <ConfigPath>板级测试\demo配置表.xlsx</ConfigPath>
-    <StrategyPath>板级测试\Strategy.xml</StrategyPath>	
-    <ReportPath>板级测试\报表模板.xlsx</ReportPath>	
+    <ConfigPath>board\BoardConfig.xlsx</ConfigPath>
+    <StrategyPath>board\Strategy.xml</StrategyPath>	
+    <ReportPath>board\BoardReport.xlsx</ReportPath>	
   </Project>    
 </Projects>
