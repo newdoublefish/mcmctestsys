@@ -43,6 +43,8 @@ extern TPS registerCtrlBoxSetTestTps(void);
 extern TPS registerPowerModuleTestTps(void);
 extern TPS registerGunSelectedTestTps(void);
 extern TPS registerNetWorkCheckTestTps(void);
+extern TPS registerBoardTestTPS(void);
+extern TPS registerCanTestTPS(void);
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
@@ -69,6 +71,8 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerGunSelectedTestTps,//«π—°‘Ò
 	registerNetWorkCheckTestTps,//Õ¯¬ÁºÏ≤È
 	//∞Âº∂≤‚ ‘
+	registerBoardTestTPS,
+	registerCanTestTPS,
 };
 
 
