@@ -11,6 +11,7 @@
  // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
+
 #include <userint.h>
 #include "excelHelper.h" 
 #include "toolbox.h"  
@@ -22,6 +23,7 @@
 #include "tpsHelper.h"
 #include "resultSave.h"
 #include "common.h"
+#include "regexpr.h" 
 								  
 #define SHEET_RANGE_TIPS "A2:B2"   
 								  
@@ -123,14 +125,103 @@ BOOL sendCmdToBoardAndGetResult(EUT eut,char *cmd,char *resultBuffer,int maxResu
 	if(sendCmdToBoard(eut.matainConfig.portNum,cmd)==FALSE)
 		return FALSE;
 
+	
 	if(resultBuffer!=NULL)
 	{
-		SetComTime(eut.matainConfig.portNum,timeOutSeconds);
+		SetComTime(eut.matainConfig.portNum,1);
 	
 		//int recvCnt=GetInQLen(eut.matainConfig.portNum);
-		if(ComRd(eut.matainConfig.portNum,resultBuffer,maxResultBufferLen)<0)
-		{
-			return FALSE;
+		double elapsed = timeOutSeconds;
+		double outTime = Timer();
+		int totalRecvCnt=0;
+		while(1)
+		{				
+			double currentTime = Timer();	
+			if(currentTime-outTime > elapsed)
+			{
+				break;
+			}			
+			char buffer[128]={0};
+			int recvLen=0;
+			recvLen=ComRd(eut.matainConfig.portNum,buffer,128);
+			if(recvLen<0)
+			{
+				return FALSE;
+			}else if(recvLen > 0)
+			{
+				//strcat(resultBuffer,buffer);
+				//sprintf(resultBuffer,"%s%s",resultBuffer,buffer);
+				memcpy(resultBuffer+totalRecvCnt,buffer,recvLen);
+				totalRecvCnt+=recvLen;
+				outTime = Timer();
+			}
+			
+			if(strstr(resultBuffer,"shell>")!=NULL)
+			{
+				break;
+			}
+		}
+	}else{
+		Delay(1);
+	}
+
+	CloseCom(eut.matainConfig.portNum);	 
+	return TRUE;
+}
+
+BOOL sendCmdToBoardAndGetResultWithMessage(EUT eut,char *cmd,char *resultBuffer,int maxResultBufferLen,double timeOutSeconds,int msgHandle)
+{
+	int RS232Error=0; 
+	
+    RS232Error = OpenComConfig (eut.matainConfig.portNum,"",eut.matainConfig.baudRate, eut.matainConfig.parity,
+                                        eut.matainConfig.dataBit, eut.matainConfig.stopBit, 0, 0);
+	
+	if(RS232Error<0)
+	{
+		  WarnShow1(0,"串口连接失败！");  
+		  return FALSE;
+	}
+	
+	if(sendCmdToBoard(eut.matainConfig.portNum,cmd)==FALSE)
+		return FALSE;
+
+	
+	if(resultBuffer!=NULL)
+	{
+		SetComTime(eut.matainConfig.portNum,1);
+	
+		//int recvCnt=GetInQLen(eut.matainConfig.portNum);
+		double elapsed = timeOutSeconds;
+		double outTime = Timer();
+		int totalRecvCnt=0;
+		while(1)
+		{				
+			ProcessSystemEvents();
+			double currentTime = Timer();	
+			if(currentTime-outTime > elapsed)
+			{
+				break;
+			}			
+			char buffer[129]={0};
+			int recvLen=0;
+			recvLen=ComRd(eut.matainConfig.portNum,buffer,128);
+			if(recvLen<0)
+			{
+				return FALSE;
+			}else if(recvLen > 0)
+			{
+				//strcat(resultBuffer,buffer);
+				//sprintf(resultBuffer,"%s%s",resultBuffer,buffer);
+				APPEND_INFO_FORMAT(msgHandle,"%s",buffer);
+				memcpy(resultBuffer+totalRecvCnt,buffer,recvLen);
+				totalRecvCnt+=recvLen;
+				outTime = Timer();
+			}
+			
+			if(strstr(resultBuffer,"shell>")!=NULL)
+			{
+				break;
+			}
 		}
 	}else{
 		Delay(1);
@@ -146,18 +237,23 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	
-	char resultBuffer[512]={0};
+	char resultBuffer[1024]={0};
 	char cmd[20]={0};
 	
 	if(getBoardCmd(group.groupName,cmd)==FALSE)
 		return TEST_RESULT_ERROR;		
 	
-	APPEND_INFO_FORMAT(msgPanel,"cmd:%s",cmd); 
+	APPEND_INFO_FORMAT(msgPanel,"send:%s",cmd); 
 	
-	if(sendCmdToBoardAndGetResult(eut,cmd,resultBuffer,512,5)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(eut,cmd,resultBuffer,1024,15,msgPanel)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
+	
+	
+	//APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);
+	
+	//printf("%s\n",resultBuffer);
 
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -195,7 +291,7 @@ METHODRET CanTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	
-	if(sendCmdToBoardAndGetResult(eut,group.type,NULL,0,0)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(eut,group.type,NULL,0,0,msgPanel)==FALSE)
 		goto DONE;
 	
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
@@ -205,7 +301,7 @@ METHODRET CanTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 		ListGetItem(group.subItems,&item,i);
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
-		if(sendCmdToBoardAndGetResult(eut,item.inputValue_,buffer,512,3)==FALSE)
+		if(sendCmdToBoardAndGetResultWithMessage(eut,item.inputValue_,buffer,512,15,msgPanel)==FALSE)
 		{
 			goto DONE;
 		}
@@ -231,5 +327,300 @@ TPS registerCanTestTPS(void)
 	tps.testFunction=CanTest;
 	return tps;
 }
+
+double getSpiAdcValue(char *source,char *spiAdc)
+{
+	 int matched,position,matchedLen;
+	 char pattern[50]={0};
+	 sprintf(pattern,"%s = [0-9]*.[0-9]* ",spiAdc);
+	 //printf("%d\n",strlen(source));
+	 RegExpr_FindPatternInText(pattern,0,source,strlen(source),1,1,&matched,&position,&matchedLen);
+	 if(matched)
+	 {	
+		char temp[20]={0};
+	 	memcpy(temp,source+position+strlen(spiAdc)+3,matchedLen-strlen(spiAdc)-4);
+		return atof(temp);
+	 }
+	return 0;		
+}
+
+METHODRET SpiAdcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	
+	char resultBuffer[512]={0};
+	
+	
+	APPEND_INFO_FORMAT(msgPanel,"send:%s",group.type); 
+	
+	if(sendCmdToBoardAndGetResultWithMessage(eut,group.type,resultBuffer,512,15,msgPanel)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	
+	
+	//APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);
+	
+	//printf("%s\n",resultBuffer);
+
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		double value = getSpiAdcValue(resultBuffer,item.itemName_);
+		double standard = atof(item.standard_);
+		if(value<standard +0.05 && value>standard-0.05)
+		{
+			itemResult.pass = RESULT_PASS;	
+		}
+		sprintf(itemResult.recvString,"%0.2f",value);
+		/*if(strstr(resultBuffer,item.standard_)!=NULL)
+		{
+			itemResult.pass = RESULT_PASS;   
+		}*/
+		saveResult(hashTable,&itemResult);
+	}
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerSpiAdcTestTPS(void)
+{
+	TPS tps=newTps("spiadc");
+	tps.testFunction=SpiAdcTest;
+	return tps;
+}
+
+double getAdcValue(char *source,char *adc)
+{
+	 int matched,position,matchedLen;
+	 char pattern[50]={0};
+	 sprintf(pattern,"%s: [0-9]*.[0-9]* ",adc);
+	 //printf("%d\n",strlen(source));
+	 RegExpr_FindPatternInText(pattern,0,source,strlen(source),1,1,&matched,&position,&matchedLen);
+	 if(matched)
+	 {	
+		char temp[20]={0};
+	 	memcpy(temp,source+position+strlen(adc)+2,matchedLen-strlen(adc)-4);
+		return atof(temp);
+	 }
+	return 0;		
+}
+
+METHODRET AdcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	
+	char resultBuffer[1024]={0};
+	
+	
+	APPEND_INFO_FORMAT(msgPanel,"send:%s",group.type); 
+	
+	if(sendCmdToBoardAndGetResultWithMessage(eut,group.type,resultBuffer,1024,15,msgPanel)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	
+	
+	APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);
+	
+	//printf("%s\n",resultBuffer);
+
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		double value = getAdcValue(resultBuffer,item.itemName_);
+		double standard = atof(item.standard_);
+		if(value<standard +0.05 && value>standard-0.05)
+		{
+			itemResult.pass = RESULT_PASS;	
+		}
+		sprintf(itemResult.recvString,"%0.2f",value);
+		/*if(strstr(resultBuffer,item.standard_)!=NULL)
+		{
+			itemResult.pass = RESULT_PASS;   
+		}*/
+		saveResult(hashTable,&itemResult);
+	}
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerAdcTestTPS(void)
+{
+	TPS tps=newTps("adc");
+	tps.testFunction=AdcTest;
+	return tps;
+}
+
+METHODRET RtcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	
+	char resultBuffer[512]={0};
+	
+	
+	APPEND_INFO_FORMAT(msgPanel,"send:%s","rtc w"); 
+	
+	if(sendCmdToBoardAndGetResultWithMessage(eut,"rtc w",resultBuffer,512,15,msgPanel)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	//APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);
+	
+	memset(resultBuffer,0,512);
+	
+	if(sendCmdToBoardAndGetResultWithMessage(eut,"rtc r",resultBuffer,512,15,msgPanel)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	//APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);	
+	
+	//printf("%s\n",resultBuffer);
+
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		itemResult.pass = RESULT_PASS;
+		saveResult(hashTable,&itemResult);
+	}
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerRTCTestTPS(void)
+{
+	TPS tps=newTps("rtc");
+	tps.testFunction=RtcTest;
+	return tps;
+}
+
+METHODRET RS485Test(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	
+	char resultBuffer[512]={0};
+	
+	
+	APPEND_INFO_FORMAT(msgPanel,"send:%s","uart"); 
+	
+	if(sendCmdToBoardAndGetResultWithMessage(eut,"uart",resultBuffer,512,15,msgPanel)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	//APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);
+	
+	//printf("%s\n",resultBuffer);
+	char *ptr1,*ptr2;
+	ptr1 = resultBuffer;
+	ptr2=strstr(resultBuffer,"CARD 2 TEST");
+	*ptr2 = '\0';
+	ptr2=ptr2+1;
+	//printf("ptr1 %s\n",ptr1);
+	//printf("ptr2 %s\n",ptr2); 
+
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		if(i==1)
+		{
+			if(strstr(ptr1,"NO")==NULL)
+			{
+				itemResult.pass = RESULT_PASS;	
+				
+			}
+		}else{
+			if(strstr(ptr2,"NO")==NULL)
+			{
+				itemResult.pass = RESULT_PASS;	
+			}			
+		}
+		
+		if(itemResult.pass == RESULT_PASS)
+		{
+			sprintf(itemResult.recvString,"%s","OK");
+		}else{
+			sprintf(itemResult.recvString,"%s","NO"); 
+		}
+
+		
+		saveResult(hashTable,&itemResult);
+	}
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerRS485TestTPS(void)
+{
+	TPS tps=newTps("485");
+	tps.testFunction=RS485Test;
+	return tps;
+}
+
+extern METHODRET manualTest(TestGroup group,EUT eut,HashTableType hashTable);
+METHODRET LedDispTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	char resultBuffer[512]={0};
+	
+	
+	APPEND_INFO_FORMAT(msgPanel,"send:%s",group.type); 
+	
+	if(sendCmdToBoardAndGetResultWithMessage(eut,group.type,resultBuffer,512,15,msgPanel)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	//APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);
+	manualTest(group,eut,hashTable);
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerLedDispTestTPS(void)
+{
+	TPS tps=newTps("disp");
+	tps.testFunction=LedDispTest;
+	return tps;
+}
+
+
+
+
 
 

@@ -45,6 +45,12 @@ extern TPS registerGunSelectedTestTps(void);
 extern TPS registerNetWorkCheckTestTps(void);
 extern TPS registerBoardTestTPS(void);
 extern TPS registerCanTestTPS(void);
+extern TPS registerSpiAdcTestTPS(void);
+extern TPS registerAdcTestTPS(void);
+extern TPS registerRTCTestTPS(void);
+extern TPS registerRS485TestTPS(void);
+extern TPS registerLedDispTestTPS(void);
+
 
 
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
@@ -73,6 +79,11 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	//∞Âº∂≤‚ ‘
 	registerBoardTestTPS,
 	registerCanTestTPS,
+	registerSpiAdcTestTPS,
+	registerAdcTestTPS,
+	registerRTCTestTPS,
+	registerRS485TestTPS,
+	registerLedDispTestTPS,
 };
 
 
