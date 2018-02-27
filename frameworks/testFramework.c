@@ -248,6 +248,58 @@ TESTobject *createAndaddTestObject(TESTengine *t,EUT eut)
 	  return obj;
 }
 
+int CalcTotalTestItemsByHash(ListType itemList,ListType collectList)
+{
+	int totalTestItems=0;
+	HashTableType table=0; 
+	HashTableCreate(10,FIXED_SIZE_KEY,sizeof(int),sizeof(int),&table);
+	 for(int i=1;i<=ListNumItems(collectList);i++)
+	 {
+	     Collect collect;
+		 ListGetItem(collectList,&collect,i);
+		 //t->totalTestGroupCount+=ListNumItems(collect.groups);
+		 for(int j=1;j<=ListNumItems(collect.groups);j++)
+		 {
+		 	  int groupIndex=0;
+
+			  ListGetItem(collect.groups,&groupIndex,j);//获取组的ID号
+			  TestGroup testGroup={0};
+		      ListGetItem(itemList,&testGroup,groupIndex);//获取组	
+			  for(int z=1;z<=ListNumItems(testGroup.subItems);z++)
+			  {
+				  TestItem item={0};
+				  ListGetItem(testGroup.subItems,&item,z);
+				  HashTableInsertItem(table,&item.itemId,&item.itemId);		  		
+			  }
+			  //totalTestItems+=ListNumItems(testGroup.subItems);
+		 }
+	 }
+	HashTableGetAttribute(table,ATTR_HT_SIZE,&totalTestItems);
+	 HashTableDispose(table);
+	 return  totalTestItems;
+}
+
+int CalcTotalTestItems(ListType itemList,ListType collectList)
+{
+	int totalTestItems=0;
+	 for(int i=1;i<=ListNumItems(collectList);i++)
+	 {
+	     Collect collect;
+		 ListGetItem(collectList,&collect,i);
+		 //t->totalTestGroupCount+=ListNumItems(collect.groups);
+		 for(int j=1;j<=ListNumItems(collect.groups);j++)
+		 {
+		 	  int groupIndex=0;
+
+			  ListGetItem(collect.groups,&groupIndex,j);//获取组的ID号
+			  TestGroup testGroup={0};
+		      ListGetItem(itemList,&testGroup,groupIndex);//获取组			  
+			  totalTestItems+=ListNumItems(testGroup.subItems);
+		 }
+	 }
+	 return  totalTestItems;
+}
+
 TESTengine *createTestEngine(int panelHandle,ListType itemList,ListType collectList)
 {
      TESTengine *t=(TESTengine *)malloc(sizeof(TESTengine));
@@ -262,21 +314,7 @@ TESTengine *createTestEngine(int panelHandle,ListType itemList,ListType collectL
 	 t->onTestFinishListener=NULL;
 	 t->totalTestGroupCount=0;
 	 t->reTestCnt=1;
-	 for(int i=1;i<=ListNumItems(collectList);i++)
-	 {
-	     Collect collect;
-		 ListGetItem(collectList,&collect,i);
-		 //t->totalTestGroupCount+=ListNumItems(collect.groups);
-		 for(int j=1;j<=ListNumItems(collect.groups);j++)
-		 {
-		 	  int groupIndex=0;
-
-			  ListGetItem(collect.groups,&groupIndex,j);//获取组的ID号
-			  TestGroup testGroup={0};
-		      ListGetItem(t->itemList,&testGroup,groupIndex);//获取组			  
-			  t->totalTestGroupCount+=ListNumItems(testGroup.subItems);
-		 }
-	 }	 
+	 t->totalTestGroupCount= CalcTotalTestItemsByHash(itemList,collectList);
 	 return t;
 }
 

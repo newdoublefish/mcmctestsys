@@ -238,7 +238,7 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	
-	char resultBuffer[1024]={0};
+	char resultBuffer[2048]={0};
 	char cmd[20]={0};
 	
 	RSCONFIG resconfig={0};
@@ -252,7 +252,7 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 	
 	APPEND_INFO_FORMAT(msgPanel,"send:%s",cmd); 
 	
-	if(sendCmdToBoardAndGetResultWithMessage(resconfig,cmd,resultBuffer,1024,15,msgPanel)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,cmd,resultBuffer,2048,15,msgPanel)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
@@ -648,6 +648,45 @@ TPS registerLedDispTestTPS(void)
 {
 	TPS tps=newTps("disp");
 	tps.testFunction=LedDispTest;
+	return tps;
+}
+
+METHODRET BoardDoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	char resultBuffer[2048]={0};
+	char cmd[20]={0};
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}
+	
+	if(getBoardCmd(group.groupName,cmd)==FALSE)
+		return TEST_RESULT_ERROR;		
+	
+	APPEND_INFO_FORMAT(msgPanel,"send:%s",cmd); 	
+	
+	
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,cmd,resultBuffer,2048,15,msgPanel)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	//APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);
+	manualTest(group,eut,hashTable);
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerBoardDoTestTPS(void)
+{
+	TPS tps=newTps("do");
+	tps.testFunction=BoardDoTest;
 	return tps;
 }
 

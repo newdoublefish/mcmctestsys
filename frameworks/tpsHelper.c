@@ -50,6 +50,7 @@ extern TPS registerAdcTestTPS(void);
 extern TPS registerRTCTestTPS(void);
 extern TPS registerRS485TestTPS(void);
 extern TPS registerLedDispTestTPS(void);
+extern TPS registerBoardDoTestTPS(void);
 
 
 
@@ -84,6 +85,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerRTCTestTPS,
 	registerRS485TestTPS,
 	registerLedDispTestTPS,
+	registerBoardDoTestTPS,
 };
 
 
