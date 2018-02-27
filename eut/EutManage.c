@@ -1,6 +1,7 @@
 #include "EutManage.h"
 #include "toolbox.h"   
 #include "EutManagePanel.h"
+#include "sutCommon.h"  
 
 ListType eutList;
 ListType activityList;
@@ -29,11 +30,16 @@ typedef struct{
 }tConfig;
 
 static tConfig tConfigGroup[]={
-	{"基本配置",BasicConfigActivity},
+	/*{"基本配置",BasicConfigActivity},
 	{"安规测量仪",RS422ConfigActivity},
 	{"继电器",RS422ConfigActivity}, 
 	{"BMS模拟器",RS422ConfigActivity}, 	
 	{"充电桩网络",NetConfigActivity},
+	{"k60串口",RS422ConfigActivity}, 
+	{"k64串口",RS422ConfigActivity},*/
+	{"Basic",BasicConfigActivity},
+	{"Serial",RS422ConfigActivity},
+	{"Net",NetConfigActivity}, 
 };
 
 
@@ -117,10 +123,11 @@ void ParseXML2EutList(CVIXMLElement currElem)
 	   
 	   //ConfigActivity activity;
 	   tActivity ta={0};
-	   if(getActivity(elemValue,&ta)>0)
+	   if(getActivity(elemName,&ta)>0)
 	   {
 			ConfigItem item={0};
-			sprintf(item.tagName,"%s",ta.name);
+			sprintf(item.tagName,"%s",elemValue);
+			sprintf(item.typeName,"%s",elemName); 
 			item.configPtrHandle =(*(ON_CREATE_CONFIG)(ta.activity.onCreate))();
 			ListType list=ParseXmlElementsToListMap(currChildElem);
 			//(*(LOAD_EUT_SUB_CONFIG)activity.loadConfig)(currChildElem,item.configPtrHandle);
@@ -206,8 +213,11 @@ void LoadEutList()
 
 	InitActivity();
 	char fileName[MAX_PATHNAME_LEN];
-	GetProjectDir (fileName);
-	strcat(fileName,deviceFile);
+	//GetProjectDir (fileName);
+	//strcat(fileName,deviceFile);
+	SUT s;
+	s=GetSeletedSut();
+	sprintf(fileName,"%s",s.deviceFile);	
 	LoadEutListFromXml(eutList,fileName);
 }
 
@@ -274,15 +284,15 @@ void saveListMapToXml(ListType list,CVIXMLElement currElem)
 void saveEut2Xml(EEUT eut,CVIXMLElement currElem)
 {
 	
-	ConfigItem item;  
+	ConfigItem item={0};  
 	for(int j=1;j<=ListNumItems(eut.configList);j++)
 	{
 		ListGetItem(eut.configList,&item,j);
 		//ConfigActivity activity;
 		tActivity ta={0};
-		getActivity(item.tagName,&ta);
+		//getActivity(item.tagName,&ta);
 		//ListGetItem(activityList,&ta,j);
-	   	if(getActivity(item.tagName,&ta)>0)
+	   	if(getActivity(item.typeName,&ta)>0)
 	   	{
 			CVIXMLElement currChildElem; 
 			CVIXMLNewElement(currElem,j-1,ta.activity.configName, &currChildElem); 
@@ -292,7 +302,7 @@ void saveEut2Xml(EEUT eut,CVIXMLElement currElem)
 			(*(ON_SAVE_CONFIG)ta.activity.onSaveConfig)(mapList,item.configPtrHandle);
 			saveListMapToXml(mapList,currChildElem);
 			disposeMapList(mapList);
-			CVIXMLSetElementValue (currChildElem,ta.name);
+			CVIXMLSetElementValue (currChildElem,item.tagName);
 			CVIXMLDiscardElement(currChildElem);
 				
 	   	}
@@ -302,32 +312,68 @@ void saveEut2Xml(EEUT eut,CVIXMLElement currElem)
 
 void addNewToEutList()
 {
-	if(ListNumItems(eutList)==0)
+	/*if(ListNumItems(eutList)==0)
 	{
 		eutList=ListCreate(sizeof(EEUT));	
+	}*/
+	
+	EEUT eut={0};
+	if(ListNumItems(eutList)==0)
+	{
+		return;
 	}
-		EEUT eut={0};
-		eut.configList=ListCreate(sizeof(ConfigItem));
+	
+	ListGetItem(eutList,&eut,1);
+	
+	EEUT eutNew={0};
+	eutNew.configList=ListCreate(sizeof(ConfigItem));
+	
+	for(int i=1;i<=ListNumItems(eut.configList);i++)
+	{
+		tActivity ta={0};
+		ConfigItem item={0}; 
+		ListGetItem(eut.configList,&item,i);
+		if(0==getActivity(item.typeName,&ta))
+		{
+			continue;
+		}
+		ConfigItem itemNew={0};
+		sprintf(itemNew.tagName,"%s",item.tagName);
+		sprintf(itemNew.typeName,"%s",item.typeName);
+		itemNew.configPtrHandle =(*(ON_CREATE_CONFIG)(ta.activity.onCreate))();
+		ListInsertItem(eutNew.configList,&itemNew,END_OF_LIST);		
+	
+	}
+	
+	ListInsertItem(eutList,&eutNew,END_OF_LIST);
+/*	
+	EEUT eut={0};
+	eut.configList=ListCreate(sizeof(ConfigItem));
 		
-		for(int i=1;i<=ListNumItems(activityList);i++)
-	 	{
+	for(int i=1;i<=ListNumItems(activityList);i++)
+	{
 			tActivity ta={0};
 			ConfigItem item={0};  
 			ListGetItem(activityList,&ta,i);
 			sprintf(item.tagName,"%s",ta.name);
 			item.configPtrHandle =(*(ON_CREATE_CONFIG)(ta.activity.onCreate))();
 			ListInsertItem(eut.configList,&item,END_OF_LIST);
-	 	}
-		
-		ListInsertItem(eutList,&eut,END_OF_LIST);
-
+	}
+	ListInsertItem(eutList,&eut,END_OF_LIST);
+*/
 }
 
 void saveEutList()
 {
-	char fileName[MAX_PATHNAME_LEN];
+	/*char fileName[MAX_PATHNAME_LEN];
 	GetProjectDir (fileName);
-	strcat(fileName,deviceFile);	
+	strcat(fileName,deviceFile);*/
+	char fileName[MAX_PATHNAME_LEN];
+	//GetProjectDir (fileName);
+	//strcat(fileName,deviceFile);
+	SUT s;
+	s=GetSeletedSut();
+	sprintf(fileName,"%s",s.deviceFile);	
     CVIXMLDocument      document = 0;
     CVIXMLElement       currElem = 0 ,currChildElem = 0;  
     int                 len,numChildElems;

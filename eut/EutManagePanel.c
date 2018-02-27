@@ -13,6 +13,8 @@ ListType getGenerteEutList()
 	return generateEutList;
 }
 
+
+
 void initEutConfigPanel()
 {
 	ListType list=getEEutList();
@@ -30,7 +32,7 @@ void initEutConfigPanel()
 		EEUT eeut={0};
 		EUT eut={0};
 		ListGetItem(list,&eeut,i);
-		
+		eut.configList=eeut.configList;
 		for(int j=1;j<=ListNumItems(eeut.configList);j++)
 		{
 			ConfigItem configItem={0};
@@ -112,7 +114,7 @@ void showConfigList(EEUT eut,int panelHandle)
 		ConfigItem item={0};
 		ListGetItem(list,&item,i);
 		tActivity ta={0};
-		getActivity(item.tagName,&ta);
+		getActivity(item.typeName,&ta);
 		int panelHandle1=(*(LOAD_CONFIG_PANEL)(ta.activity.onLoadPanel))(item.configPtrHandle);//(*LOAD_CONFIG_PANEL(activity.loadPanel))();
 		//DisplayPanel(panelHandle);
 		InsertListItem(panelHandle,EUTPANEL_LISTBOX,i-1,item.tagName,0);
@@ -139,7 +141,7 @@ void RefreshSelectedEutConfig(int panelHandle)
 		//ConfigActivity activity;
 		tActivity ta;
 		GetPanelHandleFromTabPage(panelHandle,EUTPANEL_TAB,i-1,&configPanel);
-		getActivity(item.tagName,&ta);
+		getActivity(item.typeName,&ta);
 		(*(GET_CHANGE_CONFIG)(ta.activity.onPanelChange))(configPanel,item.configPtrHandle);
 	}
 }

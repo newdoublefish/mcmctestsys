@@ -63,6 +63,12 @@ static void XMLtoSut(CVIXMLElement currElem,SUTCONFIG *sutConfigPtr)
 		  strcat(project.strategyFile,config);
 	   	  strcat(project.strategyFile,elemValue);  
 		  
+	   }else if(strcmp(elemName,"DevicePath")==0)
+	   {
+		  GetProjectDir(project.deviceFile);
+		  strcat(project.deviceFile,config);
+	   	  strcat(project.deviceFile,elemValue);  
+		  
 	   }else if(strcmp(elemName,"ReportPath")==0)
 	   {
 		  GetProjectDir(project.reportFilePath);

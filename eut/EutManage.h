@@ -22,6 +22,7 @@
 typedef struct
 {
 	char tagName[20];
+	char typeName[20];
 	int configPtrHandle;
 }ConfigItem;
 

@@ -17,6 +17,7 @@ typedef struct
    char systemName[SYSTEM_NAME_LEN];//系统名称
    char configPath[MAX_PATHNAME_LEN];//测试条例存放路径
    char strategyFile[MAX_PATHNAME_LEN];//策略存放路径
+   char deviceFile[MAX_PATHNAME_LEN];//策略存放路径    
    char reportFilePath[MAX_PATHNAME_LEN];//报表模板存放路径   
 } SUT;
 

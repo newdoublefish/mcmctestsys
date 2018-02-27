@@ -54,6 +54,7 @@ typedef struct
 	NETCONFIG chargingPile;
 	NETCONFIG testInstrument;
 	int enable;
+	ListType configList;
 } EUT;//Device under test	
 
 	   

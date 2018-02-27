@@ -24,6 +24,7 @@
 #include "resultSave.h"
 #include "common.h"
 #include "regexpr.h" 
+#include "EutHelper.h"
 								  
 #define SHEET_RANGE_TIPS "A2:B2"   
 								  
@@ -169,12 +170,12 @@ BOOL sendCmdToBoardAndGetResult(EUT eut,char *cmd,char *resultBuffer,int maxResu
 	return TRUE;
 }
 
-BOOL sendCmdToBoardAndGetResultWithMessage(EUT eut,char *cmd,char *resultBuffer,int maxResultBufferLen,double timeOutSeconds,int msgHandle)
+BOOL sendCmdToBoardAndGetResultWithMessage(RSCONFIG config,char *cmd,char *resultBuffer,int maxResultBufferLen,double timeOutSeconds,int msgHandle)
 {
 	int RS232Error=0; 
 	
-    RS232Error = OpenComConfig (eut.matainConfig.portNum,"",eut.matainConfig.baudRate, eut.matainConfig.parity,
-                                        eut.matainConfig.dataBit, eut.matainConfig.stopBit, 0, 0);
+    RS232Error = OpenComConfig (config.portNum,"",config.baudRate, config.parity,
+                                        config.dataBit, config.stopBit, 0, 0);
 	
 	if(RS232Error<0)
 	{
@@ -182,13 +183,13 @@ BOOL sendCmdToBoardAndGetResultWithMessage(EUT eut,char *cmd,char *resultBuffer,
 		  return FALSE;
 	}
 	
-	if(sendCmdToBoard(eut.matainConfig.portNum,cmd)==FALSE)
+	if(sendCmdToBoard(config.portNum,cmd)==FALSE)
 		return FALSE;
 
 	
 	if(resultBuffer!=NULL)
 	{
-		SetComTime(eut.matainConfig.portNum,1);
+		SetComTime(config.portNum,1);
 	
 		//int recvCnt=GetInQLen(eut.matainConfig.portNum);
 		double elapsed = timeOutSeconds;
@@ -204,7 +205,7 @@ BOOL sendCmdToBoardAndGetResultWithMessage(EUT eut,char *cmd,char *resultBuffer,
 			}			
 			char buffer[129]={0};
 			int recvLen=0;
-			recvLen=ComRd(eut.matainConfig.portNum,buffer,128);
+			recvLen=ComRd(config.portNum,buffer,128);
 			if(recvLen<0)
 			{
 				return FALSE;
@@ -227,7 +228,7 @@ BOOL sendCmdToBoardAndGetResultWithMessage(EUT eut,char *cmd,char *resultBuffer,
 		Delay(1);
 	}
 
-	CloseCom(eut.matainConfig.portNum);	 
+	CloseCom(config.portNum);	 
 	return TRUE;
 }
 								  
@@ -240,12 +241,18 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 	char resultBuffer[1024]={0};
 	char cmd[20]={0};
 	
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}	
+	
 	if(getBoardCmd(group.groupName,cmd)==FALSE)
 		return TEST_RESULT_ERROR;		
 	
 	APPEND_INFO_FORMAT(msgPanel,"send:%s",cmd); 
 	
-	if(sendCmdToBoardAndGetResultWithMessage(eut,cmd,resultBuffer,1024,15,msgPanel)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,cmd,resultBuffer,1024,15,msgPanel)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
@@ -290,8 +297,14 @@ METHODRET CanTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
 	METHODRET ret = TEST_RESULT_ALLPASS;
+
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}
 	
-	if(sendCmdToBoardAndGetResultWithMessage(eut,group.type,NULL,0,0,msgPanel)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,group.type,NULL,0,0,msgPanel)==FALSE)
 		goto DONE;
 	
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
@@ -301,7 +314,7 @@ METHODRET CanTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 		ListGetItem(group.subItems,&item,i);
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
-		if(sendCmdToBoardAndGetResultWithMessage(eut,item.inputValue_,buffer,512,15,msgPanel)==FALSE)
+		if(sendCmdToBoardAndGetResultWithMessage(resconfig,item.inputValue_,buffer,512,15,msgPanel)==FALSE)
 		{
 			goto DONE;
 		}
@@ -350,11 +363,15 @@ METHODRET SpiAdcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	
 	char resultBuffer[512]={0};
-	
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}	
 	
 	APPEND_INFO_FORMAT(msgPanel,"send:%s",group.type); 
 	
-	if(sendCmdToBoardAndGetResultWithMessage(eut,group.type,resultBuffer,512,15,msgPanel)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,group.type,resultBuffer,512,15,msgPanel)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
@@ -420,11 +437,15 @@ METHODRET AdcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	
 	char resultBuffer[1024]={0};
-	
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}	
 	
 	APPEND_INFO_FORMAT(msgPanel,"send:%s",group.type); 
 	
-	if(sendCmdToBoardAndGetResultWithMessage(eut,group.type,resultBuffer,1024,15,msgPanel)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,group.type,resultBuffer,1024,15,msgPanel)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
@@ -474,11 +495,15 @@ METHODRET RtcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	
 	char resultBuffer[512]={0};
-	
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}	
 	
 	APPEND_INFO_FORMAT(msgPanel,"send:%s","rtc w"); 
 	
-	if(sendCmdToBoardAndGetResultWithMessage(eut,"rtc w",resultBuffer,512,15,msgPanel)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,"rtc w",resultBuffer,512,15,msgPanel)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
@@ -486,7 +511,7 @@ METHODRET RtcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 	
 	memset(resultBuffer,0,512);
 	
-	if(sendCmdToBoardAndGetResultWithMessage(eut,"rtc r",resultBuffer,512,15,msgPanel)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,"rtc r",resultBuffer,512,15,msgPanel)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
@@ -524,11 +549,15 @@ METHODRET RS485Test(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	
 	char resultBuffer[512]={0};
-	
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}	
 	
 	APPEND_INFO_FORMAT(msgPanel,"send:%s","uart"); 
 	
-	if(sendCmdToBoardAndGetResultWithMessage(eut,"uart",resultBuffer,512,15,msgPanel)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,"uart",resultBuffer,512,15,msgPanel)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
@@ -594,11 +623,14 @@ METHODRET LedDispTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPan
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	char resultBuffer[512]={0};
-	
-	
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}
 	APPEND_INFO_FORMAT(msgPanel,"send:%s",group.type); 
 	
-	if(sendCmdToBoardAndGetResultWithMessage(eut,group.type,resultBuffer,512,15,msgPanel)==FALSE)
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,group.type,resultBuffer,512,15,msgPanel)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
