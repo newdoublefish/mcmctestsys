@@ -97,6 +97,32 @@ BOOL BoardProtocolInit(char *sheetName)
 	return TRUE;
 	//printf("%d\n",ListNumItems(paramList));
 }
+
+int find_string(char str[], char substr[])
+{
+    int count = 0,i,j,check;
+    int len = strlen(str);
+    int sublen = strlen(substr);
+    for(i = 0; i < len; i++)
+    {
+        check = 1;
+        for(j = 0; j + i < len && j < sublen; j++)
+        {
+            if(str[i+j] != substr[j])
+            {
+                check = 0;
+                break;
+            }
+        }
+        if(check == 1)
+        {
+            count++;
+            i = i + sublen;
+        }
+    }
+
+    return count;
+}
 								  
 
 BOOL sendCmdToBoard(int port,char *cmd)
@@ -242,7 +268,7 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 	char cmd[20]={0};
 	
 	RSCONFIG resconfig={0};
-	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	if(FALSE == getSerialConfig(eut.configList,"k60串口",&resconfig))
 	{
 		return TEST_RESULT_ALLPASS;
 	}	
@@ -272,6 +298,24 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 		{
 			itemResult.pass = RESULT_PASS;   
 		}
+		
+		if(strcmp(group.groupName,"di_全关")==0 || strcmp(group.groupName,"IODI防接反(打开防接反)")==0 )
+		{
+			if(itemResult.pass == RESULT_PASS)
+			{
+				sprintf(itemResult.recvString,"%s","0");
+			}else{
+				sprintf(itemResult.recvString,"%s","1");
+			}
+		}else if(strcmp(group.groupName,"di_全合")==0 || strcmp(group.groupName,"IODI防接反(关闭防接反)")==0 )
+		{
+			if(itemResult.pass == RESULT_PASS)
+			{
+				sprintf(itemResult.recvString,"%s","1");
+			}else{
+				sprintf(itemResult.recvString,"%s","0");
+			}
+		}
 		saveResult(hashTable,&itemResult);
 	}
 DONE:	
@@ -293,13 +337,75 @@ TPS registerBoardTestTPS(void)
 	return tps;
 }
 
+BOOL sendCmdToBoardAndGetResultWithMessageByCan(RSCONFIG config,char *cmd,char *resultBuffer,int maxResultBufferLen,double timeOutSeconds,int msgHandle)
+{
+	int RS232Error=0; 
+	
+    RS232Error = OpenComConfig (config.portNum,"",config.baudRate, config.parity,
+                                        config.dataBit, config.stopBit, 0, 0);
+	
+	if(RS232Error<0)
+	{
+		  WarnShow1(0,"串口连接失败！");  
+		  return FALSE;
+	}
+	
+	if(sendCmdToBoard(config.portNum,cmd)==FALSE)
+		return FALSE;
+
+	
+	if(resultBuffer!=NULL)
+	{
+		SetComTime(config.portNum,1);
+	
+		//int recvCnt=GetInQLen(eut.matainConfig.portNum);
+		double elapsed = timeOutSeconds;
+		double outTime = Timer();
+		int totalRecvCnt=0;
+		while(1)
+		{				
+			ProcessSystemEvents();
+			double currentTime = Timer();	
+			if(currentTime-outTime > elapsed)
+			{
+				break;
+			}			
+			char buffer[129]={0};
+			int recvLen=0;
+			recvLen=ComRd(config.portNum,buffer,128);
+			if(recvLen<0)
+			{
+				return FALSE;
+			}else if(recvLen > 0)
+			{
+				//strcat(resultBuffer,buffer);
+				//sprintf(resultBuffer,"%s%s",resultBuffer,buffer);
+				APPEND_INFO_FORMAT(msgHandle,"%s",buffer);
+				memcpy(resultBuffer+totalRecvCnt,buffer,recvLen);
+				totalRecvCnt+=recvLen;
+				outTime = Timer();
+			}
+			
+			/*if(strstr(resultBuffer,"shell>")!=NULL)
+			{
+				break;
+			}*/
+		}
+	}else{
+		Delay(1);
+	}
+
+	CloseCom(config.portNum);	 
+	return TRUE;
+}
+
 METHODRET CanTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
 	METHODRET ret = TEST_RESULT_ALLPASS;
 
 	RSCONFIG resconfig={0};
-	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	if(FALSE == getSerialConfig(eut.configList,"k60串口",&resconfig))
 	{
 		return TEST_RESULT_ALLPASS;
 	}
@@ -314,14 +420,21 @@ METHODRET CanTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 		ListGetItem(group.subItems,&item,i);
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
-		if(sendCmdToBoardAndGetResultWithMessage(resconfig,item.inputValue_,buffer,512,15,msgPanel)==FALSE)
+		if(sendCmdToBoardAndGetResultWithMessageByCan(resconfig,item.inputValue_,buffer,512,1,msgPanel)==FALSE)
 		{
 			goto DONE;
 		}
 		
-		if(strstr(buffer,"OK")!=NULL)
+		/*if(strstr(buffer,"OK")!=NULL)
 		{
 			itemResult.pass =  RESULT_PASS;
+		}*/
+		if(strstr(buffer,"OK")!=NULL)
+		{
+			int okCnt = find_string(buffer,"OK");
+			int standard = atof(item.standard_);
+			if(okCnt == standard)
+				itemResult.pass = RESULT_PASS;
 		}
 		
 		saveResult(hashTable,&itemResult);
@@ -334,10 +447,127 @@ DONE:
 	return ret;
 }
 
+
+
 TPS registerCanTestTPS(void)
 {
 	TPS tps=newTps("can");
 	tps.testFunction=CanTest;
+	return tps;
+}
+
+METHODRET UartK60Test(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS; 
+	char resultBuffer[512]={0};
+	TestItem item={0};
+	ListGetItem(group.subItems,&item,1);
+	RESULT result={0};
+	result.pass=RESULT_PASS;
+	result.index=item.itemId;
+	RSCONFIG K60config={0};
+	if(FALSE == getSerialConfig(eut.configList,"k60串口",&K60config))
+	{
+		return TEST_RESULT_ALLPASS;
+	}
+	RSCONFIG Rs485config={0};
+	if(FALSE == getSerialConfig(eut.configList,"RS485串口",&Rs485config))
+	{
+		return TEST_RESULT_ALLPASS;
+	}	
+
+	if(OpenComConfig (K60config.portNum,"",K60config.baudRate, K60config.parity,
+                                        K60config.dataBit, K60config.stopBit, 0, 0)<0)
+	{
+		  WarnShow1(0,"k60 串口连接失败！");  
+		  goto DONE;
+	}
+	
+	if(OpenComConfig (Rs485config.portNum,"",Rs485config.baudRate, Rs485config.parity,
+                                        Rs485config.dataBit, Rs485config.stopBit, 0, 0)<0)
+	{
+		  WarnShow1(0,"485 串口连接失败！");  
+		  goto DONE;
+	}	
+
+	//step1 向K60发送uart命令
+	APPEND_INFO_FORMAT(msgPanel,"K60 send:%s","uart");
+	if(sendCmdToBoard(K60config.portNum,"uart")==FALSE)
+		goto DONE;	
+	
+	//step2 rs485回复
+	if(ComRd(Rs485config.portNum,resultBuffer,512)<0)
+	{
+		goto DONE;
+	}
+	APPEND_INFO_FORMAT(msgPanel,"RS485 recv:%s",resultBuffer); 
+	if(strstr(resultBuffer,"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789")==NULL)
+	{
+		result.pass=RESULT_FAIL;								
+	}
+	
+	//step3 rs485发送 12345
+	memset(resultBuffer,0,512);
+	sprintf(resultBuffer,"%s","1234567890");
+	APPEND_INFO_FORMAT(msgPanel,"RS485 send:%s",resultBuffer); 
+	if(ComWrt (Rs485config.portNum,resultBuffer,strlen(resultBuffer))<0)
+		goto DONE;	
+	
+	//step4 K60收到12345
+		memset(resultBuffer,0,512);
+		SetComTime(K60config.portNum,1);
+	
+		//int recvCnt=GetInQLen(eut.matainConfig.portNum);
+		double elapsed = 20;
+		double outTime = Timer();
+		int totalRecvCnt=0;
+		while(1)
+		{				
+			ProcessSystemEvents();
+			double currentTime = Timer();	
+			if(currentTime-outTime > elapsed)
+			{
+				break;
+			}			
+			char buffer[129]={0};
+			int recvLen=0;
+			recvLen=ComRd(K60config.portNum,buffer,128);
+			if(recvLen<0)
+			{
+				return FALSE;
+			}else if(recvLen > 0)
+			{
+				//strcat(resultBuffer,buffer);
+				//sprintf(resultBuffer,"%s%s",resultBuffer,buffer);
+				APPEND_INFO_FORMAT(msgPanel,"K60 recv:%s",buffer);
+				memcpy(resultBuffer+totalRecvCnt,buffer,recvLen);
+				totalRecvCnt+=recvLen;
+				outTime = Timer();
+			}
+			
+			if(strstr(resultBuffer,"shell>")!=NULL)
+			{
+				break;
+			}
+		}
+		
+		if(strstr(resultBuffer,"049 050 051 052 053 054 055 056 057 048")==NULL)
+		{
+			result.pass=RESULT_FAIL;		
+		}
+DONE:
+	saveResult(hashTable,&result); 
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);
+	CloseCom(K60config.portNum);
+	CloseCom(Rs485config.portNum);	
+	return ret;
+}
+
+TPS registerUartK60TestTPS(void)
+{
+	TPS tps=newTps("uart_k60");
+	tps.testFunction=UartK60Test;
 	return tps;
 }
 
@@ -364,7 +594,7 @@ METHODRET SpiAdcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 	
 	char resultBuffer[512]={0};
 	RSCONFIG resconfig={0};
-	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	if(FALSE == getSerialConfig(eut.configList,"k60串口",&resconfig))
 	{
 		return TEST_RESULT_ALLPASS;
 	}	
@@ -438,7 +668,7 @@ METHODRET AdcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 	
 	char resultBuffer[1024]={0};
 	RSCONFIG resconfig={0};
-	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	if(FALSE == getSerialConfig(eut.configList,"k60串口",&resconfig))
 	{
 		return TEST_RESULT_ALLPASS;
 	}	
@@ -457,13 +687,21 @@ METHODRET AdcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
+		double value=0;
 		TestItem item={0};
 		ListGetItem(group.subItems,&item,i);
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
-		double value = getAdcValue(resultBuffer,item.itemName_);
+		if(i>4)
+		{   
+			char *temp = strstr(resultBuffer,"off");
+			if(temp!=NULL)
+				value = getAdcValue(temp,item.itemName_);
+		}else{
+			value = getAdcValue(resultBuffer,item.itemName_);
+		}
 		double standard = atof(item.standard_);
-		if(value<standard +0.05 && value>standard-0.05)
+		if(value<standard +0.2 && value>standard-0.2)
 		{
 			itemResult.pass = RESULT_PASS;	
 		}
