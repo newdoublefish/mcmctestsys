@@ -52,6 +52,8 @@ extern TPS registerRS485TestTPS(void);
 extern TPS registerLedDispTestTPS(void);
 extern TPS registerBoardDoTestTPS(void);
 extern TPS registerUartK60TestTPS(void);
+extern TPS registerBoardk64TestTPS(void);
+extern TPS registerUsbTestTPS(void);
 
 
 
@@ -81,13 +83,16 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	//∞Âº∂≤‚ ‘
 	registerBoardTestTPS,
 	registerCanTestTPS,
-	registerUartK60TestTPS,   	
+	registerUartK60TestTPS, 
+	registerBoardDoTestTPS,   
 	registerSpiAdcTestTPS,
 	registerAdcTestTPS,
+	registerBoardk64TestTPS,  
 	registerRTCTestTPS,
 	registerRS485TestTPS,
 	registerLedDispTestTPS,
-	registerBoardDoTestTPS,
+	registerUsbTestTPS, 
+
 
 };
 

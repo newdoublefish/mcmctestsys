@@ -209,8 +209,11 @@ BOOL sendCmdToBoardAndGetResultWithMessage(RSCONFIG config,char *cmd,char *resul
 		  return FALSE;
 	}
 	
-	if(sendCmdToBoard(config.portNum,cmd)==FALSE)
-		return FALSE;
+	if(cmd!=NULL)
+	{
+		if(sendCmdToBoard(config.portNum,cmd)==FALSE)
+			return FALSE;
+	}
 
 	
 	if(resultBuffer!=NULL)
@@ -763,7 +766,10 @@ METHODRET RtcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 		ListGetItem(group.subItems,&item,i);
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;
-		itemResult.pass = RESULT_PASS;
+		if(strstr(resultBuffer,"2017-04-12  15:30:47")!=NULL && strstr(resultBuffer,"2017-04-12  15:30:49")!=NULL)
+		{
+			itemResult.pass = RESULT_PASS; 		
+		}
 		saveResult(hashTable,&itemResult);
 	}
 DONE:	
@@ -928,6 +934,176 @@ TPS registerBoardDoTestTPS(void)
 	return tps;
 }
 
+METHODRET BoardK64Test(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	
+	char resultBuffer[2048]={0};
+	char cmd[20]={0};
+	
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}	
+	
+	if(getBoardCmd(group.groupName,cmd)==FALSE)
+		return TEST_RESULT_ERROR;		
+	
+	APPEND_INFO_FORMAT(msgPanel,"send:%s",cmd); 
+	
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,cmd,resultBuffer,2048,5,msgPanel)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	
+	//printf("%s\n",resultBuffer);
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		if(strstr(resultBuffer,item.standard_)!=NULL)
+		{
+			itemResult.pass = RESULT_PASS;   
+		}
+		
+		if(strcmp(item.itemName_,"电源板断电重启功能")==0)
+		{
+			char *ptr = resultBuffer+100;
+			if(strstr(ptr,item.standard_)!=NULL)
+			{
+				 itemResult.pass = RESULT_PASS;
+			}
+		}
+		
+		saveResult(hashTable,&itemResult);
+	}
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerBoardk64TestTPS(void)
+{
+	TPS tps=newTps("board_k64");
+	//tps.autoTestFunction=DemoTest;
+	tps.testFunction=BoardK64Test;
+	//tps.createTpsPanel=NULL;
+	//tps.manualTestFunction=DemoTest;
+	return tps;
+}
+
+METHODRET UsbTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	
+	char resultBuffer[2048]={0};
+	char cmd[20]={0};
+	
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}	
+	
+	int RS232Error=0; 
+	
+    RS232Error = OpenComConfig (resconfig.portNum,"",resconfig.baudRate, resconfig.parity,
+                                        resconfig.dataBit, resconfig.stopBit, 0, 0);
+	
+	if(RS232Error<0)
+	{
+		  WarnShow1(0,"串口连接失败！");  
+		  goto DONE;
+	}
+	
+	WarnShow1(0,"请插入USB");
+	
+	if(resultBuffer!=NULL)
+	{
+		SetComTime(resconfig.portNum,1);
+	
+		//int recvCnt=GetInQLen(eut.matainConfig.portNum);
+		double elapsed = 5;
+		double outTime = Timer();
+		int totalRecvCnt=0;
+		while(1)
+		{				
+			ProcessSystemEvents();
+			double currentTime = Timer();	
+			if(currentTime-outTime > elapsed)
+			{
+				break;
+			}			
+			char buffer[129]={0};
+			int recvLen=0;
+			recvLen=ComRd(resconfig.portNum,buffer,128);
+			if(recvLen<0)
+			{
+				return FALSE;
+			}else if(recvLen > 0)
+			{
+				//strcat(resultBuffer,buffer);
+				//sprintf(resultBuffer,"%s%s",resultBuffer,buffer);
+				APPEND_INFO_FORMAT(msgPanel,"%s",buffer);
+				memcpy(resultBuffer+totalRecvCnt,buffer,recvLen);
+				totalRecvCnt+=recvLen;
+				outTime = Timer();
+			}
+			
+			if(strstr(resultBuffer,"shell>")!=NULL)
+			{
+				break;
+			}
+		}
+	}else{
+		Delay(1);
+	}
+
+	CloseCom(resconfig.portNum);
+	
+	//printf("%s\n",resultBuffer);
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		if(strstr(resultBuffer,"OK")!=NULL)
+		{
+			if(strstr(resultBuffer,"NO")==NULL)
+			{
+				itemResult.pass = RESULT_PASS;   
+			}
+		}
+		saveResult(hashTable,&itemResult);
+	}
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerUsbTestTPS(void)
+{
+	TPS tps=newTps("usb");
+	//tps.autoTestFunction=DemoTest;
+	tps.testFunction=UsbTest;
+	//tps.createTpsPanel=NULL;
+	//tps.manualTestFunction=DemoTest;
+	return tps;
+}
 
 
 

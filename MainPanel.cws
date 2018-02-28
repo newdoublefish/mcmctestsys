@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 3
+Number of Opened Files = 4
 Window Confinement Region Enabled = True
 MainColumnWidth = 215
 FileDateColumnWidth = 70
@@ -105,22 +105,22 @@ Breakpoint 0001 = "156,0,enabled,"
 [File 0009]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/board/BoardTest.c"
 File Type = "CSource"
-Disk Date = 3602633324
+Disk Date = 3602646073
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
 Window Z-Order = 1
-Source Window State = "1,301,301,301,75,82,75,0,0,169,0,0,0,0,0,18,299,0,306,151,215,517,1,0,"
+Source Window State = "1,1080,1080,1080,32,34,34,0,0,169,0,0,0,0,0,18,1074,0,1080,34,215,517,1,0,"
 
 [File 0010]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
 File Type = "CSource"
-Disk Date = 3602630267
+Disk Date = 3602645860
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
 Window Z-Order = 2
-Source Window State = "1,81,81,81,4,24,24,0,3,105,0,38,0,0,0,25,78,0,81,4,323,665,1,29,"
+Source Window State = "1,93,93,93,4,32,32,0,0,105,0,38,0,0,0,25,81,0,93,23,323,665,1,29,"
 
 [File 0011]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/AppInitSplash.uir"
@@ -523,7 +523,7 @@ In Projects = "1,"
 Window Top = 62
 Window Left = 26
 Window Z-Order = 3
-Source Window State = "1,417,417,417,12,31,31,0,0,95,0,194,0,0,0,25,211,0,223,8,323,605,1,59,"
+Source Window State = "1,417,417,417,12,31,31,0,0,95,0,194,0,0,0,25,220,0,223,8,323,605,1,59,"
 
 [File 0054]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/manualTest.c"
@@ -1404,7 +1404,8 @@ Disk Date = 3599223524
 In Projects = "1,"
 Window Top = 152
 Window Left = 74
-Source Window State = "1,38,38,38,8,26,26,0,0,0,0,0,0,0,0,0,33,0,37,71,323,665,1,0,"
+Window Z-Order = 4
+Source Window State = "1,38,38,38,8,26,26,0,0,105,0,0,0,0,0,25,33,0,42,0,323,665,1,0,"
 
 [File 0153]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/contentVerification/verification.h"
@@ -1605,6 +1606,7 @@ In Projects = "1,"
 Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/board/BoardTest.c"
 Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
 Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.c"
+Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.h"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
@@ -1696,6 +1698,9 @@ Environment Options = ""
 
 [Watch 1]
 Watch Expression = "config"
+
+[Watch 2]
+Watch Expression = "resultBuffer"
 
 [Distributions]
 Active Index = 1
