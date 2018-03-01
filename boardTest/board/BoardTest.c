@@ -68,7 +68,7 @@ static HRESULT onCellListenerGetBoardCmds(VARIANT *MyVariant,int row,int column)
 static HRESULT onStartGetBoardCmds(VARIANT *MyVariant,int row,int column)				
 {
 	//istList=ListCreate(sizeof(INSTRUCTION));
-	HashTableCreate(10,C_STRING_KEY,0,20,&boardCmdHashTable);
+	HashTableCreate(10,C_STRING_KEY,0,256,&boardCmdHashTable);
     return 0;	
 }
 
@@ -78,7 +78,7 @@ HRESULT getBoardCmd(char *key,char *value)
    HashTableFindItem(boardCmdHashTable,key,&found);
    if(found==1)
    {
-   	   HashTableGetItem(boardCmdHashTable,key,value,20);
+   	   HashTableGetItem(boardCmdHashTable,key,value,256);
    }
    return found;
 }
@@ -268,7 +268,7 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	
 	char resultBuffer[2048]={0};
-	char cmd[20]={0};
+	char cmd[512]={0};
 	
 	RSCONFIG resconfig={0};
 	if(FALSE == getSerialConfig(eut.configList,"k60串口",&resconfig))
@@ -470,38 +470,47 @@ METHODRET UartK60Test(TestGroup group,EUT eut,HashTableType hashTable,int msgPan
 	result.pass=RESULT_PASS;
 	result.index=item.itemId;
 	RSCONFIG K60config={0};
+	RSCONFIG Rs485config={0}; 
 	if(FALSE == getSerialConfig(eut.configList,"k60串口",&K60config))
 	{
-		return TEST_RESULT_ALLPASS;
+		result.pass=RESULT_FAIL;
+		goto DONE;
 	}
-	RSCONFIG Rs485config={0};
+
 	if(FALSE == getSerialConfig(eut.configList,"RS485串口",&Rs485config))
 	{
-		return TEST_RESULT_ALLPASS;
+		result.pass=RESULT_FAIL;
+		goto DONE;
 	}	
 
 	if(OpenComConfig (K60config.portNum,"",K60config.baudRate, K60config.parity,
                                         K60config.dataBit, K60config.stopBit, 0, 0)<0)
 	{
 		  WarnShow1(0,"k60 串口连接失败！");  
-		  goto DONE;
+		result.pass=RESULT_FAIL;
+		goto DONE;
 	}
 	
 	if(OpenComConfig (Rs485config.portNum,"",Rs485config.baudRate, Rs485config.parity,
                                         Rs485config.dataBit, Rs485config.stopBit, 0, 0)<0)
 	{
 		  WarnShow1(0,"485 串口连接失败！");  
-		  goto DONE;
+		result.pass=RESULT_FAIL;
+		goto DONE;
 	}	
 
 	//step1 向K60发送uart命令
 	APPEND_INFO_FORMAT(msgPanel,"K60 send:%s","uart");
-	if(sendCmdToBoard(K60config.portNum,"uart")==FALSE)
-		goto DONE;	
+	if(sendCmdToBoard(K60config.portNum,"uart")==FALSE){
+		result.pass=RESULT_FAIL;
+		goto DONE;
+	}
+		
 	
 	//step2 rs485回复
 	if(ComRd(Rs485config.portNum,resultBuffer,512)<0)
 	{
+		result.pass=RESULT_FAIL;
 		goto DONE;
 	}
 	APPEND_INFO_FORMAT(msgPanel,"RS485 recv:%s",resultBuffer); 
@@ -514,8 +523,10 @@ METHODRET UartK60Test(TestGroup group,EUT eut,HashTableType hashTable,int msgPan
 	memset(resultBuffer,0,512);
 	sprintf(resultBuffer,"%s","1234567890");
 	APPEND_INFO_FORMAT(msgPanel,"RS485 send:%s",resultBuffer); 
-	if(ComWrt (Rs485config.portNum,resultBuffer,strlen(resultBuffer))<0)
+	if(ComWrt (Rs485config.portNum,resultBuffer,strlen(resultBuffer))<0){
+		result.pass=RESULT_FAIL;
 		goto DONE;	
+	}
 	
 	//step4 K60收到12345
 		memset(resultBuffer,0,512);
@@ -768,7 +779,8 @@ METHODRET RtcTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 		itemResult.index=item.itemId;
 		if(strstr(resultBuffer,"2017-04-12  15:30:47")!=NULL && strstr(resultBuffer,"2017-04-12  15:30:49")!=NULL)
 		{
-			itemResult.pass = RESULT_PASS; 		
+			itemResult.pass = RESULT_PASS; 	
+			sprintf(itemResult.recvString,"%s","2017-04-12  15:30:49");
 		}
 		saveResult(hashTable,&itemResult);
 	}
@@ -811,6 +823,8 @@ METHODRET RS485Test(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 	char *ptr1,*ptr2;
 	ptr1 = resultBuffer;
 	ptr2=strstr(resultBuffer,"CARD 2 TEST");
+	if(ptr2==NULL)
+		goto DONE;
 	*ptr2 = '\0';
 	ptr2=ptr2+1;
 	//printf("ptr1 %s\n",ptr1);
@@ -895,14 +909,47 @@ TPS registerLedDispTestTPS(void)
 	return tps;
 }
 
+METHODRET LedDispCardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	char resultBuffer[512]={0};
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}
+	APPEND_INFO_FORMAT(msgPanel,"send:%s",group.type); 
+	
+	if(sendCmdToBoardAndGetResultWithMessage(resconfig,group.type,resultBuffer,512,15,msgPanel)==FALSE)
+	{
+		return TEST_RESULT_ERROR;
+	}
+	//APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);
+	manualTest(group,eut,hashTable);
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerLedDispCardTestTPS(void)
+{
+	TPS tps=newTps("card");
+	tps.testFunction=LedDispCardTest;
+	return tps;
+}
+
 METHODRET BoardDoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	char resultBuffer[2048]={0};
-	char cmd[20]={0};
+	char cmd[512]={0};
 	RSCONFIG resconfig={0};
-	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
+	if(FALSE == getSerialConfig(eut.configList,"k60串口",&resconfig))
 	{
 		return TEST_RESULT_ALLPASS;
 	}
@@ -919,6 +966,31 @@ METHODRET BoardDoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPan
 	}
 	//APPEND_INFO_FORMAT(msgPanel,"recv:%s",resultBuffer);
 	manualTest(group,eut,hashTable);
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT result={0};
+		HashTableGetItem(hashTable,&item.itemId,&result,sizeof(RESULT)); 
+		if(result.pass == RESULT_PASS)
+		{
+			if(strcmp(group.groupName,"do_全亮")==0)
+			{
+				sprintf(result.recvString,"%s","1");
+			}else{
+				sprintf(result.recvString,"%s","0"); 
+			}
+		}else{
+			if(strcmp(group.groupName,"do_全亮")==0)
+			{
+				sprintf(result.recvString,"%s","0");
+			}else{
+				sprintf(result.recvString,"%s","1"); 
+			}			
+		}
+		saveResult(hashTable,&result); 
+	}
 DONE:	
 	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
 
@@ -940,7 +1012,7 @@ METHODRET BoardK64Test(TestGroup group,EUT eut,HashTableType hashTable,int msgPa
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	
 	char resultBuffer[2048]={0};
-	char cmd[20]={0};
+	char cmd[512]={0};
 	
 	RSCONFIG resconfig={0};
 	if(FALSE == getSerialConfig(eut.configList,"k64串口",&resconfig))
@@ -977,6 +1049,23 @@ METHODRET BoardK64Test(TestGroup group,EUT eut,HashTableType hashTable,int msgPa
 			if(strstr(ptr,item.standard_)!=NULL)
 			{
 				 itemResult.pass = RESULT_PASS;
+			}
+		}
+		
+		if(strcmp(item.itemName_,"时钟测试(rtc))")==0){
+			if(itemResult.pass == RESULT_PASS)
+			{
+				sprintf(itemResult.recvString,"%s",item.standard_);
+			}
+		}
+		
+		if(strcmp(group.groupName,"选枪按键测试(key)")==0)
+		{
+			if(itemResult.pass == RESULT_PASS)
+			{
+				sprintf(itemResult.recvString,"%s",item.standard_);
+			}else{
+				sprintf(itemResult.recvString,"%s","0");
 			}
 		}
 		
@@ -1102,6 +1191,39 @@ TPS registerUsbTestTPS(void)
 	tps.testFunction=UsbTest;
 	//tps.createTpsPanel=NULL;
 	//tps.manualTestFunction=DemoTest;
+	return tps;
+}
+
+
+METHODRET UpdateTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	char cmd[512]={0};
+	if(getBoardCmd(group.groupName,cmd)==FALSE){
+		WarnShow1(0,"未检测到自动烧写程序脚本,请手动烧写程序");
+	}else{
+		if(FileExists(cmd,NULL)<=0)
+		{
+			WarnShow1(0,"未检测到到自动烧写程序脚本,请手动烧写程序");				
+		}else{
+			system(cmd);
+		}
+	}
+		
+	manualTest(group,eut,hashTable);
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+
+
+TPS registerUpdateTestTPS(void)
+{
+	TPS tps=newTps("update");
+	tps.testFunction=UpdateTest;
 	return tps;
 }
 
