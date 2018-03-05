@@ -29,6 +29,7 @@
 #include "testInit.h"
 #include "log.h"
 #include "login.h"
+#include "reportDb.h"
 
 
 #define COPY_RIGHT "CopyRight 2017  GuangDong Thousands of Cities & Charging Stations E-Vehicles Operating Co., Ltd."
@@ -223,6 +224,9 @@ int main (int argc, char *argv[])
 		DisplaySutConfigPanel();
 		RunUserInterface ();
 	}
+	
+	
+	
 	DiscardPanel(panelMain);
 	AppDeInit();//这里可能会影响程序关闭     	
 	

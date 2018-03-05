@@ -16,6 +16,8 @@
 #include <userint.h>
 #include "ftpConfigPanel.h"
 #include"ftpConfigBiz.h"
+#include "reportDb.h"
+#include "common.h"
 
 static int panelHandle;
 tFtpConfig gFtpConfig;
@@ -33,6 +35,10 @@ int DisplayFtpConfigView (int panel)
 {
 	if ((panelHandle = LoadPanel (panel, "ftpConfigPanel.uir", PANEL)) < 0)
 		return -1;
+	if(initDb() == FALSE)
+	{
+		WarnShow1(0,"打开数据库失败");
+	}		
 	showFtpConfigs();  
 	DisplayPanel (panelHandle);
 	return 0;

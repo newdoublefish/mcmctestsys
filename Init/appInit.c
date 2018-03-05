@@ -21,6 +21,7 @@
 #include "excelHelper.h"   
 #include "log.h"
 #include "reportDb.h"
+#include "common.h"
 
 
 #define DEBUG
@@ -47,7 +48,11 @@ HRESULT EnterAppInit()
 	
 	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG,"正在初始化Excel组建...OK"); 
 	
-	initDb();
+	/*if(initDb()<0)
+	{
+		WarnShow1(0,"数据库连接失败");
+		//DeInitExcel();
+	}*/
 	
 	initLogModule();
 	

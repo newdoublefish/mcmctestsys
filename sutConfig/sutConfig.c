@@ -80,6 +80,7 @@ int CVICALLBACK SYSTEM_SELECTE_NEXT (int panel, int control, int event,
 		  GetCtrlIndex(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,&index);   
 		  wParam1=1;
 		  ListGetItem(sutConfig.sutList,&selectSut,index+1);
+		  //printf("%s\n",selectSut.dbName);
 		  
 		  //ItemInit(selectSut.configPath);   //解析测试用例表
 		  //protocolInit();                   //解析协议

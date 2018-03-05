@@ -126,17 +126,18 @@ static void setButtonState(int state)
 
 static void saveRecordToDb(TESTobject obj,char *productId,char *startTime,char *reportFilePath)
 {
-
 	tAutoTestRecord record={0};
-	if(0==strlen(productId))
+	/*if(0==strlen(productId))
 		sprintf(record.ProductId,"%s",obj.device.eutName);
 	else
-		sprintf(record.ProductId,"%s",productId);
-	sprintf(record.m_date,"%s",startTime);
-	sprintf(record.FtpAddress,"%s",reportFilePath);
-	record.Result=1;
-	record.m_update=0;
-	sprintf(record.m_name,"%s","ray");
+		sprintf(record.ProductId,"%s",productId);*/
+	sprintf(record.m_code,"%s",gTestProject->projectName);	
+	sprintf(record.m_createtime,"%s",startTime);
+	sprintf(record.m_reportpath,"%s",reportFilePath);
+	sprintf(record.m_projectpath,"%s",gTestProject->projectPath);
+	record.m_result=1;
+	record.m_upload=0;
+	//sprintf(record.m_name,"%s","ray");
 	insertReportRecord(record);	
 }
 

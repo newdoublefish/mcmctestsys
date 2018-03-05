@@ -6,13 +6,15 @@
     <ConfigPath>Integrate\IntegrateConfig.xlsx</ConfigPath>
     <StrategyPath>Integrate\Strategy.xml</StrategyPath>	
     <DevicePath>Integrate\Device.xml</DevicePath>	
-    <ReportPath>Integrate\IntegrateReport.xlsx</ReportPath>	
+    <DBName>integrate</DBName>	
+    <ReportPath>Integrate\IntegrateReport.xlsx</ReportPath>
   </Project> 
   <Project>
     <ProjectName>可靠性测试</ProjectName>
     <ConfigPath>reliability\reliabilityConfig.xlsx</ConfigPath>
     <StrategyPath>reliability\Strategy.xml</StrategyPath>	
     <DevicePath>reliability\Device.xml</DevicePath>
+    <DBName>reliability</DBName>   
     <ReportPath>reliability\reliabilityReport.xlsx</ReportPath>	
   </Project>    
   <Project>
@@ -20,6 +22,7 @@
     <ConfigPath>board\BoardConfig.xlsx</ConfigPath>
     <StrategyPath>board\Strategy.xml</StrategyPath>	
     <DevicePath>board\Device.xml</DevicePath>
-    <ReportPath>board\BoardReport.xlsx</ReportPath>	
+    <DBName>board</DBName>	   
+    <ReportPath>board\BoardReport.xlsx</ReportPath>
   </Project>    
 </Projects>

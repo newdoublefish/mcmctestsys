@@ -16,18 +16,18 @@ static void showRecord(ListType list)
 		
 		char indexTag[10]={0};
 		ListGetItem(list,&record,i);
-		sprintf(indexTag,"%d",record.id);
-       	InsertTreeItem (reportManagerPanel, PANEL_RECORDTREE, VAL_SIBLING,0,VAL_LAST,record.ProductId,indexTag, 0, 0);  //TAG 用组在组链表中的序号		
-		if(record.Result>0)
+		sprintf(indexTag,"%d",record.m_id);
+       	InsertTreeItem (reportManagerPanel, PANEL_RECORDTREE, VAL_SIBLING,0,VAL_LAST,record.m_code,indexTag, 0, 0);  //TAG 用组在组链表中的序号		
+		if(record.m_result>0)
 			Fmt(temp,"%s","通过");
 		else
 			Fmt(temp,"%s","未通过");
 		
 		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,1,ATTR_LABEL_TEXT,temp);
-		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,2,ATTR_LABEL_TEXT,record.m_date);
-		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,3,ATTR_LABEL_TEXT,record.m_name); 
+		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,2,ATTR_LABEL_TEXT,record.m_createtime);
+		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,3,ATTR_LABEL_TEXT,record.m_createtime); 
 		memset(temp,0,50);
-		if(record.m_update>0)
+		if(record.m_upload>0)
 			Fmt(temp,"%s","已上传");
 		else
 			Fmt(temp,"%s","未上传");
@@ -67,10 +67,10 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 				tAutoTestRecord record=getRecordById(atoi(tag));
 				//printRecord(record);
 				
-				if(ftpSendFile(record.FtpAddress)>=0)
+				if(ftpSendFile(record.m_reportpath)>=0)
 				{	
 					updateUpload(atoi(tag),1);
-				    SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.FtpAddress);
+				    SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.m_reportpath);
 					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"\n"); 
 				}else{
 					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"Ftp上传出错\n");

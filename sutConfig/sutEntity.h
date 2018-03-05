@@ -18,7 +18,8 @@ typedef struct
    char configPath[MAX_PATHNAME_LEN];//测试条例存放路径
    char strategyFile[MAX_PATHNAME_LEN];//策略存放路径
    char deviceFile[MAX_PATHNAME_LEN];//策略存放路径    
-   char reportFilePath[MAX_PATHNAME_LEN];//报表模板存放路径   
+   char reportFilePath[MAX_PATHNAME_LEN];//报表模板存放路径 
+   char dbName[MAX_PATHNAME_LEN];//数据库表名     
 } SUT;
 
 typedef struct

@@ -69,6 +69,10 @@ static void XMLtoSut(CVIXMLElement currElem,SUTCONFIG *sutConfigPtr)
 		  strcat(project.deviceFile,config);
 	   	  strcat(project.deviceFile,elemValue);  
 		  
+	   }else if(strcmp(elemName,"DBName")==0)
+	   {
+	   	  strcat(project.dbName,elemValue);  
+		  
 	   }else if(strcmp(elemName,"ReportPath")==0)
 	   {
 		  GetProjectDir(project.reportFilePath);
@@ -91,7 +95,7 @@ void printEutList(ListType list)
    {
        SUT sut;
 	   ListGetItem(list,&sut,i);
-	   PRINT("name:%s,configPath:%s,strategyPath:%s,reportPath:%s",sut.systemName,sut.configPath,sut.strategyFile,sut.reportFilePath);
+	   PRINT("name:%s,configPath:%s,strategyPath:%s,dbName:%s",sut.systemName,sut.configPath,sut.strategyFile,sut.dbName);
 	   
    }	   
 }
