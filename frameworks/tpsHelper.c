@@ -56,6 +56,7 @@ extern TPS registerBoardk64TestTPS(void);
 extern TPS registerUsbTestTPS(void);  
 extern TPS registerLedDispCardTestTPS(void);
 extern TPS registerUpdateTestTPS(void);
+extern TPS registerParamsSetTps(void);
 
 
 
@@ -67,6 +68,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	//整机测试
 	registerParamTestTPS,
 	registerParamsCheckTps,
+	registerParamsSetTps,
 	registerParamTemperatureTps,
 	registerPowerDistributeTestTps,	 //功率分配
 	registerScanTestTps,	  //扫码测试

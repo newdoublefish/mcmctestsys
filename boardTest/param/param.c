@@ -476,6 +476,55 @@ TPS registerParamsCheckTps(void)
 	return tps;			
 }
 
+METHODRET ParamSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	APPEND_INFO(masgHandle,"进入测试"); 
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT result={0};
+		result.index = item.itemId;
+		//char cmd[10]={0};
+		//sprintf(cmd,"%d",(int)(atof(item.inputValue_)));
+		if(FALSE==ParamSetDependWithRetry(eut,item.itemName_,item.inputValue_,3))
+		{
+			goto DONE;
+		}else{
+			APPEND_INFO_FORMAT(masgHandle,"%s 设置成功，值为%s",item.itemName_,item.inputValue_);
+		}		
+		if(FALSE==ParamGetDependWithRetry(eut,item.itemName_,result.recvString,3))
+		{	
+			APPEND_INFO_FORMAT(masgHandle,"%s:获取失败",item.itemName_); 
+			goto DONE;
+		}else{
+			APPEND_INFO_FORMAT(masgHandle,"%s,%s:获取成功",item.itemName_,result.recvString); 
+		}
+		
+		if(strstr(item.standard_,result.recvString)!=NULL)
+		{
+			result.pass = RESULT_PASS;
+		}
+		
+		saveResult(hashTable,&result);		
+	}
+
+DONE:	
+	//onStubDisConnected(servicePtr);
+	APPEND_INFO(masgHandle,"退出测试");
+	return ret;
+}	
+
+TPS registerParamsSetTps(void)
+{
+	TPS tps=newTps("paramSet");
+	tps.testFunction=ParamSetTest;
+	tps.protocolInit=ParamProtocolInit;
+	return tps;			
+}
+
 METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
