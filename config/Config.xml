@@ -2,27 +2,51 @@
 <Projects>
   <Version>0.2</Version>   
   <Project>
-    <ProjectName>整机测试</ProjectName>
-    <ConfigPath>Integrate\IntegrateConfig.xlsx</ConfigPath>
-    <StrategyPath>Integrate\Strategy.xml</StrategyPath>	
-    <DevicePath>Integrate\Device.xml</DevicePath>	
+    <ProjectName>120KW整机测试</ProjectName>
+    <ConfigPath>Integrate_120KW\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>Integrate_120KW\Strategy.xml</StrategyPath>	
+    <DevicePath>Integrate_120KW\Device.xml</DevicePath>	
     <DBName>integrate</DBName>	
-    <ReportPath>Integrate\IntegrateReport.xlsx</ReportPath>
+    <ReportPath>Integrate_120KW\IntegrateReport.xlsx</ReportPath>
   </Project> 
   <Project>
-    <ProjectName>可靠性测试</ProjectName>
-    <ConfigPath>reliability\reliabilityConfig.xlsx</ConfigPath>
-    <StrategyPath>reliability\Strategy.xml</StrategyPath>	
-    <DevicePath>reliability\Device.xml</DevicePath>
+    <ProjectName>120KW可靠性测试</ProjectName>
+    <ConfigPath>reliability_120KW\reliabilityConfig.xlsx</ConfigPath>
+    <StrategyPath>reliability_120KW\Strategy.xml</StrategyPath>	
+    <DevicePath>reliability_120KW\Device.xml</DevicePath>
     <DBName>reliability</DBName>   
-    <ReportPath>reliability\reliabilityReport.xlsx</ReportPath>	
+    <ReportPath>reliability_120KW\reliabilityReport.xlsx</ReportPath>	
   </Project>    
   <Project>
-    <ProjectName>板级测试</ProjectName>
-    <ConfigPath>board\BoardConfig.xlsx</ConfigPath>
-    <StrategyPath>board\Strategy.xml</StrategyPath>	
-    <DevicePath>board\Device.xml</DevicePath>
+    <ProjectName>120KW板级测试</ProjectName>
+    <ConfigPath>board_120KW\BoardConfig.xlsx</ConfigPath>
+    <StrategyPath>board_120KW\Strategy.xml</StrategyPath>	
+    <DevicePath>board_120KW\Device.xml</DevicePath>
     <DBName>board</DBName>	   
-    <ReportPath>board\BoardReport.xlsx</ReportPath>
+    <ReportPath>board_120KW\BoardReport.xlsx</ReportPath>
+  </Project>
+  <Project>  
+    <ProjectName>90KW整机测试</ProjectName>
+    <ConfigPath>Integrate_90KW\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>Integrate_90KW\Strategy.xml</StrategyPath>	
+    <DevicePath>Integrate_90KW\Device.xml</DevicePath>	
+    <DBName>integrate</DBName>	
+    <ReportPath>Integrate_90KW\IntegrateReport.xlsx</ReportPath>
+  </Project> 
+  <Project>
+    <ProjectName>90KW可靠性测试</ProjectName>
+    <ConfigPath>reliability_90KW\reliabilityConfig.xlsx</ConfigPath>
+    <StrategyPath>reliability_90KW\Strategy.xml</StrategyPath>	
+    <DevicePath>reliability_90KW\Device.xml</DevicePath>
+    <DBName>reliability</DBName>   
+    <ReportPath>reliability_90KW\reliabilityReport.xlsx</ReportPath>	
   </Project>    
+  <Project>
+    <ProjectName>90KW板级测试</ProjectName>
+    <ConfigPath>board_90KW\BoardConfig.xlsx</ConfigPath>
+    <StrategyPath>board_90KW\Strategy.xml</StrategyPath>	
+    <DevicePath>board_90KW\Device.xml</DevicePath>
+    <DBName>board</DBName>	   
+    <ReportPath>board_90KW\BoardReport.xlsx</ReportPath>
+  </Project>         
 </Projects>

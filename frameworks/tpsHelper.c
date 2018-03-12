@@ -57,6 +57,7 @@ extern TPS registerUsbTestTPS(void);
 extern TPS registerLedDispCardTestTPS(void);
 extern TPS registerUpdateTestTPS(void);
 extern TPS registerParamsSetTps(void);
+extern TPS register120KWPowerModuleTestTps(void);
 
 
 
@@ -98,6 +99,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerLedDispCardTestTPS,
 	registerUsbTestTPS, 
 	registerUpdateTestTPS, 
+	register120KWPowerModuleTestTps,
 };
 
 
