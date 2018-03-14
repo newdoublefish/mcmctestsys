@@ -1790,7 +1790,17 @@ TPS registerChargingTestTestTps(void)
 }
 
 
+static void BuildSetTime(char *timeBuffer)
+{
+	unsigned int year, month, day, hour, min, sec, weekDay;
+	CVIAbsoluteTime absTime;
+	GetCurrentCVIAbsoluteTime(&absTime);
+    CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
+                &min, &sec, 0, &weekDay);
+	//sprintf(timeBuffer,"%02d-%02d-%02d %02d:%02d:%02d",year-2000,month,day,hour,min,sec);
+	sprintf(timeBuffer,"%02d-%02d-%02d-%02d:%02d:%02d:0000",year-2000,month,day,hour,min,sec);
 
+}
 
 
 METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
@@ -1804,7 +1814,7 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 	if(strcmp("NA",item.inputValue_)!=0){
 		sprintf(itemResult.recvString,"%s",item.inputValue_);			
 	}else{
-		getSysTime(itemResult.recvString);
+		BuildSetTime(itemResult.recvString);
 	}
 	
 	if(FALSE==ParamSetDependWithRetry(eut,item.itemName_,itemResult.recvString,3))
