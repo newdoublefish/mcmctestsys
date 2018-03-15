@@ -2633,7 +2633,7 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		int retryCnt = 10;
 		while(retryCnt-- >=0 )
 		{
-			if(strcmp(item.itemName_,"电源模块1")==0 || strcmp(item.itemName_,"电源模块2")==0 || strcmp(item.itemName_,"电源模块3")==0 || strcmp(item.itemName_,"电源模块4")==0)
+			if(strcmp(item.itemName_,"120KW_电源模块1")==0 || strcmp(item.itemName_,"120KW_电源模块2")==0 || strcmp(item.itemName_,"120KW_电源模块3")==0 || strcmp(item.itemName_,"120KW_电源模块4")==0)
 			{
 				if(FALSE == ParamGetDependWithRetry(eut,"枪1电表电压",getVal,3))
 				{
