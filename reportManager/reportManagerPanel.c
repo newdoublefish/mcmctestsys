@@ -5,6 +5,8 @@
 #include "reportManagerPanel.h"
 #include "ftpHelper.h"
 #include "common.h"
+#include "sutCommon.h"
+#include "httpPost.h"
 
 static int reportManagerPanel;
 
@@ -67,8 +69,23 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 				tAutoTestRecord record=getRecordById(atoi(tag));
 				//printRecord(record);
 				
-				if(ftpSendFile(record.m_reportpath)>=0)
+				char remotePath[256]={0};
+				if(ftpSendFile(record.m_reportpath,remotePath)>=0)
 				{	
+					char type[50]={0};
+					SUT sut=GetSeletedSut();
+					if(strcmp(sut.dbName,"reliability")==0)
+					{
+						sprintf(type,"%s","安规");
+					}else if(strcmp(sut.dbName,"board")==0)
+					{
+						sprintf(type,"%s","板级");
+					}else if(strcmp(sut.dbName,"integrate")==0)
+					{
+						sprintf(type,"%s","整机");
+					}
+						
+					httpPost(record.m_code,type,remotePath,"锐速","阿豪",1);
 					updateUpload(atoi(tag),1);
 				    SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.m_reportpath);
 					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"\n"); 

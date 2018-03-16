@@ -18,7 +18,7 @@
 #ifdef __cplusplus
     extern "C" {
 #endif
-int ftpSendFile(char *fileName);		
+int ftpSendFile(char *fileName,char *remotePath);		
 #ifdef __cplusplus
     }
 #endif

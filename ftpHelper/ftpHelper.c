@@ -19,7 +19,7 @@ static void Error (int error)
 	MessagePopup (s, InetGetErrorMessage (error));
 }
 
-int ftpSendFile(char *pathName)
+int ftpSendFile(char *pathName,char *remotePath)
 {
 	int ftp_handle = -1; 
 	int error=0;  
@@ -42,8 +42,8 @@ int ftpSendFile(char *pathName)
 				Error (error);
 				return -1;
 	}
-
-
+	if(NULL!=remotePath)
+		sprintf(remotePath,"ftp://%s/%s",config.server,fileName);
 	
 	if (ftp_handle >= 0)
 		if ((error = InetFTPClose (ftp_handle)) < 0)

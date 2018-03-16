@@ -24,9 +24,10 @@ typedef struct{
 	char projectPath[MAX_PATHNAME_LEN];
 }tTestProject;
 
-BOOL newTestProject(tTestProject *project);
-BOOL loadTestProject(tTestProject *project);
-BOOL saveTestProjectInfo(tTestProject info);
+BOOL newTestProject();
+BOOL loadTestProject();
+BOOL saveTestProjectInfo();
+tTestProject *getCurrentProject(); 
 #ifdef __cplusplus
     }
 #endif

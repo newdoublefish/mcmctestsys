@@ -45,7 +45,7 @@ static int tabStrategyConfig;//≤ﬂ¬‘≈‰÷√tab
 static int tabHardwareConfig;  //”≤º˛≈‰÷√tab
 static int tabSystemConfig;  //œµÕ≥≈‰÷√tab
 
-tTestProject gProject={0};
+//tTestProject gProject={0};
 
 
 
@@ -248,13 +248,13 @@ int CVICALLBACK PICTUREBUTTON_STATE (int panel, int control, int event,
 				WarnShow1(0,filePath);
 				DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,filePath);  
 			}*/
-			tTestProject project={0};
-			if(loadTestProject(&project))
+			//tTestProject project={0};
+			if(loadTestProject())
 			{
 				SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1); 
-				memcpy(&gProject,&project,sizeof(tTestProject));
+				//memcpy(&gProject,&project,sizeof(tTestProject));
 				HidePanel(panelMain);
-				DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,&gProject);
+				DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());
 				//printf("%s,%s",gProject.projectName,gProject.projectPath);
 				
 			}
@@ -271,13 +271,11 @@ int CVICALLBACK PICTUREBUTTON_AUTO (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			tTestProject project={0};
-			if(newTestProject(&project))
+			if(newTestProject())
 			{
 				SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1);
-				memcpy(&gProject,&project,sizeof(tTestProject));
 				HidePanel(panelMain);
-				DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,&gProject);
+				DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());
 			}
 			break;
 	}
@@ -386,7 +384,7 @@ int CVICALLBACK BackMain (int panel, int control, int event,
 	{
 		case EVENT_COMMIT:
 			//DisplaySutConfigPanel();
-			DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,&gProject);
+			DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());
 			break;
 	}
 	return 0;
