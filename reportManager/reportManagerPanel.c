@@ -85,7 +85,7 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 						sprintf(type,"%s","整机");
 					}
 						
-					httpPost(record.m_code,type,remotePath,"锐速","阿豪",1);
+					//httpPost(record.m_code,type,remotePath,"锐速","阿豪",1);
 					updateUpload(atoi(tag),1);
 				    SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.m_reportpath);
 					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"\n"); 

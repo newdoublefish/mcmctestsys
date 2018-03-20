@@ -1227,6 +1227,41 @@ TPS registerUpdateTestTPS(void)
 	return tps;
 }
 
+METHODRET CodeInput(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"¿ªÊ¼²âÊÔ:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	manualTest(group,eut,hashTable);
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		HashTableGetItem(hashTable,&item.itemId,&itemResult,sizeof(RESULT)); 	
+		
+		if(strcmp(item.standard_,"NA")!=0)
+		{
+			char temp[100]={0};
+			sprintf(temp,"%s%s",item.standard_,itemResult.recvString);
+			memset(itemResult.recvString,0,RESULT_RECEIVE_LEN);
+			sprintf(itemResult.recvString,"%s",temp);
+			saveResult(hashTable,&itemResult);
+		}
+	}
+DONE:	
+	APPEND_INFO_FORMAT(msgPanel,"%s²âÊÔÍê±Ï",group.groupName);	
+
+	return ret;
+}
+
+TPS registerCodeInputTestTPS(void)
+{
+	TPS tps=newTps("codeinput");
+	tps.testFunction=CodeInput;
+	return tps;
+}
+
 
 
 
