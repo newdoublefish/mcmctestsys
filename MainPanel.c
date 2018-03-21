@@ -251,6 +251,7 @@ int CVICALLBACK PICTUREBUTTON_STATE (int panel, int control, int event,
 			//tTestProject project={0};
 			if(loadTestProject())
 			{
+				initLogPath();
 				SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1); 
 				//memcpy(&gProject,&project,sizeof(tTestProject));
 				HidePanel(panelMain);
@@ -273,6 +274,7 @@ int CVICALLBACK PICTUREBUTTON_AUTO (int panel, int control, int event,
 		case EVENT_COMMIT:
 			if(newTestProject())
 			{
+				initLogPath();
 				SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1);
 				HidePanel(panelMain);
 				DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());

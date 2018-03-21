@@ -75,6 +75,7 @@ int LOG_REC(char *logMsg);
 int initLogModule(void);
 void quitLogModule(void);
 void deleteLogFile(void);
+void initLogPath(void);
 
 
 #ifdef __cplusplus

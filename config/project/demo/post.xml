@@ -1,0 +1,18 @@
+<postset>
+<post name="report" url="http://127.0.0.1:80/poll/add/" request="report">
+	<param name="type" type="default">板级</param>
+	<param name="result" type="default">true</param>		
+	<param name="report" type="default">ftp://120.78.222.124/test.xlsx</param>
+	<param name="factory" type="default">锐速</param>	
+	<param name="person" type="default">阿豪</param>
+	<param name="approved" type="default">false</param>						
+</post>
+<post name="box" url="http://127.0.0.1:80/poll/add/" request="report">
+	<param name="type" type="default">板级</param>
+	<param name="result" type="default">true</param>		
+	<param name="report" type="default">ftp://120.78.222.124/test.xlsx</param>
+	<param name="factory" type="default">锐速</param>	
+	<param name="person" type="default">阿豪</param>
+	<param name="approved" type="default">false</param>						
+</post>
+</postset>

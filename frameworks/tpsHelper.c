@@ -20,6 +20,7 @@
 #include "ansi_c.h"
 static ListType tpsList;
 extern TPS registerDemoTestTPS(void);
+extern TPS registerHttpPostTPS(void);
 extern TPS registerframeTestTPS(void);
 extern TPS registerCanTestTPS(void);
 extern TPS registerSpiFlashTestTPS(void);
@@ -65,6 +66,7 @@ extern TPS registerCodeInputTestTPS(void);
 static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 {
 	registerDemoTestTPS,
+	registerHttpPostTPS,
 	//可靠性
 	registerResistanceTestTPS,  //可靠性，安规仪
 	//整机测试

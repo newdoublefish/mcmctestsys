@@ -68,7 +68,11 @@ static void XMLtoSut(CVIXMLElement currElem,SUTCONFIG *sutConfigPtr)
 		  GetProjectDir(project.deviceFile);
 		  strcat(project.deviceFile,config);
 	   	  strcat(project.deviceFile,elemValue);  
-		  
+	   }else if(strcmp(elemName,"PostPath")==0)
+	   {
+		  GetProjectDir(project.postFilePath);
+		  strcat(project.postFilePath,config);
+	   	  strcat(project.postFilePath,elemValue);  
 	   }else if(strcmp(elemName,"DBName")==0)
 	   {
 	   	  strcat(project.dbName,elemValue);  

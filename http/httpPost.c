@@ -2,6 +2,7 @@
 #include"httpPost.h"
 #include "toolbox.h"
 #include "cJSON.h"
+#include "log.h"
 
 
 BOOL isRegisterd=FALSE;
@@ -59,5 +60,47 @@ int httpPost(char *recordName,char *type,char *fileName,char *location,char *per
 	CDotNetFreeMemory(class1);
 	Close_postdll();			
 	return 0;	
+}
+
+int parsePostResponse(char *response)
+{
+	int ret=0;
+	cJSON *root = NULL;
+	cJSON *data=NULL;
+	cJSON *item = NULL;
+	
+	root = cJSON_Parse(response);
+	item = cJSON_GetObjectItem(root, "status");
+	//printf("%s\n",cJSON_Print(item));
+	if(strstr(cJSON_Print(item),"success")!=NULL)
+	{
+		ret=1;
+	}
+	cJSON_Delete(root);
+	return ret;
+}
+
+int httpPostJson(char *url,char *jsonData)
+{
+	int ret=0;
+	if(FALSE==registerPostDLL())
+	{
+		LOG_EVENT_FORMAT(LOG_ERROR,"%s","register post dll error,check whether you have install .net framework");
+		return -1;
+	}
+	Initialize_postdll();
+	postdll_Class1 class1;  
+	postdll_Class1__Create(&class1,NULL);
+	char *result=NULL;
+	postdll_Class1_PostUrl(url, jsonData,&result,NULL);
+	LOG_EVENT_FORMAT(LOG_ERROR,"post url:%s",url); 
+	LOG_EVENT_FORMAT(LOG_ERROR,"post:%s",jsonData);
+	ret=parsePostResponse(result);
+	LOG_EVENT_FORMAT(LOG_ERROR,"recv:%s",result);
+	/*if(result!=NULL)
+		free(result);*/
+	CDotNetFreeMemory(class1);
+	Close_postdll();			
+	return ret;	
 }
 

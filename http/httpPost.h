@@ -18,7 +18,8 @@
 #ifdef __cplusplus
     extern "C" {
 #endif
-int httpPost(char *recordName,char *type,char *fileName,char *location,char *person,int pass);		
+int httpPost(char *recordName,char *type,char *fileName,char *location,char *person,int pass);	
+int httpPostJson(char *url,char *jsonData);
 #ifdef __cplusplus
     }
 #endif

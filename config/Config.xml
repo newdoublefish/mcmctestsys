@@ -48,5 +48,14 @@
     <DevicePath>board_90KW\Device.xml</DevicePath>
     <DBName>board</DBName>	   
     <ReportPath>board_90KW\BoardReport.xlsx</ReportPath>
-  </Project>         
+  </Project> 
+  <Project>
+    <ProjectName>Demo</ProjectName>
+    <ConfigPath>demo\demo.xlsx</ConfigPath>
+    <StrategyPath>demo\Strategy.xml</StrategyPath>	
+    <DevicePath>demo\Device.xml</DevicePath>
+    <DBName>demo</DBName>
+    <PostPath>demo\post.xml</PostPath>	   
+    <ReportPath>demo\report.xlsx</ReportPath>
+  </Project>             
 </Projects>

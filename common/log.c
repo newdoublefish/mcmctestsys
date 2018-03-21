@@ -11,7 +11,6 @@
  // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
-
 #include <formatio.h>
 #include "toolbox.h"
 #include <ansi_c.h>
@@ -19,6 +18,7 @@
 #include "debug.h"
 #include "log.h"
 #include "settingConfig.h"
+#include "testProject.h"
 
 
 static char logFileName[MAX_PATHNAME_LEN]={0}; 
@@ -54,16 +54,16 @@ static int getLogFileName(char *fileName)
 	CVIAbsoluteTime absTime;
 
 	
-	char dirName[MAX_PATHNAME_LEN]={0};
-	GetProjectDir (dirName);
-	
+	//char dirName[MAX_PATHNAME_LEN]={0};
+	//GetProjectDir (dirName);
+	tTestProject *project=getCurrentProject();		
     GetCurrentCVIAbsoluteTime(&absTime);
     CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
 		&min, &sec, 0, &weekDay);
    if(muti)	
-      sprintf(fileName,"%s\\log_%d%02d%02d%02d%02d%02d.txt",dirName,year,month,day,hour,min,sec); //每一次单独记录
+      sprintf(fileName,"%s\\log_%d%02d%02d%02d%02d%02d.txt",project->projectDir,year,month,day,hour,min,sec); //每一次单独记录
    else
-	  sprintf(fileName,"%s\\log.txt",dirName);  //会对上一次的log文件进行覆盖
+	  sprintf(fileName,"%s\\log.txt",project->projectDir);  //会对上一次的log文件进行覆盖
 
 	return 1;
 }
@@ -72,7 +72,7 @@ int initLogModule(void)
 {
 	int ret=-1;
 #ifdef REC_LOG	
-    getLogFileName(logFileName);
+    //getLogFileName(logFileName);
 	/*logFile=OpenFile (logFileName, VAL_WRITE_ONLY, VAL_APPEND,
                              VAL_ASCII);
 	if(logFile>0)
@@ -82,6 +82,16 @@ int initLogModule(void)
 	CmtNewLock ("", OPT_TL_PROCESS_EVENTS_WHILE_WAITING, &logLock);//创建锁
 #endif	
 	return ret;
+}
+
+void initLogPath(void)
+{
+	if(logFile>0)
+	{
+		CloseFile(logFile);
+		logFile=-1;
+	}
+	getLogFileName(logFileName);
 }
 
 int LOG_REC_WITHOUTTIME(char *logMsg)
@@ -126,8 +136,11 @@ int LOG_REC(char *logMsg)
 	     CmtGetLock (logLock);
 	     if(-1==logFile)
 	     {   
-	       logFile=OpenFile (logFileName, VAL_WRITE_ONLY, VAL_TRUNCATE,
+		   if(strlen(logFileName)!=0)
+		   {
+	       		logFile=OpenFile (logFileName, VAL_WRITE_ONLY, VAL_TRUNCATE,
                             VAL_ASCII);
+		   }
 	    }
 	    if(logFile>0)
 	    {
