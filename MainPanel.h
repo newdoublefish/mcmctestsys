@@ -14,9 +14,12 @@
      /* Panels and Controls: */
 
 #define  NEW_TEST                         1
-#define  NEW_TEST_STRING                  2       /* control type: string, callback function: (none) */
-#define  NEW_TEST_SURE                    3       /* control type: command, callback function: (none) */
-#define  NEW_TEST_TEXTMSG                 4       /* control type: textMsg, callback function: (none) */
+#define  NEW_TEST_DIR                     2       /* control type: string, callback function: (none) */
+#define  NEW_TEST_STRING                  3       /* control type: string, callback function: (none) */
+#define  NEW_TEST_SURE                    4       /* control type: command, callback function: (none) */
+#define  NEW_TEST_TEXTMSG                 5       /* control type: textMsg, callback function: (none) */
+#define  NEW_TEST_BROWSE                  6       /* control type: command, callback function: (none) */
+#define  NEW_TEST_CBMAKEDIR               7       /* control type: radioButton, callback function: (none) */
 
 #define  PANEL_MAIN                       2
 #define  PANEL_MAIN_PICTURE               2       /* control type: picture, callback function: (none) */

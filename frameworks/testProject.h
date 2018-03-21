@@ -21,6 +21,7 @@
 #define MAX_TEST_PROJECT_NAME 100
 typedef struct{
 	char projectName[MAX_TEST_PROJECT_NAME];
+	char projectDir[MAX_PATHNAME_LEN]; 
 	char projectPath[MAX_PATHNAME_LEN];
 }tTestProject;
 

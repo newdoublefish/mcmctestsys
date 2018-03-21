@@ -19,6 +19,7 @@
 #include "resultUtil.h"
 #include "testFramework.h"
 #include "resultInfo.h"   
+#include "testProject.h"
 
 
 void ParseXmlResult(CVIXMLElement currElem,HashTableType hashTable)
@@ -211,12 +212,12 @@ void saveResultToXml(CVIXMLElement currElem,HashTableType hashTable)
 BOOL saveResultInfo(TESTengine *gEngine,char *testProjectName){
 	char fileName[MAX_PATHNAME_LEN];
 	int fileSize=0;
-	SETTING s=getSetting();
+	//SETTING s=getSetting();
 	GetProjectDir (fileName);
-	
-	if(FileExists(s.saveDir,&fileSize)==0)
+	tTestProject *projectPtr=getCurrentProject();  	
+	if(FileExists(projectPtr->projectDir,&fileSize)==0)
 	{	
-	    MakeDir(s.saveDir);
+	    MakeDir(projectPtr->projectDir);
 	}
 
     /*sprintf(fileName,"%s\\%s",s.saveDir,deviceName); 	
@@ -225,7 +226,7 @@ BOOL saveResultInfo(TESTengine *gEngine,char *testProjectName){
 	    MakeDir(fileName);
 	}*/
 	
-	sprintf(fileName,"%s\\%s%s",s.saveDir,testProjectName,".xml");
+	sprintf(fileName,"%s\\%s%s",projectPtr->projectDir,testProjectName,".xml");
 	
     CVIXMLDocument      document = 0;
     CVIXMLElement       currElem = 0 ,currChildElem = 0;  
