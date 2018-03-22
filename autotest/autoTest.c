@@ -1334,7 +1334,6 @@ int CVICALLBACK genReport (int panel, int control, int event,
         		CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
                 	&min, &sec, 0, &weekDay);
 				sprintf(startTime,"%d年%02d月%02d日%2d时%02d分%02d秒",year,month,day,hour,min,sec); 
-			 	
 			 }
 		     saveAutoTestResult(gEngine);
 			 //soundFinish();

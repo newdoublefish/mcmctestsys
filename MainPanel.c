@@ -32,7 +32,7 @@
 #include "reportDb.h"
 
 
-#define COPY_RIGHT "CopyRight 2017  GuangDong Thousands of Cities & Charging Stations E-Vehicles Operating Co., Ltd."
+#define COPY_RIGHT "CopyRight 2018  GuangDong Thousands of Cities & Charging Stations E-Vehicles Operating Co., Ltd."
 
 
 static int panelMain = 0;	//主面板
@@ -329,7 +329,13 @@ int CVICALLBACK MainPnlMsgCallback (int panelHandle, int message,
 	{
 	    AppDeInit();//这里可能会影响程序关闭
 		QuitUserInterface(0); 
-	}	
+	}else if(*wParam==4)//开启测试
+	{
+	    initLogPath();
+		SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1); 
+		HidePanel(panelMain);
+		DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());
+	}
 	
 	return 0; 
 

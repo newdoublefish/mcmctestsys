@@ -99,6 +99,32 @@ BOOL newTestProject()
 	return ret;
 }
 
+BOOL setProjectPath(char *path)
+{
+	if(FileExists(path,NULL)==1)
+	{
+		memset(&gProject,0,sizeof(tTestProject)); 
+		sprintf(gProject.projectPath,"%s",path);
+		char driveName[MAX_PATHNAME_LEN];  
+		char directoryName[MAX_PATHNAME_LEN];  
+		char fileName[MAX_PATHNAME_LEN];  
+		SplitPath (gProject.projectPath, driveName,directoryName,fileName);
+		char *token=strstr(fileName,".xml");
+		if(token!=NULL)
+		{
+			memcpy(gProject.projectName,fileName,token-fileName);
+		}
+		int dirNameLen = strlen(directoryName);
+		if(directoryName[dirNameLen-1]=='\\')
+		{
+			directoryName[dirNameLen-1]='\0';	
+		}
+		sprintf(gProject.projectDir,"%s%s",driveName,directoryName);
+		return TRUE;
+	}
+	return FALSE;
+}
+
 BOOL loadTestProject()
 {
 	SETTING s=getSetting();

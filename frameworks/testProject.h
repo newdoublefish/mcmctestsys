@@ -29,6 +29,7 @@ BOOL newTestProject();
 BOOL loadTestProject();
 BOOL saveTestProjectInfo();
 tTestProject *getCurrentProject(); 
+BOOL setProjectPath(char *path);
 #ifdef __cplusplus
     }
 #endif

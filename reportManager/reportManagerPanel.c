@@ -1,12 +1,15 @@
+#include "windows.h" 
 #include <formatio.h>
 #include <cvirte.h>		
 #include <userint.h>
+#include "toolbox.h"
 #include "reportDb.h"
 #include "reportManagerPanel.h"
 #include "ftpHelper.h"
 #include "common.h"
 #include "sutCommon.h"
 #include "httpPost.h"
+#include "testProject.h"
 
 static int reportManagerPanel;
 
@@ -46,11 +49,18 @@ static void refreshRecordTree()
 	showRecord(list);
 	ListDispose(list);
 }
-
+extern int g_mainHWND;
 static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemID, 
 									void *callbackData)
 {
 	int count=0,check=0;
+	int checkNum=0;
+	GetNumCheckedItems(panel,controlID,&checkNum);
+	if(checkNum<=0)
+	{
+		WarnShow1(panel,"未选中任何项目");
+		return;
+	}
 	if(MenuItemID==1)
 	{
 		int ftpPanel= LoadPanel (reportManagerPanel, "reportManagerPanel.uir", FTP);
@@ -116,6 +126,36 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 			}
 		}
 		refreshRecordTree();
+	}else if(MenuItemID==3)
+	{
+		GetNumListItems(panel,controlID,&count);
+		for(int i=0;i<count;i++)
+		{
+			IsListItemChecked(panel,controlID,i,&check);
+			
+			if(check)
+			{
+				char tag[32]={0}; 
+				GetTreeItemTag(reportManagerPanel,controlID,i,tag);
+				tAutoTestRecord record=getRecordById(atoi(tag));
+				//printf("%s\n",record.m_projectpath);
+				if(AlertDialogWithRet(panel,"警告","确认打开当前测试","取消","继续")==FALSE)
+				{
+					return;
+				}
+				
+				if(setProjectPath(record.m_projectpath)==TRUE)
+				{
+					unsigned int wParam1=4;   
+					unsigned int lParam1=0;   
+					PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);
+					QuitUserInterface (0); 
+					return;//一定要return，否则会出问题
+				}else{
+					WarnShow1(panel,"无法打开当前测试！！");
+				}
+			}
+		}
 	}
 	
 }
@@ -130,7 +170,7 @@ static void configTreeAttribute(int panel,int tree)
 	HideBuiltInCtrlMenuItem(panel, tree, VAL_COLLAPSE_ALL);
 	NewCtrlMenuItem(panel, tree, "上传", -1, ReportMenuItemCB, 0);
 	NewCtrlMenuItem(panel, tree, "删除", -1, ReportMenuItemCB, 0);
-	NewCtrlMenuItem(panel, tree, "打开报表", -1, ReportMenuItemCB, 0);
+	NewCtrlMenuItem(panel, tree, "打开测试", -1, ReportMenuItemCB, 0);
 }
 
 
