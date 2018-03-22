@@ -71,7 +71,7 @@ void ParseXmlResult(CVIXMLElement currElem,HashTableType hashTable)
 	}
 }
 
-BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable,char *testProjectName){
+BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable){
     CVIXMLDocument      document = 0;
     CVIXMLElement       currElem = 0 ,currChildElem = 0;  
     int                 len,numChildElems;
@@ -91,7 +91,7 @@ BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable,char
 	{
 		CVIXMLAttribute attr;
 		CVIXMLGetAttributeByName(currElem,"testProject",&attr);
-		CVIXMLGetAttributeValue (attr,testProjectName);
+		//CVIXMLGetAttributeValue (attr,testProjectName);
 		CVIXMLGetNumChildElements (currElem, &numChildElems); 
 		for(int index=0;index<numChildElems;index++){
 			CVIXMLGetChildElementByIndex (currElem, index, &currChildElem);	
@@ -109,10 +109,10 @@ BOOL loadResultInfo(char *fileName,char *deviceName,HashTableType hashTable,char
 					CVIXMLAttribute attribute;
 					CVIXMLGetAttributeByIndex (currChildElem,i,&attribute);
 					CVIXMLGetAttributeValue (attribute,name);
-					if(strcmp(name,deviceName)==0)
-					{
+					//if(strcmp(name,deviceName)==0)
+					//{
 						ParseXmlResult(currChildElem,hashTable);					
-					}
+					//}
 					CVIXMLDiscardAttribute(attribute);
 				}
 				

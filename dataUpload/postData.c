@@ -6,6 +6,13 @@
 #include "log.h"
 
 ListType postDataSet=0;
+BOOL importPostProtocol(void);
+
+ListType getPostDataSet(void)
+{
+	importPostProtocol();
+	return postDataSet;
+}
 
 BOOL loadPostDataParam(CVIXMLElement currElem,ListType postParamList)
 {
@@ -130,7 +137,7 @@ BOOL loadPostDataFromXml(char *fileName,ListType postDataSet)
 }
 
 
-BOOL buildPostDataStr(tPostData postData,char *buffer,char *callbackFunc)
+BOOL buildPostDataStr(tPostData postData,char *buffer,void *callbackFunc,void *callbackData)
 {
 	cJSON *root = NULL;                                                                                
 	cJSON *data =NULL;                                                                                 
@@ -142,7 +149,7 @@ BOOL buildPostDataStr(tPostData postData,char *buffer,char *callbackFunc)
 		tPostParam param ={0};
 		ListGetItem(postData.postParamList,&param,i);                                                                                              
 		if(callbackFunc!=NULL)
-			(*(ON_FILL_DATA_PARAM)(callbackFunc))(&param);
+			(*(ON_FILL_DATA_PARAM)(callbackFunc))(&param,callbackData);
 		cJSON_AddStringToObject(data,param.name,param.value); 
 	}                                                  
 	cJSON_AddItemToObject(root,"data",data);                                                           

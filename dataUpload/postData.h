@@ -33,11 +33,12 @@ typedef struct{
 	char request[POST_DATA_BASE];
 	ListType postParamList;
 }tPostData;
-typedef BOOL (*ON_FILL_DATA_PARAM)(tPostParam *);
+typedef BOOL (*ON_FILL_DATA_PARAM)(tPostParam *,void *callbackData);
 
-BOOL buildPostDataStr(tPostData data,char *buffer,char *callbackFunc);
+BOOL buildPostDataStr(tPostData data,char *buffer,void *callbackFunc,void *callbackData);
 BOOL importPostProtocol(void);
 BOOL getPostData(tPostData *postDataPtr,char *name);
+ListType getPostDataSet();
 
 #ifdef __cplusplus
     }

@@ -76,6 +76,15 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *testItemIndex);
 
 
+static int getObjectTestProgress(TESTobject obj)
+{
+	int size=0;
+	TESTengine *t=obj.enginePtr;
+	HashTableGetAttribute(obj.resultHashTable,ATTR_HT_SIZE,&size);
+	int perc = size*100/(t->totalTestGroupCount);
+	return perc;
+
+}
 static void setPercentage(TESTobject *obj)
 {
 	int size=0;
@@ -136,6 +145,7 @@ static void saveRecordToDb(TESTobject obj,char *productId,char *startTime,char *
 	sprintf(record.m_createtime,"%s",startTime);
 	sprintf(record.m_reportpath,"%s",reportFilePath);
 	sprintf(record.m_projectpath,"%s",gTestProject->projectPath);
+	sprintf(record.m_lasttest,"%d",getObjectTestProgress(obj));
 	record.m_result=1;
 	record.m_upload=0;
 	//sprintf(record.m_name,"%s","ray");
@@ -1083,7 +1093,7 @@ void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,Lis
 		obj->onResultShowListener=(void *)objectResultShow;	   //测试对象结果显示
 		obj->onObjectTestErrorListener=(void *)objectTestError;//测试对象出错
 		obj->onObjectTestFinish=(void *)objectTestFinish;
-		loadResultInfo(gTestProject->projectPath,obj->device.eutName,obj->resultHashTable,gTestProject->projectName);
+		loadResultInfo(gTestProject->projectPath,obj->device.eutName,obj->resultHashTable);
 	}
 	SUT sut=GetSeletedSut();
 	char currentSutName[50]={0};

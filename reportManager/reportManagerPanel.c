@@ -10,8 +10,12 @@
 #include "sutCommon.h"
 #include "httpPost.h"
 #include "testProject.h"
+#include "postData.h"
+#include "resultUtil.h"
+#include "resultInfo.h"
 
 static int reportManagerPanel;
+static HashTableType resultHashTable=0;
 
 static void showRecord(ListType list)
 {
@@ -23,13 +27,13 @@ static void showRecord(ListType list)
 		ListGetItem(list,&record,i+1);
 		sprintf(indexTag,"%d",record.m_id);
        	InsertTreeItem (reportManagerPanel, PANEL_RECORDTREE, VAL_SIBLING,0,VAL_LAST,record.m_code,indexTag, 0, 0);  //TAG 用组在组链表中的序号		
-		if(record.m_result>0)
+		/*if(record.m_result>0)
 			Fmt(temp,"%s","通过");
 		else
-			Fmt(temp,"%s","未通过");
-		
-		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,1,ATTR_LABEL_TEXT,temp);
-		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,2,ATTR_LABEL_TEXT,record.m_createtime);
+			Fmt(temp,"%s","未通过");*/
+		sprintf(temp,"%s%%",record.m_lasttest);
+		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,1,ATTR_LABEL_TEXT,temp); //显示测试进度
+		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,2,ATTR_LABEL_TEXT,record.m_createtime); //显示测试时间
 		 
 		if(FileExists(record.m_reportpath,NULL)==1)
 		{
@@ -55,6 +59,58 @@ static void refreshRecordTree()
 	showRecord(list);
 	ListDispose(list);
 }
+
+BOOL onParsePostData(tPostParam *paramPtr,void *callbackData)
+{
+	if(strcmp(paramPtr->type,"result")==0)
+	{
+		RESULT itemResult={0};
+		int index=atoi(paramPtr->value);
+		HashTableGetItem(resultHashTable,&index,&itemResult,sizeof(RESULT));
+		memset(paramPtr->value,0,POST_DATA_VALUE);
+		sprintf(paramPtr->value,"%s",itemResult.recvString);
+	}else if(strcmp(paramPtr->type,"projectName")==0)
+	{
+		tAutoTestRecord *recordPtr=(tAutoTestRecord *)callbackData;
+		memset(paramPtr->value,0,POST_DATA_VALUE);
+		sprintf(paramPtr->value,"%s",recordPtr->m_code);
+		//sprintf(paramPtr->value,"%s",itemResult.recvString);
+	}else if(strcmp(paramPtr->type,"ftpPath")==0)
+	{
+		tAutoTestRecord *recordPtr=(tAutoTestRecord *)callbackData;
+		memset(paramPtr->value,0,POST_DATA_VALUE);
+		sprintf(paramPtr->value,"%s",recordPtr->m_reportpath);
+		//sprintf(paramPtr->value,"%s",itemResult.recvString);
+	}
+
+	return TRUE;	
+}
+
+BOOL postData(int ftpPanel,tAutoTestRecord record)
+{
+	ListType list=getPostDataSet();
+	for(int i=1;i<=ListNumItems(list);i++)
+	{
+		tPostData data={0};
+		char buffer[512]={0}; 
+		ListGetItem(list,&data,i);
+		Fmt(buffer,"上传数据 %s ",data.name);
+		SetCtrlVal(ftpPanel,FTP_TEXTBOX,buffer);
+		memset(buffer,0,512);
+		buildPostDataStr(data,buffer,onParsePostData,&record);
+		if(1!=httpPostJson(data.url,buffer))
+		{
+			//return FALSE;
+			SetCtrlVal(ftpPanel,FTP_TEXTBOX,"上传失败\n"); 	
+		}else{
+		   	SetCtrlVal(ftpPanel,FTP_TEXTBOX,"上传成功\n");
+		}
+		
+		
+	}
+	return TRUE;	
+}
+
 extern int g_mainHWND;
 static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemID, 
 									void *callbackData)
@@ -100,11 +156,35 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 					{
 						sprintf(type,"%s","整机");
 					}
-						
+					memset(record.m_reportpath,0,250);
+					sprintf(record.m_reportpath,"%s",remotePath);
 					//httpPost(record.m_code,type,remotePath,"锐速","阿豪",1);
-					updateUpload(atoi(tag),1);
-				    SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.m_reportpath);
-					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"\n"); 
+					if(FileExists(record.m_projectpath,NULL)==1)
+					{
+						if(resultHashTable!=0)
+						{
+							HashTableDispose(resultHashTable);
+						}
+						createResultHashTable(&resultHashTable);
+						loadResultInfo(record.m_projectpath,NULL,resultHashTable);					
+						if(postData(ftpPanel,record))
+						{
+							updateUpload(atoi(tag),1);
+					    	SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.m_reportpath);
+							SetCtrlVal(ftpPanel,FTP_TEXTBOX,"\n");
+						}else{
+							SetCtrlVal(ftpPanel,FTP_TEXTBOX,"http post 上传出错\n");
+						}
+					
+						if(resultHashTable!=0)
+						{
+							HashTableDispose(resultHashTable);
+							resultHashTable=0;
+						}
+					}else{
+						SetCtrlVal(ftpPanel,FTP_TEXTBOX,"工程文件丢失\n");
+					}                                                           
+					
 				}else{
 					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"Ftp上传出错\n");
 					break;

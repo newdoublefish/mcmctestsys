@@ -69,7 +69,7 @@ METHODRET HttpPostTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPa
 		if(TRUE==getPostData(&data,item.itemName_))
 		{
 			char buffer[512]={0};
-			buildPostDataStr(data,buffer,NULL);
+			buildPostDataStr(data,buffer,NULL,NULL);
 			if(1==httpPostJson(data.url,buffer))
 			{
 				itemResult.pass = RESULT_PASS;
