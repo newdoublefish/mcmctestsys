@@ -21,8 +21,8 @@
 
 #define  PANEL                            2       /* callback function: ReportPanelCallbak */
 #define  PANEL_RECORDTREE                 2       /* control type: tree, callback function: (none) */
-#define  PANEL_BACKGROUD                  3       /* control type: textMsg, callback function: (none) */
-#define  PANEL_TITLE                      4       /* control type: textMsg, callback function: (none) */
+#define  PANEL_TITLE                      3       /* control type: textMsg, callback function: (none) */
+#define  PANEL_BACKGROUD                  4       /* control type: textMsg, callback function: (none) */
 
 
      /* Control Arrays: */

@@ -38,6 +38,8 @@ int getAllRecord(ListType list);
 int deleteById(int id);
 int updateUpload(int id,short flag);   
 void printRecord(tAutoTestRecord record);
+int updateRecord(tAutoTestRecord record);
+int getInsertdRecordId(int *id);
 #ifdef __cplusplus
     }
 #endif

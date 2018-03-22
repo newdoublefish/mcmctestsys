@@ -23,6 +23,7 @@ typedef struct{
 	char projectName[MAX_TEST_PROJECT_NAME];
 	char projectDir[MAX_PATHNAME_LEN]; 
 	char projectPath[MAX_PATHNAME_LEN];
+	int dbId;//Êý¾Ý¿âÖ÷¼ü
 }tTestProject;
 
 BOOL newTestProject();
@@ -30,6 +31,7 @@ BOOL loadTestProject();
 BOOL saveTestProjectInfo();
 tTestProject *getCurrentProject(); 
 BOOL setProjectPath(char *path);
+void setTestProjectDbId(int id);
 #ifdef __cplusplus
     }
 #endif

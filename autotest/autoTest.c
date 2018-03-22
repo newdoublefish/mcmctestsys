@@ -131,6 +131,7 @@ static void saveRecordToDb(TESTobject obj,char *productId,char *startTime,char *
 		sprintf(record.ProductId,"%s",obj.device.eutName);
 	else
 		sprintf(record.ProductId,"%s",productId);*/
+	record.m_id = gTestProject->dbId;
 	sprintf(record.m_code,"%s",gTestProject->projectName);	
 	sprintf(record.m_createtime,"%s",startTime);
 	sprintf(record.m_reportpath,"%s",reportFilePath);
@@ -138,7 +139,7 @@ static void saveRecordToDb(TESTobject obj,char *productId,char *startTime,char *
 	record.m_result=1;
 	record.m_upload=0;
 	//sprintf(record.m_name,"%s","ray");
-	insertReportRecord(record);	
+	updateRecord(record);	
 }
 
 void CreateReportFilePath(char *customName,char *fileName,TESTobject testObj)

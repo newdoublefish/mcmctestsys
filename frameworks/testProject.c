@@ -6,6 +6,12 @@
 
 tTestProject gProject={0};
 
+void setTestProjectDbId(int id)
+{
+	gProject.dbId=id;
+}
+
+
 
 int CVICALLBACK projectPanelCtrlCallback (int panel, int control, int event,
 		void *callbackData, int eventData1, int eventData2)

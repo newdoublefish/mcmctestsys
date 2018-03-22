@@ -20,7 +20,7 @@ static void showRecord(ListType list)
 	for(int i=0;i<ListNumItems(list);i++){
 		
 		char indexTag[10]={0};
-		ListGetItem(list,&record,i);
+		ListGetItem(list,&record,i+1);
 		sprintf(indexTag,"%d",record.m_id);
        	InsertTreeItem (reportManagerPanel, PANEL_RECORDTREE, VAL_SIBLING,0,VAL_LAST,record.m_code,indexTag, 0, 0);  //TAG 用组在组链表中的序号		
 		if(record.m_result>0)
@@ -30,7 +30,13 @@ static void showRecord(ListType list)
 		
 		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,1,ATTR_LABEL_TEXT,temp);
 		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,2,ATTR_LABEL_TEXT,record.m_createtime);
-		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,3,ATTR_LABEL_TEXT,record.m_createtime); 
+		 
+		if(FileExists(record.m_reportpath,NULL)==1)
+		{
+			SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,3,ATTR_LABEL_TEXT,"已生成");		
+		}else{
+			SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,3,ATTR_LABEL_TEXT,"未生成");			
+		}
 		memset(temp,0,50);
 		if(record.m_upload>0)
 			Fmt(temp,"%s","已上传");
@@ -146,6 +152,7 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 				
 				if(setProjectPath(record.m_projectpath)==TRUE)
 				{
+					setTestProjectDbId(atoi(tag));
 					unsigned int wParam1=4;   
 					unsigned int lParam1=0;   
 					PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);

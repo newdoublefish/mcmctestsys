@@ -233,6 +233,36 @@ int main (int argc, char *argv[])
 	return 0;
 }
 
+BOOL addTestProjectToDb(tTestProject *projectPtr)
+{
+	tAutoTestRecord record={0};
+	/*if(0==strlen(productId))
+		sprintf(record.ProductId,"%s",obj.device.eutName);
+	else
+		sprintf(record.ProductId,"%s",productId);*/
+	sprintf(record.m_code,"%s",projectPtr->projectName);	
+	//sprintf(record.m_createtime,"%s","");
+	//sprintf(record.m_reportpath,"%s",reportFilePath);
+	sprintf(record.m_projectpath,"%s",projectPtr->projectPath);
+	record.m_result=0;
+	record.m_upload=0;
+
+	unsigned int year, month, day, hour, min, sec, weekDay;
+	CVIAbsoluteTime absTime;
+	char startTime[100]={0};
+	GetCurrentCVIAbsoluteTime(&absTime);
+    CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
+                	&min, &sec, 0, &weekDay);
+	sprintf(startTime,"%d年%02d月%02d日%2d时%02d分%02d秒",year,month,day,hour,min,sec); 
+	sprintf(record.m_createtime,"%s",startTime);	
+	
+	insertReportRecord(record);	
+
+	getInsertdRecordId(&projectPtr->dbId);
+	
+	return TRUE;	
+}
+
 //////////////////////////////////////////////////////////////////////////
 //---------------------------------------------------------------主界面操作
 //---------------------------------------------------------------TABPANEL1
@@ -256,6 +286,7 @@ int CVICALLBACK PICTUREBUTTON_STATE (int panel, int control, int event,
 				//memcpy(&gProject,&project,sizeof(tTestProject));
 				HidePanel(panelMain);
 				DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());
+				addTestProjectToDb(getCurrentProject());
 				//printf("%s,%s",gProject.projectName,gProject.projectPath);
 				
 			}
@@ -278,6 +309,7 @@ int CVICALLBACK PICTUREBUTTON_AUTO (int panel, int control, int event,
 				SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1);
 				HidePanel(panelMain);
 				DisplayAutoTestPanel(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());
+				addTestProjectToDb(getCurrentProject());
 			}
 			break;
 	}
@@ -335,6 +367,7 @@ int CVICALLBACK MainPnlMsgCallback (int panelHandle, int message,
 		SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1); 
 		HidePanel(panelMain);
 		DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());
+		//addTestProjectToDb(getCurrentProject());
 	}
 	
 	return 0; 

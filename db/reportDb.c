@@ -91,6 +91,33 @@ int initDb()
 	return TRUE;
 }
 
+int getInsertdRecordId(int *id)
+{
+	char SQLCommand[250];
+	int  fileHandle=0;
+	int  dbstatus[8]={0};
+	tAutoTestRecord record={0};	
+	//*listPtr=ListCreate(sizeof(tAutoTestRecord));
+	SUT sut=GetSeletedSut(); 
+	Fmt(SQLCommand,"select @@identity as %s","m_id");
+	fileHandle= DBActivateSQL(dBHandle,SQLCommand);//与数据库中的表建立连接 
+	//num=DBNumberOfRecords (fileHandle);//获取当前数据库中的记录
+	
+	DBBindColInt(fileHandle,1,&record.m_id,&dbstatus[0]);
+	
+	
+	while(DBFetchNext(fileHandle)==0)
+	{
+		//printf("record %s,%d\n",record.ProductId,record.id);
+		//ListInsertItem(list,&record,END_OF_LIST);
+		//printf("%d\n",record.m_id);
+		*id = record.m_id;
+	}
+	DBDeactivateSQL (fileHandle); 
+	
+	return 0;
+}
+
 int insertReportRecord(tAutoTestRecord record)
 {
 	char SQLCommand[250];
@@ -108,7 +135,7 @@ int insertReportRecord(tAutoTestRecord record)
 	{
 		DBDeactivateSQL (fileHandle); 
 		return -1; 
-	}	
+	}
 	return 1;
 }
 
@@ -122,7 +149,7 @@ int getAllRecord(ListType list)
 		return -1;
 	//*listPtr=ListCreate(sizeof(tAutoTestRecord));
 		SUT sut=GetSeletedSut(); 
-	Fmt(SQLCommand,"SELECT * FROM %s",sut.dbName);
+	Fmt(SQLCommand,"SELECT * FROM %s order by m_id desc",sut.dbName);
 	fileHandle= DBActivateSQL(dBHandle,SQLCommand);//与数据库中的表建立连接 
 	//num=DBNumberOfRecords (fileHandle);//获取当前数据库中的记录
 	
@@ -138,6 +165,37 @@ int getAllRecord(ListType list)
 	
 	return 0;
 }
+
+int updateRecord(tAutoTestRecord recordToUpdate)
+{
+	char SQLCommand[250];
+	int  dbstatus[8];
+	int  fileHandle;
+	SUT sut=GetSeletedSut();
+	//int id = 0;
+	tAutoTestRecord record={0};
+	//getInsertdRecordId(&id);
+	
+	Fmt(SQLCommand,"SELECT * FROM %s where m_id=%d",sut.dbName,recordToUpdate.m_id);
+	
+	fileHandle= DBActivateSQL(dBHandle,SQLCommand);//与数据库中的表建立连接
+	record.m_id =-1; //等于-1不bind
+	bindRecord(&record,fileHandle,dbstatus);	
+	
+	while(DBFetchNext(fileHandle)==0)
+	{
+		record=recordToUpdate;
+		if(DBPutRecord (fileHandle)!=DB_SUCCESS)
+		{
+
+			DBDeactivateSQL (fileHandle); 
+			return -1; 
+		}
+	}
+	DBDeactivateSQL (fileHandle); 	
+	return 1;	
+}
+
 
 int updateUpload(int id,short flag)
 {
