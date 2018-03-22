@@ -328,6 +328,10 @@ int CVICALLBACK MainPnlMsgCallback (int panelHandle, int message,
 		
 		
 	   //测试条例读取完毕，获取测试条例
+	    SUT sut=GetSeletedSut();
+		char title[100]={0};
+		sprintf(title,"广州万城万充新能源科技有限公司-%s",sut.systemName);
+		SetPanelAttribute(panelMain,ATTR_TITLE,title);
 		if(testInit(GetSeletedSut())<0)//初始化测试  
 		{
 		   DisplaySutConfigPanel();  
