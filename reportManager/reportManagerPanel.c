@@ -94,6 +94,8 @@ BOOL postData(int ftpPanel,tAutoTestRecord record)
 		tPostData data={0};
 		char buffer[512]={0}; 
 		ListGetItem(list,&data,i);
+		if(data.upload == 0 )
+			continue;
 		Fmt(buffer,"上传数据 %s ",data.name);
 		SetCtrlVal(ftpPanel,FTP_TEXTBOX,buffer);
 		memset(buffer,0,512);

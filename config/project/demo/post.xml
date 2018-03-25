@@ -1,11 +1,11 @@
 <postset>
-<post name="创建设备" url="http://127.0.0.1:80/test/dev/" request="dev">
+<post name="创建设备" url="http://127.0.0.1:80/test/dev/" request="dev" upload="False">
 	<param name="sn" type="projectName">ZB00003</param>
 	<param name="type" type="default">STUB</param>		
 	<param name="vendor" type="default">万城万充</param>
 	<param name="location" type="default">广州</param>						
 </post>
-<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report">
+<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="False">
 	<param name="sn" type="projectName">ZB00003</param>
 	<param name="type" type="default">板级</param>
 	<param name="result" type="default">true</param>		
@@ -13,5 +13,16 @@
 	<param name="factory" type="default">广州锐速</param>	
 	<param name="person" type="default">陶斯君</param>
 	<param name="approved" type="default">false</param>						
+</post>
+<post name="控制盒数据" url="http://127.0.0.1:80/test/boardinfo/" request="boardinfo" upload="True">
+	<param name="board" type="default">ZB00003</param>
+	<param name="dcd" type="default">128</param>
+	<param name="dcm" type="default">129</param>		
+	<param name="pwr" type="default">132</param>
+	<param name="cpu" type="default">130</param>	
+	<param name="g4" type="default">131</param>
+	<param name="ddb" type="default">133</param>	
+	<param name="dcr" type="default">127</param>	
+	<param name="led" type="default">134</param>								
 </post>
 </postset>

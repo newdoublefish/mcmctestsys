@@ -4,6 +4,7 @@
 #include "postData.h"
 #include "sutCommon.h"
 #include "log.h"
+#include "common.h"
 
 ListType postDataSet=0;
 BOOL importPostProtocol(void);
@@ -43,6 +44,20 @@ BOOL loadPostDataParam(CVIXMLElement currElem,ListType postParamList)
 		CVIXMLGetAttributeByName(currElem,"request",&attr);
 		CVIXMLGetAttributeValue (attr,postData.request);
 		CVIXMLDiscardAttribute(attr);
+		
+		char upload[20]={0};
+		CVIXMLGetAttributeByName(currElem,"upload",&attr);
+		CVIXMLGetAttributeValue (attr,upload);
+		CVIXMLDiscardAttribute(attr);
+		
+		if(strcmp(upload,"True")!=0)
+		{
+			postData.upload = 0;
+		}else{
+			postData.upload = 1;
+		}
+		//	goto DONE;
+		
 		
 		postData.postParamList = ListCreate(sizeof(tPostParam));
 
@@ -95,7 +110,7 @@ BOOL loadPostDataParam(CVIXMLElement currElem,ListType postParamList)
 		}
 		ListInsertItem(postDataSet,&postData,END_OF_LIST);
 	}
-
+DONE:
 	free (elemName);
 	free (elemValue);
 	return TRUE;
@@ -171,7 +186,12 @@ BOOL importPostProtocol(void)
 		GetProjectDir(fileName);
 		strcat(fileName,"\\post.xml");*/
 		SUT sut=GetSeletedSut();
-		loadPostDataFromXml(sut.postFilePath,postDataSet);
+		if(FileExists(sut.postFilePath,NULL)==1)
+		{
+			loadPostDataFromXml(sut.postFilePath,postDataSet);
+		}else{
+			WarnShow1(0,"找不到post文件");
+		}
 
 	}
 	return TRUE;

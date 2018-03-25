@@ -1,0 +1,13 @@
+<postset>
+<post name="控制盒数据" url="http://120.78.222.124:80/query/boardinfo/" request="boardinfo" upload="True">
+	<param name="board" type="projectName">ZB00003</param>
+	<param name="dcd" type="result">128</param>
+	<param name="dcm" type="result">129</param>		
+	<param name="pwr" type="result">132</param>
+	<param name="cpu" type="result">130</param>	
+	<param name="g4" type="result">131</param>
+	<param name="ddb" type="result">133</param>	
+	<param name="dcr" type="result">127</param>	
+	<param name="led" type="result">134</param>								
+</post>
+</postset>

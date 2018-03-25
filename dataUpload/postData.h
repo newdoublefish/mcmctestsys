@@ -31,6 +31,7 @@ typedef struct{
 	char name[30];
 	char url[POST_DATA_VALUE];
 	char request[POST_DATA_BASE];
+	int upload;
 	ListType postParamList;
 }tPostData;
 typedef BOOL (*ON_FILL_DATA_PARAM)(tPostParam *,void *callbackData);

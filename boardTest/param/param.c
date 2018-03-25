@@ -1892,13 +1892,15 @@ TPS registerTimeSetTestTps(void)
 	return tps;	
 }
 
-METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
+METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
+	APPEND_INFO(masgHandle,"进入测试");
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 	{
-		return 	TEST_RESULT_ERROR;
+		//return 	TEST_RESULT_ERROR;
+		goto DONE;
 	}	
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -1937,7 +1939,8 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 			if(servicePtr==NULL)
 			{
 				itemResult.pass=RESULT_FAIL;
-				return 	TEST_RESULT_ERROR;
+				//return 	TEST_RESULT_ERROR;
+				goto DONE;
 			}			
 		}else if(strcmp(item.itemName_,"交流复位")==0){
 			PARAMETER param={0};
@@ -1959,7 +1962,8 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 			if(servicePtr==NULL)
 			{
 				itemResult.pass=RESULT_FAIL;
-				return 	TEST_RESULT_ERROR;
+				//return 	TEST_RESULT_ERROR;
+				goto DONE;
 			}			
 		}
 		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
@@ -1967,14 +1971,16 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable)
 		saveResult(hashTable,&itemResult);
 		
 	}
+DONE:	
+	APPEND_INFO(masgHandle,"退出测试"); 
 	return ret;
 }
 
 TPS registerStubCmdTestTps(void)
 {
 	TPS tps=newTps("StubCmd");
-	tps.autoTestFunction=StubCmdTest;
-	tps.createTpsPanel=NULL;
+	tps.testFunction=StubCmdTest;
+	//tps.createTpsPanel=NULL;
 	return tps;	
 }
 

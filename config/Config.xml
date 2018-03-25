@@ -7,6 +7,7 @@
     <StrategyPath>Integrate_120KW\Strategy.xml</StrategyPath>	
     <DevicePath>Integrate_120KW\Device.xml</DevicePath>	
     <DBName>integrate</DBName>	
+    <PostPath>Integrate_120KW\post.xml</PostPath>	    
     <ReportPath>Integrate_120KW\IntegrateReport.xlsx</ReportPath>
   </Project> 
   <Project>
@@ -22,7 +23,8 @@
     <ConfigPath>board_120KW\BoardConfig.xlsx</ConfigPath>
     <StrategyPath>board_120KW\Strategy.xml</StrategyPath>	
     <DevicePath>board_120KW\Device.xml</DevicePath>
-    <DBName>board</DBName>	   
+    <DBName>board</DBName>
+    <PostPath>board_120KW\post.xml</PostPath>	   
     <ReportPath>board_120KW\BoardReport.xlsx</ReportPath>
   </Project>
   <Project>  

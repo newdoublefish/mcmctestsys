@@ -93,13 +93,15 @@ int httpPostJson(char *url,char *jsonData)
 	postdll_Class1__Create(&class1,NULL);
 	char *result=NULL;
 	postdll_Class1_PostUrl(url, jsonData,&result,NULL);
-	LOG_EVENT_FORMAT(LOG_ERROR,"post url:%s",url); 
 	LOG_EVENT_FORMAT(LOG_ERROR,"post:%s",jsonData);
+	LOG_EVENT_FORMAT(LOG_ERROR,"post url:%s",url); 
+	
 	ret=parsePostResponse(result);
 	LOG_EVENT_FORMAT(LOG_ERROR,"recv:%s",result);
 	/*if(result!=NULL)
 		free(result);*/
-	CDotNetFreeMemory(class1);
+	CDotNetDiscardHandle(class1);
+	//CDotNetFreeMemory(class1);
 	Close_postdll();			
 	return ret;	
 }
