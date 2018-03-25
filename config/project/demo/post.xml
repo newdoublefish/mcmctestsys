@@ -16,7 +16,7 @@
 </post>
 <post name="控制盒数据" url="http://127.0.0.1:80/test/boardinfo/" request="boardinfo" upload="True">
 	<param name="board" type="default">ZB00003</param>
-	<param name="dcd" type="default">128</param>
+	<param name="dcd" type="default">1288</param>
 	<param name="dcm" type="default">129</param>		
 	<param name="pwr" type="default">132</param>
 	<param name="cpu" type="default">130</param>	
