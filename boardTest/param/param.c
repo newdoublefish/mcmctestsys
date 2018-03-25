@@ -503,7 +503,7 @@ METHODRET ParamSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgH
 			APPEND_INFO_FORMAT(masgHandle,"%s,%s:获取成功",item.itemName_,result.recvString); 
 		}
 		
-		if(strstr(item.standard_,result.recvString)!=NULL)
+		if(strstr(result.recvString,item.standard_)!=NULL)
 		{
 			result.pass = RESULT_PASS;
 		}
@@ -2639,7 +2639,7 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		int retryCnt = 10;
 		while(retryCnt-- >=0 )
 		{
-			if(strcmp(item.itemName_,"120KW_电源模块1")==0 || strcmp(item.itemName_,"120KW_电源模块2")==0 || strcmp(item.itemName_,"120KW_电源模块3")==0 || strcmp(item.itemName_,"120KW_电源模块4")==0)
+			/*if(strcmp(item.itemName_,"120KW_电源模块1")==0 || strcmp(item.itemName_,"120KW_电源模块2")==0 || strcmp(item.itemName_,"120KW_电源模块3")==0 || strcmp(item.itemName_,"120KW_电源模块4")==0)
 			{
 				if(FALSE == ParamGetDependWithRetry(eut,"枪1电表电压",getVal,3))
 				{
@@ -2652,6 +2652,21 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 					APPEND_INFO(masgHandle,"获取枪2电压失败");  
 					goto DONE;		
 				}				
+			}*/
+			
+			if(strcmp(item.inputValue_,"电表1")==0)
+			{
+				if(FALSE == ParamGetDependWithRetry(eut,"枪1电表电压",getVal,3))
+				{
+					APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					goto DONE;		
+				}
+			}else  if(strcmp(item.inputValue_,"电表2")==0){
+				if(FALSE == ParamGetDependWithRetry(eut,"枪2电表电压",getVal,3))
+				{
+					APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					goto DONE;		
+				}
 			}
 			
 			getValF= atof(getVal);

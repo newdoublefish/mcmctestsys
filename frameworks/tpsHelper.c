@@ -88,6 +88,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerPowerModuleTestTps,//电源模块测试
 	registerGunSelectedTestTps,//枪选择
 	registerNetWorkCheckTestTps,//网络检查
+	register120KWPowerModuleTestTps, 
 	//板级测试
 	registerBoardTestTPS,
 	registerCanTestTPS,
@@ -102,7 +103,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerLedDispCardTestTPS,
 	registerUsbTestTPS, 
 	registerUpdateTestTPS, 
-	register120KWPowerModuleTestTps,
+	
 	registerCodeInputTestTPS,//条形码录入
 };
 
