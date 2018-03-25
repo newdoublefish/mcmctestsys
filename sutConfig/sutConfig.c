@@ -54,7 +54,10 @@ void DisplaySutConfigPanel()
 	{
        //SystemListGetItem(&temp,index);
 	   ListGetItem(sutConfig.sutList,&temp,index);
-	   InsertListItem(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,index-1,temp.systemName,0);    
+	   if(strlen(temp.nickName)>0)
+	   		InsertListItem(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,index-1,temp.nickName,0);  //用别名好理解一点
+		else
+			InsertListItem(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,index-1,temp.systemName,0); //如果没有别名显示系统名称	
 	}
     //显示面板
     DisplayPanel(sutConfigPanelHandle);

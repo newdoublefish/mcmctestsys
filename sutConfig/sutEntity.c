@@ -57,6 +57,10 @@ static void XMLtoSut(CVIXMLElement currElem,SUTCONFIG *sutConfigPtr)
 		  GetProjectDir(project.configPath);
 		  strcat(project.configPath,config);
 	   	  strcat(project.configPath,elemValue);  
+	   }else if(strcmp(elemName,"NickName")==0)
+	   {
+	      strcpy(project.nickName,elemValue);
+	   
 	   }else if(strcmp(elemName,"StrategyPath")==0)
 	   {
 		  GetProjectDir(project.strategyFile);

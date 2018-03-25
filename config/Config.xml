@@ -2,7 +2,8 @@
 <Projects>
   <Version>0.2</Version>   
   <Project>
-    <ProjectName>120KW整机测试</ProjectName>
+    <ProjectName>120KW_integration</ProjectName>
+    <NickName>120KW整机测试</NickName>
     <ConfigPath>Integrate_120KW\IntegrateConfig.xlsx</ConfigPath>
     <StrategyPath>Integrate_120KW\Strategy.xml</StrategyPath>	
     <DevicePath>Integrate_120KW\Device.xml</DevicePath>	
@@ -11,7 +12,8 @@
     <ReportPath>Integrate_120KW\IntegrateReport.xlsx</ReportPath>
   </Project> 
   <Project>
-    <ProjectName>120KW可靠性测试</ProjectName>
+    <ProjectName>120KW_reliability</ProjectName>
+    <NickName>120KW可靠性测试</NickName>
     <ConfigPath>reliability_120KW\reliabilityConfig.xlsx</ConfigPath>
     <StrategyPath>reliability_120KW\Strategy.xml</StrategyPath>	
     <DevicePath>reliability_120KW\Device.xml</DevicePath>
@@ -19,7 +21,8 @@
     <ReportPath>reliability_120KW\reliabilityReport.xlsx</ReportPath>	
   </Project>    
   <Project>
-    <ProjectName>120KW板级测试</ProjectName>
+    <ProjectName>120KW_board</ProjectName>
+    <NickName>120KW板级测试</NickName>
     <ConfigPath>board_120KW\BoardConfig.xlsx</ConfigPath>
     <StrategyPath>board_120KW\Strategy.xml</StrategyPath>	
     <DevicePath>board_120KW\Device.xml</DevicePath>
@@ -28,7 +31,8 @@
     <ReportPath>board_120KW\BoardReport.xlsx</ReportPath>
   </Project>
   <Project>  
-    <ProjectName>90KW整机测试</ProjectName>
+    <ProjectName>90KW_integration</ProjectName>
+    <NickName>90KW整机测试</NickName>
     <ConfigPath>Integrate_90KW\IntegrateConfig.xlsx</ConfigPath>
     <StrategyPath>Integrate_90KW\Strategy.xml</StrategyPath>	
     <DevicePath>Integrate_90KW\Device.xml</DevicePath>	
@@ -36,7 +40,8 @@
     <ReportPath>Integrate_90KW\IntegrateReport.xlsx</ReportPath>
   </Project> 
   <Project>
-    <ProjectName>90KW可靠性测试</ProjectName>
+    <ProjectName>90KW_reliability</ProjectName>
+    <NickName>90KW可靠性测试</NickName>
     <ConfigPath>reliability_90KW\reliabilityConfig.xlsx</ConfigPath>
     <StrategyPath>reliability_90KW\Strategy.xml</StrategyPath>	
     <DevicePath>reliability_90KW\Device.xml</DevicePath>
@@ -44,7 +49,8 @@
     <ReportPath>reliability_90KW\reliabilityReport.xlsx</ReportPath>	
   </Project>    
   <Project>
-    <ProjectName>90KW板级测试</ProjectName>
+    <ProjectName>90KW_board</ProjectName>
+    <NickName>120KW板级测试</NickName>
     <ConfigPath>board_90KW\BoardConfig.xlsx</ConfigPath>
     <StrategyPath>board_90KW\Strategy.xml</StrategyPath>	
     <DevicePath>board_90KW\Device.xml</DevicePath>
@@ -53,6 +59,7 @@
   </Project> 
   <Project>
     <ProjectName>Demo</ProjectName>
+    <NickName>模板</NickName>
     <ConfigPath>demo\demo.xlsx</ConfigPath>
     <StrategyPath>demo\Strategy.xml</StrategyPath>	
     <DevicePath>demo\Device.xml</DevicePath>

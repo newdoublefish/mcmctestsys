@@ -164,6 +164,17 @@ static void  adjustTstTab(int tabPanel)
 	SetCtrlAttribute(tabPanel,TABPANEL_PICTUREBUTTON_INSTR,ATTR_LEFT,3*paddingLeft+2*buttonSize);		
 }
 
+void static setMainPanelTitle(){
+   char title[100]={0};
+   SUT sut=GetSeletedSut();
+   tTestProject *projectPtr=getCurrentProject();
+   if(strlen(projectPtr->projectName)==0)
+	  sprintf(title,"广州万城万充新能源科技有限公司-%s",sut.nickName);
+   else
+	   sprintf(title,"广州万城万充新能源科技有限公司-%s-%s",sut.nickName,projectPtr->projectName);
+   SetPanelAttribute(panelMain,ATTR_TITLE,title);
+}
+
 int main (int argc, char *argv[])
 {
 	if (InitCVIRTE (0, argv, 0) == 0)
@@ -281,6 +292,7 @@ int CVICALLBACK PICTUREBUTTON_STATE (int panel, int control, int event,
 			//tTestProject project={0};
 			if(loadTestProject())
 			{
+				setMainPanelTitle();
 				initLogPath();
 				SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1); 
 				//memcpy(&gProject,&project,sizeof(tTestProject));
@@ -305,6 +317,7 @@ int CVICALLBACK PICTUREBUTTON_AUTO (int panel, int control, int event,
 		case EVENT_COMMIT:
 			if(newTestProject())
 			{
+				setMainPanelTitle();
 				initLogPath();
 				SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1);
 				HidePanel(panelMain);
@@ -328,10 +341,7 @@ int CVICALLBACK MainPnlMsgCallback (int panelHandle, int message,
 		
 		
 	   //测试条例读取完毕，获取测试条例
-	    SUT sut=GetSeletedSut();
-		char title[100]={0};
-		sprintf(title,"广州万城万充新能源科技有限公司-%s",sut.systemName);
-		SetPanelAttribute(panelMain,ATTR_TITLE,title);
+		setMainPanelTitle();
 		if(testInit(GetSeletedSut())<0)//初始化测试  
 		{
 		   DisplaySutConfigPanel();  
@@ -369,6 +379,7 @@ int CVICALLBACK MainPnlMsgCallback (int panelHandle, int message,
 	{
 	    initLogPath();
 		SetCtrlAttribute(panelMain,PANEL_MAIN_BACK,ATTR_VISIBLE,1); 
+		setMainPanelTitle();
 		HidePanel(panelMain);
 		DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());
 		//addTestProjectToDb(getCurrentProject());

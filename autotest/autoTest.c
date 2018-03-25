@@ -751,7 +751,8 @@ static void operateTimer(int on)
 		GetCurrentCVIAbsoluteTime(&absTime);
         CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
                 &min, &sec, 0, &weekDay);
-		sprintf(startTime,"%d年%02d月%02d日%2d时%02d分%02d秒",year,month,day,hour,min,sec);
+		//sprintf(startTime,"%d年%02d月%02d日%2d时%02d分%02d秒",year,month,day,hour,min,sec);
+		sprintf(startTime,"%d%02d%02d%2d%02d",year,month,day,hour,min); 
 		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TIMER,ATTR_INTERVAL,0.5);  //开始 
 	}else
 	{
@@ -1097,7 +1098,7 @@ void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,Lis
 	}
 	SUT sut=GetSeletedSut();
 	char currentSutName[50]={0};
-	sprintf(currentSutName,"当前测试项目:%s",sut.systemName);
+	sprintf(currentSutName,"当前测试项目:%s",sut.nickName);
 	SetCtrlVal(autoPanelHandle,PANEL_AUTO_CURRENT_SUT,currentSutName);
 	SetCtrlVal(autoPanelHandle,PANEL_AUTO_TEST_PROJECT,gTestProject->projectName);	
 	disPlayTestPanel(gEngine); //step3 显示测试对象面板
@@ -1137,7 +1138,7 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 	}
 	SUT sut=GetSeletedSut();
 	char currentSutName[50]={0};
-	sprintf(currentSutName,"当前测试项目:%s",sut.systemName);
+	sprintf(currentSutName,"当前测试项目:%s",sut.nickName);
 	SetCtrlVal(autoPanelHandle,PANEL_AUTO_CURRENT_SUT,currentSutName);	
 	SetCtrlVal(autoPanelHandle,PANEL_AUTO_TEST_PROJECT,gTestProject->projectName);	
 	adjustPanelSize(autoPanelHandle);
