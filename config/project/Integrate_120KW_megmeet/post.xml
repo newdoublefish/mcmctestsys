@@ -19,7 +19,7 @@
 	<param name="person" type="default">陶斯君</param>
 	<param name="approved" type="default">false</param>						
 </post>	
-<post name="桩数据" url="http://127.0.0.1:80/test/stubinfo/" request="stubinfo"  upload='True'>
+<post name="桩数据" url="http://127.0.0.1:80/test/stubinfo/" request="stubinfo"  upload='False'>
 	<param name="stub" type="result">105</param>
 	<param name="sim" type="result">98</param>
 	<param name="board" type="result">101</param>		
@@ -30,7 +30,7 @@
 	<param name="vendor" type="result">106</param>
 	<param name="power" type="default">2</param>								
 </post>
-<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="True">
+<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="False">
 	<param name="sn" type="projectName">ZB00003</param>
 	<param name="type" type="default">整机</param>
 	<param name="result" type="default">true</param>		

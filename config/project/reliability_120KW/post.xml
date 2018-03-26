@@ -8,7 +8,7 @@
 	<param name="person" type="default">陶斯君</param>
 	<param name="approved" type="default">false</param>						
 </post>
-<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="True">
+<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="False">
 	<param name="sn" type="projectName">ZB00003</param>
 	<param name="type" type="default">安规</param>
 	<param name="result" type="default">true</param>		

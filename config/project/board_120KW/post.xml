@@ -1,5 +1,5 @@
 <postset>
-<post name="控制盒数据" url="http://127.0.0.1:80/test/boardinfo/" request="boardinfo" upload="True">
+<post name="控制盒数据" url="http://127.0.0.1:80/test/boardinfo/" request="boardinfo" upload="False">
 	<param name="board" type="projectName">ZB00003</param>
 	<param name="dcd" type="result">128</param>
 	<param name="dcm" type="result">129</param>		
@@ -30,7 +30,7 @@
 	<param name="person" type="default">陶斯君</param>
 	<param name="approved" type="default">false</param>						
 </post>
-<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="True">
+<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="False">
 	<param name="sn" type="projectName">ZB00003</param>
 	<param name="type" type="default">板级</param>
 	<param name="result" type="default">true</param>		
