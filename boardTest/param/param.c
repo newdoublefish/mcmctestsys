@@ -388,7 +388,7 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 			char minPai[20]={0};
 			memcpy(minPai,itemResult.recvString+10,7);
 			memset(itemResult.recvString,0,RESULT_RECEIVE_LEN); 
-			sprintf(itemResult.recvString,"%s%s","ZB",minPai);
+			sprintf(itemResult.recvString,"%s%s",item.inputValue_,minPai);
 			APPEND_INFO_FORMAT(masgHandle,"√˙≈∆±‡∫≈Œª:%s",itemResult.recvString);
 			saveResult(hashTable,&itemResult);  
 			continue;
