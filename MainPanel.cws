@@ -116,7 +116,7 @@ In Projects = "1,"
 Window Top = 64
 Window Left = 26
 Window Z-Order = 1
-Source Window State = "1,901,901,901,38,45,45,2,0,157,0,261,0,605,0,32,886,0,902,87,239,517,1,0,"
+Source Window State = "1,901,901,901,38,45,45,2,0,157,0,261,0,605,0,32,898,0,898,138,239,517,1,0,"
 
 [File 0011]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/ParamSetGet.c"
