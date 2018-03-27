@@ -48,6 +48,7 @@
     <StrategyPath>Integrate_90KW\Strategy.xml</StrategyPath>	
     <DevicePath>Integrate_90KW\Device.xml</DevicePath>	
     <DBName>integrate</DBName>	
+    <PostPath>Integrate_90KW\post.xml</PostPath>
     <ReportPath>Integrate_90KW\IntegrateReport.xlsx</ReportPath>
   </Project> 
   <Project>

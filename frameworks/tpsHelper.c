@@ -60,6 +60,7 @@ extern TPS registerUpdateTestTPS(void);
 extern TPS registerParamsSetTps(void);
 extern TPS register120KWPowerModuleTestTps(void);
 extern TPS registerCodeInputTestTPS(void);
+extern TPS registerResistanceJinkoTestTPS(void);
 
 
 
@@ -69,6 +70,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerHttpPostTPS,
 	//可靠性
 	registerResistanceTestTPS,  //可靠性，安规仪
+	registerResistanceJinkoTestTPS,//金科安规仪
 	//整机测试
 	registerParamTestTPS,
 	registerParamsCheckTps,
