@@ -5,17 +5,8 @@
 	<param name="vendor" type="default">万城万充</param>
 	<param name="location" type="default">广州</param>						
 </post>
-<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="False">
-	<param name="sn" type="projectName">ZB00003</param>
-	<param name="type" type="default">板级</param>
-	<param name="result" type="default">true</param>		
-	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
-	<param name="factory" type="default">广州锐速</param>	
-	<param name="person" type="default">陶斯君</param>
-	<param name="approved" type="default">false</param>						
-</post>
-<post name="控制盒数据" url="http://127.0.0.1:80/test/boardinfo/" request="boardinfo" upload="True">
-	<param name="board" type="default">ZB00003</param>
+<post name="控制盒数据" url="http://120.78.222.124:80/query/boardinfo/" request="boardinfo" upload="True">
+	<param name="board" type="default">test</param>
 	<param name="dcd" type="default">1288</param>
 	<param name="dcm" type="default">129</param>		
 	<param name="pwr" type="default">132</param>
@@ -25,4 +16,25 @@
 	<param name="dcr" type="default">127</param>	
 	<param name="led" type="default">134</param>								
 </post>
+<post name="桩数据" url="http://120.78.222.124:80/query/stubinfo/" request="stubinfo"  upload='True'>
+	<param name="stub" type="default">test</param>
+	<param name="sim" type="default">98</param>
+	<param name="board" type="default">101</param>		
+	<param name="ammeter1" type="default">24</param>
+	<param name="ammeter2" type="default">25</param>	
+	<param name="gun1" type="default">21</param>
+	<param name="gun2" type="default">22</param>	
+	<param name="vendor" type="default">106</param>
+	<param name="power" type="default">1</param>								
+</post>
+<post name="上传报告" url="http://120.78.222.124:80/query/report/" request="report" upload="True">
+	<param name="sn" type="default">test</param>
+	<param name="type" type="default">整机</param>
+	<param name="result" type="default">true</param>		
+	<param name="report" type="default">ftp://120.78.222.124/test.xlsx</param>
+	<param name="factory" type="default">广州锐速</param>	
+	<param name="person" type="default">陶斯君</param>
+	<param name="approved" type="default">false</param>						
+</post>
+
 </postset>

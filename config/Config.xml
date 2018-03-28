@@ -23,14 +23,24 @@
   </Project>    
   <Project>
     <ProjectName>120KW_reliability</ProjectName>
-    <NickName>120KW可靠性测试</NickName>
-    <ConfigPath>reliability_120KW\reliabilityConfig.xlsx</ConfigPath>
-    <StrategyPath>reliability_120KW\Strategy.xml</StrategyPath>	
-    <DevicePath>reliability_120KW\Device.xml</DevicePath>
+    <NickName>120KW可靠性测试_安柏</NickName>
+    <ConfigPath>reliability_120KW_anbat\reliabilityConfig.xlsx</ConfigPath>
+    <StrategyPath>reliability_120KW_anbat\Strategy.xml</StrategyPath>	
+    <DevicePath>reliability_120KW_anbat\Device.xml</DevicePath>
     <DBName>reliability</DBName>  
-    <PostPath>reliability_120KW\post.xml</PostPath>	 
-    <ReportPath>reliability_120KW\reliabilityReport.xlsx</ReportPath>	
-  </Project>    
+    <PostPath>reliability_120KW_anbat\post.xml</PostPath>	 
+    <ReportPath>reliability_120KW_anbat\reliabilityReport.xlsx</ReportPath>	
+  </Project> 
+  <Project>
+    <ProjectName>120KW_reliability</ProjectName>
+    <NickName>120KW可靠性测试_金科</NickName>
+    <ConfigPath>reliability_120KW_jinko\reliabilityConfig.xlsx</ConfigPath>
+    <StrategyPath>reliability_120KW_jinko\Strategy.xml</StrategyPath>	
+    <DevicePath>reliability_120KW_jinko\Device.xml</DevicePath>
+    <DBName>reliability</DBName>  
+    <PostPath>reliability_120KW_jinko\post.xml</PostPath>	 
+    <ReportPath>reliability_120KW_jinko\reliabilityReport.xlsx</ReportPath>	
+  </Project>      
   <Project>
     <ProjectName>120KW_board</ProjectName>
     <NickName>120KW板级测试</NickName>
