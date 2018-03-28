@@ -175,6 +175,7 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 					    	SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.m_reportpath);
 							SetCtrlVal(ftpPanel,FTP_TEXTBOX,"\n");
 						}else{
+							updateUpload(atoi(tag),0);
 							SetCtrlVal(ftpPanel,FTP_TEXTBOX,"http post ÉÏ´«³ö´í\n");
 						}
 					

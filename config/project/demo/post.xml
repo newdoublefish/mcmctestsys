@@ -1,5 +1,5 @@
 <postset>
-<post name="创建设备" url="http://127.0.0.1:80/test/dev/" request="dev" upload="False">
+<post name="创建设备" url="http://127.0.0.1:80/test/dev/" request="dev" upload="True">
 	<param name="sn" type="projectName">ZB00003</param>
 	<param name="type" type="default">STUB</param>		
 	<param name="vendor" type="default">万城万充</param>
