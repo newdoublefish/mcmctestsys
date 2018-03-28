@@ -88,6 +88,7 @@ BOOL onParsePostData(tPostParam *paramPtr,void *callbackData)
 
 BOOL postData(int ftpPanel,tAutoTestRecord record)
 {
+	BOOL ret=TRUE;
 	ListType list=getPostDataSet();
 	for(int i=1;i<=ListNumItems(list);i++)
 	{
@@ -103,14 +104,13 @@ BOOL postData(int ftpPanel,tAutoTestRecord record)
 		if(1!=httpPostJson(data.url,buffer))
 		{
 			//return FALSE;
+			ret = FALSE;
 			SetCtrlVal(ftpPanel,FTP_TEXTBOX,"上传失败\n"); 	
 		}else{
 		   	SetCtrlVal(ftpPanel,FTP_TEXTBOX,"上传成功\n");
 		}
-		
-		
 	}
-	return TRUE;	
+	return ret;	
 }
 
 extern int g_mainHWND;

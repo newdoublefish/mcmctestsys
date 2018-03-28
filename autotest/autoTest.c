@@ -1251,6 +1251,11 @@ int CVICALLBACK RESET (int panel, int control, int event,
 	{
 		case EVENT_COMMIT:
 			//operateTimer(0);
+			if(AlertDialogWithRet(0,"警告","重置会导致所有结果丢失，是否继续","继续","不继续"))
+			{
+				return 0;
+			}
+		
 			resetResult(gEngine);
 			reSetEngine(gEngine);
 			
