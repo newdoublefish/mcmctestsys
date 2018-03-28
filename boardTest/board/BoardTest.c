@@ -1259,6 +1259,7 @@ TPS registerCodeInputTestTPS(void)
 {
 	TPS tps=newTps("codeinput");
 	tps.testFunction=CodeInput;
+	tps.createTpsPanel=NULL;
 	return tps;
 }
 
