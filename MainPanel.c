@@ -440,6 +440,7 @@ int CVICALLBACK BackMain (int panel, int control, int event,
 	{
 		case EVENT_COMMIT:
 			//DisplaySutConfigPanel();
+			HidePanel(panelMain); 
 			DisplayAutoTestPanelWithTestData(getItemList(),getEutList(),GetCollectList(),ENUM_TEST_PANEL_AUTO,getCurrentProject());
 			break;
 	}

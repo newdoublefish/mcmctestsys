@@ -866,6 +866,14 @@ ENUMTestResult onObjectGroupTest(TestGroup testItem,TESTobject *_obj,TESTType ty
 			 goto DONE;
 		}
 		
+		for(int itemIndex=1;itemIndex<=ListNumItems(testItem.subItems);itemIndex++)
+		{
+			  TestItem item={0};
+			  ListGetItem(testItem.subItems,&item,itemIndex);
+			  RESULT result={0};
+			  result.index = item.itemId;
+			  saveResult(_obj->resultHashTable,&result);
+		}
 		
 	    /*TEST_METHOD method=getTestMethod(testItem); //获取测试方法
 		//LOG_LEVEL("Debug","%x\n",_obj->resultHashTable);

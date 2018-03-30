@@ -1793,20 +1793,34 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		saveResult(hashTable,&itemResult);			
 	}
 	
+	WarnShow1(0,"手动解锁测试,请按下手动解锁按钮！！");
+	
+	if(AlertDialogWithRet(0,"手动解锁测试","手动解锁能是否正常","否","正常")==TRUE)
+	{
+		itemResult1.pass = RESULT_PASS;	
+		saveResult(hashTable,&itemResult1); 
+	}else{
+		itemResult1.pass = RESULT_FAIL;	
+		saveResult(hashTable,&itemResult1); 		
+	}
+	
 	
 	
 DONE:
 	ListDispose(paramsToSet);
 	//ListDispose(paramsToGet);
 	
-	if(ParamSetDepend(eut,stopChargeCMD,"1")==FALSE)
+	/*if(ParamSetDepend(eut,stopChargeCMD,"1")==FALSE)
 	{
 		WarnShow1(0,"不能停止充电,请按下急停按钮");		
 	}else{
 		APPEND_INFO(msgHandler,"已经停止充电流程");
-	}
+	}*/
 	
-	WarnShow1(0,"请确保已经停止充电");
+	//WarnShow1(0,"请按下急停按钮")
+	
+	WarnShow1(0,"请确保已经停止充电,如果没有请按急停按钮");
+	
 	
 	if(CloseDo(eut.relayConfig,31)==FALSE)
 	{
