@@ -1,6 +1,7 @@
 #include "toolbox.h"
 #include "login.h"
 #include "WarnPanel.h"
+#include "loginConfigBiz.h"
 
 
 int CVICALLBACK LoginPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
@@ -44,13 +45,24 @@ int CVICALLBACK onLoginCtrlCallBack (int panel, int control, int event,
 		case EVENT_COMMIT:
 			 BOOL *ret = (BOOL *)callbackData;
 			 
-			 char userName[30]={0};
-			 char password[30]={0};
-			 GetCtrlVal(panel,LOGINPANEL_USERNAME,userName);
-			 GetCtrlVal(panel,LOGINPANEL_PASSWORD,password);
-			 *ret = Login(userName,password);
-			 if(*ret == TRUE)
+			 //char userName[30]={0};
+			 //char password[30]={0};
+			 tLoginConfig config={0};
+			 GetCtrlVal(panel,LOGINPANEL_USERNAME,config.userName);
+			 GetCtrlVal(panel,LOGINPANEL_PASSWORD,config.password);
+			 GetCtrlVal(panel,LOGINPANEL_REMEBER,&config.remember);
+			 *ret = Login(config.userName,config.password);
+			 if(*ret == TRUE){
+				 
+				if(config.remember > 0)
+				{
+					saveLoginConfig(config);	
+				}else{
+					tLoginConfig temp={0};
+					saveLoginConfig(temp);
+				}
 			 	QuitUserInterface(1);
+			 }
 			 else
 				SetCtrlVal(panel,LOGINPANEL_ERRORMSG,"用户名或者密码错误");		 
 		     break;
@@ -64,6 +76,10 @@ BOOL DisplayLoginPanel(void)
 	int panel = LoadPanel(0,"WarnPanel.uir",LOGINPANEL);
 	InstallCtrlCallback(panel,LOGINPANEL_COMMANDBUTTON,onLoginCtrlCallBack,&ret); 
 	InstallPanelCallback(panel,LoginPanelCallback,NULL); 
+	tLoginConfig config=getLoginConfig();
+	SetCtrlVal(panel,LOGINPANEL_USERNAME,config.userName);
+	SetCtrlVal(panel,LOGINPANEL_PASSWORD,config.password);
+	SetCtrlVal(panel,LOGINPANEL_REMEBER,config.remember);
 	DisplayPanel(panel);
 	RunUserInterface();
 	DiscardPanel(panel);

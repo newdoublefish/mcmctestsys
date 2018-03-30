@@ -19,7 +19,8 @@
 #define  LOGINPANEL_COMMANDBUTTON         4       /* control type: command, callback function: (none) */
 #define  LOGINPANEL_TEXTMSG               5       /* control type: textMsg, callback function: (none) */
 #define  LOGINPANEL_TEXTMSG_2             6       /* control type: textMsg, callback function: (none) */
-#define  LOGINPANEL_ERRORMSG              7       /* control type: textMsg, callback function: (none) */
+#define  LOGINPANEL_REMEBER               7       /* control type: radioButton, callback function: (none) */
+#define  LOGINPANEL_ERRORMSG              8       /* control type: textMsg, callback function: (none) */
 
 #define  MANUALTIPS                       2
 #define  MANUALTIPS_SURE                  2       /* control type: command, callback function: (none) */

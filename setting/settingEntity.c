@@ -117,6 +117,8 @@ SETTING getSetting(void)
 		  items  = Ini_NumberOfItems (g_myInifile, sectionName);
 		  if(sectionName)
 		  {	  
+			 if(strcmp(sectionName,"Setting")!=0)
+				continue;
 		    for(int item=1;item<=items;item++)
 		    {
 		         Ini_NthItemName (g_myInifile, sectionName, item,&itemName);
