@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 9
+Number of Opened Files = 7
 Window Confinement Region Enabled = True
 MainColumnWidth = 261
 FileDateColumnWidth = 70
@@ -95,7 +95,6 @@ Disk Date = 3597902402
 In Projects = "1,"
 Window Top = 152
 Window Left = 74
-Window Z-Order = 2
 Source Window State = "1,218,218,218,163,164,164,0,0,91,0,228,0,0,0,19,140,0,97,84,251,605,1,114,"
 Breakpoint 0001 = "147,0,disabled,"
 
@@ -112,11 +111,12 @@ Breakpoint 0001 = "156,0,enabled,"
 [File 0010]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
 File Type = "CSource"
-Disk Date = 3604980658
+Disk Date = 3605237108
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,82,82,82,4,31,31,0,0,101,0,38,0,0,0,25,82,0,94,66,323,665,1,29,"
+Window Z-Order = 1
+Source Window State = "1,94,94,94,4,41,41,0,0,157,0,38,0,0,0,26,76,0,94,31,323,665,1,29,"
 
 [File 0011]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/param.c"
@@ -323,7 +323,6 @@ Window Top = 32
 Window Left = 10
 Window Height = 323
 Window Width = 605
-Window Z-Order = 5
 
 [File 0032]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/appInit.c"
@@ -341,7 +340,8 @@ Disk Date = 3605233300
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,708,708,708,16,26,26,0,3,76,0,0,0,0,0,21,701,0,708,16,275,517,1,52,"
+Window Z-Order = 5
+Source Window State = "1,856,856,856,19,30,30,0,3,76,0,0,0,0,0,21,839,0,856,19,275,517,1,52,"
 
 [File 0034]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/eut/BasicInfoConfig.c"
@@ -430,6 +430,7 @@ Disk Date = 3604548251
 In Projects = "1,"
 Window Top = 242
 Window Left = 122
+Window Z-Order = 4
 Source Window State = "1,68,69,68,0,0,0,0,0,111,0,0,0,0,0,25,58,0,69,73,323,725,1,0,"
 
 [File 0044]
@@ -502,8 +503,7 @@ Disk Date = 3605234704
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 7
-Source Window State = "1,104,104,104,35,44,44,0,0,76,0,90,0,151,0,20,28,0,53,49,263,517,1,51,"
+Source Window State = "1,104,104,104,35,44,44,0,0,157,0,90,0,151,0,27,28,0,53,49,263,517,1,51,"
 
 [File 0052]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/ftpConfig/ftpConfigView.c"
@@ -566,8 +566,7 @@ Disk Date = 3605235443
 In Projects = "1,"
 Window Top = 96
 Window Left = 43
-Window Z-Order = 1
-Source Window State = "1,51,52,52,18,74,74,0,0,157,0,0,0,0,0,26,26,0,60,72,251,517,1,0,"
+Source Window State = "1,51,52,52,18,74,74,0,0,76,0,0,0,0,0,19,62,0,40,78,251,517,1,0,"
 
 [File 0059]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.c"
@@ -684,7 +683,8 @@ Disk Date = 3605225541
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,93,93,93,14,24,24,0,0,76,0,0,0,0,0,16,10,0,105,73,215,517,1,0,"
+Window Z-Order = 3
+Source Window State = "1,649,649,649,5,28,28,0,0,76,0,0,0,0,0,16,640,0,654,61,215,517,1,0,"
 
 [File 0072]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/relayProtocol.c"
@@ -698,11 +698,12 @@ Source Window State = "1,121,121,121,88,89,88,0,0,0,0,150,0,150,0,0,103,0,120,87
 [File 0073]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/relayTest.c"
 File Type = "CSource"
-Disk Date = 3599608163
+Disk Date = 3605237072
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,39,39,39,4,24,24,0,0,0,0,47,0,47,0,0,21,0,31,73,215,517,1,0,"
+Window Z-Order = 2
+Source Window State = "1,72,72,72,0,38,38,0,3,76,0,48,0,80,0,16,55,0,72,0,215,517,1,31,"
 
 [File 0074]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/db/reportDb.c"
@@ -801,7 +802,6 @@ Disk Date = 3605234791
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Window Z-Order = 9
 Source Window State = "1,119,119,119,36,43,43,0,3,91,0,202,0,0,0,19,44,0,119,36,251,605,1,34,"
 
 [File 0085]
@@ -1030,7 +1030,8 @@ Disk Date = 3602541962
 In Projects = "1,"
 Window Top = 228
 Window Left = 122
-Source Window State = "1,50,50,50,4,12,12,0,0,0,0,0,0,0,0,0,37,0,45,70,323,605,1,0,"
+Window Z-Order = 6
+Source Window State = "1,50,50,50,13,25,25,0,0,91,0,0,0,0,0,25,37,0,47,53,323,605,1,0,"
 
 [File 0111]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/eut/EutHelper.h"
@@ -1102,7 +1103,6 @@ Disk Date = 3596074708
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 8
 Source Window State = "1,32,37,37,0,13,13,0,0,76,0,38,0,38,0,20,7,0,21,63,263,517,1,0,"
 
 [File 0119]
@@ -1297,7 +1297,8 @@ Disk Date = 3605225584
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,28,28,28,0,85,85,0,0,76,0,0,0,0,0,16,13,0,31,67,215,517,1,0,"
+Window Z-Order = 7
+Source Window State = "1,28,28,28,5,28,28,0,3,76,0,0,0,0,0,16,13,0,28,5,215,517,1,0,"
 
 [File 0141]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/relayProtocol.h"
@@ -1706,45 +1707,31 @@ Disk Date = 3600953720
 In Projects = "1,"
 
 [File 0197]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.h"
-File Type = "Include"
-Disk Date = 3605235087
-In Projects = ""
-Window Top = 126
-Window Left = 58
-Window Z-Order = 4
-Source Window State = "1,21,21,21,9,27,27,0,0,80,0,0,0,0,0,15,0,0,7,78,203,541,1,0,"
-
-[File 0198]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/loginConfigBiz.c"
 File Type = "CSource"
 Disk Date = 3605234733
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 6
 Source Window State = "1,103,103,103,35,46,46,0,0,80,0,42,0,0,0,15,0,0,61,61,203,541,1,0,"
 
-[File 0199]
+[File 0198]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/loginConfigBiz.h"
 File Type = "Include"
 Disk Date = 3605234326
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 3
 Source Window State = "1,29,29,29,8,23,23,0,3,80,0,9,0,0,0,15,9,0,29,8,203,541,1,31,"
 
 [Tab Order]
-Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/ftpConfig/ftpConfigBiz.c"
-Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/ftpConfig/ftpConfigBiz.h"
-Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/loginConfigBiz.h"
-Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/loginConfigBiz.c"
-Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/setting/settingEntity.c"
-Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/login.c"
-Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.uir"
-Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.h"
-Tab 0009 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/excelHelper/excelHelper.c"
+Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/testCode/demoTestCode/demoTest.c"
+Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/relayTest.c"
+Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/relayHelper.c"
+Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/relayHelper/relayHelper.h"
+Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/eutConfig/eutEntity.h"
+Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
+Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

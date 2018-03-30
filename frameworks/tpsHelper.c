@@ -61,6 +61,7 @@ extern TPS registerParamsSetTps(void);
 extern TPS register120KWPowerModuleTestTps(void);
 extern TPS registerCodeInputTestTPS(void);
 extern TPS registerResistanceJinkoTestTPS(void);
+extern TPS registerOptoCouplerTestTPS(void);
 
 
 
@@ -91,6 +92,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerGunSelectedTestTps,//«π—°‘Ò
 	registerNetWorkCheckTestTps,//Õ¯¬ÁºÏ≤È
 	register120KWPowerModuleTestTps, 
+	registerOptoCouplerTestTPS, 
 	//∞Âº∂≤‚ ‘
 	registerBoardTestTPS,
 	registerCanTestTPS,
