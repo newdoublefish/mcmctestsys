@@ -325,6 +325,27 @@ BOOL OperatDoSetWithMask(RSCONFIG config,unsigned int doMask,unsigned int mask)
 	return TRUE;
 }
 
+BOOL buildCheckOptoCouplerPacket(RelayBuf *buffPtr,unsigned int mask)
+{
+	if(buffPtr==NULL)
+		return FALSE;
+	if((mask&0x0000FFFF)>0)
+	{
+    	buffPtr->data[buffPtr->len++] = 0xFE;
+     	buffPtr->data[buffPtr->len++] = 0x02;
+        buffPtr->data[buffPtr->len++] = 0x00;
+     	buffPtr->data[buffPtr->len++] = 0x00;
+     	buffPtr->data[buffPtr->len++] = 0x00;
+     	buffPtr->data[buffPtr->len++] = 0x10;
+    	unsigned short crc = CalculateCrc(buffPtr->data,buffPtr->len);
+     	buffPtr->data[buffPtr->len++] = (unsigned char)(crc & 0xff);
+     	buffPtr->data[buffPtr->len++] = (unsigned char)(crc>>8);
+	}else{
+		return FALSE;
+	}
+	return TRUE;		
+}
+
 BOOL buildCheckPacketWithMask(RelayBuf *buffPtr,unsigned int mask)
 {
 	if(buffPtr==NULL)
@@ -379,7 +400,7 @@ static BOOL ParseResult(RelayBuf *buf,unsigned int *value)
 		if(buf->data[1]==0x0F)
 		{
 			return TRUE;
-		}else if(buf->data[1]==0x01)
+		}else if(buf->data[1]==0x01 || buf->data[1]==0x02)
 		{
 			int byteNum = buf->data[2];
 			for(int i=0;i<byteNum;i++)
@@ -432,7 +453,7 @@ BOOL buildALLDoPacket(RelayBuf *buffPtr,unsigned int doMask,unsigned int mask)
    	 	unsigned short crc = CalculateCrc(buffPtr->data,buffPtr->len);
      	buffPtr->data[buffPtr->len++] = (unsigned char)(crc & 0xff);
      	buffPtr->data[buffPtr->len++] = (unsigned char)(crc>>8);
-	 }else{
+	 }else if((mask&0x0000FF00)>0){
    		buffPtr->data[buffPtr->len++] = 0xFE;
      	buffPtr->data[buffPtr->len++] = 0x0F;
      	buffPtr->data[buffPtr->len++] = 0x00;
@@ -445,7 +466,18 @@ BOOL buildALLDoPacket(RelayBuf *buffPtr,unsigned int doMask,unsigned int mask)
    	 	unsigned short crc = CalculateCrc(buffPtr->data,buffPtr->len);
      	buffPtr->data[buffPtr->len++] = (unsigned char)(crc & 0xff);
      	buffPtr->data[buffPtr->len++] = (unsigned char)(crc>>8);
-	 
+	 }else if((mask&0x000000FF)>0){
+   		buffPtr->data[buffPtr->len++] = 0xFE;
+     	buffPtr->data[buffPtr->len++] = 0x0F;
+     	buffPtr->data[buffPtr->len++] = 0x00;
+     	buffPtr->data[buffPtr->len++] = 0x00;
+	 	buffPtr->data[buffPtr->len++] = 0x00;
+	 	buffPtr->data[buffPtr->len++] = 0x08;
+	 	buffPtr->data[buffPtr->len++] = 0x01;
+	 	buffPtr->data[buffPtr->len++] = (unsigned char)(doMask & 0xff);
+   	 	unsigned short crc = CalculateCrc(buffPtr->data,buffPtr->len);
+     	buffPtr->data[buffPtr->len++] = (unsigned char)(crc & 0xff);
+     	buffPtr->data[buffPtr->len++] = (unsigned char)(crc>>8);			 	
 	 }
 	 return TRUE;
 	 
@@ -585,6 +617,40 @@ BOOL CheckDoSet(RSCONFIG config,unsigned int *value,unsigned int mask)
 {
 	RelayBuf buf={0};
 	buildCheckPacket(&buf,mask);
+	if(FALSE==operateDo(config,&buf))
+		return FALSE;
+	if(FALSE== ParseResult(&buf,value))
+	{
+		return FALSE;	
+	}
+	return TRUE;	
+}
+
+BOOL buildCheckOptoCouplerPacket(RelayBuf *buffPtr,unsigned int mask)
+{
+	if(buffPtr==NULL)
+		return FALSE;
+	if((mask&0x0000FFFF)>0)
+	{
+    	buffPtr->data[buffPtr->len++] = 0xFE;
+     	buffPtr->data[buffPtr->len++] = 0x02;
+        buffPtr->data[buffPtr->len++] = 0x00;
+     	buffPtr->data[buffPtr->len++] = 0x00;
+     	buffPtr->data[buffPtr->len++] = 0x00;
+     	buffPtr->data[buffPtr->len++] = 0x10;
+    	unsigned short crc = CalculateCrc(buffPtr->data,buffPtr->len);
+     	buffPtr->data[buffPtr->len++] = (unsigned char)(crc & 0xff);
+     	buffPtr->data[buffPtr->len++] = (unsigned char)(crc>>8);
+	}else{
+		return FALSE;
+	}
+	return TRUE;		
+}
+
+BOOL CheckDoCheckOptoCoupler(RSCONFIG config,unsigned int *value,unsigned int mask)
+{
+	RelayBuf buf={0};
+	buildCheckOptoCouplerPacket(&buf,mask);
 	if(FALSE==operateDo(config,&buf))
 		return FALSE;
 	if(FALSE== ParseResult(&buf,value))

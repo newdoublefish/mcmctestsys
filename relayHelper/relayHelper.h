@@ -26,6 +26,7 @@ BOOL CloseDo(RSCONFIG config,int doMask);
 
 //BOOL OperatDoSet(RSCONFIG config,unsigned int mask);
 BOOL OperatDoSet(RSCONFIG config,unsigned int doMask,unsigned int mask);
+BOOL CheckDoCheckOptoCoupler(RSCONFIG config,unsigned int *value,unsigned int mask);
 
 
 #ifdef __cplusplus

@@ -1703,15 +1703,35 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		float strValue=atof(itemResult.recvString);
 		if(i==3)
 		{
-			if(strValue<352 && strValue>348)
+			if(strstr(item.inputValue_,"NA")==NULL && strstr(item.inputValue_,"NA")==NULL)
 			{
-				itemResult.pass=RESULT_PASS;
+				float tolenrent = atof(item.inputValue_);
+				float standard = atof(item.standard_);
+				if(strValue<=(standard+tolenrent) && strValue>=(standard-tolenrent))
+				{
+					itemResult.pass=RESULT_PASS;
+				}
+			}else{
+				if(strValue<353 && strValue>347)
+				{
+					itemResult.pass=RESULT_PASS;
+				}
 			}
 		}else if(i==2)
 		{
-			if(strValue<2.87 && strValue>2.67)
+			if(strstr(item.inputValue_,"NA")==NULL && strstr(item.standard_,"NA")==NULL)
 			{
-				itemResult.pass=RESULT_PASS;
+				float tolenrent = atof(item.inputValue_);
+				float standard = atof(item.standard_);
+				if(strValue<=(standard+tolenrent) && strValue>=(standard-tolenrent))
+				{
+					itemResult.pass=RESULT_PASS;
+				}
+			}else{
+				if(strValue<2.87 && strValue>2.67)
+				{
+					itemResult.pass=RESULT_PASS;
+				}
 			}
 		}else{
 			itemResult.pass=RESULT_PASS; 
@@ -1738,19 +1758,35 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		itemResult.pass=RESULT_PASS; 
 		if(i==2)
 		{
-			if(strValue<352 && strValue>348)
+			if(strstr(item.inputValue_,"NA")==NULL && strstr(item.standard_,"NA")==NULL)
 			{
-				itemResult.pass=RESULT_PASS;
+				int tolenrent = atof(item.inputValue_);
+				int standard = atof(item.standard_);
+				if(strValue<=(standard+tolenrent) && strValue>=(standard-tolenrent))
+				{
+					itemResult.pass=RESULT_PASS;
+				}
 			}else{
-				itemResult.pass=RESULT_FAIL;
+				if(strValue<353 && strValue>347)
+				{
+					itemResult.pass=RESULT_PASS;
+				}
 			}
 		}else if(i==1)
 		{
-			if(strValue<2.87 && strValue>2.67)
+			if(strstr(item.inputValue_,"NA")==NULL && strstr(item.standard_,"NA")==NULL)
 			{
-				itemResult.pass=RESULT_PASS;
+				float tolenrent = atof(item.inputValue_);
+				float standard = atof(item.standard_);
+				if(strValue<=(standard+tolenrent) && strValue>=(standard-tolenrent))
+				{
+					itemResult.pass=RESULT_PASS;
+				}
 			}else{
-				itemResult.pass=RESULT_FAIL;
+				if(strValue<2.87 && strValue>2.67)
+				{
+					itemResult.pass=RESULT_PASS;
+				}
 			}
 		}
 		APPEND_INFO_FORMAT(msgHandler,"%s 值为 %s，测试结果为 %d",item.itemName_,itemResult.recvString,itemResult.pass);
