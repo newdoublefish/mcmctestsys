@@ -2741,7 +2741,23 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 			
 			APPEND_INFO_FORMAT(masgHandle,"电压值为:%f,测试结果为:%d",getValF,result.pass);
 			if(result.pass == RESULT_PASS)
+			{
+			
+				if(FALSE==AlertDialogWithRetAutoClose(0,"waring","请观察风扇转动情况","取消","跳过",15))
+				{
+					break;
+				}
+				
+				if(AlertDialogWithRet(0,"warning","风扇是否正常","不正常","正常")==FALSE)
+				{
+					result.pass =  RESULT_FAIL;
+				}
+				
+				
+
 				break;
+			}
+
 			
 			if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",5))
 			{
