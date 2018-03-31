@@ -1389,6 +1389,8 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 	}	
 	
 	//WarnAlert(0,"延时中",30);
+	WarnShow1(0,"请确认充电已经停止，充电停止后进入下一步测试");
+	
 	WarnShow1(0,"下一步测试");
 	
 	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(29) | RELAY(30)| RELAY(2),MASK32))
@@ -1577,7 +1579,7 @@ TPS registerInsulationTestTestTps(void)
 {
 	TPS tps=newTps("insulation");
 	//tps.testFunction=InsulationTest;
-	tps.testFunction=InsulationTest2;
+	tps.testFunction=InsulationTest;
 	return tps;	
 }
 
