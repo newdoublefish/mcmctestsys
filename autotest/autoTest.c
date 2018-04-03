@@ -96,6 +96,30 @@ static void setPercentage(TESTobject *obj)
 	SetCtrlVal(obj->panelHandle,P_ITEMSHOW_PERCSTR,percStr);
 }
 
+static void setAccuracy(TESTobject *obj)
+{
+	int                 error       = 0; 
+	unsigned int i;
+	HashTableIterator iter;	
+	int passCnt = 0;
+    for (error = HashTableIteratorCreate(obj->resultHashTable, &iter), i = 1;
+                 error >= 0 && error != HASH_TABLE_END;
+                 error = HashTableIteratorAdvance(obj->resultHashTable, iter), ++i)
+    {
+		RESULT result={0};
+		HashTableIteratorGetItem(obj->resultHashTable,iter,&result.index,sizeof(int),&result,sizeof(RESULT));
+		if(result.pass == RESULT_PASS)
+		{
+			passCnt++;
+		}
+	}
+	TESTengine *t=obj->enginePtr; 
+	int perc = passCnt*100/(t->totalTestGroupCount); 
+	char percStr[30]={0};
+	Fmt(percStr,"%d%%",perc);
+	SetCtrlVal(obj->panelHandle,P_ITEMSHOW_ACCURACY,percStr);	
+}
+
 
 static void setButtonState(int state)
 {
@@ -471,6 +495,7 @@ BOOL objectResultShow(TESTobject *obj,TestGroup group,int testGroupIndex,int *te
 	Fmt(percStr,"%d%%",perc);
 	SetCtrlVal(obj->panelHandle,P_ITEMSHOW_PERCSTR,percStr); */
 	setPercentage(obj);
+	setAccuracy(obj);
 	
 	//PRINT("total:%d,current:%d,%s",t->totalTestGroupCount,obj->totalFinishedTestGroupCount,percStr);
 	
@@ -706,6 +731,7 @@ static void objectPanelInit(TESTobject *_obj)
 		}	
 	}
 	setPercentage(_obj);
+	setAccuracy(_obj);
 	SETTING set=getSetting();
 	SetTreeCellAttribute (panelHandle,P_ITEMSHOW_TREE, VAL_ALL_OBJECTS ,  VAL_ALL_OBJECTS , ATTR_LABEL_POINT_SIZE,set.frontSize);
 		

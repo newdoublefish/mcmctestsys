@@ -40,6 +40,16 @@
     <DBName>reliability</DBName>  
     <PostPath>reliability_120KW_jinko\post.xml</PostPath>	 
     <ReportPath>reliability_120KW_jinko\reliabilityReport.xlsx</ReportPath>	
+  </Project>  
+  <Project>
+    <ProjectName>board_120KW_auto</ProjectName>
+    <NickName>120KW板级测试-自动化方案</NickName>
+    <ConfigPath>board_120KW_auto\BoardConfig.xlsx</ConfigPath>
+    <StrategyPath>board_120KW_auto\Strategy.xml</StrategyPath>	
+    <DevicePath>board_120KW_auto\Device.xml</DevicePath>
+    <DBName>board</DBName>
+    <PostPath>board_120KW_auto\post.xml</PostPath>	   
+    <ReportPath>board_120KW_auto\BoardReport.xlsx</ReportPath>
   </Project>      
   <Project>
     <ProjectName>120KW_board</ProjectName>

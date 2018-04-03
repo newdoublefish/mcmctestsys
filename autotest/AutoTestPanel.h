@@ -15,8 +15,10 @@
 
 #define  P_ITEMSHOW                       1
 #define  P_ITEMSHOW_TREE                  2       /* control type: tree, callback function: (none) */
-#define  P_ITEMSHOW_TEXTMSG               3       /* control type: textMsg, callback function: (none) */
-#define  P_ITEMSHOW_PERCSTR               4       /* control type: textMsg, callback function: (none) */
+#define  P_ITEMSHOW_TEXTMSG_2             3       /* control type: textMsg, callback function: (none) */
+#define  P_ITEMSHOW_ACCURACY              4       /* control type: textMsg, callback function: (none) */
+#define  P_ITEMSHOW_TEXTMSG               5       /* control type: textMsg, callback function: (none) */
+#define  P_ITEMSHOW_PERCSTR               6       /* control type: textMsg, callback function: (none) */
 
 #define  PANEL_AUTO                       2       /* callback function: onPanelAutoCall */
 #define  PANEL_AUTO_PICTURE_5             2       /* control type: picture, callback function: (none) */
