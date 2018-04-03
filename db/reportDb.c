@@ -46,7 +46,7 @@ BOOL createTableifNotExist(char *tableName)
 			m_createtime varchar(50),\
 			m_lasttest varchar(50),\
 			m_upload bit,\
-			m_result bit,\
+			m_result integer,\
 			m_projectpath varchar(250),\
 			m_reportpath varchar(250));",tableName);
 			fileHandle= DBActivateSQL(dBHandle,SQLCommand);//与数据库中的表建立连接  
@@ -66,7 +66,7 @@ BOOL bindRecord(tAutoTestRecord *record,int fileHandle,int *dbstatus)
 	DBBindColChar(fileHandle,3,50,record->m_createtime,&dbstatus[2],"");
 	DBBindColChar(fileHandle,4,50,record->m_lasttest,&dbstatus[3],"");	
 	DBBindColShort(fileHandle,5,&record->m_upload,&dbstatus[4]);
-	DBBindColShort(fileHandle,6,&record->m_result,&dbstatus[5]);
+	DBBindColInt(fileHandle,6,&record->m_result,&dbstatus[5]);
 	DBBindColChar(fileHandle,7,250,record->m_projectpath,&dbstatus[6],""); 
 	DBBindColChar(fileHandle,8,250,record->m_reportpath,&dbstatus[7],""); 
 	return TRUE;

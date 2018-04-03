@@ -25,7 +25,7 @@ typedef struct
 	unsigned char m_createtime[50];
 	unsigned char m_lasttest[50];
 	unsigned short m_upload;
-	unsigned short m_result; 
+	int m_result; 
 	unsigned char m_projectpath[250];
 	unsigned char m_reportpath[250];
 }tAutoTestRecord;

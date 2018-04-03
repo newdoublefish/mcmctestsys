@@ -96,6 +96,28 @@ static void setPercentage(TESTobject *obj)
 	SetCtrlVal(obj->panelHandle,P_ITEMSHOW_PERCSTR,percStr);
 }
 
+static int getAccuracy(TESTobject *obj)
+{
+	int                 error       = 0; 
+	unsigned int i;
+	HashTableIterator iter;	
+	int passCnt = 0;
+    for (error = HashTableIteratorCreate(obj->resultHashTable, &iter), i = 1;
+                 error >= 0 && error != HASH_TABLE_END;
+                 error = HashTableIteratorAdvance(obj->resultHashTable, iter), ++i)
+    {
+		RESULT result={0};
+		HashTableIteratorGetItem(obj->resultHashTable,iter,&result.index,sizeof(int),&result,sizeof(RESULT));
+		if(result.pass == RESULT_PASS)
+		{
+			passCnt++;
+		}
+	}
+	TESTengine *t=obj->enginePtr; 
+	int perc = passCnt*100/(t->totalTestGroupCount); 
+	return perc;	
+}
+
 static void setAccuracy(TESTobject *obj)
 {
 	int                 error       = 0; 
@@ -170,7 +192,7 @@ static void saveRecordToDb(TESTobject obj,char *productId,char *startTime,char *
 	sprintf(record.m_reportpath,"%s",reportFilePath);
 	sprintf(record.m_projectpath,"%s",gTestProject->projectPath);
 	sprintf(record.m_lasttest,"%d",getObjectTestProgress(obj));
-	record.m_result=1;
+	record.m_result=getAccuracy(&obj);
 	record.m_upload=0;
 	//sprintf(record.m_name,"%s","ray");
 	updateRecord(record);	

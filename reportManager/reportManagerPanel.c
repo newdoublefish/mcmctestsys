@@ -33,20 +33,23 @@ static void showRecord(ListType list)
 			Fmt(temp,"%s","未通过");*/
 		sprintf(temp,"%s%%",record.m_lasttest);
 		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,1,ATTR_LABEL_TEXT,temp); //显示测试进度
-		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,2,ATTR_LABEL_TEXT,record.m_createtime); //显示测试时间
+		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,3,ATTR_LABEL_TEXT,record.m_createtime); //显示测试时间
+		memset(temp,0,50);
+		sprintf(temp,"%d%%",record.m_result);		
+		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,2,ATTR_LABEL_TEXT,temp); //显示合格率
 		 
 		if(FileExists(record.m_reportpath,NULL)==1)
 		{
-			SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,3,ATTR_LABEL_TEXT,"已生成");		
+			SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,4,ATTR_LABEL_TEXT,"已生成");		
 		}else{
-			SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,3,ATTR_LABEL_TEXT,"未生成");			
+			SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,4,ATTR_LABEL_TEXT,"未生成");			
 		}
 		memset(temp,0,50);
 		if(record.m_upload>0)
 			Fmt(temp,"%s","已上传");
 		else
 			Fmt(temp,"%s","未上传");
-		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,4,ATTR_LABEL_TEXT,temp);
+		SetTreeCellAttribute(reportManagerPanel,PANEL_RECORDTREE,i,5,ATTR_LABEL_TEXT,temp);
 	}
 }
 
