@@ -18,6 +18,7 @@
 #include "sutCommon.h"
 #include "httpPost.h"
 
+
 METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	APPEND_INFO_FORMAT(msgPanel,"¿ªÊ¼²âÊÔ:%s",group.groupName); 

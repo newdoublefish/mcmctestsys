@@ -1,0 +1,73 @@
+/*---------------------------------------------------------------------------
+ // 版权声明：本文件由广东万城万充电动车运营股份有限公司版权所有，未经授权，
+ // 禁止第三方进行拷贝和使用。
+ //
+ // 文件名：
+ // 文件功能描述: 
+ //
+ // 
+ // 创建标识：曾衍仁 
+ //
+ // 修改标识：
+ // 修改描述：
+ //-------------------------------------------------------------------------*/
+#include "tpsHelper.h"
+#include "resultSave.h"
+#include "common.h"
+#include "conditionModbus.h"
+#include "EutHelper.h"
+
+
+METHODRET ConditionTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"空调",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}	
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item;
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult;
+		itemResult.index=item.itemId;
+		/*if(AlertDialogWithRet(0,"请选择","请确认结果是否正确","错误","正确")==TRUE)
+		{
+			itemResult.pass=1;	
+		}else
+			itemResult.pass=0;*/
+		tConditonItem conditionItem = {0};
+		conditionItem.address = HexStrToUnsignedInt(item.inputValue_);
+		printf("0x%x",conditionItem.address);
+		//conditionItem.address = 0x0100;
+		if(TRUE==ConditionGetItem(resconfig,&conditionItem))
+		{
+						
+		}
+		
+		//APPEND_INFO_FORMAT(msgPanel,"测试条例:%s的测试结果为：%s",item.itemName_,(itemResult.pass==1)?"合格":"不合格");
+		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
+		sprintf(itemResult.recvString,"0x%x",conditionItem.value);
+		saveResult(hashTable,&itemResult);
+		
+	}
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);		
+	return ret;
+}
+
+
+
+TPS registerConditionTestTPS(void)
+{
+	TPS tps=newTps("condition");
+	//tps.autoTestFunction=DemoTest;
+	tps.testFunction=ConditionTest;
+	tps.createTpsPanel=NULL;
+	//tps.manualTestFunction=DemoTest;
+	return tps;
+}
+

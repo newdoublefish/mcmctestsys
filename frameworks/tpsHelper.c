@@ -62,6 +62,7 @@ extern TPS register120KWPowerModuleTestTps(void);
 extern TPS registerCodeInputTestTPS(void);
 extern TPS registerResistanceJinkoTestTPS(void);
 extern TPS registerOptoCouplerTestTPS(void);
+extern TPS registerConditionTestTPS(void);
 
 
 
@@ -109,6 +110,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerUpdateTestTPS, 
 	
 	registerCodeInputTestTPS,//条形码录入
+	registerConditionTestTPS,//热风机测试
 };
 
 
