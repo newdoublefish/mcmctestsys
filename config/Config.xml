@@ -98,5 +98,17 @@
     <DBName>demo</DBName>
     <PostPath>demo\post.xml</PostPath>	   
     <ReportPath>demo\report.xlsx</ReportPath>
-  </Project>             
+  </Project>   
+  <Project>
+    <ProjectName>Ameter</ProjectName>
+    <NickName>杭州电表设置</NickName> 
+    <ConfigPath>ametar-hangzhou\DLT645\ammeter</ConfigPath> 
+    <ReportPath>exe</ReportPath>
+  </Project>   
+  <Project>
+    <ProjectName>Ameter</ProjectName>
+    <NickName>厦门电表设置</NickName> 
+    <ConfigPath>ametar-xiamen\DLT645\ammeter</ConfigPath> 
+    <ReportPath>exe</ReportPath>
+  </Project>                 
 </Projects>

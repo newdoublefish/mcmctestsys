@@ -22,6 +22,8 @@ typedef struct
 {
 	char userName[50];
 	char password[50];
+	char url[50];
+	char method[50];	
 	int remember;
 }tLoginConfig;
  

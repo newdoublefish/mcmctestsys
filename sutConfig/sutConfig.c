@@ -93,7 +93,25 @@ int CVICALLBACK SYSTEM_SELECTE_NEXT (int panel, int control, int event,
 		  //printList(items);
           //´òÓ¡½á¹û  
 		  //if(testInit(selectSut))
-
+		  /*
+		  if(strstr(selectSut.reportFilePath,"exe")!=NULL)
+		  {
+			    char fileName[MAX_PATHNAME_LEN]; 
+				GetProjectDir (fileName);
+				
+		    	//LaunchExecutable (selectSut.configPath);
+				//system(selectSut.configPath);
+				char temp[MAX_PATHNAME_LEN]={0};
+				sprintf(temp,"%s%s",selectSut.configPath,".exe");
+				CopyFile(selectSut.configPath,temp);
+				system(temp);
+				DeleteFile(temp);
+			    unsigned int wParam1=9;
+                unsigned int lParam1=0;
+			    PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1); 
+			    QuitUserInterface(1);		  
+		  }
+		  */
 		  
 		  PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);
  		  QuitUserInterface(1);

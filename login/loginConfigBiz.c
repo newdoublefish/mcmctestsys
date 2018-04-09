@@ -46,7 +46,9 @@ HRESULT saveLoginConfig(tLoginConfig s)
 	 //Ini_PutInt(g_myInifile,"Hardware","arinc429Card",gHardware.arinc429card);
 	 Ini_PutBoolean (g_myInifile,"LoginConfig","remember",s.remember);  
 	 Ini_PutRawString (g_myInifile,"LoginConfig","username",s.userName); 
-	 Ini_PutRawString (g_myInifile,"LoginConfig","password",s.password); 
+	 Ini_PutRawString (g_myInifile,"LoginConfig","password",s.password);
+	 Ini_PutRawString (g_myInifile,"LoginConfig","url",s.url); 
+	 Ini_PutRawString (g_myInifile,"LoginConfig","method",s.method); 	 
 
 	 Ini_WriteToFile (g_myInifile, inifileName);  
                                 
@@ -127,6 +129,19 @@ tLoginConfig getLoginConfig()
                                  sectionName, itemName, &stringValue)>0)
 						{
 							sprintf(config.password,"%s",stringValue);							
+						}						 
+					 }else if(strcmp(itemName,"url")==0){
+					 
+                        if (Ini_GetPointerToRawString (g_myInifile,
+                                 sectionName, itemName, &stringValue)>0)
+						{
+							sprintf(config.url,"%s",stringValue);							
+						}					 
+					 }else if(strcmp(itemName,"method")==0){
+                        if (Ini_GetPointerToRawString (g_myInifile,
+                                 sectionName, itemName, &stringValue)>0)
+						{
+							sprintf(config.method,"%s",stringValue);							
 						}						 
 					 }
 				 }	 

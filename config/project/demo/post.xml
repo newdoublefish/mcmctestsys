@@ -1,4 +1,8 @@
 <postset>
+<post name="login" url="http://127.0.0.1:8000/test/login" request="login" upload="False">
+	<param name="username" type="username">username</param>
+	<param name="password" type="username">password</param>						
+</post>	
 <post name="创建设备" url="http://127.0.0.1:80/test/dev/" request="dev" upload="True">
 	<param name="sn" type="projectName">ZB00003</param>
 	<param name="type" type="default">STUB</param>		
