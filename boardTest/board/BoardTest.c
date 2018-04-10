@@ -302,6 +302,24 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 			itemResult.pass = RESULT_PASS;   
 		}
 		
+		if(strstr(item.standard_,"= 1")!=NULL)
+		{
+			if(itemResult.pass == RESULT_PASS)
+			{
+				sprintf(itemResult.recvString,"%s","1");
+			}else{
+				sprintf(itemResult.recvString,"%s","0");
+			}		
+		}else if(strstr(item.standard_,"= 0")!=NULL){
+			
+			if(itemResult.pass == RESULT_PASS)
+			{
+				sprintf(itemResult.recvString,"%s","0");
+			}else{
+				sprintf(itemResult.recvString,"%s","1");
+			}		
+		}
+#if 0		
 		if(strcmp(group.groupName,"di_全关")==0 || strcmp(group.groupName,"IODI防接反(打开防接反)")==0 )
 		{
 			if(itemResult.pass == RESULT_PASS)
@@ -310,7 +328,7 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 			}else{
 				sprintf(itemResult.recvString,"%s","1");
 			}
-		}else if(strcmp(group.groupName,"di_全合")==0 || strcmp(group.groupName,"IODI防接反(关闭防接反)")==0 )
+		}else if(strstr(group.groupName,"di_")!=NULL || strcmp(group.groupName,"IODI防接反(关闭防接反)")==0 )
 		{
 			if(itemResult.pass == RESULT_PASS)
 			{
@@ -319,6 +337,7 @@ METHODRET BoardTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 				sprintf(itemResult.recvString,"%s","0");
 			}
 		}
+#endif		
 		saveResult(hashTable,&itemResult);
 	}
 DONE:	
