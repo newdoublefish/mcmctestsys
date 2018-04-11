@@ -40,7 +40,7 @@ FileSizeColumnWidth = 70
 Version = 1700
 Don't Update DistKit = False
 Platform Code = 4
-Build Configuration = "Debug"
+Build Configuration = "Release"
 Warn User If Debugging Release = 0
 Batch Build Release = False
 Batch Build Debug = False
@@ -96,7 +96,7 @@ In Projects = "1,"
 Window Top = 152
 Window Left = 74
 Window Z-Order = 1
-Source Window State = "1,218,218,218,163,164,164,0,0,157,0,228,0,0,0,26,86,0,95,4,251,605,1,114,"
+Source Window State = "1,218,218,218,163,164,164,0,0,157,0,228,0,0,0,26,140,0,103,83,251,605,1,114,"
 Breakpoint 0001 = "147,0,disabled,"
 
 [File 0009]
