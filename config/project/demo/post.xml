@@ -31,10 +31,10 @@
 	<param name="vendor" type="default">106</param>
 	<param name="power" type="default">1</param>								
 </post>
-<post name="上传报告" url="http://120.78.222.124:80/query/report/" request="report" upload="True">
+<post name="上传报告" url="http://127.0.0.1:8000/query/report/" request="report" upload="False">
 	<param name="sn" type="default">test</param>
 	<param name="type" type="default">整机</param>
-	<param name="result" type="default">true</param>		
+	<param name="result" type="default">90</param>		
 	<param name="report" type="default">ftp://120.78.222.124/test.xlsx</param>
 	<param name="factory" type="default">广州锐速</param>	
 	<param name="person" type="default">陶斯君</param>
