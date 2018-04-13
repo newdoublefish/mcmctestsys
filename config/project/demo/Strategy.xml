@@ -3,5 +3,5 @@
 	<StrategyName>策略1</StrategyName>
 	<StrategyTestType>Serial</StrategyTestType>
 	<Collects>
-		<Collect><CollectName>继电器</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><TipsFlag>1</TipsFlag><TipsCloseTime>1</TipsCloseTime><Groups><GroupId>4</GroupId><GroupId>5</GroupId><GroupId>6</GroupId><GroupId>7</GroupId><GroupId>8</GroupId><GroupId>9</GroupId><GroupId>10</GroupId><GroupId>11</GroupId></Groups></Collect><Collect><CollectName>post</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><TipsFlag>1</TipsFlag><TipsCloseTime>0</TipsCloseTime><Groups><GroupId>3</GroupId></Groups></Collect></Collects>
+		<Collect><CollectName>空调</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><TipsFlag>1</TipsFlag><TipsCloseTime>2</TipsCloseTime><Groups><GroupId>28</GroupId><GroupId>29</GroupId><GroupId>30</GroupId><GroupId>31</GroupId><GroupId>32</GroupId><GroupId>33</GroupId><GroupId>34</GroupId><GroupId>35</GroupId><GroupId>36</GroupId><GroupId>37</GroupId><GroupId>38</GroupId><GroupId>39</GroupId><GroupId>40</GroupId><GroupId>41</GroupId><GroupId>42</GroupId><GroupId>3</GroupId></Groups></Collect></Collects>
 </Strategy>

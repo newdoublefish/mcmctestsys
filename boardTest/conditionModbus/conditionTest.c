@@ -16,6 +16,7 @@
 #include "common.h"
 #include "conditionModbus.h"
 #include "EutHelper.h"
+#include "ParamSetGet.h"  
 
 
 METHODRET ConditionTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
@@ -27,13 +28,30 @@ METHODRET ConditionTest(TestGroup group,EUT eut,HashTableType hashTable,int msgP
 	if(FALSE == getSerialConfig(eut.configList,"空调",&resconfig))
 	{
 		return TEST_RESULT_ALLPASS;
+	}
+	
+	if(FALSE==ParamSetDepend(eut,"1枪调试启动充电","1"))
+	{
+		APPEND_INFO(msgPanel,"发送启动充电命令失败"); 
+		WarnShow1(0,"发送启动充电命令失败！");
+		APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+		return ret;
+	}else{
+		APPEND_INFO(msgPanel,"已成功发送启动充电命令");
 	}	
+	
+	if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
+	{
+			//getStubNetService(ip,port);
+		APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+		return ret;
+	}		
 	
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item;
 		ListGetItem(group.subItems,&item,i);
-		RESULT itemResult;
+		RESULT itemResult={0};
 		itemResult.index=item.itemId;
 		/*if(AlertDialogWithRet(0,"请选择","请确认结果是否正确","错误","正确")==TRUE)
 		{
@@ -42,19 +60,53 @@ METHODRET ConditionTest(TestGroup group,EUT eut,HashTableType hashTable,int msgP
 			itemResult.pass=0;*/
 		tConditonItem conditionItem = {0};
 		conditionItem.address = HexStrToUnsignedInt(item.inputValue_);
-		printf("0x%x",conditionItem.address);
+		conditionItem.value = 0x01;
+		//printf("0x%x",conditionItem.address);
 		//conditionItem.address = 0x0100;
+		/*if(strstr(item.itemName_,"远程自测")!=NULL)
+		{
+			if(TRUE==ConditionSetItem(resconfig,&conditionItem))
+			{
+				APPEND_INFO_FORMAT(msgPanel,"%s 值为 %d",item.itemName_,conditionItem.value);
+						
+		}else{
+				APPEND_INFO_FORMAT(msgPanel,"%s 值获取失败",item.itemName_); 
+				goto DONE;
+			}					
+		}*/
+		
+		
 		if(TRUE==ConditionGetItem(resconfig,&conditionItem))
 		{
+			APPEND_INFO_FORMAT(msgPanel,"%s 值为 %d",item.itemName_,conditionItem.value);
 						
+		}else{
+			APPEND_INFO_FORMAT(msgPanel,"%s 值获取失败",item.itemName_); 
+			goto DONE;
 		}
 		
-		//APPEND_INFO_FORMAT(msgPanel,"测试条例:%s的测试结果为：%s",item.itemName_,(itemResult.pass==1)?"合格":"不合格");
+		if(strstr(item.standard_,"NA")!=NULL)
+		{
+		
+		}else{
+			itemResult.pass=1;	
+		}
+		
 		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
-		sprintf(itemResult.recvString,"0x%x",conditionItem.value);
+		sprintf(itemResult.recvString,"%d",conditionItem.value);
 		saveResult(hashTable,&itemResult);
 		
 	}
+DONE:
+	if(FALSE==ParamSetDepend(eut,"1枪调试停止充电","1"))
+	{
+		APPEND_INFO(msgPanel,"发送停止充电命令失败"); 
+		WarnShow1(0,"发送停止充电命令失败！");
+		return ret;
+	}else{
+		APPEND_INFO(msgPanel,"已成功发送停止充电命令");
+	}		
+	WarnShow1(0,"请等待并确保充电流程已经停止"); 
 	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);		
 	return ret;
 }
@@ -66,7 +118,7 @@ TPS registerConditionTestTPS(void)
 	TPS tps=newTps("condition");
 	//tps.autoTestFunction=DemoTest;
 	tps.testFunction=ConditionTest;
-	tps.createTpsPanel=NULL;
+	//tps.createTpsPanel=NULL;
 	//tps.manualTestFunction=DemoTest;
 	return tps;
 }

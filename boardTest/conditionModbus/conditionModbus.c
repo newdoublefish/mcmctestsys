@@ -5,7 +5,7 @@
 #include "CrcCalc.h"
 #include "common.h"
 
-//#define DEBUG
+#define DEBUG
 
 
 
@@ -162,6 +162,34 @@ BOOL ConditionGetItem(RSCONFIG config,tConditonItem *itemPtr)
 {
 	tConditionBuf buf={0};
 	buildGetConditionPacket(&buf,*itemPtr);
+	if(FALSE==operateCondition(config,&buf))
+		return FALSE;
+	if(FALSE==ParseConditionResponse(buf,itemPtr))  	
+		return FALSE;
+	return TRUE;
+}
+
+BOOL buildSetConditionPacket(tConditionBuf *buffPtr,tConditonItem item)
+{
+	if(buffPtr==NULL)
+		return FALSE;
+   	 buffPtr->data[buffPtr->len++] = 0x01;
+	 buffPtr->data[buffPtr->len++] = 0x06;
+	 buffPtr->data[buffPtr->len++] = (unsigned char)((item.address>>8) & 0xff); 
+	 buffPtr->data[buffPtr->len++] = (unsigned char)(item.address&0xff); 
+	 buffPtr->data[buffPtr->len++] = (unsigned char)((item.value>>8) & 0xff);
+	 buffPtr->data[buffPtr->len++] = (unsigned char)(item.value&0xff); 	  
+   	 unsigned short crc = count_CRC(buffPtr->data,buffPtr->len);
+
+     buffPtr->data[buffPtr->len++] = (unsigned char)(crc & 0xff);
+     buffPtr->data[buffPtr->len++] = (unsigned char)(crc>>8); 	 
+	 return TRUE;
+}
+
+BOOL ConditionSetItem(RSCONFIG config,tConditonItem *itemPtr)
+{
+	tConditionBuf buf={0};
+	buildSetConditionPacket(&buf,*itemPtr);
 	if(FALSE==operateCondition(config,&buf))
 		return FALSE;
 	if(FALSE==ParseConditionResponse(buf,itemPtr))  	

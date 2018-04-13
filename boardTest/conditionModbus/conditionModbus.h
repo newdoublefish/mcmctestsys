@@ -15,6 +15,7 @@ typedef struct{
 	short value;
 }tConditonItem;
 BOOL ConditionGetItem(RSCONFIG config,tConditonItem *item);
+BOOL ConditionSetItem(RSCONFIG config,tConditonItem *itemPtr);
 #ifdef __cplusplus
     }
 #endif

@@ -63,6 +63,7 @@ extern TPS registerCodeInputTestTPS(void);
 extern TPS registerResistanceJinkoTestTPS(void);
 extern TPS registerOptoCouplerTestTPS(void);
 extern TPS registerConditionTestTPS(void);
+extern TPS registerCCIDTestTps(void);
 
 
 
@@ -94,6 +95,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerNetWorkCheckTestTps,//网络检查
 	register120KWPowerModuleTestTps, 
 	registerOptoCouplerTestTPS, 
+	registerCCIDTestTps,//CCID查看 
 	//板级测试
 	registerBoardTestTPS,
 	registerCanTestTPS,

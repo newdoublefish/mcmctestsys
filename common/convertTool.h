@@ -35,6 +35,8 @@ int OctToHex(int a);
 
 unsigned HexStrToUnsignedInt(char *str);
 
+int htoi(char s[]);
+
 #ifdef __cplusplus
    }
 #endif	   

@@ -109,7 +109,7 @@ static void adustFooter(int panel)
 	int width=0;
 	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_TOP,mainPanelHeight-MAINPANLE_FOOTER_HEIGHT+10);
 	GetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_WIDTH,&width);
-	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_LEFT,mainPanelWidth-width);
+	SetCtrlAttribute(panel,PANEL_MAIN_VERSION_VALUE,ATTR_LEFT,mainPanelWidth-width-50);
 	
 	SetCtrlAttribute(panel,PANEL_MAIN_COPYRIGHT,ATTR_TOP,mainPanelHeight-MAINPANLE_FOOTER_HEIGHT+10);
 	SetCtrlAttribute(panel,PANEL_MAIN_COPYRIGHT,ATTR_LEFT,10);

@@ -2861,3 +2861,71 @@ TPS registerNetWorkCheckTestTps(void)
 	return tps;			
 }
 
+
+BOOL parseCCID(char *src,char *dst)
+{
+	int len = strlen(src);
+	if(len<=0 || len%2!=0)
+		return FALSE;
+	
+	char temp[3]={0};
+	int dstIndex=0;
+	for(int i=0;i<len/2;i++)
+	{
+		temp[0]=src[2*i];
+		temp[1]=src[2*i+1];
+		//printf("%d,",htoi(temp)-48);	
+		dst[dstIndex++] = htoi(temp);
+	}
+	return TRUE;
+}
+
+
+METHODRET CCIDTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	APPEND_INFO(masgHandle,"进入测试"); 
+
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item;
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;		
+		itemResult.pass=RESULT_PASS;
+		char tempORIGIN[100]={0};
+		//char tempCCID[100]={0};
+		
+		if(ParamGetDependWithRetry(eut,item.itemName_,tempORIGIN,3)==FALSE)
+		{
+			APPEND_INFO(masgHandle,"获取结果失败");				
+			goto DONE;
+		}else{
+			APPEND_INFO_FORMAT(masgHandle,"获取到CCID原始值为%s",tempORIGIN);
+
+		}
+		
+		if(FALSE == parseCCID(tempORIGIN,itemResult.recvString))
+		{
+			 APPEND_INFO(masgHandle,"CCID值异常");
+			 goto DONE;
+		}
+		
+		APPEND_INFO_FORMAT(masgHandle,"CCID解析后为%s",itemResult.recvString); 
+		saveResult(hashTable,&itemResult);
+	}
+DONE:	
+	//onStubDisConnected(servicePtr);
+	APPEND_INFO(masgHandle,"退出测试");
+	return ret;
+}
+
+TPS registerCCIDTestTps(void)
+{
+	TPS tps=newTps("ccid");
+	tps.testFunction=CCIDTest;
+	tps.createTpsPanel=NULL;
+	//tps.protocolInit=BiboProtocolInit;
+	return tps;			
+}
+
