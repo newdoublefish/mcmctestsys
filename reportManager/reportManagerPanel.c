@@ -84,6 +84,9 @@ BOOL onParsePostData(tPostParam *paramPtr,void *callbackData)
 		memset(paramPtr->value,0,POST_DATA_VALUE);
 		sprintf(paramPtr->value,"%s",recordPtr->m_reportpath);
 		//sprintf(paramPtr->value,"%s",itemResult.recvString);
+	}else if(strcmp(paramPtr->type,"username")==0)
+    {
+			
 	}
 
 	return TRUE;	

@@ -130,8 +130,9 @@ int CVICALLBACK onLoginCtrlCallBack (int panel, int control, int event,
 				{
 					saveLoginConfig(config);	
 				}else{
-					tLoginConfig temp={0};
-					saveLoginConfig(temp);
+			        memset(config.userName,0,50);
+			        memset(config.password,0,50);
+					saveLoginConfig(config);
 				}
 			 	QuitUserInterface(1);
 			 }
