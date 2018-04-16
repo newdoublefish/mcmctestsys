@@ -93,7 +93,7 @@ HRESULT DeInitExcel()
 {
 	HRESULT error = 0;    
 	
-	CmtDiscardLock (excelLock);  // Õ∑≈À¯
+	//CmtDiscardLock (excelLock);  //TODO: Õ∑≈À¯???????
 	
     if (AppExcelAppHandle)
     {   

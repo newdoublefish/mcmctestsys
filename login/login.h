@@ -18,7 +18,9 @@
 #ifdef __cplusplus
     extern "C" {
 #endif
-BOOL DisplayLoginPanel();		
+#include "loginConfigBiz.h"
+BOOL DisplayLoginPanel();	
+tLoginConfig getAccount();
 #ifdef __cplusplus
     }
 #endif

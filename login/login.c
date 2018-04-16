@@ -1,10 +1,17 @@
 #include "toolbox.h"
-#include "login.h"
 #include "WarnPanel.h"
 #include "loginConfigBiz.h"
+#include "login.h" 
 #include "postData.h"
 #include "httpPost.h"
 
+
+tLoginConfig gConfig={0};
+
+tLoginConfig getAccount()
+{
+	return gConfig;
+}
 
 int CVICALLBACK LoginPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
 	
@@ -89,7 +96,7 @@ BOOL Login(tLoginConfig config)
 			return TRUE;
 		}else{
 			int pass = atoi(config.password);
-			if(pass == getSecret())
+			if((pass == getSecret())&&strlen(config.userName)==0)  
 			{
 				return TRUE;
 			}			
@@ -98,7 +105,7 @@ BOOL Login(tLoginConfig config)
 	}
 	
 	int pass = atoi(config.password);
-	if(pass == getSecret())
+	if((pass == getSecret())&&strlen(config.userName)==0)
 	{
 		return TRUE;
 	}
@@ -117,22 +124,23 @@ int CVICALLBACK onLoginCtrlCallBack (int panel, int control, int event,
 			 //char userName[30]={0};
 			 //char password[30]={0};
 			 //tLoginConfig config={0};
-			 tLoginConfig config=getLoginConfig();
-			 memset(config.userName,0,50);
-			 memset(config.password,0,50);
-			 GetCtrlVal(panel,LOGINPANEL_USERNAME,config.userName);
-			 GetCtrlVal(panel,LOGINPANEL_PASSWORD,config.password);
-			 GetCtrlVal(panel,LOGINPANEL_REMEBER,&config.remember);
-			 *ret = Login(config);
+			 //tLoginConfig config=getLoginConfig();
+			 gConfig=getLoginConfig();  
+			 memset(gConfig.userName,0,50);
+			 memset(gConfig.password,0,50);
+			 GetCtrlVal(panel,LOGINPANEL_USERNAME,gConfig.userName);
+			 GetCtrlVal(panel,LOGINPANEL_PASSWORD,gConfig.password);
+			 GetCtrlVal(panel,LOGINPANEL_REMEBER,&gConfig.remember);
+			 *ret = Login(gConfig);
 			 if(*ret == TRUE){
 				 
-				if(config.remember > 0)
+				if(gConfig.remember > 0)
 				{
-					saveLoginConfig(config);	
+					saveLoginConfig(gConfig);	
 				}else{
-			        memset(config.userName,0,50);
-			        memset(config.password,0,50);
-					saveLoginConfig(config);
+			        memset(gConfig.userName,0,50);
+			        memset(gConfig.password,0,50);
+					saveLoginConfig(gConfig);
 				}
 			 	QuitUserInterface(1);
 			 }

@@ -13,6 +13,7 @@
 #include "postData.h"
 #include "resultUtil.h"
 #include "resultInfo.h"
+#include "login.h"
 
 static int reportManagerPanel;
 static HashTableType resultHashTable=0;
@@ -86,7 +87,12 @@ BOOL onParsePostData(tPostParam *paramPtr,void *callbackData)
 		//sprintf(paramPtr->value,"%s",itemResult.recvString);
 	}else if(strcmp(paramPtr->type,"username")==0)
     {
-			
+		tLoginConfig config = getAccount(); 
+		if(strlen(config.userName)!=0)
+		{
+			memset(paramPtr->value,0,POST_DATA_VALUE);
+			sprintf(paramPtr->value,"%s",config.userName);
+		}
 	}
 
 	return TRUE;	
