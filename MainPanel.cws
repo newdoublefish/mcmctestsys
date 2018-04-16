@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 2
+Number of Opened Files = 4
 Window Confinement Region Enabled = True
 MainColumnWidth = 260
 FileDateColumnWidth = 70
@@ -115,12 +115,8 @@ Disk Date = 3606688505
 In Projects = "1,"
 Window Top = 96
 Window Left = 43
-Window Z-Order = 1
-Source Window State = "1,98,98,98,12,35,35,0,0,172,0,30,0,0,0,30,84,0,102,63,251,517,0,0,"
-Breakpoint 0001 = "109,0,enabled,"
-Tracepoint 0001 = "0,0,110,1,"
-Breakpoint 0002 = "112,0,enabled,"
-Tracepoint 0002 = "0,0,113,1,"
+Window Z-Order = 4
+Source Window State = "1,98,98,98,12,35,35,0,0,76,0,30,0,0,0,19,75,0,105,54,251,517,1,0,"
 
 [File 0011]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/loginConfigBiz.c"
@@ -152,12 +148,12 @@ Source Window State = "1,13,13,13,4,22,22,0,0,80,0,0,0,0,0,20,46,0,10,67,263,541
 [File 0014]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/reportManager/reportManagerPanel.c"
 File Type = "CSource"
-Disk Date = 3606688274
+Disk Date = 3606688782
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 2
-Source Window State = "1,90,90,90,25,26,25,0,0,76,0,0,0,0,0,18,72,0,85,48,239,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,95,95,95,36,47,47,0,3,172,0,0,0,0,0,30,78,0,95,36,239,517,1,0,"
 
 [File 0015]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/AT9220Panel.uir"
@@ -185,7 +181,8 @@ Disk Date = 3606343469
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,79,79,79,4,24,24,0,3,101,0,38,0,0,0,25,67,0,79,4,323,665,1,29,"
+Window Z-Order = 3
+Source Window State = "1,99,99,99,4,24,24,0,3,101,0,38,0,0,0,25,76,0,99,4,323,665,1,29,"
 
 [File 0018]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/param/param.c"
@@ -417,7 +414,8 @@ Disk Date = 3606190802
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,318,318,318,52,53,52,0,0,0,0,0,0,0,0,0,50,0,58,15,215,517,1,0,"
+Window Z-Order = 2
+Source Window State = "1,350,350,350,4,24,24,0,0,76,0,0,0,0,0,16,335,0,348,104,215,517,1,0,"
 
 [File 0042]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/http/cJSON.c"
@@ -1753,6 +1751,8 @@ In Projects = "1,"
 [Tab Order]
 Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/reportManager/reportManagerPanel.c"
 Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/login.c"
+Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
+Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/board/BoardTest.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

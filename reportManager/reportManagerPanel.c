@@ -93,6 +93,10 @@ BOOL onParsePostData(tPostParam *paramPtr,void *callbackData)
 			memset(paramPtr->value,0,POST_DATA_VALUE);
 			sprintf(paramPtr->value,"%s",config.userName);
 		}
+	}else if(strcmp(paramPtr->type,"passpercent")==0)
+	{
+		tAutoTestRecord *recordPtr=(tAutoTestRecord *)callbackData; 
+		sprintf(paramPtr->value,"%d",recordPtr->m_result);
 	}
 
 	return TRUE;	

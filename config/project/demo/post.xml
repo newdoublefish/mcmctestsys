@@ -34,7 +34,7 @@
 <post name="上传报告" url="http://127.0.0.1:8000/query/report/" request="report" upload="True">
 	<param name="sn" type="default">test</param>
 	<param name="type" type="default">整机</param>
-	<param name="result" type="default">90</param>		
+	<param name="result" type="passpercent">True</param>		
 	<param name="report" type="default">ftp://120.78.222.124/test.xlsx</param>
 	<param name="factory" type="default">广州锐速</param>	
 	<param name="person" type="username">陶斯君</param>
