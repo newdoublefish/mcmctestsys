@@ -1,9 +1,11 @@
+#include "windows.h"
 #include "toolbox.h"
 #include "WarnPanel.h"
 #include "loginConfigBiz.h"
 #include "login.h" 
 #include "postData.h"
 #include "httpPost.h"
+#include "common.h"
 
 
 tLoginConfig gConfig={0};
@@ -71,6 +73,33 @@ tPostData buildLoginPostData(tLoginConfig config)
 	
 }
 
+void utf8ToGbk(char *utf8String, char *gbkString)
+{
+	wchar_t *unicodeStr = NULL;
+	int nRetLen = 0;
+
+	nRetLen = MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, NULL, 0);
+
+	//求需求的宽字符数大小
+
+	unicodeStr = (wchar_t *)malloc(nRetLen * sizeof(wchar_t));
+
+	nRetLen = MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, unicodeStr, nRetLen);
+
+	//将utf-8编码转换成unicode编码
+
+	nRetLen = WideCharToMultiByte(CP_ACP, 0, unicodeStr, -1, NULL, 0, NULL, 0);
+
+	//求转换所需字节数
+
+	nRetLen = WideCharToMultiByte(CP_ACP, 0, unicodeStr, -1, gbkString, nRetLen, NULL, 0);
+
+	//unicode编码转换成gbk编码
+
+	free(unicodeStr);
+}
+
+
 BOOL Login(tLoginConfig config)
 {
 	/*tPostData data={0};
@@ -91,8 +120,30 @@ BOOL Login(tLoginConfig config)
 		tPostData data = buildLoginPostData(config);
 		buildPostDataStr(data,buffer,onParseLoginPostData,&config);
 		ListDispose(data.postParamList);
-		if(1==httpPostJson(data.url,buffer))
+		char *fullName;
+		if(1==httpPostJsonWithResponseData(data.url,buffer,&fullName))
 		{
+			if(fullName!=NULL)
+			{
+				char temp[50]={0};
+				utf8ToGbk(fullName,temp);
+				char *first=NULL;
+				if((first=strstr(temp,"\""))!=NULL)
+				{
+					first = first+1;
+					//printf("%s\n",first);
+					char *last=NULL; 
+					if((last = strstr(first,"\""))!=NULL)
+					{
+						*last = '\0';
+						memset(gConfig.fullName,0,50);
+						sprintf(gConfig.fullName,"%s",first);
+					}
+				}
+				//WarnShow1(0,gConfig.fullName);
+				free(fullName);
+			}
+			//WarnShow1(0,gConfig.fullName);
 			return TRUE;
 		}else{
 			int pass = atoi(config.password);
@@ -131,6 +182,7 @@ int CVICALLBACK onLoginCtrlCallBack (int panel, int control, int event,
 			 GetCtrlVal(panel,LOGINPANEL_USERNAME,gConfig.userName);
 			 GetCtrlVal(panel,LOGINPANEL_PASSWORD,gConfig.password);
 			 GetCtrlVal(panel,LOGINPANEL_REMEBER,&gConfig.remember);
+			 sprintf(gConfig.fullName,"%s",gConfig.userName);
 			 *ret = Login(gConfig);
 			 if(*ret == TRUE){
 				 

@@ -31,6 +31,7 @@
 #include "log.h"
 #include "settingConfig.h"
 #include "regexpr.h" 
+#include "login.h"
 
 #define SAVE_RANGE "A1:K1" 
 
@@ -413,6 +414,8 @@ void parseExcelCell(char *writeStr,char *temp,HashTableType hashTable)
 	 	sprintf(writeStr,"%s",itemResult.recvString);
 	 }
 	 
+
+	 
 	 if(strstr(temp,"time")!=NULL)
 	 {
 		char date[30]={0};
@@ -502,6 +505,7 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 	int currentSaveCnt=0;
 	char date[30]={0};
 	getResultRecordTime(date);
+	
 	while(1)
 	{
 		int index=-1;
@@ -543,7 +547,7 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 				{
 					char writeStr[100]={0};
 					BOOL writeFlag =FALSE;
-					RegExpr_FindPatternInText("{value}|{result}|{time}[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
+					RegExpr_FindPatternInText("{username}|{value}|{result}|{time}[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
 					if(matched==1)
 					{
 						parseExcelCell(writeStr,temp,hashTable);
@@ -563,6 +567,15 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 							sprintf(writeStr,"%s",date);
 							writeFlag=TRUE; 
 						}*/
+
+					    if(strstr(temp,"username")!=NULL)
+	 					{
+		 					tLoginConfig acount=getAccount(); 
+							//printf("%s",acount.fullName);
+		 					sprintf(writeStr,"%s",acount.fullName);
+							writeFlag=TRUE;
+	 					}
+						
 					
 					}
 					
