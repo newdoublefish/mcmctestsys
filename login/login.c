@@ -188,6 +188,7 @@ int CVICALLBACK onLoginCtrlCallBack (int panel, int control, int event,
 				 
 				if(gConfig.remember > 0)
 				{
+					memset(gConfig.password,0,50); 
 					saveLoginConfig(gConfig);	
 				}else{
 			        memset(gConfig.userName,0,50);

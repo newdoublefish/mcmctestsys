@@ -5,7 +5,7 @@
 #include "CrcCalc.h"
 #include "common.h"
 
-#define DEBUG
+//#define DEBUG
 
 
 

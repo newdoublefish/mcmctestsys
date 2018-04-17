@@ -29,8 +29,8 @@ METHODRET ConditionTest(TestGroup group,EUT eut,HashTableType hashTable,int msgP
 	{
 		return TEST_RESULT_ALLPASS;
 	}
-	
-	if(FALSE==ParamSetDepend(eut,"1枪调试启动充电","1"))
+#if 1	
+	if(FALSE==ParamSetDepend(eut,"2枪调试启动充电","1"))
 	{
 		APPEND_INFO(msgPanel,"发送启动充电命令失败"); 
 		WarnShow1(0,"发送启动充电命令失败！");
@@ -39,7 +39,7 @@ METHODRET ConditionTest(TestGroup group,EUT eut,HashTableType hashTable,int msgP
 	}else{
 		APPEND_INFO(msgPanel,"已成功发送启动充电命令");
 	}	
-	
+#endif	
 	if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
 	{
 			//getStubNetService(ip,port);
@@ -63,49 +63,64 @@ METHODRET ConditionTest(TestGroup group,EUT eut,HashTableType hashTable,int msgP
 		conditionItem.value = 0x01;
 		//printf("0x%x",conditionItem.address);
 		//conditionItem.address = 0x0100;
-		/*if(strstr(item.itemName_,"远程自测")!=NULL)
+		if(strstr(item.itemName_,"远程自测")!=NULL)
 		{
 			if(TRUE==ConditionSetItem(resconfig,&conditionItem))
 			{
 				APPEND_INFO_FORMAT(msgPanel,"%s 值为 %d",item.itemName_,conditionItem.value);
 						
-		}else{
+			}else{
 				APPEND_INFO_FORMAT(msgPanel,"%s 值获取失败",item.itemName_); 
 				goto DONE;
-			}					
-		}*/
+			}
+			/*if(FALSE==AlertDialogWithRetAutoClose(0,"waring","空调自测大概需要80s,请稍后",80))
+			{
+				break;
+			}*/
+			WarnAlert(0,"空调自测大概需要80s,请稍后",80);
+			itemResult.pass=1;
+		}else{
 		
-		
-		if(TRUE==ConditionGetItem(resconfig,&conditionItem))
-		{
-			APPEND_INFO_FORMAT(msgPanel,"%s 值为 %d",item.itemName_,conditionItem.value);
+			if(TRUE==ConditionGetItem(resconfig,&conditionItem))
+			{
+				APPEND_INFO_FORMAT(msgPanel,"%s 值为 %d",item.itemName_,conditionItem.value);
 						
-		}else{
-			APPEND_INFO_FORMAT(msgPanel,"%s 值获取失败",item.itemName_); 
-			goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(msgPanel,"%s 值获取失败",item.itemName_); 
+				goto DONE;
+			}
+		
+			if(strstr(item.standard_,"NA")!=NULL)
+			{
+				itemResult.pass=1;
+			}else{
+				//itemResult.pass=1;
+				if(conditionItem.value == atoi(item.standard_))
+				{
+					itemResult.pass=1;
+				}else{
+					itemResult.pass = 0;
+				}
+			}
+			
+			memset(itemResult.recvString,0,sizeof(itemResult.recvString));
+			sprintf(itemResult.recvString,"%d",conditionItem.value);		
+		
 		}
-		
-		if(strstr(item.standard_,"NA")!=NULL)
-		{
-		
-		}else{
-			itemResult.pass=1;	
-		}
-		
-		memset(itemResult.recvString,0,sizeof(itemResult.recvString));
-		sprintf(itemResult.recvString,"%d",conditionItem.value);
 		saveResult(hashTable,&itemResult);
 		
 	}
 DONE:
-	if(FALSE==ParamSetDepend(eut,"1枪调试停止充电","1"))
+#if 1	
+	if(FALSE==ParamSetDepend(eut,"2枪调试停止充电","1"))
 	{
 		APPEND_INFO(msgPanel,"发送停止充电命令失败"); 
 		WarnShow1(0,"发送停止充电命令失败！");
 		return ret;
 	}else{
 		APPEND_INFO(msgPanel,"已成功发送停止充电命令");
-	}		
+	}
+#endif	
 	WarnShow1(0,"请等待并确保充电流程已经停止"); 
 	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);		
 	return ret;

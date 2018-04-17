@@ -37,7 +37,7 @@
 	<param name="result" type="passpercent">True</param>		
 	<param name="report" type="default">ftp://120.78.222.124/test.xlsx</param>
 	<param name="factory" type="default">广州锐速</param>	
-	<param name="person" type="default">user1</param>
+	<param name="person" type="default">陶斯君</param>
 	<param name="approved" type="default">false</param>						
 </post>
 
