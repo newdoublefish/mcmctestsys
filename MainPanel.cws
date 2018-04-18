@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 8
+Number of Opened Files = 10
 Window Confinement Region Enabled = True
 MainColumnWidth = 260
 FileDateColumnWidth = 70
@@ -105,7 +105,7 @@ Disk Date = 3606860276
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 4
+Window Z-Order = 6
 Source Window State = "1,51,51,51,12,21,21,0,0,76,0,0,0,0,0,21,784,0,795,33,275,517,1,52,"
 
 [File 0010]
@@ -115,7 +115,7 @@ Disk Date = 3606434219
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 8
+Window Z-Order = 10
 Source Window State = "1,352,353,352,0,0,0,0,0,91,0,243,0,0,0,25,244,0,267,37,323,605,1,39,"
 
 [File 0011]
@@ -125,7 +125,7 @@ Disk Date = 3605588791
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 6
+Window Z-Order = 8
 Source Window State = "1,68,68,68,4,18,18,0,0,76,0,104,0,0,0,21,55,0,65,42,275,517,1,0,"
 
 [File 0012]
@@ -135,7 +135,7 @@ Disk Date = 3606866112
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 5
+Window Z-Order = 7
 Source Window State = "1,102,102,102,34,35,34,0,0,76,0,0,0,0,0,18,0,0,92,108,239,517,1,0,"
 
 [File 0013]
@@ -145,7 +145,7 @@ Disk Date = 3606791061
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 3
+Window Z-Order = 5
 Source Window State = "1,639,639,639,5,19,19,0,3,76,0,0,0,0,0,19,618,0,639,5,251,517,1,0,"
 
 [File 0014]
@@ -155,7 +155,7 @@ Disk Date = 3605588768
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 7
+Window Z-Order = 9
 Source Window State = "1,25,25,25,18,28,28,0,0,76,0,0,0,0,0,21,19,0,24,18,275,517,1,0,"
 
 [File 0015]
@@ -380,7 +380,8 @@ Disk Date = 3606190802
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,1248,1248,1248,10,19,19,0,0,0,0,0,0,0,0,0,1229,0,1237,64,215,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,1276,1276,1276,4,28,28,0,0,157,0,0,0,0,0,26,1248,0,1267,46,215,517,1,0,"
 
 [File 0038]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/http/cJSON.c"
@@ -748,8 +749,8 @@ Disk Date = 3606883689
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 1
-Source Window State = "1,344,344,344,5,24,24,0,0,157,0,0,0,0,0,26,340,0,355,66,215,517,1,0,"
+Window Z-Order = 3
+Source Window State = "1,344,344,344,5,24,24,0,0,76,0,0,0,0,0,16,340,0,355,66,215,517,1,0,"
 
 [File 0079]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/resultSave/resultInfo.c"
@@ -776,7 +777,7 @@ Disk Date = 3606883389
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 2
+Window Z-Order = 4
 Source Window State = "1,163,163,163,25,26,25,0,0,80,0,0,0,0,0,20,73,0,158,69,263,541,1,0,"
 
 [File 0082]
@@ -903,7 +904,8 @@ Disk Date = 3606343469
 In Projects = "1,"
 Window Top = 122
 Window Left = 58
-Source Window State = "1,92,92,92,4,30,30,0,3,0,0,38,0,0,0,0,76,0,92,4,323,665,1,29,"
+Window Z-Order = 2
+Source Window State = "1,113,113,113,4,28,28,0,3,101,0,38,0,0,0,25,91,0,113,4,323,665,1,29,"
 
 [File 0096]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/contentVerification/verification.c"
@@ -1760,6 +1762,8 @@ Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/db/reportDb.c"
 Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/reportManager/reportManagerPanel.c"
 Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/resistentTest.c"
 Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/safety.c"
+Tab 0009 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/tpsHelper.c"
+Tab 0010 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/board/BoardTest.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
