@@ -800,7 +800,7 @@ static void operateTimer(int on)
         CVIAbsoluteTimeToLocalCalendar(absTime, &year, &month, &day, &hour, 
                 &min, &sec, 0, &weekDay);
 		//sprintf(startTime,"%d年%02d月%02d日%2d时%02d分%02d秒",year,month,day,hour,min,sec);
-		sprintf(startTime,"%d%02d%02d%2d%02d",year,month,day,hour,min); 
+		sprintf(startTime,"%d%02d%02d%02d%02d",year,month,day,hour,min); 
 		SetCtrlAttribute(autoPanelHandle,PANEL_AUTO_TIMER,ATTR_INTERVAL,0.5);  //开始 
 	}else
 	{

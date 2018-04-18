@@ -97,6 +97,10 @@ BOOL onParsePostData(tPostParam *paramPtr,void *callbackData)
 	{
 		tAutoTestRecord *recordPtr=(tAutoTestRecord *)callbackData; 
 		sprintf(paramPtr->value,"%d",recordPtr->m_result);
+	}else if(strcmp(paramPtr->type,"pubdate")==0)
+	{
+		tAutoTestRecord *recordPtr=(tAutoTestRecord *)callbackData; 
+		sprintf(paramPtr->value,"%s",recordPtr->m_createtime);
 	}
 
 	return TRUE;	
