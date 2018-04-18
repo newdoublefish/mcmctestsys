@@ -14,9 +14,9 @@ Active Project = 1
 Project 0001 = "MainPanel.prj"
 Drag Bar Left = 277
 Window Top = 128
-Window Left = 2143
+Window Left = 1190
 Window Bottom = 554
-Window Right = 2991
+Window Right = 2038
 Maximized = True
 Maximized Children = True
 Max32 Number Of Errors = 20
@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 6
+Number of Opened Files = 8
 Window Confinement Region Enabled = True
 MainColumnWidth = 260
 FileDateColumnWidth = 70
@@ -40,7 +40,7 @@ FileSizeColumnWidth = 70
 Version = 1700
 Don't Update DistKit = False
 Platform Code = 4
-Build Configuration = "Release"
+Build Configuration = "Debug"
 Warn User If Debugging Release = 0
 Batch Build Release = False
 Batch Build Debug = False
@@ -105,7 +105,7 @@ Disk Date = 3606860276
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 2
+Window Z-Order = 4
 Source Window State = "1,51,51,51,12,21,21,0,0,76,0,0,0,0,0,21,784,0,795,33,275,517,1,52,"
 
 [File 0010]
@@ -115,7 +115,7 @@ Disk Date = 3606434219
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 5
+Window Z-Order = 8
 Source Window State = "1,352,353,352,0,0,0,0,0,91,0,243,0,0,0,25,244,0,267,37,323,605,1,39,"
 
 [File 0011]
@@ -125,7 +125,7 @@ Disk Date = 3605588791
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 3
+Window Z-Order = 6
 Source Window State = "1,68,68,68,4,18,18,0,0,76,0,104,0,0,0,21,55,0,65,42,275,517,1,0,"
 
 [File 0012]
@@ -135,8 +135,8 @@ Disk Date = 3606866112
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 1
-Source Window State = "1,102,102,102,34,35,34,0,0,172,0,0,0,0,0,30,0,0,92,108,239,517,1,0,"
+Window Z-Order = 5
+Source Window State = "1,102,102,102,34,35,34,0,0,76,0,0,0,0,0,18,0,0,92,108,239,517,1,0,"
 
 [File 0013]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/resultSave/resultSave.c"
@@ -145,8 +145,8 @@ Disk Date = 3606791061
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 6
-Source Window State = "1,639,639,639,5,19,19,0,3,76,0,0,0,0,0,19,621,0,639,5,251,517,1,0,"
+Window Z-Order = 3
+Source Window State = "1,639,639,639,5,19,19,0,3,76,0,0,0,0,0,19,618,0,639,5,251,517,1,0,"
 
 [File 0014]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/db/reportDb.h"
@@ -155,7 +155,7 @@ Disk Date = 3605588768
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 4
+Window Z-Order = 7
 Source Window State = "1,25,25,25,18,28,28,0,0,76,0,0,0,0,0,21,19,0,24,18,275,517,1,0,"
 
 [File 0015]
@@ -744,11 +744,12 @@ Source Window State = "1,29,29,29,12,21,21,0,3,0,0,48,0,80,0,0,19,0,29,12,215,51
 [File 0078]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/resistentTest.c"
 File Type = "CSource"
-Disk Date = 3604986718
+Disk Date = 3606881063
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,269,269,269,37,44,44,0,0,0,0,0,0,0,0,0,249,0,258,107,215,517,1,0,"
+Window Z-Order = 2
+Source Window State = "1,417,417,417,23,39,39,0,3,76,0,0,0,0,0,16,391,0,417,23,215,517,1,0,"
 
 [File 0079]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/resultSave/resultInfo.c"
@@ -771,11 +772,12 @@ Source Window State = "1,43,43,43,4,23,23,2,3,0,0,0,0,0,0,0,29,0,43,4,251,605,1,
 [File 0081]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/safety.c"
 File Type = "CSource"
-Disk Date = 3604986285
+Disk Date = 3606883389
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Source Window State = "1,143,152,143,0,0,0,0,0,0,0,0,0,0,0,0,139,0,143,0,263,541,1,0,"
+Window Z-Order = 1
+Source Window State = "1,163,163,163,25,26,25,0,0,157,0,0,0,0,0,26,145,0,163,39,263,541,1,0,"
 
 [File 0082]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/scpiHelper.c"
@@ -1756,6 +1758,8 @@ Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.c"
 Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/db/reportDb.h"
 Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/db/reportDb.c"
 Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/reportManager/reportManagerPanel.c"
+Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/resistentTest.c"
+Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/safety.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

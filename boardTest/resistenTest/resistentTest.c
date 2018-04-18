@@ -398,7 +398,7 @@ void JinkoComCallback(int portNumber, int eventMask, void *callbackdata)
 {
 
 //	if (eventMask & LWRS_RXFLAG)
-	char	readBuf[256] = {0};
+	unsigned char	readBuf[256] = {0};
 	int	    strLen=0;
 	strLen = GetInQLen (portNumber);
 	ComRd (portNumber, readBuf, strLen); 

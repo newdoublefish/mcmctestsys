@@ -147,12 +147,23 @@ BOOL parseJinkoResult(char *resultBuffer,char *result)
 		ret= TRUE;
 	}
 	
-	int tempResult = resultBuffer[6]<<24 | resultBuffer[7]<<16 | resultBuffer[8]<<8 | resultBuffer[9]&0xff; 
+	union U{
+		float v;
+		unsigned char c[4];
+		unsigned int i;
+	}uu;
+	uu.c[0]=resultBuffer[6];
+	uu.c[1]=resultBuffer[7];
+	uu.c[2]=resultBuffer[8];
+	uu.c[3]=resultBuffer[9];	
+	
+	//unsigned int tempResult = resultBuffer[6]<<24 | resultBuffer[7]<<16 | resultBuffer[8]<<8 | resultBuffer[9]&0xff;
+	//float tempResultF = tempResult;
 	//printf("%x\n",resultBuffer[3]);
 	if((resultBuffer[3] & 0xC0) ==0){
-		sprintf(result,"%d mA",tempResult*100);
+		sprintf(result,"%f mA",uu.v/100);
 	}else if((resultBuffer[3] & 0xC0) >0){
-		sprintf(result,"%d M¦¸",tempResult);	  	
+		sprintf(result,"%0.6f M¦¸",uu.v);	  	
 	}
 		
 	return ret;	
