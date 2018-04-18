@@ -40,7 +40,7 @@ FileSizeColumnWidth = 70
 Version = 1700
 Don't Update DistKit = False
 Platform Code = 4
-Build Configuration = "Debug"
+Build Configuration = "Release"
 Warn User If Debugging Release = 0
 Batch Build Release = False
 Batch Build Debug = False
@@ -136,7 +136,7 @@ In Projects = "1,"
 Window Top = 157
 Window Left = 74
 Window Z-Order = 1
-Source Window State = "1,102,102,102,34,35,34,0,0,172,0,0,0,0,0,30,76,0,93,81,239,517,1,0,"
+Source Window State = "1,102,102,102,34,35,34,0,0,172,0,0,0,0,0,30,0,0,92,108,239,517,1,0,"
 
 [File 0013]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/resultSave/resultSave.c"
