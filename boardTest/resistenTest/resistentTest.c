@@ -348,6 +348,7 @@ void JinkoResistanceTest(TestItem item,RESULT *resultPtr,int comPort)
 	tSCPICMD proc=getResisiProc(item.itemName_);
 	int panel = loadAt9220Panel(proc,item.itemName_);
 	InstallPanelCallback(panel,At9220PanelCallback,resultPtr);
+	SetPanelAttribute(panel,ATTR_TITLE,"JINKO 71xx");
 	/*scpiDispPage(comPort,MSETUP);
 	Delay(0.2);
 	scpiSendCmd(comPort,proc);
