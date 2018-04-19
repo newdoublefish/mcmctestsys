@@ -22,6 +22,7 @@
 #include "relayHelper.h"
 #include "ParamSetGet.h"
 #include "BmsHelper.h"
+#include "relayProtocol.h"   
 
 
 BOOL CheckGunPlugined(EUT eut,int gunIndex,int *result)
@@ -1227,13 +1228,41 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int ms
 		flag1=0;
 	}
 	APPEND_INFO_FORMAT(msgHandle,"flag1:%d",flag1);
-	
+#if 0	
 	if(OperatDoSet(eut.relayConfig,RELAY(31)|RELAY(3)|RELAY(4)|RELAY(2),MASK32)==FALSE)
 	{
 		goto DONE;
 	}else{
 		APPEND_INFO(msgHandle,"继电器操作成功,闭合2，3，4，31继电器");	
 	}
+#endif	
+	RelayOperate operate={0};
+	if(getRelayMask("反接告警",&operate)){
+
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"操作继电器失败");
+			goto DONE;
+		}else{
+			APPEND_INFO(msgHandle,"继电器操作成功");	
+		}
+		
+		Delay(1);
+		
+		if(OperatDoSet(eut.relayConfig,operate.afterTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"操作继电器失败");
+			goto DONE;
+		}else{
+			APPEND_INFO(msgHandle,"继电器操作成功");	
+		}		
+	}else{
+	
+		WarnShow1(0,"无反接告警继电器协议");
+		goto DONE;
+	}	
+	
+
 	
 	//WarnAlert(0,);
 	WarnAlert(0,"延时中",8);
@@ -1261,13 +1290,28 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int ms
 														 
 	APPEND_INFO_FORMAT(msgHandle,"flag2:%d",flag2); 
 	
-
+#if 0
 	if(OperatDoSet(eut.relayConfig,RELAY(2),MASK32)==FALSE)
 	{
 		goto DONE;
 	}else{
 		APPEND_INFO(msgHandle,"继电器操作成功,闭合2继电器");	
 	}
+#endif	
+	if(getRelayMask("上电",&operate)){
+
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"上电 操作继电器失败");
+			goto DONE;
+		}else{
+			APPEND_INFO(msgHandle,"继电器操作成功");	
+		}
+	}else{
+	
+		WarnShow1(0,"无上电继电器协议");
+		goto DONE;
+	}		
 	
 	WarnAlert(0,"延时中",8); 
 	
@@ -1299,18 +1343,43 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int ms
 	itemResult.pass = flag1 & flag2 & flag3;
 	sprintf(itemResult.recvString,"{%d,%d,%d}",flag1,flag2,flag3);
 	saveResult(hashTable,&itemResult);
-	
+#if 0	
 	if(OperatDoSet(eut.relayConfig,RELAY(2),MASK32)==TRUE)
 	{
 		 APPEND_INFO(msgHandle,"继电器操作成功,闭合2继电器");
 	}
+#endif
+	if(getRelayMask("上电",&operate)){
+
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"上电 操作继电器失败");
+			goto DONE;
+		}else{
+			APPEND_INFO(msgHandle,"继电器操作成功");	
+		}
+	}else{
+	
+		WarnShow1(0,"无上电继电器协议");
+		goto DONE;
+	}		
 	APPEND_INFO(msgHandle,"退出测试");
 	return ret;
 DONE:
-	if(OperatDoSet(eut.relayConfig,RELAY(2),MASK32)==TRUE)
-	{
-		 APPEND_INFO(msgHandle,"继电器操作成功,闭合2继电器");
-	}	
+	if(getRelayMask("上电",&operate)){
+
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"上电 操作继电器失败");
+			//goto DONE;
+		}else{
+			APPEND_INFO(msgHandle,"继电器操作成功");	
+		}
+	}else{
+	
+		WarnShow1(0,"无上电继电器协议");
+		//goto DONE;
+	}		
 	onStubDisConnected(servicePtr);
 	APPEND_INFO(msgHandle,"退出测试"); 
 	return ret;
@@ -1343,7 +1412,7 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 		sprintf(stopChargeCMD,"%s","2枪调试停止充电");
 		sprintf(isolateCMD,"%s","2枪绝缘检测结果");
 	}
-
+#if 0
 	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(30)|RELAY(2),MASK32))
 	{
 		APPEND_INFO(msgHander,"继电器操作失败！！");
@@ -1351,7 +1420,23 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 	}else{
 	    APPEND_INFO(msgHander,"继电器操作成功，闭合2，30继电器！！");
 	}
+#else
+	RelayOperate operate={0}; 
+	if(getRelayMask("绝缘告警",&operate)){
 
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"绝缘告警 操作继电器失败");
+			goto DONE;
+		}else{
+			APPEND_INFO(msgHander,"绝缘告警 继电器操作成功");	
+		}
+	}else{
+	
+		WarnShow1(0,"无绝缘告警继电器协议");
+		goto DONE;
+	}		
+#endif	
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
 		WarnShow1(0,"无法启动充电！");
@@ -1392,7 +1477,7 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 	WarnShow1(0,"请确认充电已经停止，充电停止后进入下一步测试");
 	
 	WarnShow1(0,"下一步测试");
-	
+#if 0	
 	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(29) | RELAY(30)| RELAY(2),MASK32))
 	{
 		APPEND_INFO(msgHander,"继电器操作失败！！");
@@ -1400,7 +1485,22 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 	}else{
 	    APPEND_INFO(msgHander,"继电器操作成功，闭合2，29,30继电器！！");
 	}
+#else
+	if(getRelayMask("绝缘故障",&operate)){
+
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"绝缘故障 操作继电器失败");
+			goto DONE;
+		}else{
+			APPEND_INFO(msgHander,"绝缘故障 继电器操作成功");	
+		}
+	}else{
 	
+		WarnShow1(0,"无绝缘故障继电器协议");
+		goto DONE;
+	}	
+#endif	
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
 		WarnShow1(0,"无法启动充电！");
@@ -1433,9 +1533,23 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 		APPEND_INFO(msgHander,"发送充电停止命令成功"); 
 	}	
 DONE:	
-	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(2),MASK32))
+	/*if(FALSE==OperatDoSet(eut.relayConfig,RELAY(2),MASK32))
 	{
-	}
+	}*/
+	if(getRelayMask("上电",&operate)){
+
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"上电 操作继电器失败");
+			goto DONE;
+		}else{
+			APPEND_INFO(msgHander,"上电 继电器操作成功");	
+		}
+	}else{
+	
+		WarnShow1(0,"无上电继电器协议");
+		goto DONE;
+	}		
 	
 	RESULT itemResult={0};
 	itemResult.index=item.itemId;
@@ -1585,6 +1699,7 @@ TPS registerInsulationTestTestTps(void)
 
 METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHandler)
 {
+	ListType paramsToSet=ListCreate(sizeof(PARAMETER));    
 	APPEND_INFO_FORMAT(msgHandler,"进入%s",group.groupName);
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
@@ -1650,11 +1765,28 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 	saveResult(hashTable,&itemResult1);
 	
 	//加负载
+#if 0	
 	if(OpenDo(eut.relayConfig,31)==FALSE)
 	{
 		return 	TEST_RESULT_ERROR;
 	}else{
 		APPEND_INFO(msgHandler,"闭合继电器31，负载加载成功");
+	}
+#endif
+	RelayOperate operate={0};
+	if(getRelayMask("充电负载",&operate)){
+
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"操作继电器失败");
+			goto DONE;
+		}else{
+			APPEND_INFO(msgHandler,"继电器操作成功");	
+		}
+	}else{
+	
+		WarnShow1(0,"无充电负载继电器协议");
+		goto DONE;
 	}	
 	
 	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
@@ -1666,7 +1798,7 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 	WarnShow1(0,"按下确定开始读数");
 	APPEND_INFO(msgHandler,"开始读数"); 
 
-	ListType paramsToSet=ListCreate(sizeof(PARAMETER));
+
 	for(int i=2;i<=4;i++)
 	{
 		TestItem item;
@@ -1823,13 +1955,29 @@ DONE:
 	
 	WarnShow1(0,"请确保已经停止充电,如果没有请按急停按钮");
 	
-	
+#if 0	
 	if(CloseDo(eut.relayConfig,31)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}else{
 		APPEND_INFO(msgHandler,"断开继电器31成功");
 	}
+#endif
+	RelayOperate operateUp={0};
+	if(getRelayMask("上电",&operateUp)){
+
+		if(OperatDoSet(eut.relayConfig,operateUp.beforeTestMask,operateUp.mask)==FALSE)
+		{
+			WarnShow1(0,"操作继电器失败");
+			goto DONE;
+		}else{
+			APPEND_INFO(msgHandler,"继电器操作成功");	
+		}
+	}else{
+	
+		WarnShow1(0,"无上电继电器协议");
+		goto DONE;
+	}	
 	APPEND_INFO(msgHandler,"离开测试");
 	return ret;
 }

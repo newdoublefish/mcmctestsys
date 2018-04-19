@@ -13,6 +13,16 @@
   </Project>
   <Project>
     <ProjectName>120KW_integration</ProjectName>
+    <NickName>120KW整机测试-麦格米特-新工装</NickName>
+    <ConfigPath>Integrate_120KW_megmeet_new\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>Integrate_120KW_megmeet_new\Strategy.xml</StrategyPath>	
+    <DevicePath>Integrate_120KW_megmeet_new\Device.xml</DevicePath>	
+    <DBName>megmeet</DBName>	
+    <PostPath>Integrate_120KW_megmeet_new\post.xml</PostPath>	    
+    <ReportPath>Integrate_120KW_megmeet_new\IntegrateReport.xlsx</ReportPath>
+  </Project>   
+  <Project>
+    <ProjectName>120KW_integration</ProjectName>
     <NickName>120KW整机测试-麦格米特</NickName>
     <ConfigPath>Integrate_120KW_megmeet\IntegrateConfig.xlsx</ConfigPath>
     <StrategyPath>Integrate_120KW_megmeet\Strategy.xml</StrategyPath>	
