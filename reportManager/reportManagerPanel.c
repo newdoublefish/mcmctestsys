@@ -14,6 +14,7 @@
 #include "resultUtil.h"
 #include "resultInfo.h"
 #include "login.h"
+#include "common.h"
 
 static int reportManagerPanel;
 static HashTableType resultHashTable=0;
@@ -220,6 +221,10 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 		refreshRecordTree();
 	}else if(MenuItemID==2)
 	{
+		if(FALSE==AlertDialogWithRet(0,"警告","确认删除?","取消","确认"))
+		{
+			return;
+		}		
 		GetNumListItems(panel,controlID,&count);
 		for(int i=0;i<count;i++)
 		{

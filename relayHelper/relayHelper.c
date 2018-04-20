@@ -568,7 +568,8 @@ BOOL CloseDo(RSCONFIG config,int doMask){
 	return operateDo(config,&buf);
 }
 
-BOOL OperatDoSet(RSCONFIG config,unsigned int doMask,unsigned int mask)
+BOOL DoSetOperate(RSCONFIG config,unsigned int doMask,unsigned int mask)
+{
 {
 	SETTING s=getSetting();
 	if(s.relayEnable==FALSE)
@@ -582,6 +583,36 @@ BOOL OperatDoSet(RSCONFIG config,unsigned int doMask,unsigned int mask)
 		return FALSE;	
 	}
 	return TRUE;
+}
+}
+
+BOOL OperatDoSet(RSCONFIG config,unsigned int doMask,unsigned int mask)
+{
+/*
+	SETTING s=getSetting();
+	if(s.relayEnable==FALSE)
+		return TRUE;	
+	RelayBuf buf={0};
+	buildALLDoPacket(&buf,doMask,mask);
+	if(FALSE==operateDo(config,&buf))
+		return FALSE;
+	if(FALSE== ParseResult(&buf,NULL))
+	{
+		return FALSE;	
+	}
+	return TRUE;
+*/
+	int retryCnt = 3;
+	BOOL ret=FALSE;
+	while(retryCnt>0)
+	{
+		ret = DoSetOperate(config,doMask,mask);
+		if(ret==TRUE)
+		{
+			break;
+		}
+	}
+	return ret;
 }
 
 BOOL buildCheckPacket(RelayBuf *buffPtr,unsigned int mask)

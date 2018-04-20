@@ -1795,7 +1795,8 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		return 	TEST_RESULT_ERROR;
 	}*/
 
-	WarnShow1(0,"按下确定开始读数");
+	//WarnShow1(0,"按下确定开始读数");
+	WarnAlert(0,"准备读取数值",5); 
 	APPEND_INFO(msgHandler,"开始读数"); 
 
 
@@ -1873,10 +1874,13 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		
 		APPEND_INFO_FORMAT(msgHandler,"%s 测试结果为 %d",item.itemName_,itemResult.pass);
 		
-		saveResult(hashTable,&itemResult);			
+		saveResult(hashTable,&itemResult);
+		itemResult.index = itemResult.index +3;
+		saveResult(hashTable,&itemResult);  //不用填写面板的数字
 	}
 		
 	//ListType paramsToSet=ListCopy(paramsToGet);
+#if 0	
 	showParamSetPanel(paramsToSet);
 	APPEND_INFO(msgHandler,"开始读数面板数值");	
 	for(int i=1;i<=ListNumItems(paramsToSet);i++)
@@ -1890,6 +1894,12 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		sprintf(itemResult.recvString,"%s",param.value);
 		float strValue=atof(param.value);
 		itemResult.pass=RESULT_PASS; 
+		if(strstr(item.inputValue_,"NA")!=NULL)
+		{
+			itemResult.pass=RESULT_PASS;
+			saveResult(hashTable,&itemResult);
+			continue;
+		}
 		if(i==2)
 		{
 			if(strstr(item.inputValue_,"NA")==NULL && strstr(item.standard_,"NA")==NULL)
@@ -1926,7 +1936,7 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		APPEND_INFO_FORMAT(msgHandler,"%s 值为 %s，测试结果为 %d",item.itemName_,itemResult.recvString,itemResult.pass);
 		saveResult(hashTable,&itemResult);			
 	}
-	
+#endif	
 	WarnShow1(0,"手动解锁测试,请按下手动解锁按钮！！");
 	
 	if(AlertDialogWithRet(0,"手动解锁测试","手动解锁能是否正常","否","正常")==TRUE)
@@ -2030,7 +2040,7 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 	saveResult(hashTable,&itemResult);
 	APPEND_INFO(masgHandle,"主动断开网络"); 
 	ReleaseStubNetService();
-	if(CloseDo(eut.relayConfig,1)==FALSE)
+	/*if(CloseDo(eut.relayConfig,1)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
 	}
@@ -2041,9 +2051,43 @@ METHODRET TimeSetTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 	if(OpenDo(eut.relayConfig,1)==FALSE)
 	{
 		return TEST_RESULT_ERROR;
+	}*/
+	RelayOperate operate={0}; 
+	if(getRelayMask("断电",&operate)){
+
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"断电 操作继电器失败");
+			APPEND_INFO(masgHandle,"退出测试");
+			return TEST_RESULT_ERROR;
+		}else{
+			APPEND_INFO(masgHandle,"断电 继电器操作成功");	
+		}
+	}else{
+	
+		WarnShow1(0,"无断电继电器协议");
+		APPEND_INFO(masgHandle,"退出测试");
+		return TEST_RESULT_ERROR;
 	}
 	
+	WarnAlert(0,"重启中",3);
 	
+	if(getRelayMask("上电",&operate)){
+
+		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
+		{
+			WarnShow1(0,"上电 操作继电器失败");
+			APPEND_INFO(masgHandle,"退出测试");
+			return TEST_RESULT_ERROR;
+		}else{
+			APPEND_INFO(masgHandle,"上电 继电器操作成功");	
+		}
+	}else{
+	
+		WarnShow1(0,"无上电继电器协议");
+		APPEND_INFO(masgHandle,"退出测试");
+		return TEST_RESULT_ERROR;
+	}	
 	
 	WarnAlert(0,"请确认设备已经器动",30);
 	TestItem item2;

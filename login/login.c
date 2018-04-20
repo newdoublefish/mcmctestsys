@@ -1,4 +1,5 @@
 #include "windows.h"
+#include "regexpr.h"
 #include "toolbox.h"
 #include "WarnPanel.h"
 #include "loginConfigBiz.h"
@@ -128,6 +129,7 @@ BOOL Login(tLoginConfig config)
 				char temp[50]={0};
 				utf8ToGbk(fullName,temp);
 				char *first=NULL;
+#if 0				
 				if((first=strstr(temp,"\""))!=NULL)
 				{
 					first = first+1;
@@ -141,6 +143,15 @@ BOOL Login(tLoginConfig config)
 					}
 				}
 				//WarnShow1(0,gConfig.fullName);
+#else
+				int matched=0,position=0,matchedLen=0;
+				RegExpr_FindPatternInText("\".*\"",1,temp,-1,1,1,&matched,&position,&matchedLen);
+				if(matched == 1)
+				{
+					memset(gConfig.fullName,0,50);
+					memcpy(gConfig.fullName,temp+position+1,matchedLen-2);
+				}
+#endif				
 				free(fullName);
 			}
 			//WarnShow1(0,gConfig.fullName);

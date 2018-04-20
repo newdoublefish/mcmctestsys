@@ -1016,8 +1016,8 @@ DONE:
 		return ret;
 }
 
-#define  AUTOTEST_PANEL_PADDING_TOP 25
-#define  AUTOTEST_PANEL_PADDING_LEFT 150
+static int  AUTOTEST_PANEL_PADDING_TOP=25;
+static int  AUTOTEST_PANEL_PADDING_LEFT=150;
 #define  AUTOTEST_BUTTON_PADDING_SIZE 30
 static int autoPanelWidth=0;
 static int autoPanelHeight=0;
@@ -1450,8 +1450,20 @@ int  CVICALLBACK onPanelAutoCall(int panel, int event, void *callbackData, int e
 {
 	switch (event)
 	{
-		case EVENT_PANEL_SIZE:
-			break;	
+		case EVENT_PANEL_MAXIMIZE:
+			if(AUTOTEST_PANEL_PADDING_TOP==25 && AUTOTEST_PANEL_PADDING_LEFT==150)
+			{
+				AUTOTEST_PANEL_PADDING_TOP=10;
+				AUTOTEST_PANEL_PADDING_LEFT=5;
+			}else{
+				AUTOTEST_PANEL_PADDING_TOP=25;
+				AUTOTEST_PANEL_PADDING_LEFT=150;			
+			}
+			reFreshAutoTestPanel(panel);
+		
+			break;
+		case EVENT_PANEL_MINIMIZE:
+			reFreshAutoTestPanel(panel);
 	}
 	return 0;
 }
