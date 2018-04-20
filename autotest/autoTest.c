@@ -1095,6 +1095,73 @@ static void adjustPanelSize(int panel)
 	adjustBody(panel);
 }
 
+int CheckResultTable(ListType itemList,ListType collectList,HashTableType resultHashTable)
+{
+	int totalTestItems=0;
+	HashTableType table=0; 
+	HashTableCreate(10,FIXED_SIZE_KEY,sizeof(int),sizeof(int),&table);
+	 for(int i=1;i<=ListNumItems(collectList);i++)
+	 {
+	     Collect collect;
+		 ListGetItem(collectList,&collect,i);
+		 //t->totalTestGroupCount+=ListNumItems(collect.groups);
+		 for(int j=1;j<=ListNumItems(collect.groups);j++)
+		 {
+		 	  int groupIndex=0;
+
+			  ListGetItem(collect.groups,&groupIndex,j);//获取组的ID号
+			  TestGroup testGroup={0};
+		      ListGetItem(itemList,&testGroup,groupIndex);//获取组	
+			  for(int z=1;z<=ListNumItems(testGroup.subItems);z++)
+			  {
+				  TestItem item={0};
+				  ListGetItem(testGroup.subItems,&item,z);
+				  HashTableInsertItem(table,&item.itemId,&item.itemId);		  		
+			  }
+			  //totalTestItems+=ListNumItems(testGroup.subItems);
+		 }
+	 }
+     HashTableGetAttribute(table,ATTR_HT_SIZE,&totalTestItems);
+	
+	 HashTableIterator iter;
+	 int status = 0;
+
+	int found = 0;
+	int key;  
+	RESULT result={0};	 
+	ListType removeItemList = ListCreate(sizeof(int));
+	for (status = HashTableIteratorCreate(resultHashTable, &iter);status >= 0 && status != HASH_TABLE_END;status = HashTableIteratorAdvance(resultHashTable, iter)) 
+    {
+
+		status = HashTableIteratorGetItem(resultHashTable, iter, &key, sizeof(int), &result, sizeof(RESULT)); 
+		/* do something with key and value */ 
+
+		HashTableFindItem(table,&key,&found);
+		if(found<=0)
+		{
+			//HashTableRemoveItem(resultHashTable,&key,&result,sizeof(RESULT));
+			ListInsertItem(removeItemList,&key,END_OF_LIST);
+		}
+
+	}
+
+	HashTableIteratorDispose(resultHashTable, iter); 
+	
+	for(int i=1;i<=ListNumItems(removeItemList);i++)
+	{
+		//int key=0;
+		//RESULT result={0};
+		ListGetItem(removeItemList,&key,i);
+		//HashTableGetItem(resultHashTable,&key,&result,sizeof(RESULT));
+		int ret = HashTableRemoveItem(resultHashTable,&key,&result,sizeof(RESULT));			
+	}
+	
+	ListDispose(removeItemList);	
+	HashTableDispose(table);
+	return  totalTestItems;
+}
+
+
 
 void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,ListType collectList,ENUMETestPanel type,tTestProject *testProjectPtr)
 {
@@ -1151,6 +1218,8 @@ void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,Lis
 		obj->onObjectTestErrorListener=(void *)objectTestError;//测试对象出错
 		obj->onObjectTestFinish=(void *)objectTestFinish;
 		loadResultInfo(gTestProject->projectPath,obj->device.eutName,obj->resultHashTable);
+		//TODO 删除不属于当前集合的测试项
+		CheckResultTable(groupList,collectList,obj->resultHashTable);
 	}
 	SUT sut=GetSeletedSut();
 	char currentSutName[50]={0};

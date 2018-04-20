@@ -274,7 +274,7 @@ int CalcTotalTestItemsByHash(ListType itemList,ListType collectList)
 			  //totalTestItems+=ListNumItems(testGroup.subItems);
 		 }
 	 }
-	HashTableGetAttribute(table,ATTR_HT_SIZE,&totalTestItems);
+     HashTableGetAttribute(table,ATTR_HT_SIZE,&totalTestItems);
 	 HashTableDispose(table);
 	 return  totalTestItems;
 }
