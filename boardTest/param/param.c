@@ -3116,7 +3116,7 @@ TPS registerCCIDTestTps(void)
 {
 	TPS tps=newTps("ccid");
 	tps.testFunction=CCIDTest;
-	tps.createTpsPanel=NULL;
+	//tps.createTpsPanel=NULL;
 	//tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }

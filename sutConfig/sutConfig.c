@@ -37,6 +37,25 @@ extern int g_mainHWND; //先不发消息
 SUTCONFIG sutConfig;
 SUT selectSut;
 
+int CVICALLBACK OnListPartClick (int panelHandle, int controlID, int event, void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_LEFT_DOUBLE_CLICK:
+			int index=0;
+			unsigned int wParam1=1;
+    		unsigned int lParam1=0;
+			GetCtrlIndex(panelHandle,controlID,&index);
+		    wParam1=1;
+		    ListGetItem(sutConfig.sutList,&selectSut,index+1);	
+		    PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);
+ 		    QuitUserInterface(1);
+			break;
+	}
+	return 0;			
+}
+
+
 void DisplaySutConfigPanel()
 {
 	SUT temp; 
@@ -59,6 +78,7 @@ void DisplaySutConfigPanel()
 		else
 			InsertListItem(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,index-1,temp.systemName,0); //如果没有别名显示系统名称	
 	}
+	InstallCtrlCallback(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,OnListPartClick,NULL);
     //显示面板
     DisplayPanel(sutConfigPanelHandle);
 	RunUserInterface();

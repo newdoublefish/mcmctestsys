@@ -65,8 +65,8 @@
 #define  PROGRESS_2_RINGSLIDE             2       /* control type: slide, callback function: (none) */
 #define  PROGRESS_2_TEXTMSG               3       /* control type: textMsg, callback function: (none) */
 #define  PROGRESS_2_TEXTBOX               4       /* control type: textBox, callback function: (none) */
-#define  PROGRESS_2_TEXTMSG_3             5       /* control type: textMsg, callback function: (none) */
-#define  PROGRESS_2_COMMANDBUTTON         6       /* control type: command, callback function: (none) */
+#define  PROGRESS_2_COMMANDBUTTON         5       /* control type: command, callback function: (none) */
+#define  PROGRESS_2_TEXTMSG_3             6       /* control type: textMsg, callback function: (none) */
 #define  PROGRESS_2_TEXTMSG_2             7       /* control type: textMsg, callback function: (none) */
 
 
