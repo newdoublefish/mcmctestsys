@@ -16,11 +16,11 @@
 #define  LOAD_P                           1
 #define  LOAD_P_TEXTMSG_429               2       /* control type: textMsg, callback function: (none) */
 #define  LOAD_P_TEXTMSG_422               3       /* control type: textMsg, callback function: (none) */
-#define  LOAD_P_TEXTMSG_6                 4       /* control type: textMsg, callback function: (none) */
-#define  LOAD_P_TEXTMSG_3                 5       /* control type: textMsg, callback function: (none) */
-#define  LOAD_P_TEXTMSG_V                 6       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_LOGO                      4       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_APPNAME                   5       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_VERSION                   6       /* control type: textMsg, callback function: (none) */
 #define  LOAD_P_TEXTMSG                   7       /* control type: textMsg, callback function: (none) */
-#define  LOAD_P_TEXTMSG_2                 8       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_COPYRIGHT                 8       /* control type: textMsg, callback function: (none) */
 
 
      /* Control Arrays: */

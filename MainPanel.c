@@ -30,10 +30,7 @@
 #include "log.h"
 #include "login.h"
 #include "reportDb.h"
-
-
-#define COPY_RIGHT "CopyRight 2018  GuangDong Thousands of Cities & Charging Stations E-Vehicles Operating Co., Ltd."
-
+#include "application.h"
 
 static int panelMain = 0;	//主面板
 
@@ -167,11 +164,12 @@ static void  adjustTstTab(int tabPanel)
 void static setMainPanelTitle(){
    char title[100]={0};
    SUT sut=GetSeletedSut();
+   tApplication ta = getApplication();
    tTestProject *projectPtr=getCurrentProject();
    if(strlen(projectPtr->projectName)==0)
-	  sprintf(title,"广州万城万充新能源科技有限公司-%s",sut.nickName);
+	  sprintf(title,"%s-%s",ta.basic.company,sut.nickName);
    else
-	   sprintf(title,"广州万城万充新能源科技有限公司-%s-%s",sut.nickName,projectPtr->projectName);
+	   sprintf(title,"%s-%s-%s",ta.basic.company,sut.nickName,projectPtr->projectName);
    SetPanelAttribute(panelMain,ATTR_TITLE,title);
 }
 
@@ -349,9 +347,10 @@ int CVICALLBACK MainPnlMsgCallback (int panelHandle, int message,
 			
 		   //显示版本号
 		   char version[50]={0};
-		   sprintf(version,"版本号:%s",getVersion());
+		   tApplication ta = getApplication();
+		   sprintf(version,"版本号:%s",ta.basic.version);
 		   SetCtrlVal(panelMain,PANEL_MAIN_VERSION_VALUE,version);
-		   SetCtrlVal(panelMain,PANEL_MAIN_COPYRIGHT,COPY_RIGHT);
+		   SetCtrlVal(panelMain,PANEL_MAIN_COPYRIGHT,ta.basic.copyRight);
 	       //显示主面板
 		   DisplayPanel(panelMain);
 		   //显示设备配置面板

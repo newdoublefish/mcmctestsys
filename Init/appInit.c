@@ -22,6 +22,7 @@
 #include "log.h"
 #include "reportDb.h"
 #include "common.h"
+#include "application.h"
 
 
 #define DEBUG
@@ -33,9 +34,16 @@ HRESULT EnterAppInit()
 		return -1;
 	DisplayPanel(panelLoadHandle);
 	
-	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG_V,"版本:v0.1");
+	ApplicationInit();
 	
-	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG,"正在初始化Excel组建...");
+	tApplication ta = getApplication();
+	
+	SetCtrlVal(panelLoadHandle,LOAD_P_LOGO,ta.basic.logo);
+	SetCtrlVal(panelLoadHandle,LOAD_P_APPNAME,ta.basic.applicationName);
+	SetCtrlVal(panelLoadHandle,LOAD_P_VERSION,ta.basic.version);
+	SetCtrlVal(panelLoadHandle,LOAD_P_COPYRIGHT,ta.basic.copyRight);
+	
+	//SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG,"正在初始化Excel组建...");
 	
 	
 	//注意加入以下这行代码，程序不会中断，调试时候打开
@@ -46,7 +54,7 @@ HRESULT EnterAppInit()
 	//Delay(2);
 	InitExcel();
 	
-	SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG,"正在初始化Excel组建...OK"); 
+	//SetCtrlVal(panelLoadHandle,LOAD_P_TEXTMSG,"正在初始化Excel组建...OK"); 
 	
 	/*if(initDb()<0)
 	{

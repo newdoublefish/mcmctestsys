@@ -7,6 +7,7 @@
 #include "postData.h"
 #include "httpPost.h"
 #include "common.h"
+#include "application.h"
 
 
 tLoginConfig gConfig={0};
@@ -219,7 +220,10 @@ BOOL DisplayLoginPanel(void)
 {
 	BOOL ret=FALSE;
 	int panel = LoadPanel(0,"WarnPanel.uir",LOGINPANEL);
+	tApplication ta = getApplication();
+	SetPanelAttribute(panel,ATTR_TITLE,ta.basic.company);
 	InstallCtrlCallback(panel,LOGINPANEL_COMMANDBUTTON,onLoginCtrlCallBack,&ret); 
+	InstallCtrlCallback(panel,LOGINPANEL_PASSWORD,onLoginCtrlCallBack,&ret);
 	InstallPanelCallback(panel,LoginPanelCallback,NULL); 
 	tLoginConfig config=getLoginConfig();
 	SetCtrlVal(panel,LOGINPANEL_USERNAME,config.userName);

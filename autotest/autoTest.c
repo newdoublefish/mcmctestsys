@@ -42,6 +42,7 @@
 #include "TpsDefaultPanel.h"
 #include "sutCommon.h"
 #include "resultInfo.h"
+#include "application.h"
 
 
 static int autoPanelHandle=0;
@@ -1172,6 +1173,9 @@ void DisplayAutoTestPanelWithTestData(ListType groupList,ListType deviceList,Lis
 	if ((autoPanelHandle = LoadPanel (0, "AutoTestPanel.uir", PANEL_AUTO)) < 0)
 		return;
 
+	tApplication ta = getApplication();
+	SetPanelAttribute(autoPanelHandle,ATTR_TITLE,ta.basic.company);
+	
    	if(GetPanelHandleFromTabPage(autoPanelHandle,PANEL_AUTO_TAB_AUTO,0,&tempPanel) < 0)
   	{
 	        return;
@@ -1248,6 +1252,9 @@ void DisplayAutoTestPanel(ListType groupList,ListType deviceList,ListType collec
 	int tempPanel=0;
 	if ((autoPanelHandle = LoadPanel (0, "AutoTestPanel.uir", PANEL_AUTO)) < 0)
 		return;
+	
+	tApplication ta = getApplication();
+	SetPanelAttribute(autoPanelHandle,ATTR_TITLE,ta.basic.company);	
 
    	if(GetPanelHandleFromTabPage(autoPanelHandle,PANEL_AUTO_TAB_AUTO,0,&tempPanel) < 0)
   	{

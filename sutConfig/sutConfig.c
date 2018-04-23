@@ -39,18 +39,27 @@ SUT selectSut;
 
 int CVICALLBACK OnListPartClick (int panelHandle, int controlID, int event, void *callbackData, int eventData1, int eventData2)
 {
+	int index=0;
+	unsigned int wParam1=1;
+    unsigned int lParam1=0;	
 	switch (event)
 	{
 		case EVENT_LEFT_DOUBLE_CLICK:
-			int index=0;
-			unsigned int wParam1=1;
-    		unsigned int lParam1=0;
+
 			GetCtrlIndex(panelHandle,controlID,&index);
 		    wParam1=1;
 		    ListGetItem(sutConfig.sutList,&selectSut,index+1);	
 		    PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);
  		    QuitUserInterface(1);
 			break;
+		case EVENT_COMMIT:
+
+			GetCtrlIndex(panelHandle,controlID,&index);
+		    wParam1=1;
+		    ListGetItem(sutConfig.sutList,&selectSut,index+1);	
+		    PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);
+ 		    QuitUserInterface(1);
+			break;			
 	}
 	return 0;			
 }
