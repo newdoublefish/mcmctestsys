@@ -44,14 +44,14 @@ int CVICALLBACK OnListPartClick (int panelHandle, int controlID, int event, void
     unsigned int lParam1=0;	
 	switch (event)
 	{
-		case EVENT_LEFT_DOUBLE_CLICK:
+		/*case EVENT_LEFT_DOUBLE_CLICK:
 
 			GetCtrlIndex(panelHandle,controlID,&index);
 		    wParam1=1;
 		    ListGetItem(sutConfig.sutList,&selectSut,index+1);	
 		    PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);
  		    QuitUserInterface(1);
-			break;
+			break;*/
 		case EVENT_COMMIT:
 
 			GetCtrlIndex(panelHandle,controlID,&index);

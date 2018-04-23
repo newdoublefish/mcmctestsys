@@ -265,8 +265,7 @@ BOOL DisplayLoginPanel(void)
 	int panel = LoadPanel(0,"WarnPanel.uir",LOGINPANEL);
 	tApplication ta = getApplication();
 	SetPanelAttribute(panel,ATTR_TITLE,ta.basic.company);
-	//InstallCtrlCallback(panel,LOGINPANEL_COMMANDBUTTON,onLoginCtrlCallBack,&ret);//这里很奇怪要把这里删除，否则到系统选择那里直接就没显示了
-	
+	//InstallCtrlCallback(panel,LOGINPANEL_COMMANDBUTTON,onLoginCtrlCallBack,&ret);//这里很奇怪要把这里删除，否则到系统选择那里直接就没显示了 
 	InstallCtrlCallback(panel,LOGINPANEL_PASSWORD,onLoginEnterCallBack,&ret);
 	InstallPanelCallback(panel,LoginPanelCallback,NULL); 
 	tLoginConfig config=getLoginConfig();
