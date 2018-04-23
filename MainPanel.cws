@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 12
+Number of Opened Files = 8
 Window Confinement Region Enabled = True
 MainColumnWidth = 260
 FileDateColumnWidth = 70
@@ -101,12 +101,12 @@ Breakpoint 0001 = "156,0,enabled,"
 [File 0009]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/login.c"
 File Type = "CSource"
-Disk Date = 3607296743
+Disk Date = 3607307243
 In Projects = "1,"
 Window Top = 96
 Window Left = 43
-Window Z-Order = 5
-Source Window State = "1,225,225,225,30,54,54,0,0,76,0,30,0,0,0,19,186,0,215,62,251,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,184,184,184,13,25,25,0,0,184,0,30,0,0,0,42,243,0,267,97,251,517,1,0,"
 
 [File 0010]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/policyConfig/policyPanel.uir"
@@ -121,23 +121,24 @@ Window Width = 605
 [File 0011]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/SutPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3607296119
+Disk Date = 3607298308
 In Projects = "1,"
 Window Top = 152
 Window Left = 74
 Window Height = 323
 Window Width = 605
+Window Z-Order = 7
 
 [File 0012]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3607296675
+Disk Date = 3607298059
 In Projects = "1,"
 Window Top = 32
 Window Left = 10
 Window Height = 323
 Window Width = 605
-Window Z-Order = 8
+Window Z-Order = 2
 
 [File 0013]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/bmsHelper/BmsHelper.c"
@@ -164,18 +165,18 @@ Disk Date = 3606789844
 In Projects = "1,"
 Window Top = 152
 Window Left = 74
-Window Z-Order = 6
+Window Z-Order = 3
 Source Window State = "1,95,95,95,20,29,29,0,0,91,0,228,0,0,0,19,86,0,95,4,251,605,1,114,"
 
 [File 0016]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/sutConfig.c"
 File Type = "CSource"
-Disk Date = 3607296837
+Disk Date = 3607306624
 In Projects = "1,"
 Window Top = 92
 Window Left = 42
-Window Z-Order = 4
-Source Window State = "1,157,157,157,6,16,16,0,0,91,0,0,0,0,0,19,148,0,154,71,251,605,1,0,"
+Window Z-Order = 6
+Source Window State = "1,95,150,150,0,3,3,0,0,91,0,0,0,0,0,19,38,0,46,8,251,605,1,0,"
 
 [File 0017]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/AppInitSplash.uir"
@@ -186,7 +187,6 @@ Window Top = 33
 Window Left = 10
 Window Height = 275
 Window Width = 427
-Window Z-Order = 9
 
 [File 0018]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/AT9220Panel.uir"
@@ -201,13 +201,12 @@ Window Width = 517
 [File 0019]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/AutoTestPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3607079074
+Disk Date = 3607297405
 In Projects = "1,"
 Window Top = 32
 Window Left = 10
 Window Height = 323
 Window Width = 605
-Window Z-Order = 1
 
 [File 0020]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/eut/BasicInfoConfigPanel.uir"
@@ -335,7 +334,6 @@ Disk Date = 3607296491
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 10
 Source Window State = "1,24,24,24,10,21,21,0,3,91,0,0,0,0,0,25,13,0,24,10,323,605,1,0,"
 
 [File 0033]
@@ -345,7 +343,6 @@ Disk Date = 3607297365
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 2
 Source Window State = "1,1175,1176,1176,0,72,72,0,0,76,0,0,0,0,0,21,1227,0,1256,67,275,517,1,52,"
 
 [File 0034]
@@ -525,7 +522,7 @@ Disk Date = 3603946524
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,38,38,38,17,32,32,0,0,0,0,4,0,4,0,0,0,0,47,34,239,517,1,0,"
+Source Window State = "1,38,38,38,17,32,32,0,3,76,0,4,0,4,0,18,17,0,38,17,239,517,1,0,"
 
 [File 0054]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/http/httpPost.c"
@@ -579,7 +576,7 @@ Disk Date = 3607297115
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Window Z-Order = 3
+Window Z-Order = 4
 Source Window State = "1,352,352,352,62,63,62,0,0,91,0,243,0,0,0,25,212,0,233,8,323,605,1,39,"
 
 [File 0060]
@@ -724,7 +721,7 @@ Disk Date = 3605588791
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,68,68,68,4,18,18,0,0,0,0,104,0,0,0,0,55,0,65,42,275,517,1,0,"
+Source Window State = "1,199,199,199,4,16,16,0,0,76,0,104,0,0,0,21,184,0,195,65,275,517,1,0,"
 
 [File 0076]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/reportManager/reportManagerPanel.c"
@@ -733,7 +730,7 @@ Disk Date = 3607080422
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Source Window State = "1,223,223,223,18,36,36,0,0,0,0,0,0,0,0,0,298,0,319,62,239,517,1,0,"
+Source Window State = "1,167,167,167,19,30,30,0,3,76,0,0,0,0,0,18,146,0,167,19,239,517,1,0,"
 
 [File 0077]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/resistentTest.c"
@@ -936,7 +933,7 @@ Source Window State = "1,28,28,28,131,142,142,0,0,0,0,13,0,13,0,0,8,0,28,146,299
 [File 0099]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/AutoTestPanel.h"
 File Type = "Include"
-Disk Date = 3607079074
+Disk Date = 3607297405
 In Projects = "1,"
 Window Top = 32
 Window Left = 10
@@ -1473,7 +1470,7 @@ Source Window State = "1,29,29,29,17,28,28,0,0,0,0,0,0,0,0,0,11,0,22,49,323,605,
 [File 0160]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/SutPanel.h"
 File Type = "Include"
-Disk Date = 3607296119
+Disk Date = 3607298308
 In Projects = "1,"
 Window Top = 212
 Window Left = 106
@@ -1753,55 +1750,50 @@ Disk Date = 3600953720
 In Projects = "1,"
 
 [File 0202]
-Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/AppInitSplash.h"
-File Type = "Include"
-Disk Date = 3607296252
-In Projects = ""
-Window Top = 33
-Window Left = 10
-Window Z-Order = 12
-Source Window State = "1,22,22,22,9,25,25,0,3,80,0,0,0,0,0,25,0,0,22,9,323,541,1,0,"
-
-[File 0203]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/application.h"
 File Type = "Include"
 Disk Date = 3607257974
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 11
 Source Window State = "1,19,19,19,4,19,19,0,3,80,0,0,0,0,0,25,0,0,19,4,323,541,1,0,"
 
-[File 0204]
+[File 0203]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/application.c"
 File Type = "CSource"
 Disk Date = 3607258076
 In Projects = "1,"
 Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
-[File 0205]
+[File 0204]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.h"
 File Type = "Include"
-Disk Date = 3607082031
+Disk Date = 3607298059
 In Projects = ""
 Window Top = 157
 Window Left = 74
-Window Z-Order = 7
+Window Z-Order = 8
 Source Window State = "1,16,16,16,9,28,28,0,0,80,0,0,0,0,0,25,0,0,13,41,323,541,1,0,"
 
+[File 0205]
+Path = "/c/Program Files (x86)/National Instruments/CVI2017/include/userint.h"
+File Type = "Include"
+Disk Date = 3573565200
+In Projects = ""
+Window Top = 33
+Window Left = 10
+Window Z-Order = 5
+Source Window State = "1,1660,1660,1660,8,24,24,0,0,80,0,0,0,0,0,25,1633,0,1648,44,323,541,1,0,"
+
 [Tab Order]
-Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/AppInitSplash.uir"
-Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/appInit.c"
-Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/AppInitSplash.h"
-Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/application.h"
-Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/excelHelper/excelHelper.c"
-Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/login.c"
-Tab 0007 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.uir"
-Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.h"
-Tab 0009 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/sutConfig.c"
-Tab 0010 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.c"
-Tab 0011 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/AutoTestPanel.uir"
-Tab 0012 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/autoTest.c"
+Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.uir"
+Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/login/login.c"
+Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/common/WarnPanel.h"
+Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/MainPanel.c"
+Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/sutConfig.c"
+Tab 0006 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/SutPanel.uir"
+Tab 0007 = "/c/Program Files (x86)/National Instruments/CVI2017/include/userint.h"
+Tab 0008 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/excelHelper/excelHelper.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

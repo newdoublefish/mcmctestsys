@@ -1,4 +1,5 @@
 #include "windows.h"
+#include "pwctrl.h"
 #include "regexpr.h"
 #include "toolbox.h"
 #include "WarnPanel.h"
@@ -181,6 +182,47 @@ int CVICALLBACK onLoginCtrlCallBack (int panel, int control, int event,
 	
 	switch (event)
 	{
+		case EVENT_LEFT_CLICK:
+			 BOOL *ret = (BOOL *)callbackData;
+			 
+			 //char userName[30]={0};
+			 //char password[30]={0};
+			 //tLoginConfig config={0};
+			 //tLoginConfig config=getLoginConfig();
+			 gConfig=getLoginConfig();  
+			 memset(gConfig.userName,0,50);
+			 memset(gConfig.password,0,50);
+			 GetCtrlVal(panel,LOGINPANEL_USERNAME,gConfig.userName);
+			 GetCtrlVal(panel,LOGINPANEL_PASSWORD,gConfig.password);
+			 GetCtrlVal(panel,LOGINPANEL_REMEBER,&gConfig.remember);
+			 sprintf(gConfig.fullName,"%s",gConfig.userName);
+			 *ret = Login(gConfig);
+			 if(*ret == TRUE){
+				 
+				if(gConfig.remember > 0)
+				{
+					memset(gConfig.password,0,50); 
+					saveLoginConfig(gConfig);	
+				}else{
+			        memset(gConfig.userName,0,50);
+			        memset(gConfig.password,0,50);
+					saveLoginConfig(gConfig);
+				}
+			 	QuitUserInterface(1);
+			 }
+			 else
+				SetCtrlVal(panel,LOGINPANEL_ERRORMSG,"用户名或者密码错误");		 
+		     break;
+	}
+	return 0;
+}
+
+int CVICALLBACK onLoginEnterCallBack (int panel, int control, int event,
+		void *callbackData, int eventData1, int eventData2)
+{
+	
+	switch (event)
+	{
 		case EVENT_COMMIT:
 			 BOOL *ret = (BOOL *)callbackData;
 			 
@@ -219,16 +261,23 @@ int CVICALLBACK onLoginCtrlCallBack (int panel, int control, int event,
 BOOL DisplayLoginPanel(void)
 {
 	BOOL ret=FALSE;
+	int password_ctrl=0;
 	int panel = LoadPanel(0,"WarnPanel.uir",LOGINPANEL);
 	tApplication ta = getApplication();
 	SetPanelAttribute(panel,ATTR_TITLE,ta.basic.company);
-	InstallCtrlCallback(panel,LOGINPANEL_COMMANDBUTTON,onLoginCtrlCallBack,&ret); 
-	InstallCtrlCallback(panel,LOGINPANEL_PASSWORD,onLoginCtrlCallBack,&ret);
+	//InstallCtrlCallback(panel,LOGINPANEL_COMMANDBUTTON,onLoginCtrlCallBack,&ret);//这里很奇怪要把这里删除，否则到系统选择那里直接就没显示了
+	
+	InstallCtrlCallback(panel,LOGINPANEL_PASSWORD,onLoginEnterCallBack,&ret);
 	InstallPanelCallback(panel,LoginPanelCallback,NULL); 
 	tLoginConfig config=getLoginConfig();
 	SetCtrlVal(panel,LOGINPANEL_USERNAME,config.userName);
 	SetCtrlVal(panel,LOGINPANEL_PASSWORD,config.password);
 	SetCtrlVal(panel,LOGINPANEL_REMEBER,config.remember);
+	
+	password_ctrl = PasswordCtrl_ConvertFromString (panel,
+				LOGINPANEL_PASSWORD);
+	PasswordCtrl_SetAttribute (panel, password_ctrl,
+				ATTR_PASSWORD_MASK_CHARACTER, '*');	
 	DisplayPanel(panel);
 	RunUserInterface();
 	DiscardPanel(panel);
