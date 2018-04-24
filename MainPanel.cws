@@ -13,10 +13,10 @@ Number of Projects = 1
 Active Project = 1
 Project 0001 = "MainPanel.prj"
 Drag Bar Left = 277
-Window Top = 31
-Window Left = 2442
-Window Bottom = 457
-Window Right = 3290
+Window Top = 60
+Window Left = 420
+Window Bottom = 486
+Window Right = 1268
 Maximized = True
 Maximized Children = True
 Max32 Number Of Errors = 20
@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 5
+Number of Opened Files = 2
 Window Confinement Region Enabled = True
 MainColumnWidth = 260
 FileDateColumnWidth = 70
@@ -40,7 +40,7 @@ FileSizeColumnWidth = 70
 Version = 1700
 Don't Update DistKit = False
 Platform Code = 4
-Build Configuration = "Debug"
+Build Configuration = "Release"
 Warn User If Debugging Release = 0
 Batch Build Release = False
 Batch Build Debug = False
@@ -171,8 +171,7 @@ Disk Date = 3607309530
 In Projects = "1,"
 Window Top = 92
 Window Left = 42
-Window Z-Order = 2
-Source Window State = "1,39,39,39,16,31,31,0,0,91,0,0,0,0,0,19,68,0,93,74,251,605,1,0,"
+Source Window State = "1,114,142,142,0,19,19,0,0,91,0,0,0,0,0,19,111,0,147,48,251,605,1,0,"
 
 [File 0017]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/Init/AppInitSplash.uir"
@@ -312,7 +311,6 @@ Window Top = 122
 Window Left = 58
 Window Height = 323
 Window Width = 605
-Window Z-Order = 1
 
 [File 0031]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/frameworks/TpsDefaultPanel.uir"
@@ -519,8 +517,7 @@ Disk Date = 3603946524
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 5
-Source Window State = "1,38,38,38,17,32,32,0,0,76,0,4,0,4,0,18,0,0,45,101,239,517,1,0,"
+Source Window State = "1,30,30,30,31,37,37,0,3,76,0,4,0,4,0,18,0,0,30,31,239,517,1,0,"
 
 [File 0054]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/http/httpPost.c"
@@ -574,7 +571,7 @@ Disk Date = 3607297115
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Source Window State = "1,352,352,352,62,63,62,0,0,91,0,243,0,0,0,25,212,0,233,8,323,605,1,39,"
+Source Window State = "1,352,352,352,62,63,62,0,0,157,0,243,0,0,0,29,212,0,233,8,323,605,1,39,"
 
 [File 0060]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/autotest/manualTest.c"
@@ -727,8 +724,8 @@ Disk Date = 3607080422
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 3
-Source Window State = "1,167,167,167,19,30,30,0,3,76,0,0,0,0,0,18,146,0,167,19,239,517,1,0,"
+Window Z-Order = 2
+Source Window State = "1,167,167,167,19,30,30,0,0,76,0,0,0,0,0,18,90,0,160,97,239,517,1,0,"
 
 [File 0077]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/resistentTest.c"
@@ -737,7 +734,8 @@ Disk Date = 3606883689
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,344,344,344,5,24,24,0,0,0,0,0,0,0,0,0,340,0,355,66,215,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,436,436,436,49,56,56,0,3,157,0,0,0,0,0,27,423,0,436,49,215,517,1,0,"
 
 [File 0078]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/resultSave/resultInfo.c"
@@ -800,8 +798,7 @@ Disk Date = 3599221820
 In Projects = "1,"
 Window Top = 92
 Window Left = 42
-Window Z-Order = 4
-Source Window State = "1,87,87,87,12,22,22,2,0,91,0,16,0,0,0,19,28,0,58,13,251,605,1,22,"
+Source Window State = "1,87,87,87,12,22,22,2,0,91,0,16,0,0,0,19,94,0,42,119,251,605,1,22,"
 
 [File 0085]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/setting/settingEntity.c"
@@ -1765,11 +1762,8 @@ In Projects = "1,"
 Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
 [Tab Order]
-Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/reportManager/reportManagerPanel.c"
-Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/ftpHelper/ftpHelper.c"
-Tab 0003 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/setting/settingConfig.c"
-Tab 0004 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/setting/SettingPanel.uir"
-Tab 0005 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/sutConfig/sutConfig.c"
+Tab 0001 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/boardTest/resistenTest/resistentTest.c"
+Tab 0002 = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/reportManager/reportManagerPanel.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

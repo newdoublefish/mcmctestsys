@@ -1,7 +1,7 @@
 <postset>
 <post name="桩数据" url="http://120.78.222.124:80/query/stubinfo/" request="stubinfo"  upload='True'>
 	<param name="stub" type="result">105</param>
-	<param name="sim" type="result">98</param>
+	<param name="sim" type="result">183</param>
 	<param name="board" type="result">101</param>		
 	<param name="ammeter1" type="result">24</param>
 	<param name="ammeter2" type="result">25</param>	
