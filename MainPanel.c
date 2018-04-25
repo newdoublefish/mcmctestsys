@@ -253,6 +253,7 @@ BOOL addTestProjectToDb(tTestProject *projectPtr)
 	//sprintf(record.m_createtime,"%s","");
 	//sprintf(record.m_reportpath,"%s",reportFilePath);
 	sprintf(record.m_projectpath,"%s",projectPtr->projectPath);
+	sprintf(record.m_lasttest,"%d",0);
 	record.m_result=0;
 	record.m_upload=0;
 

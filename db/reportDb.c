@@ -196,6 +196,39 @@ int updateRecord(tAutoTestRecord recordToUpdate)
 	return 1;	
 }
 
+int updateTestRate(tAutoTestRecord recordToUpdate)
+{
+	char SQLCommand[250];
+	int  dbstatus[8];
+	int  fileHandle;
+	SUT sut=GetSeletedSut();
+	//int id = 0;
+	tAutoTestRecord record={0};
+	//getInsertdRecordId(&id);
+	
+	Fmt(SQLCommand,"SELECT * FROM %s where m_id=%d",sut.dbName,recordToUpdate.m_id);
+	
+	fileHandle= DBActivateSQL(dBHandle,SQLCommand);//与数据库中的表建立连接
+	record.m_id =-1; //等于-1不bind
+	//bindRecord(&record,fileHandle,dbstatus);	
+	DBBindColChar(fileHandle,3,50,record.m_createtime,&dbstatus[2],"");
+	DBBindColChar(fileHandle,4,50,record.m_lasttest,&dbstatus[3],"");	
+	DBBindColInt(fileHandle,6,&record.m_result,&dbstatus[5]);	
+	
+	while(DBFetchNext(fileHandle)==0)
+	{
+		record=recordToUpdate;
+		if(DBPutRecord (fileHandle)!=DB_SUCCESS)
+		{
+
+			DBDeactivateSQL (fileHandle); 
+			return -1; 
+		}
+	}
+	DBDeactivateSQL (fileHandle); 	
+	return 1;	
+}
+
 
 int updateUpload(int id,short flag)
 {

@@ -3,5 +3,5 @@
 	<StrategyName>策略1</StrategyName>
 	<StrategyTestType>Serial</StrategyTestType>
 	<Collects>
-		<Collect><CollectName>空调</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><TipsFlag>1</TipsFlag><TipsCloseTime>2</TipsCloseTime><Groups><GroupId>45</GroupId><GroupId>46</GroupId><GroupId>47</GroupId><GroupId>43</GroupId><GroupId>44</GroupId></Groups></Collect></Collects>
+		<Collect><CollectName>空调</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><TipsFlag>1</TipsFlag><TipsCloseTime>2</TipsCloseTime><Groups><GroupId>45</GroupId><GroupId>46</GroupId><GroupId>47</GroupId><GroupId>43</GroupId><GroupId>44</GroupId><GroupId>10</GroupId><GroupId>12</GroupId><GroupId>14</GroupId><GroupId>17</GroupId></Groups></Collect></Collects>
 </Strategy>

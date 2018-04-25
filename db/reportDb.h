@@ -40,6 +40,7 @@ int updateUpload(int id,short flag);
 void printRecord(tAutoTestRecord record);
 int updateRecord(tAutoTestRecord record);
 int getInsertdRecordId(int *id);
+int updateTestRate(tAutoTestRecord record);
 #ifdef __cplusplus
     }
 #endif

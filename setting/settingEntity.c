@@ -162,7 +162,8 @@ SETTING getSetting(void)
 							      char temp[MAX_PATHNAME_LEN]={0};     
 							      GetProjectDir(temp);
 								  memset(gSetting.saveDir,0,MAX_DIRNAME_LEN);
-                                  sprintf(gSetting.saveDir,"%s\\%s",temp,"Report");   						   
+                                  sprintf(gSetting.saveDir,"%s\\%s",temp,"Report");  
+								  //TODO:MakeDir(gSetting.saveDir);//防止没有找到该目录
 							   }	   
 	   
 							} 

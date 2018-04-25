@@ -1436,6 +1436,19 @@ int CVICALLBACK QUITAUTOTEST (int panel, int control, int event,
 				return 0;
 			}
 			saveResultInfo(gEngine,gTestProject->projectName);
+			//TODO:update db
+
+     		for(int i=0;i<gEngine->totalTestObject;i++)
+	 		{
+				TESTobject obj = gEngine->objectArray[i];
+				tAutoTestRecord record = {0};
+				record.m_id = gTestProject->dbId;
+				sprintf(record.m_createtime,"%s",startTime);
+				sprintf(record.m_lasttest,"%d",getObjectTestProgress(obj));
+				record.m_result=getAccuracy(&obj);
+				updateTestRate(record);				
+	 		}
+			
 			releaseTestEngine(gEngine);
 			DiscardPanel(panel); 
 			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1);  
