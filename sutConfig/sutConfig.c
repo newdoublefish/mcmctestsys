@@ -28,8 +28,9 @@
 #include "protocolHelper.h"
 #include "testInit.h"
 #include "debug.h"
+#include "application.h"
 
-int sutConfigPanelHandle;   
+//int sutConfigPanelHandle;   
 extern int g_mainHWND; //先不发消息
  
 
@@ -64,13 +65,27 @@ int CVICALLBACK OnListPartClick (int panelHandle, int controlID, int event, void
 	return 0;			
 }
 
+int CVICALLBACK SutPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			unsigned int wParam1=9;
+            unsigned int lParam1=0;
+			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1); 
+			QuitUserInterface(1);
+		     break;
+	}
+	return 0;
+}
+
 
 void DisplaySutConfigPanel()
 {
 	SUT temp; 
-    sutConfigPanelHandle = LoadPanel (0, "SutPanel.uir", PANEL_PART); 
+    int panelHandle = LoadPanel (0, "SutPanel.uir", PANEL_PART); 
     //清楚Listbox里面预先定义的值，都从配置文件里面获取
-	ClearListCtrl(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT);
+	ClearListCtrl(panelHandle,PANEL_PART_LISTBOX_PARTS_SELECT);
 	
 	//从配置文件里面获取被测系统
 	//SystemListInit();
@@ -83,15 +98,19 @@ void DisplaySutConfigPanel()
        //SystemListGetItem(&temp,index);
 	   ListGetItem(sutConfig.sutList,&temp,index);
 	   if(strlen(temp.nickName)>0)
-	   		InsertListItem(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,index-1,temp.nickName,0);  //用别名好理解一点
+	   		InsertListItem(panelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,index-1,temp.nickName,0);  //用别名好理解一点
 		else
-			InsertListItem(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,index-1,temp.systemName,0); //如果没有别名显示系统名称	
+			InsertListItem(panelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,index-1,temp.systemName,0); //如果没有别名显示系统名称	
 	}
-	InstallCtrlCallback(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,OnListPartClick,NULL);
+	InstallCtrlCallback(panelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,OnListPartClick,NULL);
+	InstallPanelCallback(panelHandle,SutPanelCallback,NULL);
+	tApplication t = getApplication();
+	SetCtrlVal(panelHandle,PANEL_PART_VERSION,t.basic.version);
+	SetPanelAttribute(panelHandle,ATTR_TITLE,t.basic.company);
     //显示面板
-    DisplayPanel(sutConfigPanelHandle);
+    DisplayPanel(panelHandle);
 	RunUserInterface();
-	DiscardPanel (sutConfigPanelHandle); 
+	DiscardPanel (panelHandle); 
 }
 
 
@@ -109,7 +128,7 @@ int CVICALLBACK SYSTEM_SELECTE_NEXT (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-		  GetCtrlIndex(sutConfigPanelHandle,PANEL_PART_LISTBOX_PARTS_SELECT,&index);   
+		  GetCtrlIndex(panel,PANEL_PART_LISTBOX_PARTS_SELECT,&index);   
 		  wParam1=1;
 		  ListGetItem(sutConfig.sutList,&selectSut,index+1);
 		  //printf("%s\n",selectSut.dbName);
@@ -169,10 +188,8 @@ int CVICALLBACK oNsutQuit (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			unsigned int wParam1=9;
-            unsigned int lParam1=0;
-			PostMessage ((HWND)g_mainHWND, 9678, wParam1, lParam1); 
-			QuitUserInterface(1);
+
+			
 			break;
 	}
 	return 0;

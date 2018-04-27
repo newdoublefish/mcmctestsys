@@ -164,6 +164,7 @@ SETTING getSetting(void)
 								  memset(gSetting.saveDir,0,MAX_DIRNAME_LEN);
                                   sprintf(gSetting.saveDir,"%s\\%s",temp,"Report");  
 								  //TODO:MakeDir(gSetting.saveDir);//防止没有找到该目录
+								  MakeDir(gSetting.saveDir);
 							   }	   
 	   
 							} 

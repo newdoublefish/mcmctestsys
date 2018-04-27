@@ -15,10 +15,10 @@
 
 #define  PANEL_PART                       1
 #define  PANEL_PART_LISTBOX_PARTS_SELECT  2       /* control type: listBox, callback function: (none) */
-#define  PANEL_PART_COMMANDBUTTON_QUIT    3       /* control type: command, callback function: oNsutQuit */
-#define  PANEL_PART_TEXTMSG               4       /* control type: textMsg, callback function: (none) */
-#define  PANEL_PART_TEXTMSG_2             5       /* control type: textMsg, callback function: (none) */
-#define  PANEL_PART_TEXTMSG_3             6       /* control type: textMsg, callback function: (none) */
+#define  PANEL_PART_TEXTMSG               3       /* control type: textMsg, callback function: (none) */
+#define  PANEL_PART_TEXTMSG_2             4       /* control type: textMsg, callback function: (none) */
+#define  PANEL_PART_TEXTMSG_3             5       /* control type: textMsg, callback function: (none) */
+#define  PANEL_PART_VERSION               6       /* control type: textMsg, callback function: (none) */
 
 #define  PROGRESS                         2
 #define  PROGRESS_RINGSLIDE               2       /* control type: slide, callback function: (none) */
@@ -35,9 +35,7 @@
           /* (no menu bars in the resource file) */
 
 
-     /* Callback Prototypes: */
-
-int  CVICALLBACK oNsutQuit(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
+     /* (no callbacks specified in the resource file) */ 
 
 
 #ifdef __cplusplus
