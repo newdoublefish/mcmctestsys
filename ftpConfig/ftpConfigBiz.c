@@ -48,6 +48,7 @@ HRESULT saveFtpConfig(tFtpConfig s)
 	 Ini_PutRawString (g_myInifile,"FtpConfig","server",s.server); 
 	 Ini_PutRawString (g_myInifile,"FtpConfig","username",s.userName); 
 	 Ini_PutRawString (g_myInifile,"FtpConfig","password",s.password); 
+	 Ini_PutRawString (g_myInifile,"FtpConfig","remotedir",s.remoteDir); 
 
 	 Ini_WriteToFile (g_myInifile, inifileName);  
                                 
@@ -135,6 +136,13 @@ tFtpConfig getFtpConfig()
                                  sectionName, itemName, &stringValue)>0)
 						{
 							sprintf(config.server,"%s",stringValue);							
+						}						 
+					 }else if(strcmp(itemName,"remotedir")==0){
+					 
+                        if (Ini_GetPointerToRawString (g_myInifile,
+                                 sectionName, itemName, &stringValue)>0)
+						{
+							sprintf(config.remoteDir,"%s",stringValue);
 						}						 
 					 } 
 				 }	 

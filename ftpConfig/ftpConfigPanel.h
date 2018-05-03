@@ -14,11 +14,12 @@
      /* Panels and Controls: */
 
 #define  PANEL                            1
-#define  PANEL_SERVER                     2       /* control type: string, callback function: (none) */
-#define  PANEL_PASSWORD                   3       /* control type: string, callback function: (none) */
-#define  PANEL_USERNAME                   4       /* control type: string, callback function: (none) */
-#define  PANEL_CHECKBOX_MODE              5       /* control type: radioButton, callback function: (none) */
-#define  PANEL_BUTTON                     6       /* control type: command, callback function: onFtpConfigSave */
+#define  PANEL_REMOTEDIR                  2       /* control type: string, callback function: (none) */
+#define  PANEL_SERVER                     3       /* control type: string, callback function: (none) */
+#define  PANEL_PASSWORD                   4       /* control type: string, callback function: (none) */
+#define  PANEL_USERNAME                   5       /* control type: string, callback function: (none) */
+#define  PANEL_CHECKBOX_MODE              6       /* control type: radioButton, callback function: (none) */
+#define  PANEL_BUTTON                     7       /* control type: command, callback function: onFtpConfigSave */
 
 
      /* Control Arrays: */

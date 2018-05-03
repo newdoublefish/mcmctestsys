@@ -35,15 +35,22 @@ int ftpSendFile(char *pathName,char *remotePath)
 		return -1;
 	}	
 	
+	InetFTPMakeDir(ftp_handle,config.remoteDir);
+	
+	char temp[MAX_FILENAME_LEN]={0};
+	
+	sprintf(temp,"%s/%s",config.remoteDir,fileName);
+	
+	
 	InetFTPSetPassiveMode (ftp_handle, config.mode);
-	if ((error = InetFTPSendFile (ftp_handle, pathName, fileName,
+	if ((error = InetFTPSendFile (ftp_handle, pathName, temp,
 				INET_FTP_FILE_TYPE_BINARY)) < 0)
 	{
 				Error (error);
 				return -1;
 	}
 	if(NULL!=remotePath)
-		sprintf(remotePath,"ftp://%s/%s",config.server,fileName);
+		sprintf(remotePath,"ftp://%s/%s",config.server,temp);
 	
 	if (ftp_handle >= 0)
 		if ((error = InetFTPClose (ftp_handle)) < 0)

@@ -23,6 +23,7 @@ typedef struct
 	char server[50];
 	char userName[50];
 	char password[50];
+	char remoteDir[250];
 	int mode;
 }tFtpConfig;
  

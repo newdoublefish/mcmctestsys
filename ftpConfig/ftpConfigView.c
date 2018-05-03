@@ -29,6 +29,7 @@ static void showFtpConfigs()
 	SetCtrlVal(panelHandle,PANEL_USERNAME,gFtpConfig.userName);
 	SetCtrlVal(panelHandle,PANEL_PASSWORD,gFtpConfig.password);
 	SetCtrlVal(panelHandle,PANEL_CHECKBOX_MODE,gFtpConfig.mode);
+	SetCtrlVal(panelHandle,PANEL_REMOTEDIR,gFtpConfig.remoteDir);
 }
 
 int DisplayFtpConfigView (int panel)
@@ -65,7 +66,10 @@ int CVICALLBACK onFtpConfigSave (int panel, int control, int event,
 			GetCtrlVal(panel,PANEL_USERNAME,gFtpConfig.userName);
 			
 			memset(gFtpConfig.password,strlen(gFtpConfig.password),0); 
-			GetCtrlVal(panel,PANEL_PASSWORD,gFtpConfig.password);		
+			GetCtrlVal(panel,PANEL_PASSWORD,gFtpConfig.password);
+			
+			memset(gFtpConfig.remoteDir,strlen(gFtpConfig.remoteDir),0); 
+			GetCtrlVal(panel,PANEL_REMOTEDIR,gFtpConfig.remoteDir);		
 			
 			GetCtrlVal(panel,PANEL_CHECKBOX_MODE,&gFtpConfig.mode);
 			
