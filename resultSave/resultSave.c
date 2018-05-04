@@ -488,7 +488,7 @@ static void getResultRecordTime(char *timeBuffer)
 
 }
 
-void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable)
+void writeResultToExcelSheet(ExcelObj_Range rangeHandler,TESTobject testObj)
 {
 	HRESULT error = 0;
 	ERRORINFO ErrorInfo; 
@@ -547,10 +547,10 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 				{
 					char writeStr[100]={0};
 					BOOL writeFlag =FALSE;
-					RegExpr_FindPatternInText("{username}|{value}|{result}|{time}[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
+					RegExpr_FindPatternInText("{passrate}|{username}|{value}|{result}|{time}[0-9]+",1,temp,-1,1,1,&matched,&position,&matchedLen);
 					if(matched==1)
 					{
-						parseExcelCell(writeStr,temp,hashTable);
+						parseExcelCell(writeStr,temp,testObj.resultHashTable);
 						writeFlag=TRUE;
 					}else{
 						RegExpr_FindPatternInText("result\{.*\}",1,temp,-1,1,1,&matched,&position,&matchedLen);
@@ -559,7 +559,7 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 							char tempBuffer[100]={0};
 							memcpy(tempBuffer,temp+position+7,matchedLen-8);
 							//printf("%s",tempBuffer);
-							if(TRUE==getResultSet(writeStr,tempBuffer,hashTable))
+							if(TRUE==getResultSet(writeStr,tempBuffer,testObj.resultHashTable))
 								writeFlag=TRUE; 
 						}/*else if(0==strcmp(temp,"time"))
 						{
@@ -575,6 +575,12 @@ void writeResultToExcelSheet(ExcelObj_Range rangeHandler,HashTableType hashTable
 		 					sprintf(writeStr,"%s",acount.fullName);
 							writeFlag=TRUE;
 	 					}
+						
+						if(strstr(temp,"passrate")!=NULL)
+						{
+							sprintf(writeStr,"%d%%",testObj.passRate);
+						    writeFlag=TRUE;
+						}
 						
 					
 					}
@@ -637,35 +643,13 @@ void generateReportFilePath(char *time,char *dirName,char *temp)
 	ValidateFile(temp);	
 }
 
-void saveTestResult(char *time,char *dirName,HashTableType hashTable,char *fileName)
-{
-    char temp[MAX_PATHNAME_LEN]={0};
-	SUT system=GetSeletedSut();
-	generateReportFilePath(time,dirName,temp);
-	saveStep=SAVE_STEP_TABLE_TITLE;
-	//LOG_EVENT_FORMAT(LOG_INFO,"save eut %s test result start!\n",dirName);
-	ExcelObj_Worksheet sheetHandle=GetWorkingSheet(system.reportFilePath,"Sheet1");//获得sheet句柄,打开模板路劲的文档
-	ExcelObj_Range rangeHandler=InitExcelRangeHandle(sheetHandle,SAVE_RANGE);
-	
-	writeResultToExcelSheet(rangeHandler,hashTable);
-	
-	//WriteResultToSheet(sheetHandle,hashTable);//操作句柄
-	
-    SaveWorkingSheet(temp);//保存更改内容 //保存在目标路径	
-	ClearObjHandler (&rangeHandler); //清除句柄  
-	ClearWorkingSheet (&sheetHandle);//清除句柄，/ 
-	//LOG_EVENT_FORMAT(LOG_INFO,"save %s test result finshed!\n",dirName);  
-	if(fileName!=NULL)
-		sprintf(fileName,"%s",temp);
-   
-}
 
-void saveResultToExcelFile(char *fileName,HashTableType hashTable)
+void saveResultToExcelFile(char *fileName,TESTobject testObj)
 {
 	SUT system=GetSeletedSut();
 	ExcelObj_Worksheet sheetHandle=GetWorkingSheet(system.reportFilePath,"Sheet1");//获得sheet句柄,打开模板路劲的文档
 	ExcelObj_Range rangeHandler=InitExcelRangeHandle(sheetHandle,SAVE_RANGE);
-	writeResultToExcelSheet(rangeHandler,hashTable);
+	writeResultToExcelSheet(rangeHandler,testObj);
     SaveWorkingSheet(fileName);//保存更改内容 //保存在目标路径	
 	ClearObjHandler (&rangeHandler); //清除句柄  
 	ClearWorkingSheet (&sheetHandle);//清除句柄，/ 

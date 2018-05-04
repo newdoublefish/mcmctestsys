@@ -529,10 +529,7 @@ TPS registerParamsSetTps(void)
 METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	METHODRET ret = TEST_RESULT_ALLPASS;
-	/*tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
-	if(servicePtr==NULL)
-		return 	TEST_RESULT_ALLPASS;
-	*/
+#if 1
 	tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
 	if(servicePtr==NULL)
 	{
@@ -540,32 +537,14 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		return 	TEST_RESULT_ERROR;
 	}
 	APPEND_INFO(msgPanel,"网络连接成功");
-/*	ListType paramsToFetch=ListCreate(sizeof(PARAMETER));
-
-	
+#endif
+	float average=0;
+	float total=0;
+	int validPoint = 0;
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
 		TestItem item;
-		ListGetItem(group.subItems,&item,i);
-		PARAMETER param={0};
-		if(FALSE==getParameter(item.itemName_,&param))
-		{
-			WarnShow1(0,"无该参数配置");
-		
-			goto DONE;
-		}else{
-		
-		}
-		ListInsertItem(paramsToFetch,&param,END_OF_LIST);
-	}*/
-	//TODO:读回参数
-	//showParamSetPanel(paramsToFetch);
-	//设置参数
-
-	for(int i=1;i<=ListNumItems(group.subItems);i++)
-	{
-		TestItem item;
-		RESULT itemResult;
+		RESULT itemResult={0};
 		ListGetItem(group.subItems,&item,i);  
 		itemResult.index=item.itemId;		
 		
@@ -578,20 +557,33 @@ METHODRET ParamTemperatureTest(TestGroup group,EUT eut,HashTableType hashTable,i
 			WarnShow1(0,"获取失败");
 			goto DONE;
 		}*/
-		
+#if 1		
 		if(FALSE==ParamGetDepend(eut,item.itemName_,itemResult.recvString))
 		{
 			APPEND_INFO_FORMAT(msgPanel,"%s:获取失败",msgPanel);		
 		}else{
-			APPEND_INFO_FORMAT(msgPanel,"%s:获取成功，值为%s",msgPanel,itemResult.recvString);			
+			APPEND_INFO_FORMAT(msgPanel,"%s:获取成功，值为%s",item.itemName_,itemResult.recvString);			
 		}
-
-		itemResult.pass=RESULT_PASS;
+#endif	
+		float tValue = atof(itemResult.recvString);		
+		if(tValue > -60.0 && tValue < 80.0)
+		{
+			validPoint++;
+			total +=tValue;
+			average = total/validPoint;
+			if(tValue - average <5 && average - tValue < 5)
+			{
+				itemResult.pass = RESULT_PASS;								
+			}
+			
+		}
 		saveResult(hashTable,&itemResult);
 	}	
 DONE:	
 	//ListDispose(paramsToFetch);
+#if 1	
 	onStubDisConnected(servicePtr);	
+#endif	
 	return ret;
 }
 

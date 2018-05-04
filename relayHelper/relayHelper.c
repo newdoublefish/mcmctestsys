@@ -611,6 +611,7 @@ BOOL OperatDoSet(RSCONFIG config,unsigned int doMask,unsigned int mask)
 		{
 			break;
 		}
+		retryCnt--;
 	}
 	return ret;
 }

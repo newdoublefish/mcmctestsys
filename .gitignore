@@ -7,4 +7,7 @@ cvidistkit.ZJS/
 cvidistkit.*/
 *.cds
 *.zip
+*.cws
+*.mdb
+*.exe
 .ZJS/

@@ -21,6 +21,7 @@
 #define  LOAD_P_VERSION                   6       /* control type: textMsg, callback function: (none) */
 #define  LOAD_P_TEXTMSG                   7       /* control type: textMsg, callback function: (none) */
 #define  LOAD_P_COPYRIGHT                 8       /* control type: textMsg, callback function: (none) */
+#define  LOAD_P_PICTURE                   9       /* control type: picture, callback function: (none) */
 
 
      /* Control Arrays: */

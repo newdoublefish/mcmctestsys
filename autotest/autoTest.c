@@ -94,6 +94,7 @@ static void setPercentage(TESTobject *obj)
 	int perc = size*100/(t->totalTestGroupCount);
 	char percStr[30]={0};
 	Fmt(percStr,"%d%%",perc);
+	obj->completeRate = perc;
 	SetCtrlVal(obj->panelHandle,P_ITEMSHOW_PERCSTR,percStr);
 }
 
@@ -140,6 +141,7 @@ static void setAccuracy(TESTobject *obj)
 	int perc = passCnt*100/(t->totalTestGroupCount); 
 	char percStr[30]={0};
 	Fmt(percStr,"%d%%",perc);
+	obj->passRate = perc;
 	SetCtrlVal(obj->panelHandle,P_ITEMSHOW_ACCURACY,percStr);	
 }
 
@@ -231,7 +233,7 @@ void saveResultToFile(TESTobject testObj)
 	}else{
 		CreateReportFilePath(NULL,filePath,testObj); 
 	}
-	saveResultToExcelFile(filePath,testObj.resultHashTable);
+	saveResultToExcelFile(filePath,testObj);
 	if(0==FileExists(filePath,0))
 	{
 		WarnShow1(0,"ÎÄ¼þ±£´æÊ§°Ü");

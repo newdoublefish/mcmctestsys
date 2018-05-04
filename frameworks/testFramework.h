@@ -74,6 +74,8 @@ typedef struct
 	BOOL errorFlag;			              //如果串口或者网络错误标志，如果错误就不会继续往下测试了
 	int totalFinishedTestGroupCount; //已经完成的测试组数量
 	char errorInfo[128];
+	int completeRate;//完成率
+	int passRate;//合格率
 }TESTobject;	
 
 typedef struct{
