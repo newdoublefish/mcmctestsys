@@ -20,7 +20,17 @@
     <DBName>megmeet</DBName>	
     <PostPath>Integrate_120KW_megmeet_new\post.xml</PostPath>	    
     <ReportPath>Integrate_120KW_megmeet_new\IntegrateReport.xlsx</ReportPath>
-  </Project>   
+  </Project>
+  <Project>
+    <ProjectName>120KW_integration</ProjectName>
+    <NickName>120KW整机测试-华为</NickName>
+    <ConfigPath>Integrate_120KW_huawei\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>Integrate_120KW_huawei\Strategy.xml</StrategyPath>	
+    <DevicePath>Integrate_120KW_huawei\Device.xml</DevicePath>	
+    <DBName>huawei</DBName>	
+    <PostPath>Integrate_120KW_huawei\post.xml</PostPath>	    
+    <ReportPath>Integrate_120KW_huawei\IntegrateReport.xlsx</ReportPath>
+  </Project>      
   <Project>
     <ProjectName>120KW_integration</ProjectName>
     <NickName>120KW整机测试-麦格米特</NickName>

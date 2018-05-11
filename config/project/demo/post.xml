@@ -9,7 +9,7 @@
 	<param name="vendor" type="default">万城万充</param>
 	<param name="location" type="default">广州</param>						
 </post>
-<post name="控制盒数据" url="http://127.0.0.1:8000/query/boardinfo/" request="boardinfo" upload="True">
+<post name="控制盒数据" url="http://127.0.0.1:8000/query/boardinfo/" request="boardinfo" upload="False">
 	<param name="board" type="default">test</param>
 	<param name="dcd" type="default">1288</param>
 	<param name="dcm" type="default">129</param>		
@@ -21,7 +21,7 @@
 	<param name="led" type="default">134</param>
 	<param name="pub_date" type="pubdate">201504040404</param>										
 </post>
-<post name="桩数据" url="http://127.0.0.1:8000/query/stubinfo/" request="stubinfo"  upload='True'>
+<post name="桩数据" url="http://127.0.0.1:8000/query/stubinfo/" request="stubinfo"  upload='False'>
 	<param name="stub" type="default">test</param>
 	<param name="sim" type="default">98</param>
 	<param name="board" type="default">101</param>		
@@ -33,7 +33,7 @@
 	<param name="power" type="default">1</param>	
 	<param name="pub_date" type="pubdate">201504040404</param>									
 </post>
-<post name="上传报告" url="http://127.0.0.1:8000/query/report/" request="report" upload="True">
+<post name="上传报告" url="http://127.0.0.1:8000/query/report/" request="report" upload="False">
 	<param name="sn" type="default">test</param>
 	<param name="type" type="default">整机</param>
 	<param name="result" type="passpercent">100</param>		
@@ -43,5 +43,9 @@
 	<param name="approved" type="default">false</param>
 	<param name="pub_date" type="pubdate">201404040404</param>									
 </post>
-
 </postset>
+<ftpset>
+<ftp name = "上传报告" url="120.79.63.59:10002" username="mcmc" password="mcmc1918" upload = "True">
+	<param name="remoteDir" type="default">report</param>
+</ftp>
+</ftpset>
