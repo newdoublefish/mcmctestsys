@@ -7,4 +7,6 @@ cvidistkit.ZJS/
 cvidistkit.*/
 *.cds
 *.zip
+MainPanel.exe
+*.mdb
 .ZJS/
