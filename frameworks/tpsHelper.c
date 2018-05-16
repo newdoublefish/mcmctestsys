@@ -64,6 +64,7 @@ extern TPS registerResistanceJinkoTestTPS(void);
 extern TPS registerOptoCouplerTestTPS(void);
 extern TPS registerConditionTestTPS(void);
 extern TPS registerCCIDTestTps(void);
+extern TPS registerMeterTPS(void); //电表模拟测试
 
 
 
@@ -113,6 +114,9 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	
 	registerCodeInputTestTPS,//条形码录入
 	registerConditionTestTPS,//热风机测试
+	
+	
+	registerMeterTPS,
 };
 
 

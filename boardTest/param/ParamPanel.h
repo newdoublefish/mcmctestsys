@@ -24,11 +24,16 @@
 #define  GUNPANEL_COMMANDBUTTON           3       /* control type: command, callback function: (none) */
 #define  GUNPANEL_RING                    4       /* control type: ring, callback function: (none) */
 
-#define  PANEL                            3
+#define  METER                            3
+#define  METER_CURRENT                    2       /* control type: scale, callback function: (none) */
+#define  METER_VOLTAGE                    3       /* control type: scale, callback function: (none) */
+#define  METER_MSG                        4       /* control type: textBox, callback function: (none) */
+
+#define  PANEL                            4
 #define  PANEL_TABLE                      2       /* control type: table, callback function: (none) */
 #define  PANEL_COMMANDBUTTON              3       /* control type: command, callback function: (none) */
 
-#define  SCANPANEL                        4
+#define  SCANPANEL                        5
 #define  SCANPANEL_SCAN4                  2       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN3                  3       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN2                  4       /* control type: string, callback function: (none) */
