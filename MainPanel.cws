@@ -13,10 +13,10 @@ Number of Projects = 1
 Active Project = 1
 Project 0001 = "MainPanel.prj"
 Drag Bar Left = 228
-Window Top = 160
-Window Left = 2278
-Window Bottom = 586
-Window Right = 3126
+Window Top = 123
+Window Left = 185
+Window Bottom = 549
+Window Right = 1033
 Maximized = True
 Maximized Children = True
 Max32 Number Of Errors = 20
@@ -124,7 +124,7 @@ In Projects = "1,"
 Window Top = 95
 Window Left = 122
 Window Z-Order = 1
-Source Window State = "1,155,155,155,38,56,56,0,0,192,0,0,0,0,0,36,132,0,152,68,323,725,1,0,"
+Source Window State = "1,155,155,155,38,51,51,0,0,166,0,0,0,0,0,21,147,0,164,64,323,725,1,0,"
 
 [File 0012]
 Path = "/c/workspace/≤‚ ‘»Ìº˛/MCMC/platDemo/eut/EutHelper.c"
