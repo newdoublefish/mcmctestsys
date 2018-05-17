@@ -126,7 +126,7 @@ int LOG_REC_WITHOUTTIME(char *logMsg)
 int LOG_REC(char *logMsg)
 {
 	int ret=-1;
-	char message[1024]={0};
+	char message[30]={0};
 	SETTING s= GetSetting();
 	//printf("%d",s.saveLog);
 	if(s.saveLog==1)
@@ -145,8 +145,10 @@ int LOG_REC(char *logMsg)
 	    if(logFile>0)
 	    {
 		  getTime(message);
-		  sprintf(message,"%s%s",message,logMsg);
+		  /*sprintf(message,"%s%s",message,logMsg);*/
 		  WriteFile (logFile, message, strlen(message));
+		  WriteFile(logFile,logMsg,strlen(logMsg));  
+		  
 	    }
 	    CmtReleaseLock(logLock);
 	  }

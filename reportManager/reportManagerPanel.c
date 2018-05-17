@@ -114,7 +114,7 @@ BOOL postData(int ftpPanel,tAutoTestRecord record)
 	for(int i=1;i<=ListNumItems(list);i++)
 	{
 		tPostData data={0};
-		char buffer[512]={0}; 
+		char buffer[2048]={0}; 
 		ListGetItem(list,&data,i);
 		if(data.upload == 0 )
 			continue;

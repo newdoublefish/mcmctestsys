@@ -25,6 +25,7 @@ typedef struct{
 	char name[POST_DATA_BASE];
 	char type[POST_DATA_BASE];
 	char value[POST_DATA_VALUE];
+	ListType postParamList;
 }tPostParam;
 
 typedef struct{
