@@ -2794,14 +2794,17 @@ TPS registerPowerModuleTestTps(void)
 
 METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
-	APPEND_INFO(masgHandle,"进入测试"); 
+	//APPEND_INFO(masgHandle,"进入测试"); 
+	SetCtrlVal(masgHandle,POWER_MSG,"进入测试\n");
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	if(FALSE==ParamSetDependWithRetry(eut,"DO单一控制标志","0",3))
 	{
-		APPEND_INFO(masgHandle,"DO单一控制标志 失败");
+		//APPEND_INFO(masgHandle,"DO单一控制标志 失败");
+		SetCtrlVal(masgHandle,POWER_MSG,"DO单一控制标志 失败\n"); 
 		return TEST_RESULT_SOMEPASS;
 	}else{
-		APPEND_INFO(masgHandle,"DO单一控制标志 成功"); 
+		//APPEND_INFO(masgHandle,"DO单一控制标志 成功"); 
+		SetCtrlVal(masgHandle,POWER_MSG,"DO单一控制标志 成功\n");
 	}
 	
 	if(strcmp(group.groupName,"断开交流接触器")==0 || strcmp(group.groupName,"枪1泄放")==0 || strcmp(group.groupName,"枪2泄放")==0)
@@ -2814,7 +2817,9 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		tBIBO bibo={0};
 		if(FALSE==getBibo(group.groupName,&bibo))
 		{
-			APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",group.groupName);
+			//APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",group.groupName);
+			SetCtrlVal(masgHandle,POWER_MSG,group.groupName); 
+			SetCtrlVal(masgHandle,POWER_MSG,"没有该配置\n");
 			saveResult(hashTable,&result);
 			goto DONE;
 		}
@@ -2822,12 +2827,16 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		sprintf(setVal,"%d",bibo.maskBo);
 		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
 		{
-			APPEND_INFO_FORMAT(masgHandle,"%s,操作BO失败",group.groupName);
+			//APPEND_INFO_FORMAT(masgHandle,"%s,操作BO失败",group.groupName);
+			SetCtrlVal(masgHandle,POWER_MSG,group.groupName); 
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO失败\n");			
 			saveResult(hashTable,&result);
 			goto DONE; 
 		}else{
 			result.pass = TRUE; 
-			APPEND_INFO_FORMAT(masgHandle,"%s,操作BO成功：%x",group.groupName,bibo.maskBo);
+			//APPEND_INFO_FORMAT(masgHandle,"%s,操作BO成功：%x",group.groupName,bibo.maskBo);
+			SetCtrlVal(masgHandle,POWER_MSG,group.groupName); 
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO成功\n");			
 			
 		}
 		saveResult(hashTable,&result);
@@ -2851,28 +2860,34 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		ListGetItem(group.subItems,&item,i);
 		result.index=item.itemId;
 		unsigned int input = HexStrToUnsignedInt(item.inputValue_);
-		APPEND_INFO_FORMAT(masgHandle,"%s 测试",item.itemName_); 
+		//APPEND_INFO_FORMAT(masgHandle,"%s 测试",item.itemName_); 
 		tBIBO bibo={0};
 		if(FALSE==getBibo(item.itemName_,&bibo))
 		{
-			APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",item.itemName_);
+			//APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",item.itemName_);
+			SetCtrlVal(masgHandle,POWER_MSG,item.itemName_); 
+			SetCtrlVal(masgHandle,POWER_MSG,"无此配置\n");
 			continue;
 		}
 		char setVal[20]={0}; 
 		sprintf(setVal,"%d",bibo.maskBo);
 		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
 		{
-			APPEND_INFO(masgHandle,"操作BO失败");
+			//APPEND_INFO(masgHandle,"操作BO失败");
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO失败\n");
 			goto DONE; 
 		}else{
-			APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBo);
+			//APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBo);
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO成功"); 
+			//SetCtrlVal(masgHandle,POWER_MSG,bibo.maskBo); 
+			SetCtrlVal(masgHandle,POWER_MSG,"\n"); 
 		}
 		
 		char getVal[20]={0};
 		float getValF=0;
 		float standardF=0;
 		
-		int retryCnt = 10;
+		int retryCnt = 50;
 		while(retryCnt-- >=0 )
 		{
 			/*if(strcmp(item.itemName_,"120KW_电源模块1")==0 || strcmp(item.itemName_,"120KW_电源模块2")==0 || strcmp(item.itemName_,"120KW_电源模块3")==0 || strcmp(item.itemName_,"120KW_电源模块4")==0)
@@ -2894,13 +2909,14 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 			{
 				if(FALSE == ParamGetDependWithRetry(eut,"枪1电表电压",getVal,3))
 				{
-					APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					//APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					SetCtrlVal(masgHandle,POWER_MSG,"获取电表1电压失败"); 
 					goto DONE;		
 				}
 			}else  if(strcmp(item.inputValue_,"电表2")==0){
 				if(FALSE == ParamGetDependWithRetry(eut,"枪2电表电压",getVal,3))
 				{
-					APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					SetCtrlVal(masgHandle,POWER_MSG,"获取电表2电压失败");  
 					goto DONE;		
 				}
 			}
@@ -2914,6 +2930,7 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		
 			if(getValF>standardF-3 && getValF<standardF+3)
 			{
+				SetCtrlVal(masgHandle,POWER_MSG,"测试结果合格！！"); 
 				result.pass=RESULT_PASS;
 				//break;
 			}else{
@@ -2923,7 +2940,11 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 			memset(result.recvString,0,RESULT_RECEIVE_LEN);
 			sprintf(result.recvString,"%f",getValF);
 			
-			APPEND_INFO_FORMAT(masgHandle,"电压值为:%f,测试结果为:%d",getValF,result.pass);
+			//APPEND_INFO_FORMAT(masgHandle,"电压值为:%f,测试结果为:%d",getValF,result.pass);
+			SetCtrlVal (masgHandle, POWER_VOLTAGE, getValF);
+			SetCtrlVal(masgHandle,POWER_MSG,result.recvString);
+			SetCtrlVal(masgHandle,POWER_MSG,"\n");
+			
 			if(result.pass == RESULT_PASS)
 			{
 			
@@ -2942,11 +2963,11 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 				break;
 			}
 
-			
-			if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",5))
+			Delay(1);
+			/*if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",5))
 			{
 				break;
-			}
+			}*/
 			
 		}
 		
@@ -2955,18 +2976,31 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		sprintf(setVal,"%d",bibo.maskBi);
 		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
 		{
-			APPEND_INFO(masgHandle,"操作BO失败");
+			//APPEND_INFO(masgHandle,"操作BO失败");
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO失败\n"); 
 			goto DONE; 
 		}else{
-			APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBi);
+			//APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBi);
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO成功\n"); 
 		}		
 		saveResult(hashTable,&result);				
 	}
-	APPEND_INFO(masgHandle,"退出测试");
+	//APPEND_INFO(masgHandle,"退出测试");
+	SetCtrlVal(masgHandle,POWER_MSG,"退出测试\n"); 
 	return ret;
 DONE:	
-	APPEND_INFO(masgHandle,"退出测试");
+	//APPEND_INFO(masgHandle,"退出测试");
+	SetCtrlVal(masgHandle,POWER_MSG,"退出测试\n"); 
 	return ret;
+}
+
+int CreatePowerTestPanel(char *groupName)
+{
+	int panelHandle =  LoadPanel(0,"ParamPanel.uir",POWER);
+	SetPanelAttribute(panelHandle,ATTR_TITLE,groupName);
+	//SetCtrlVal(panelHandle,PANEL_TITLE,groupName);
+	//InstallPanelCallback(panelHandle,oTpsPanelCallBack,NULL);  
+	return panelHandle;
 }
 
 
@@ -2974,6 +3008,7 @@ TPS register120KWPowerModuleTestTps(void)
 {
 	TPS tps=newTps("PowerModule_120KW");
 	tps.testFunction=Power120KWModuleTest;
+	tps.createTpsPanel=CreatePowerTestPanel; 
 	//tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }

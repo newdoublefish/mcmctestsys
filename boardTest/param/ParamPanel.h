@@ -33,7 +33,11 @@
 #define  PANEL_TABLE                      2       /* control type: table, callback function: (none) */
 #define  PANEL_COMMANDBUTTON              3       /* control type: command, callback function: (none) */
 
-#define  SCANPANEL                        5
+#define  POWER                            5
+#define  POWER_VOLTAGE                    2       /* control type: scale, callback function: (none) */
+#define  POWER_MSG                        3       /* control type: textBox, callback function: (none) */
+
+#define  SCANPANEL                        6
 #define  SCANPANEL_SCAN4                  2       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN3                  3       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN2                  4       /* control type: string, callback function: (none) */
