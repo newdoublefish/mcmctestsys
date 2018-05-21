@@ -28,6 +28,7 @@
 #define  METER_CURRENT                    2       /* control type: scale, callback function: (none) */
 #define  METER_VOLTAGE                    3       /* control type: scale, callback function: (none) */
 #define  METER_MSG                        4       /* control type: textBox, callback function: (none) */
+#define  METER_VOLTAGESTRIP               5       /* control type: strip, callback function: (none) */
 
 #define  PANEL                            4
 #define  PANEL_TABLE                      2       /* control type: table, callback function: (none) */

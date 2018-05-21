@@ -23,6 +23,148 @@
 #include "ParamSetGet.h"
 #include "BmsHelper.h"
 #include "relayProtocol.h"   
+#include "meter.h"  
+#include "EutHelper.h"  
+
+static int CVICALLBACK CheckMeterPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			int *quit = (int*)callbackData;	
+			*quit = 0;
+		     break;
+	}
+	return 0;
+}
+
+BOOL CheckChargingStartVoltage(EUT eut,int masgHandler)
+{
+	APPEND_INFO(masgHandler,"进入自动检测充电启动流程！！");  
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"电表",&resconfig))
+	{
+		return FALSE;
+	}
+	int panelHandle = LoadPanel(0,"ParamPanel.uir",METER);
+	int quit = 1; 
+	InstallPanelCallback(panelHandle,CheckMeterPanelCallback,&quit);
+	DisplayPanel(panelHandle);
+	double total = 90;
+	double elapsed = 5;
+	double stableTime = Timer(); 
+	float value=0;
+	char address[] = "AAAAAAAAAAAA";
+	float maxValue = 0;
+	while(total -- >0)
+	{
+		if(quit ==0)
+		{
+			DiscardPanel(panelHandle); 
+			return FALSE;
+		}
+		double currentTime = Timer(); 
+		if(currentTime - stableTime > elapsed)
+		{
+			DiscardPanel(panelHandle);
+			APPEND_INFO_FORMAT(masgHandler,"当前枪电压最大值 %f",maxValue); 
+			return TRUE;
+		}
+		if(TRUE==getMeterDlt2007Voltage(resconfig,address,&value))
+		{
+			
+			value = value/10;
+			char temp[10]={0};
+			sprintf(temp,"%0.2f",value);
+			SetCtrlVal (panelHandle, METER_VOLTAGE, value);
+			PlotStripChartPoint (panelHandle, METER_VOLTAGESTRIP, value);
+			SetCtrlVal(panelHandle,METER_MSG,"电压值:");
+			SetCtrlVal(panelHandle,METER_MSG,temp);
+			SetCtrlVal(panelHandle,METER_MSG,"\n");
+			//APPEND_INFO_FORMAT(masgHandler,"当前枪电压 %f",value);
+			if(maxValue < value)
+				maxValue = value;
+				
+			if(value >345 && value <355)
+			{
+				
+			}else{
+				stableTime = Timer();
+			}
+		}else{
+			//stableTime = Timer();
+			DiscardPanel(panelHandle); 
+			APPEND_INFO(masgHandler,"串口操作出错！！");  
+			
+			return FALSE;
+		}
+	}
+	DiscardPanel(panelHandle); 
+	APPEND_INFO(masgHandler,"检测启动充电流程超时！！");
+	return FALSE;
+}
+
+BOOL CheckChargingStopVoltage(EUT eut,int masgHandler)
+{
+	//APPEND_INFO(masgHandler,"进入自动检测充电启动流程！！");  
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"电表",&resconfig))
+	{
+		return FALSE;
+	}
+	int panelHandle = LoadPanel(0,"ParamPanel.uir",METER);
+	int quit = 1; 
+	InstallPanelCallback(panelHandle,CheckMeterPanelCallback,&quit);
+	DisplayPanel(panelHandle);
+	double total = 60;
+	double elapsed = 5;
+	double stableTime = Timer(); 
+	float value=0;
+	char address[] = "AAAAAAAAAAAA";
+	while(total -- >0)
+	{
+		if(quit ==0)
+		{
+			DiscardPanel(panelHandle); 
+			return FALSE;
+		}
+		double currentTime = Timer(); 
+		if(currentTime - stableTime > elapsed)
+		{
+			DiscardPanel(panelHandle);
+			//APPEND_INFO_FORMAT(masgHandler,"当前枪电压最大值 %f",maxValue); 
+			return TRUE;
+		}
+		if(TRUE==getMeterDlt2007Voltage(resconfig,address,&value))
+		{
+			
+			value = value/10;
+			char temp[10]={0};
+			sprintf(temp,"%0.2f",value);
+			SetCtrlVal (panelHandle, METER_VOLTAGE, value);
+			PlotStripChartPoint (panelHandle, METER_VOLTAGESTRIP, value);
+			SetCtrlVal(panelHandle,METER_MSG,"电压值:");
+			SetCtrlVal(panelHandle,METER_MSG,temp);
+			SetCtrlVal(panelHandle,METER_MSG,"\n");
+			
+			if(value < 5)
+			{
+				
+			}else{
+				stableTime = Timer();
+			}
+		}else{
+			//stableTime = Timer();
+			DiscardPanel(panelHandle); 
+			//APPEND_INFO(masgHandler,"串口操作出错！！");  
+			
+			return FALSE;
+		}
+	}
+	DiscardPanel(panelHandle); 
+	//APPEND_INFO(masgHandler,"检测启动充电流程超时！！");
+	return FALSE;
+}
 
 
 BOOL CheckGunPlugined(EUT eut,int gunIndex,int *result)
@@ -1689,6 +1831,8 @@ TPS registerInsulationTestTestTps(void)
 	return tps;	
 }
 
+
+
 METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHandler)
 {
 	ListType paramsToSet=ListCreate(sizeof(PARAMETER));    
@@ -1736,25 +1880,29 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		return TEST_RESULT_ALLPASS;
 	}
 	
-	if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
+	if(CheckChargingStartVoltage(eut,msgHandler) == FALSE)
 	{
-			//getStubNetService(ip,port);
-		//APPEND_INFO(msgHandler,"无法启动充电");
-		APPEND_INFO_FORMAT(msgHandler,"离开%s",group.groupName);			
-		return TEST_RESULT_ALLPASS;
-	}
-	APPEND_INFO(msgHandler,"已启动充电流程，并且电压已经稳定");
 	
-	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动,点击确认加负载","错误","正确")==FALSE)
-	{
-		flag=FALSE;
-		itemResult1.pass=RESULT_FAIL;
+		if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
+		{
+			//getStubNetService(ip,port);
+			//APPEND_INFO(msgHandler,"无法启动充电");
+			APPEND_INFO_FORMAT(msgHandler,"离开%s",group.groupName);			
+			return TEST_RESULT_ALLPASS;
+		}
+		APPEND_INFO(msgHandler,"已启动充电流程，并且电压已经稳定");
+	
+		if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动,点击确认加负载","错误","正确")==FALSE)
+		{
+			flag=FALSE;
+			itemResult1.pass=RESULT_FAIL;
+			saveResult(hashTable,&itemResult1);
+			//return TEST_RESULT_ALLPASS;
+			ParamSetDepend(eut,stopChargeCMD,"1");	
+			return TEST_RESULT_ALLPASS;
+		}
 		saveResult(hashTable,&itemResult1);
-		//return TEST_RESULT_ALLPASS;
-		ParamSetDepend(eut,stopChargeCMD,"1");	
-		return TEST_RESULT_ALLPASS;
 	}
-	saveResult(hashTable,&itemResult1);
 	
 	//加负载
 #if 0	
@@ -1931,13 +2079,20 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 #endif	
 	WarnShow1(0,"手动解锁测试,请按下手动解锁按钮！！");
 	
-	if(AlertDialogWithRet(0,"手动解锁测试","手动解锁能是否正常","否","正常")==TRUE)
+	if(CheckChargingStopVoltage(eut,msgHandler) == FALSE)
 	{
-		itemResult1.pass = RESULT_PASS;	
-		saveResult(hashTable,&itemResult1); 
+	
+	   if(AlertDialogWithRet(0,"手动解锁测试","手动解锁能是否正常","否","正常")==TRUE)
+	   {
+		   itemResult1.pass = RESULT_PASS;	
+		   saveResult(hashTable,&itemResult1); 
+	   }else{
+		   itemResult1.pass = RESULT_FAIL;	
+		   saveResult(hashTable,&itemResult1); 		
+	   }
 	}else{
-		itemResult1.pass = RESULT_FAIL;	
-		saveResult(hashTable,&itemResult1); 		
+		   itemResult1.pass = RESULT_PASS;	
+		   saveResult(hashTable,&itemResult1); 
 	}
 	
 	
