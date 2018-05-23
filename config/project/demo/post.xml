@@ -249,4 +249,25 @@
 		</param>								
 	</array>											
 </post>
+<post name="铭牌编号" url="http://127.0.0.1:8000/mc/attribute/" request="attribute" upload="True">
+	<param name="material" type="default">pile001</param>
+	<param name="attribute" type="default">NamePlate</param>
+	<param name="value" type="projectName">ZB00003</param> 					
+</post>
+<post name="装置编号" url="http://127.0.0.1:8000/mc/attribute/" request="attribute" upload="True">
+	<param name="material" type="default">pile001</param>
+	<param name="attribute" type="default">NamePlate</param>
+	<param name="value" type="projectName">ZB00003</param> 					
+</post>
+<post name="上传报告" url="http://127.0.0.1:8000/testing/report/" request="report" upload="True">
+	<param name="sn" type="projectName">ZB00003</param>
+	<param name="type" type="default">Board</param>
+	<param name="pass_percent" type="passpercent">100</param>		
+	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
+	<param name="vendor" type="default">广州锐速</param>	
+	<param name="user" type="username">陶斯君</param>
+	<param name="pub_date" type="pubdate">201404040404</param>			
+	<param name="approved" type="default">false</param>		
+	<param name="project" type="default">120KW</param>					
+</post>
 </postset>

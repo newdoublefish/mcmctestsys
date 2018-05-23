@@ -1,44 +1,163 @@
 <postset>
-<post name="桩数据" url="http://120.78.222.124:80/query/stubinfo/" request="stubinfo"  upload='True'>
-	<param name="stub" type="result">105</param>
-	<param name="sim" type="result">183</param>
-	<param name="board" type="result">101</param>		
-	<param name="ammeter1" type="result">24</param>
-	<param name="ammeter2" type="result">25</param>	
-	<param name="gun1" type="result">21</param>
-	<param name="gun2" type="result">22</param>	
-	<param name="vendor" type="result">106</param>
-	<param name="power" type="default">2</param>
-	<param name="pub_date" type="pubdate">201404040404</param>										
+<post name="PileInfo" url="http://127.0.0.1:8000/mc/material/" request="material" upload="True">
+	<array name="materials" type="array">
+		<param>
+			<param name="mtype" type="default">ChargingPile</param>	
+			<param name="sn" type="result">105</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">SIM</param>	
+			<param name="sn" type="result">183</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">Ammeter</param>	
+			<param name="sn" type="result">24</param>	
+			<param name="vendor" type="default">湖南威胜</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">Ammeter</param>	
+			<param name="sn" type="result">25</param>	
+			<param name="vendor" type="default">湖南威胜</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">ChargingGun</param>	
+			<param name="sn" type="result">21</param>	
+			<param name="vendor" type="default">龙立</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">ChargingGun</param>	
+			<param name="sn" type="result">22</param>	
+			<param name="vendor" type="default">龙立</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">AirConditioner</param>	
+			<param name="sn" type="default">ac001</param>	
+			<param name="vendor" type="default">依维柯</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">PowerSupplyModule</param>	
+			<param name="sn" type="result">199</param>	
+			<param name="vendor" type="default">麦格米特</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">PowerSupplyModule</param>	
+			<param name="sn" type="result">200</param>	
+			<param name="vendor" type="default">麦格米特</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">PowerSupplyModule</param>	
+			<param name="sn" type="result">201</param>	
+			<param name="vendor" type="default">麦格米特</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">PowerSupplyModule</param>	
+			<param name="sn" type="result">202</param>	
+			<param name="vendor" type="default">麦格米特</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>														
+	</array>											
 </post>
-<post name="上传报告" url="http://120.78.222.124:80/query/report/" request="report" upload="True">
+<post name="PileBom" url="http://127.0.0.1:8000/mc/bom/" request="bom" upload="True">
+	<array name="boms" type="array">
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">101</param>	
+			<param name="description" type="default">Controller</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">183</param>	
+			<param name="description" type="default">SIM</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">24</param>	
+			<param name="description" type="default">Ammeter1</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">25</param>	
+			<param name="description" type="default">Ammeter2</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>	
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">21</param>	
+			<param name="description" type="default">ChargingGun1</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">22</param>	
+			<param name="description" type="default">ChargingGun2</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="default">ac001</param>	
+			<param name="description" type="default">AirConditioner</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>	
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">199</param>	
+			<param name="description" type="default">PowerSupplyModule1</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">200</param>	
+			<param name="description" type="default">PowerSupplyModule2</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>	
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">201</param>	
+			<param name="description" type="default">PowerSupplyModule3</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>
+		<param>
+			<param name="parent" type="result">105</param>	
+			<param name="child" type="result">202</param>	
+			<param name="description" type="default">PowerSupplyModule4</param>	
+			<param name="project" type="default">120KW</param>	
+		</param>								
+	</array>											
+</post>
+<post name="铭牌编号" url="http://127.0.0.1:8000/mc/attribute/" request="attribute" upload="True">
+	<param name="material" type="result">105</param>
+	<param name="attribute" type="default">NamePlate</param>
+	<param name="value" type="result">105</param> 					
+</post>
+<post name="装置编号" url="http://127.0.0.1:8000/mc/attribute/" request="attribute" upload="True">
+	<param name="material" type="result">105</param>
+	<param name="attribute" type="default">PileSerialNumber</param>
+	<param name="value" type="result">23</param> 					
+</post>
+<post name="上传报告" url="http://127.0.0.1:8000/testing/report/" request="report" upload="True">
 	<param name="sn" type="projectName">ZB00003</param>
-	<param name="type" type="default">整机</param>
-	<param name="result" type="passpercent">100</param>		
+	<param name="type" type="default">Integration</param>
+	<param name="pass_percent" type="passpercent">100</param>		
 	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
-	<param name="factory" type="default">广州锐速</param>	
-	<param name="person" type="username">陶斯君</param>
-	<param name="approved" type="default">false</param>	
-	<param name="pub_date" type="pubdate">201404040404</param>							
+	<param name="vendor" type="default">广州锐速</param>	
+	<param name="user" type="username">陶斯君</param>
+	<param name="pub_date" type="pubdate">201404040404</param>			
+	<param name="approved" type="default">false</param>		
+	<param name="project" type="default">120KW</param>					
 </post>	
-<post name="桩数据" url="http://127.0.0.1:80/test/stubinfo/" request="stubinfo"  upload='False'>
-	<param name="stub" type="result">105</param>
-	<param name="sim" type="result">98</param>
-	<param name="board" type="result">101</param>		
-	<param name="ammeter1" type="result">24</param>
-	<param name="ammeter2" type="result">25</param>	
-	<param name="gun1" type="result">21</param>
-	<param name="gun2" type="result">22</param>	
-	<param name="vendor" type="result">106</param>
-	<param name="power" type="default">2</param>								
-</post>
-<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="False">
-	<param name="sn" type="projectName">ZB00003</param>
-	<param name="type" type="default">整机</param>
-	<param name="result" type="default">true</param>		
-	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
-	<param name="factory" type="default">广州锐速</param>	
-	<param name="person" type="default">陶斯君</param>
-	<param name="approved" type="default">false</param>						
-</post>
 </postset>
