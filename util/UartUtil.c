@@ -70,6 +70,8 @@ BOOL getUartResponse(tUartRx *ptr)
 
 void uartRxLog(int portNum,char *type,tUartRx *ptr)
 {
+	if(ptr->rxLen <=0)
+		return;
 	unsigned char *tt = (unsigned char *)malloc(ptr->rxLen*3);
 	memset(tt,0,ptr->rxLen);
 	for(int i=0;i<ptr->rxLen;i++)

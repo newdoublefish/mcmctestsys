@@ -165,6 +165,20 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 				//printRecord(record);
 				
 				char remotePath[256]={0};
+				
+				if(record.m_result!=100 && strstr(record.m_lasttest,"100")==NULL)
+				{
+					char temp[100]={0};
+					sprintf(temp,"测试未通过，完成率为%s,合格率为%d,是否继续上传！",record.m_lasttest,record.m_result);
+	   				if(AlertDialogWithRet(0,"警告",temp,"不上传","上传")==TRUE)
+	   				{
+	   				}else{
+						SetCtrlAttribute(ftpPanel,FTP_COMMANDBUTTON,ATTR_DIMMED,0); 
+						DiscardPanel(ftpPanel);
+						return;		
+	   				}					 
+				}
+				
 				if(ftpSendFile(record.m_reportpath,remotePath)>=0)
 				{	
 					char type[50]={0};
