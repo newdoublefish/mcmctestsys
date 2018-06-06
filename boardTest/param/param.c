@@ -1937,10 +1937,10 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 
 		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
 		{
-			WarnShow1(0,"操作继电器失败");
+			WarnShow1(0,"加负载操作失败");
 			goto DONE;
 		}else{
-			APPEND_INFO(msgHandler,"继电器操作成功");	
+			APPEND_INFO(msgHandler,"加负载操作成功");	
 		}
 	}else{
 	
