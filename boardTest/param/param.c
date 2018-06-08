@@ -99,6 +99,7 @@ BOOL CheckChargingStartVoltage(EUT eut,int masgHandler)
 			
 			return FALSE;
 		}
+		ProcessSystemEvents (); 
 	}
 	DiscardPanel(panelHandle); 
 	APPEND_INFO(masgHandler,"检测启动充电流程超时！！");
@@ -1653,6 +1654,12 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 		goto DONE;
 	}	
 #endif	
+	
+	if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",15))
+	{
+		
+	}
+	
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
 		WarnShow1(0,"无法启动充电！");
@@ -1662,11 +1669,20 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 	}else{
 		APPEND_INFO(msgHander,"已成功发送启动命令！");
 	}	
-
-	if(AlertDialogWithRet(0,"枪检查","请确认充电功能异常,应该自动停止充电","错误","正确")==FALSE)
+	
+	if(CheckChargingStartVoltage(eut,msgHander) == FALSE)
 	{
-		flag=FALSE;
-	}
+		APPEND_INFO(msgHander,"转入手动模式！"); 
+		if(AlertDialogWithRet(0,"警告","请确认充电功能异常,应该自动停止充电","错误","正确")==FALSE)
+		{
+			flag=FALSE;
+		}
+	}else{
+		flag = TRUE;
+		APPEND_INFO(msgHander,"错误，绝缘故障状态下不能正常充电！");
+	}	
+
+
 	
 	char inSoResult1[10]={0};
 	if(FALSE==ParamGetDepend(eut,isolateCMD,inSoResult1))
@@ -1676,14 +1692,21 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 	
 	//printf("%s\n",inSoResult1);	
 	
-	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
+	/*if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
 		APPEND_INFO(msgHander,"发送充电停止命令失败");
 		WarnShow1(0,"无法停止充电！请按急停停止"); 
 		goto DONE;
 	}else{
 		APPEND_INFO(msgHander,"发送充电停止命令成功"); 
+	}*/	
+	if(CheckChargingStopVoltage(eut,msgHander) == FALSE) 
+	{
+		WarnShow1(0,"请确保充电流程已经停止");  
+	}else{
+		APPEND_INFO(msgHander,"不在充电状态！！");  
 	}	
+	
 DONE:	
 	/*if(FALSE==OperatDoSet(eut.relayConfig,RELAY(2),MASK32))
 	{
@@ -1707,7 +1730,7 @@ DONE:
 	itemResult.index=item.itemId;
 	itemResult.pass=flag;
 	saveResult(hashTable,&itemResult);
-	WarnShow1(0,"请确保充电流程已经停止");
+	
 	APPEND_INFO(msgHander,"退出测试");
 	return ret;	
 }
