@@ -17,6 +17,9 @@
 #include "postData.h"
 #include "sutCommon.h"
 #include "httpPost.h"
+#include "EutHelper.h"
+#include "meter.h"
+#include "ParamPanel.h"
 
 
 METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
@@ -91,6 +94,95 @@ TPS registerHttpPostTPS(void)
 	//tps.autoTestFunction=DemoTest;
 	tps.testFunction=HttpPostTest;
 	tps.createTpsPanel=NULL;
+	//tps.manualTestFunction=DemoTest;
+	return tps;
+}
+
+static int CVICALLBACK MeterPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			int *quit = (int*)callbackData;	
+			*quit = 0;
+		     break;
+	}
+	return 0;
+}
+
+
+METHODRET MeterTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	//APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"电表",&resconfig))
+	{
+		return TEST_RESULT_ALLPASS;
+	}
+	//char address[] = "333333333333";
+	
+	//InstallCtrlCallback(msgPanel,
+	int quit = 1; 
+	InstallPanelCallback(msgPanel,MeterPanelCallback,&quit);
+	
+	while(quit)
+	{
+		for(int i=1;i<=ListNumItems(group.subItems);i++)
+		{
+			TestItem item;
+			ListGetItem(group.subItems,&item,i);
+			RESULT itemResult={0};
+			itemResult.index=item.itemId;
+			float value=0;
+			char address[] = "AAAAAAAAAAAA";
+			if(TRUE==getMeterDlt2007Voltage(resconfig,address,&value))
+			{
+				itemResult.pass = RESULT_PASS;
+				sprintf(itemResult.recvString,"%f",value);
+				SetCtrlVal (msgPanel, METER_VOLTAGE, value);
+				SetCtrlVal(msgPanel,METER_MSG,"电压值:");
+				SetCtrlVal(msgPanel,METER_MSG,itemResult.recvString);
+				SetCtrlVal(msgPanel,METER_MSG,"\n");
+			}
+			
+			if(quit == 0)
+				continue;
+			
+			if(TRUE == getMeterDlt2007Current(resconfig,address,&value))
+			{
+				itemResult.pass = RESULT_PASS;
+				sprintf(itemResult.recvString,"%f",value);
+				SetCtrlVal (msgPanel, METER_CURRENT, value);
+				SetCtrlVal(msgPanel,METER_MSG,"电流值:");
+				SetCtrlVal(msgPanel,METER_MSG,itemResult.recvString);
+				SetCtrlVal(msgPanel,METER_MSG,"\n");				
+			}
+			saveResult(hashTable,&itemResult);
+		
+		}
+	}
+	//APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);		
+	return ret;
+}
+
+
+int CreateMeterTpsPanel(char *groupName)
+{
+	int panelHandle =  LoadPanel(0,"ParamPanel.uir",METER);
+	SetPanelAttribute(panelHandle,ATTR_TITLE,groupName);
+	//SetCtrlVal(panelHandle,PANEL_TITLE,groupName);
+	//InstallPanelCallback(panelHandle,oTpsPanelCallBack,NULL);  
+	return panelHandle;
+}
+
+
+
+TPS registerMeterTPS(void)
+{
+	TPS tps=newTps("meter");
+	tps.testFunction=MeterTest;
+	tps.createTpsPanel=CreateMeterTpsPanel;
 	//tps.manualTestFunction=DemoTest;
 	return tps;
 }

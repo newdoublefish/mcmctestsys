@@ -5,55 +5,46 @@
 			<param name="mtype" type="default">Controller</param>	
 			<param name="sn" type="default">controller001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">DCD</param>	
 			<param name="sn" type="default">dcd001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">DCM</param>	
 			<param name="sn" type="default">dcm001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">PWR</param>	
 			<param name="sn" type="default">pwr001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">CPU</param>	
 			<param name="sn" type="default">cpu001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">4G</param>	
 			<param name="sn" type="default">4g001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">DDB</param>	
 			<param name="sn" type="default">ddb001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">DCR</param>	
 			<param name="sn" type="default">dcr001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">LED</param>	
 			<param name="sn" type="default">led001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>												
 	</array>											
 </post>
@@ -63,49 +54,41 @@
 			<param name="parent" type="default">controller001</param>	
 			<param name="child" type="default">dcd001</param>	
 			<param name="description" type="default">DCD</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">controller001</param>	
 			<param name="child" type="default">dcm001</param>	
 			<param name="description" type="default">DCM</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">controller001</param>	
 			<param name="child" type="default">pwr001</param>	
 			<param name="description" type="default">PWR</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">controller001</param>	
 			<param name="child" type="default">cpu001</param>	
 			<param name="description" type="default">CPU</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="parent" type="default">controller001</param>	
 			<param name="child" type="default">4g001</param>	
 			<param name="description" type="default">4G</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">controller001</param>	
 			<param name="child" type="default">ddb001</param>	
 			<param name="description" type="default">DDB</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">controller001</param>	
 			<param name="child" type="default">dcr001</param>	
 			<param name="description" type="default">DCR</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">controller001</param>	
 			<param name="child" type="default">led001</param>	
 			<param name="description" type="default">LED</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>							
 	</array>											
 </post>
@@ -115,67 +98,56 @@
 			<param name="mtype" type="default">ChargingPile</param>	
 			<param name="sn" type="default">pile001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">SIM</param>	
 			<param name="sn" type="default">sim001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">Ammeter</param>	
 			<param name="sn" type="default">ammeter001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">Ammeter</param>	
 			<param name="sn" type="default">ammeter002</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">ChargingGun</param>	
 			<param name="sn" type="default">cg001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">ChargingGun</param>	
 			<param name="sn" type="default">cg002</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">AirConditioner</param>	
 			<param name="sn" type="default">ac001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">PowerSupplyModule</param>	
 			<param name="sn" type="default">psm001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">PowerSupplyModule</param>	
 			<param name="sn" type="default">psm002</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">PowerSupplyModule</param>	
 			<param name="sn" type="default">psm003</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">PowerSupplyModule</param>	
 			<param name="sn" type="default">psm004</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>														
 	</array>											
 </post>
@@ -185,67 +157,56 @@
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">controller001</param>	
 			<param name="description" type="default">Controller</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">sim001</param>	
 			<param name="description" type="default">SIM</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">ammeter001</param>	
 			<param name="description" type="default">Ammeter1</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">ammeter002</param>	
 			<param name="description" type="default">Ammeter2</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">cg001</param>	
 			<param name="description" type="default">ChargingGun1</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">cg002</param>	
 			<param name="description" type="default">ChargingGun2</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">ac001</param>	
 			<param name="description" type="default">AirConditioner</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">psm001</param>	
 			<param name="description" type="default">PowerSupplyModule1</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">psm002</param>	
 			<param name="description" type="default">PowerSupplyModule2</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">psm003</param>	
 			<param name="description" type="default">PowerSupplyModule3</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="default">pile001</param>	
 			<param name="child" type="default">psm004</param>	
 			<param name="description" type="default">PowerSupplyModule4</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>								
 	</array>											
 </post>
@@ -256,18 +217,7 @@
 </post>
 <post name="装置编号" url="http://127.0.0.1:8000/mc/attribute/" request="attribute" upload="True">
 	<param name="material" type="default">pile001</param>
-	<param name="attribute" type="default">NamePlate</param>
-	<param name="value" type="projectName">ZB00003</param> 					
-</post>
-<post name="上传报告" url="http://127.0.0.1:8000/testing/report/" request="report" upload="True">
-	<param name="sn" type="projectName">ZB00003</param>
-	<param name="type" type="default">Board</param>
-	<param name="pass_percent" type="passpercent">100</param>		
-	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
-	<param name="vendor" type="default">广州锐速</param>	
-	<param name="user" type="username">陶斯君</param>
-	<param name="pub_date" type="pubdate">201404040404</param>			
-	<param name="approved" type="default">false</param>		
-	<param name="project" type="default">120KW</param>					
+	<param name="attribute" type="default">DeviceId</param>
+	<param name="value" type="projectName">0000081000081</param> 					
 </post>
 </postset>

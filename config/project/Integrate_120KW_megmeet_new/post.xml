@@ -5,67 +5,56 @@
 			<param name="mtype" type="default">ChargingPile</param>	
 			<param name="sn" type="result">105</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">SIM</param>	
 			<param name="sn" type="result">183</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">Ammeter</param>	
 			<param name="sn" type="result">24</param>	
 			<param name="vendor" type="default">湖南威胜</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">Ammeter</param>	
 			<param name="sn" type="result">25</param>	
 			<param name="vendor" type="default">湖南威胜</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">ChargingGun</param>	
 			<param name="sn" type="result">21</param>	
 			<param name="vendor" type="default">龙立</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">ChargingGun</param>	
 			<param name="sn" type="result">22</param>	
 			<param name="vendor" type="default">龙立</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">AirConditioner</param>	
 			<param name="sn" type="default">ac001</param>	
 			<param name="vendor" type="default">依维柯</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">PowerSupplyModule</param>	
 			<param name="sn" type="result">199</param>	
 			<param name="vendor" type="default">麦格米特</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">PowerSupplyModule</param>	
 			<param name="sn" type="result">200</param>	
 			<param name="vendor" type="default">麦格米特</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">PowerSupplyModule</param>	
 			<param name="sn" type="result">201</param>	
 			<param name="vendor" type="default">麦格米特</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">PowerSupplyModule</param>	
 			<param name="sn" type="result">202</param>	
 			<param name="vendor" type="default">麦格米特</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>														
 	</array>											
 </post>
@@ -75,67 +64,56 @@
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">101</param>	
 			<param name="description" type="default">Controller</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">183</param>	
 			<param name="description" type="default">SIM</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">24</param>	
 			<param name="description" type="default">Ammeter1</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">25</param>	
 			<param name="description" type="default">Ammeter2</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">21</param>	
 			<param name="description" type="default">ChargingGun1</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">22</param>	
 			<param name="description" type="default">ChargingGun2</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="default">ac001</param>	
 			<param name="description" type="default">AirConditioner</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">199</param>	
 			<param name="description" type="default">PowerSupplyModule1</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">200</param>	
 			<param name="description" type="default">PowerSupplyModule2</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">201</param>	
 			<param name="description" type="default">PowerSupplyModule3</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="result">105</param>	
 			<param name="child" type="result">202</param>	
 			<param name="description" type="default">PowerSupplyModule4</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>								
 	</array>											
 </post>
@@ -146,18 +124,23 @@
 </post>
 <post name="装置编号" url="http://127.0.0.1:8000/mc/attribute/" request="attribute" upload="True">
 	<param name="material" type="result">105</param>
-	<param name="attribute" type="default">PileSerialNumber</param>
+	<param name="attribute" type="default">DeviceId</param>
 	<param name="value" type="result">23</param> 					
 </post>
 <post name="上传报告" url="http://127.0.0.1:8000/testing/report/" request="report" upload="True">
 	<param name="sn" type="projectName">ZB00003</param>
-	<param name="type" type="default">Integration</param>
+	<param name="eut" type="result">105</param>
+	<param name="type" type="default">integrat</param>
 	<param name="pass_percent" type="passpercent">100</param>		
 	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
-	<param name="vendor" type="default">广州锐速</param>	
 	<param name="user" type="username">陶斯君</param>
-	<param name="pub_date" type="pubdate">201404040404</param>			
-	<param name="approved" type="default">false</param>		
-	<param name="project" type="default">120KW</param>					
+	<param name="pub_date" type="pubdate">201404040404</param>							
+</post>	
+<post name="上传产品" url="http://127.0.0.1:8000/product/product/" request="product" upload="True">
+	<param name="sn" type="result">105</param>
+	<param name="material" type="result">105</param>
+	<param name="type" type="default">120KW-MEGMEET</param>
+	<param name="user" type="username">陶斯君</param>
+	<param name="pub_date" type="pubdate">201404040404</param>							
 </post>	
 </postset>

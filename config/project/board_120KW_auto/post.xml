@@ -5,55 +5,46 @@
 			<param name="mtype" type="default">Controller</param>	
 			<param name="sn" type="projectName">controller001</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">DCD</param>	
 			<param name="sn" type="result">128</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">DCM</param>	
 			<param name="sn" type="result">129</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">PWR</param>	
 			<param name="sn" type="result">132</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">CPU</param>	
 			<param name="sn" type="result">130</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">4G</param>	
 			<param name="sn" type="result">131</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">DDB</param>	
 			<param name="sn" type="result">133</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="mtype" type="default">DCR</param>	
 			<param name="sn" type="result">127</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="mtype" type="default">LED</param>	
 			<param name="sn" type="result">134</param>	
 			<param name="vendor" type="default">北京龙腾</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>												
 	</array>											
 </post>
@@ -63,103 +54,51 @@
 			<param name="parent" type="projectName">controller001</param>	
 			<param name="child" type="result">128</param>	
 			<param name="description" type="default">DCD</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="projectName">controller001</param>	
 			<param name="child" type="result">129</param>	
 			<param name="description" type="default">DCM</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="projectName">controller001</param>	
 			<param name="child" type="result">132</param>	
 			<param name="description" type="default">PWR</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="projectName">controller001</param>	
 			<param name="child" type="result">130</param>	
 			<param name="description" type="default">CPU</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>	
 		<param>
 			<param name="parent" type="projectName">controller001</param>	
 			<param name="child" type="result">131</param>	
 			<param name="description" type="default">4G</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="projectName">controller001</param>	
 			<param name="child" type="result">133</param>	
 			<param name="description" type="default">DDB</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="projectName">controller001</param>	
 			<param name="child" type="result">127</param>	
 			<param name="description" type="default">DCR</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>
 		<param>
 			<param name="parent" type="projectName">controller001</param>	
 			<param name="child" type="result">134</param>	
 			<param name="description" type="default">LED</param>	
-			<param name="project" type="default">120KW</param>	
 		</param>							
 	</array>											
 </post>
 <post name="上传报告" url="http://127.0.0.1:8000/testing/report/" request="report" upload="True">
 	<param name="sn" type="projectName">ZB00003</param>
-	<param name="type" type="default">Board</param>
+	<param name="eut" type="projectName">ZB00003</param>
+	<param name="type" type="default">board</param>
 	<param name="pass_percent" type="passpercent">100</param>		
 	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
-	<param name="vendor" type="default">广州锐速</param>	
 	<param name="user" type="username">陶斯君</param>
-	<param name="pub_date" type="pubdate">201404040404</param>			
-	<param name="approved" type="default">false</param>		
-	<param name="project" type="default">120KW</param>					
+	<param name="pub_date" type="pubdate">201404040404</param>							
 </post>	
-<post name="控制盒数据" url="http://127.0.0.1:80/test/boardinfo/" request="boardinfo" upload="False">
-	<param name="board" type="projectName">ZB00003</param>
-	<param name="dcd" type="result">128</param>
-	<param name="dcm" type="result">129</param>		
-	<param name="pwr" type="result">132</param>
-	<param name="cpu" type="result">130</param>	
-	<param name="g4" type="result">131</param>
-	<param name="ddb" type="result">133</param>	
-	<param name="dcr" type="result">127</param>	
-	<param name="led" type="result">134</param>								
-</post>	
-<post name="控制盒数据" url="http://120.78.222.124:80/query/boardinfo/" request="boardinfo" upload="False">
-	<param name="board" type="projectName">ZB00003</param>
-	<param name="dcd" type="result">128</param>
-	<param name="dcm" type="result">129</param>		
-	<param name="pwr" type="result">132</param>
-	<param name="cpu" type="result">130</param>	
-	<param name="g4" type="result">131</param>
-	<param name="ddb" type="result">133</param>	
-	<param name="dcr" type="result">127</param>	
-	<param name="led" type="result">134</param>	
-	<param name="pub_date" type="pubdate">201404040404</param>									
-</post>
-<post name="上传报告" url="http://120.78.222.124:80/query/report/" request="report" upload="False">
-	<param name="sn" type="projectName">ZB00003</param>
-	<param name="type" type="default">板级</param>
-	<param name="result" type="passpercent">100</param>		
-	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
-	<param name="factory" type="default">广州锐速</param>	
-	<param name="person" type="username">陶斯君</param>
-	<param name="approved" type="default">false</param>		
-	<param name="pub_date" type="pubdate">201404040404</param>						
-</post>
-<post name="上传报告" url="http://127.0.0.1:80/test/report/" request="report" upload="False">
-	<param name="sn" type="projectName">ZB00003</param>
-	<param name="type" type="default">板级</param>
-	<param name="result" type="default">true</param>		
-	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
-	<param name="factory" type="default">广州锐速</param>	
-	<param name="person" type="default">陶斯君</param>
-	<param name="approved" type="default">false</param>						
-</post>
 </postset>

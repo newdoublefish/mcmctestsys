@@ -23,6 +23,151 @@
 #include "ParamSetGet.h"
 #include "BmsHelper.h"
 #include "relayProtocol.h"   
+#include "meter.h"  
+#include "EutHelper.h"  
+
+static int CVICALLBACK CheckMeterPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			int *quit = (int*)callbackData;	
+			*quit = 0;
+		     break;
+	}
+	return 0;
+}
+
+BOOL CheckChargingStartVoltage(EUT eut,int masgHandler)
+{
+	APPEND_INFO(masgHandler,"进入自动检测充电启动流程！！");  
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"电表",&resconfig))
+	{
+		return FALSE;
+	}
+	int panelHandle = LoadPanel(0,"ParamPanel.uir",METER);
+	SetPanelAttribute(panelHandle,ATTR_TITLE,"启动充电流程");
+	int quit = 1; 
+	InstallPanelCallback(panelHandle,CheckMeterPanelCallback,&quit);
+	DisplayPanel(panelHandle);
+	double total = 90;
+	double elapsed = 5;
+	double stableTime = Timer(); 
+	float value=0;
+	char address[] = "AAAAAAAAAAAA";
+	float maxValue = 0;
+	while(total -- >0)
+	{
+		if(quit ==0)
+		{
+			DiscardPanel(panelHandle); 
+			return FALSE;
+		}
+		double currentTime = Timer(); 
+		if(currentTime - stableTime > elapsed)
+		{
+			DiscardPanel(panelHandle);
+			APPEND_INFO_FORMAT(masgHandler,"当前枪电压最大值 %f",maxValue); 
+			return TRUE;
+		}
+		if(TRUE==getMeterDlt2007Voltage(resconfig,address,&value))
+		{
+			
+			value = value/10;
+			char temp[10]={0};
+			sprintf(temp,"%0.2f",value);
+			SetCtrlVal (panelHandle, METER_VOLTAGE, value);
+			PlotStripChartPoint (panelHandle, METER_VOLTAGESTRIP, value);
+			SetCtrlVal(panelHandle,METER_MSG,"电压值:");
+			SetCtrlVal(panelHandle,METER_MSG,temp);
+			SetCtrlVal(panelHandle,METER_MSG,"\n");
+			//APPEND_INFO_FORMAT(masgHandler,"当前枪电压 %f",value);
+			if(maxValue < value)
+				maxValue = value;
+				
+			if(value >345 && value <355)
+			{
+				
+			}else{
+				stableTime = Timer();
+			}
+		}else{
+			//stableTime = Timer();
+			DiscardPanel(panelHandle); 
+			APPEND_INFO(masgHandler,"串口操作出错！！");  
+			
+			return FALSE;
+		}
+		ProcessSystemEvents (); 
+	}
+	DiscardPanel(panelHandle); 
+	APPEND_INFO(masgHandler,"检测启动充电流程超时！！");
+	return FALSE;
+}
+
+BOOL CheckChargingStopVoltage(EUT eut,int masgHandler)
+{
+	//APPEND_INFO(masgHandler,"进入自动检测充电启动流程！！");  
+	RSCONFIG resconfig={0};
+	if(FALSE == getSerialConfig(eut.configList,"电表",&resconfig))
+	{
+		return FALSE;
+	}
+	int panelHandle = LoadPanel(0,"ParamPanel.uir",METER);
+	SetPanelAttribute(panelHandle,ATTR_TITLE,"停止充电流程");    
+	int quit = 1; 
+	InstallPanelCallback(panelHandle,CheckMeterPanelCallback,&quit);
+	DisplayPanel(panelHandle);
+	double total = 60;
+	double elapsed = 5;
+	double stableTime = Timer(); 
+	float value=0;
+	char address[] = "AAAAAAAAAAAA";
+	while(total -- >0)
+	{
+		if(quit ==0)
+		{
+			DiscardPanel(panelHandle); 
+			return FALSE;
+		}
+		double currentTime = Timer(); 
+		if(currentTime - stableTime > elapsed)
+		{
+			DiscardPanel(panelHandle);
+			//APPEND_INFO_FORMAT(masgHandler,"当前枪电压最大值 %f",maxValue); 
+			return TRUE;
+		}
+		if(TRUE==getMeterDlt2007Voltage(resconfig,address,&value))
+		{
+			
+			value = value/10;
+			char temp[10]={0};
+			sprintf(temp,"%0.2f",value);
+			SetCtrlVal (panelHandle, METER_VOLTAGE, value);
+			PlotStripChartPoint (panelHandle, METER_VOLTAGESTRIP, value);
+			SetCtrlVal(panelHandle,METER_MSG,"电压值:");
+			SetCtrlVal(panelHandle,METER_MSG,temp);
+			SetCtrlVal(panelHandle,METER_MSG,"\n");
+			
+			if(value < 5)
+			{
+				
+			}else{
+				stableTime = Timer();
+			}
+		}else{
+			//stableTime = Timer();
+			DiscardPanel(panelHandle); 
+			//APPEND_INFO(masgHandler,"串口操作出错！！");  
+			
+			return FALSE;
+		}
+	}
+	DiscardPanel(panelHandle); 
+	//APPEND_INFO(masgHandler,"检测启动充电流程超时！！");
+	return FALSE;
+}
 
 
 BOOL CheckGunPlugined(EUT eut,int gunIndex,int *result)
@@ -439,16 +584,18 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 				}
 			}									
 		}else if(strstr(item.itemName_,"插枪链接电压")!=NULL){
+			
 			float vol = atof(itemResult.recvString);
-			if(atof(item.standard_)>0.0001)
+			if(strstr(item.standard_,"NA")==NULL)
 			{
-				if(vol>(atof(item.standard_)-0.5) && vol <atof(item.standard_))
+				if(vol>=item.standard_value.minValue && vol <=item.standard_value.maxValue)
 				{
 					 itemResult.pass=RESULT_PASS;
 				}else{
 					itemResult.pass=RESULT_FAIL;
 				}
-			}					
+			}
+			//printf("value %f,%f\n",item.standard_value.maxValue,item.standard_value.minValue);
 		}else if(strcmp(item.standard_,"NA")!=0)
 		{
 			if(strstr(item.standard_,itemResult.recvString)!=NULL)
@@ -1219,7 +1366,7 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int ms
 	}else{
 		flag1=0;
 	}
-	APPEND_INFO_FORMAT(msgHandle,"flag1:%d",flag1);
+	APPEND_INFO_FORMAT(msgHandle,"告警值flag1为:%d",flag1);
 #if 0	
 	if(OperatDoSet(eut.relayConfig,RELAY(31)|RELAY(3)|RELAY(4)|RELAY(2),MASK32)==FALSE)
 	{
@@ -1274,13 +1421,14 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int ms
 	}else{
 		flag2=0;
 	}	
-	
+#if 0	
 	if(AlertDialogWithRet(0,"枪检查","请检查面板显示应充电枪故障指示灯显示应该为X","错误","正确")==FALSE)
 	{
 		flag2=0;
 	}
-														 
-	APPEND_INFO_FORMAT(msgHandle,"flag2:%d",flag2); 
+#endif
+	
+	APPEND_INFO_FORMAT(msgHandle,"告警值flag2为:%d",flag2); 
 	
 #if 0
 	if(OperatDoSet(eut.relayConfig,RELAY(2),MASK32)==FALSE)
@@ -1321,14 +1469,16 @@ METHODRET InverseWarnTest(TestGroup group,EUT eut,HashTableType hashTable,int ms
 		flag3=1;
 	}else{
 		flag3=0;
-	}	
+	}
 	
+#if 0	
 	if(AlertDialogWithRet(0,"枪检查","请检查面板显示应充电枪故障指示灯显示应该消失","错误","正确")==FALSE)
 	{
 		flag3=0;
 	}
+#endif
 	
-	APPEND_INFO_FORMAT(msgHandle,"flag3:%d",flag3); 	
+	APPEND_INFO_FORMAT(msgHandle,"告警值flag3为:%d",flag3); 	
 	
 	RESULT itemResult={0};
 	itemResult.index=item.itemId;
@@ -1439,11 +1589,15 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 		APPEND_INFO(msgHander,"已成功发送启动命令！");
 	}
 	
-	if(AlertDialogWithRet(0,"枪检查","请确认充电功能正常","错误","正确")==FALSE)
+	if(CheckChargingStartVoltage(eut,msgHander) == FALSE)
 	{
-		WarnShow1(0,"充电功能不正常！"); 
-		flag=FALSE;
-		goto DONE;
+		APPEND_INFO(msgHander,"转入手动模式！"); 
+		if(AlertDialogWithRet(0,"枪检查","请确认充电功能正常","错误","正确")==FALSE)
+		{
+			WarnShow1(0,"充电功能不正常！"); 
+			flag=FALSE;
+			goto DONE;
+		}
 	}
 	APPEND_INFO(msgHander,"充电功能正常！");
 	//读取结果
@@ -1463,12 +1617,19 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 		goto DONE;
 	}else{
 		APPEND_INFO(msgHander,"发送充电停止命令成功"); 
-	}	
+	}
 	
-	//WarnAlert(0,"延时中",30);
-	WarnShow1(0,"请确认充电已经停止，充电停止后进入下一步测试");
+	if(CheckChargingStopVoltage(eut,msgHander) == FALSE) 
+	{
+		//WarnAlert(0,"延时中",30);
+		APPEND_INFO(msgHander,"转入手动模式！");
+		WarnShow1(0,"请确认充电已经停止，充电停止后进入下一步测试");
+		APPEND_INFO(msgHander,"充电流程已经停止！！");   
+		WarnShow1(0,"下一步测试");   
+	}else{
+		APPEND_INFO(msgHander,"充电流程已经停止,进入下一步测试！！");  
+	}
 	
-	WarnShow1(0,"下一步测试");
 #if 0	
 	if(FALSE==OperatDoSet(eut.relayConfig,RELAY(29) | RELAY(30)| RELAY(2),MASK32))
 	{
@@ -1493,6 +1654,12 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 		goto DONE;
 	}	
 #endif	
+	
+	if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",15))
+	{
+		
+	}
+	
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
 	{
 		WarnShow1(0,"无法启动充电！");
@@ -1502,11 +1669,20 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 	}else{
 		APPEND_INFO(msgHander,"已成功发送启动命令！");
 	}	
-
-	if(AlertDialogWithRet(0,"枪检查","请确认充电功能异常,应该自动停止充电","错误","正确")==FALSE)
+	
+	if(CheckChargingStartVoltage(eut,msgHander) == FALSE)
 	{
-		flag=FALSE;
-	}
+		APPEND_INFO(msgHander,"转入手动模式！"); 
+		if(AlertDialogWithRet(0,"警告","请确认充电功能异常,应该自动停止充电","错误","正确")==FALSE)
+		{
+			flag=FALSE;
+		}
+	}else{
+		flag = TRUE;
+		APPEND_INFO(msgHander,"错误，绝缘故障状态下不能正常充电！");
+	}	
+
+
 	
 	char inSoResult1[10]={0};
 	if(FALSE==ParamGetDepend(eut,isolateCMD,inSoResult1))
@@ -1516,14 +1692,21 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 	
 	//printf("%s\n",inSoResult1);	
 	
-	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
+	/*if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
 	{
 		APPEND_INFO(msgHander,"发送充电停止命令失败");
 		WarnShow1(0,"无法停止充电！请按急停停止"); 
 		goto DONE;
 	}else{
 		APPEND_INFO(msgHander,"发送充电停止命令成功"); 
+	}*/	
+	if(CheckChargingStopVoltage(eut,msgHander) == FALSE) 
+	{
+		WarnShow1(0,"请确保充电流程已经停止");  
+	}else{
+		APPEND_INFO(msgHander,"不在充电状态！！");  
 	}	
+	
 DONE:	
 	/*if(FALSE==OperatDoSet(eut.relayConfig,RELAY(2),MASK32))
 	{
@@ -1547,7 +1730,7 @@ DONE:
 	itemResult.index=item.itemId;
 	itemResult.pass=flag;
 	saveResult(hashTable,&itemResult);
-	WarnShow1(0,"请确保充电流程已经停止");
+	
 	APPEND_INFO(msgHander,"退出测试");
 	return ret;	
 }
@@ -1689,6 +1872,8 @@ TPS registerInsulationTestTestTps(void)
 	return tps;	
 }
 
+
+
 METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHandler)
 {
 	ListType paramsToSet=ListCreate(sizeof(PARAMETER));    
@@ -1736,25 +1921,30 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		return TEST_RESULT_ALLPASS;
 	}
 	
-	if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
+	if(CheckChargingStartVoltage(eut,msgHandler) == FALSE)
 	{
-			//getStubNetService(ip,port);
-		//APPEND_INFO(msgHandler,"无法启动充电");
-		APPEND_INFO_FORMAT(msgHandler,"离开%s",group.groupName);			
-		return TEST_RESULT_ALLPASS;
-	}
-	APPEND_INFO(msgHandler,"已启动充电流程，并且电压已经稳定");
 	
-	if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动,点击确认加负载","错误","正确")==FALSE)
-	{
-		flag=FALSE;
-		itemResult1.pass=RESULT_FAIL;
+		APPEND_INFO(msgHandler,"已转入手动测试"); 
+		if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
+		{
+			//getStubNetService(ip,port);
+			//APPEND_INFO(msgHandler,"无法启动充电");
+			APPEND_INFO_FORMAT(msgHandler,"离开%s",group.groupName);			
+			return TEST_RESULT_ALLPASS;
+		}
+		APPEND_INFO(msgHandler,"已启动充电流程，并且电压已经稳定");
+	
+		if(AlertDialogWithRet(0,"枪检查","请确认充电流程已启动,点击确认加负载","错误","正确")==FALSE)
+		{
+			flag=FALSE;
+			itemResult1.pass=RESULT_FAIL;
+			saveResult(hashTable,&itemResult1);
+			//return TEST_RESULT_ALLPASS;
+			ParamSetDepend(eut,stopChargeCMD,"1");	
+			return TEST_RESULT_ALLPASS;
+		}
 		saveResult(hashTable,&itemResult1);
-		//return TEST_RESULT_ALLPASS;
-		ParamSetDepend(eut,stopChargeCMD,"1");	
-		return TEST_RESULT_ALLPASS;
 	}
-	saveResult(hashTable,&itemResult1);
 	
 	//加负载
 #if 0	
@@ -1770,10 +1960,10 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 
 		if(OperatDoSet(eut.relayConfig,operate.beforeTestMask,operate.mask)==FALSE)
 		{
-			WarnShow1(0,"操作继电器失败");
+			WarnShow1(0,"加负载操作失败");
 			goto DONE;
 		}else{
-			APPEND_INFO(msgHandler,"继电器操作成功");	
+			APPEND_INFO(msgHandler,"加负载操作成功");	
 		}
 	}else{
 	
@@ -1830,11 +2020,9 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		float strValue=atof(itemResult.recvString);
 		if(i==3)
 		{
-			if(strstr(item.inputValue_,"NA")==NULL && strstr(item.inputValue_,"NA")==NULL)
+			if(strstr(item.standard_,"NA")==NULL)
 			{
-				float tolenrent = atof(item.inputValue_);
-				float standard = atof(item.standard_);
-				if(strValue<=(standard+tolenrent) && strValue>=(standard-tolenrent))
+				if(strValue<=item.standard_value.maxValue && strValue>=item.standard_value.minValue)
 				{
 					itemResult.pass=RESULT_PASS;
 				}
@@ -1846,11 +2034,9 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 			}
 		}else if(i==2)
 		{
-			if(strstr(item.inputValue_,"NA")==NULL && strstr(item.standard_,"NA")==NULL)
+			if(strstr(item.standard_,"NA")==NULL)
 			{
-				float tolenrent = atof(item.inputValue_);
-				float standard = atof(item.standard_);
-				if(strValue<=(standard+tolenrent) && strValue>=(standard-tolenrent))
+				if(strValue<=item.standard_value.maxValue && strValue>=item.standard_value.minValue)
 				{
 					itemResult.pass=RESULT_PASS;
 				}
@@ -1894,11 +2080,9 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		}
 		if(i==2)
 		{
-			if(strstr(item.inputValue_,"NA")==NULL && strstr(item.standard_,"NA")==NULL)
+			if(strstr(item.standard_,"NA")==NULL)
 			{
-				int tolenrent = atof(item.inputValue_);
-				int standard = atof(item.standard_);
-				if(strValue<=(standard+tolenrent) && strValue>=(standard-tolenrent))
+				if(strValue<=item.standard_value.maxValue && strValue>=item.standard_value.minValue)
 				{
 					itemResult.pass=RESULT_PASS;
 				}
@@ -1910,14 +2094,12 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 			}
 		}else if(i==1)
 		{
-			if(strstr(item.inputValue_,"NA")==NULL && strstr(item.standard_,"NA")==NULL)
+			if(strstr(item.standard_,"NA")==NULL)
 			{
-				float tolenrent = atof(item.inputValue_);
-				float standard = atof(item.standard_);
-				if(strValue<=(standard+tolenrent) && strValue>=(standard-tolenrent))
+				if(strValue<=item.standard_value.maxValue && strValue>=item.standard_value.minValue)
 				{
 					itemResult.pass=RESULT_PASS;
-				}
+				}												  
 			}else{
 				if(strValue<2.87 && strValue>2.67)
 				{
@@ -1929,15 +2111,22 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 		saveResult(hashTable,&itemResult);			
 	}
 #endif	
-	WarnShow1(0,"手动解锁测试,请按下手动解锁按钮！！");
+	WarnShow1(0,"手动解锁测试,请按下手动解锁按钮，并且按压枪头机械解锁按钮！！");
 	
-	if(AlertDialogWithRet(0,"手动解锁测试","手动解锁能是否正常","否","正常")==TRUE)
+	if(CheckChargingStopVoltage(eut,msgHandler) == FALSE)
 	{
-		itemResult1.pass = RESULT_PASS;	
-		saveResult(hashTable,&itemResult1); 
+	
+	   if(AlertDialogWithRet(0,"手动解锁测试","手动解锁能是否正常","否","正常")==TRUE)
+	   {
+		   itemResult1.pass = RESULT_PASS;	
+		   saveResult(hashTable,&itemResult1); 
+	   }else{
+		   itemResult1.pass = RESULT_FAIL;	
+		   saveResult(hashTable,&itemResult1); 		
+	   }
 	}else{
-		itemResult1.pass = RESULT_FAIL;	
-		saveResult(hashTable,&itemResult1); 		
+		   itemResult1.pass = RESULT_PASS;	
+		   saveResult(hashTable,&itemResult1); 
 	}
 	
 	
@@ -2794,14 +2983,17 @@ TPS registerPowerModuleTestTps(void)
 
 METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
-	APPEND_INFO(masgHandle,"进入测试"); 
+	//APPEND_INFO(masgHandle,"进入测试"); 
+	SetCtrlVal(masgHandle,POWER_MSG,"进入测试\n");
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	if(FALSE==ParamSetDependWithRetry(eut,"DO单一控制标志","0",3))
 	{
-		APPEND_INFO(masgHandle,"DO单一控制标志 失败");
+		//APPEND_INFO(masgHandle,"DO单一控制标志 失败");
+		SetCtrlVal(masgHandle,POWER_MSG,"DO单一控制标志 失败\n"); 
 		return TEST_RESULT_SOMEPASS;
 	}else{
-		APPEND_INFO(masgHandle,"DO单一控制标志 成功"); 
+		//APPEND_INFO(masgHandle,"DO单一控制标志 成功"); 
+		SetCtrlVal(masgHandle,POWER_MSG,"DO单一控制标志 成功\n");
 	}
 	
 	if(strcmp(group.groupName,"断开交流接触器")==0 || strcmp(group.groupName,"枪1泄放")==0 || strcmp(group.groupName,"枪2泄放")==0)
@@ -2814,7 +3006,9 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		tBIBO bibo={0};
 		if(FALSE==getBibo(group.groupName,&bibo))
 		{
-			APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",group.groupName);
+			//APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",group.groupName);
+			SetCtrlVal(masgHandle,POWER_MSG,group.groupName); 
+			SetCtrlVal(masgHandle,POWER_MSG,"没有该配置\n");
 			saveResult(hashTable,&result);
 			goto DONE;
 		}
@@ -2822,12 +3016,16 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		sprintf(setVal,"%d",bibo.maskBo);
 		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
 		{
-			APPEND_INFO_FORMAT(masgHandle,"%s,操作BO失败",group.groupName);
+			//APPEND_INFO_FORMAT(masgHandle,"%s,操作BO失败",group.groupName);
+			SetCtrlVal(masgHandle,POWER_MSG,group.groupName); 
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO失败\n");			
 			saveResult(hashTable,&result);
 			goto DONE; 
 		}else{
 			result.pass = TRUE; 
-			APPEND_INFO_FORMAT(masgHandle,"%s,操作BO成功：%x",group.groupName,bibo.maskBo);
+			//APPEND_INFO_FORMAT(masgHandle,"%s,操作BO成功：%x",group.groupName,bibo.maskBo);
+			SetCtrlVal(masgHandle,POWER_MSG,group.groupName); 
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO成功\n");			
 			
 		}
 		saveResult(hashTable,&result);
@@ -2851,28 +3049,34 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		ListGetItem(group.subItems,&item,i);
 		result.index=item.itemId;
 		unsigned int input = HexStrToUnsignedInt(item.inputValue_);
-		APPEND_INFO_FORMAT(masgHandle,"%s 测试",item.itemName_); 
+		//APPEND_INFO_FORMAT(masgHandle,"%s 测试",item.itemName_); 
 		tBIBO bibo={0};
 		if(FALSE==getBibo(item.itemName_,&bibo))
 		{
-			APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",item.itemName_);
+			//APPEND_INFO_FORMAT(masgHandle,"%s 无此配置",item.itemName_);
+			SetCtrlVal(masgHandle,POWER_MSG,item.itemName_); 
+			SetCtrlVal(masgHandle,POWER_MSG,"无此配置\n");
 			continue;
 		}
 		char setVal[20]={0}; 
 		sprintf(setVal,"%d",bibo.maskBo);
 		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
 		{
-			APPEND_INFO(masgHandle,"操作BO失败");
+			//APPEND_INFO(masgHandle,"操作BO失败");
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO失败\n");
 			goto DONE; 
 		}else{
-			APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBo);
+			//APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBo);
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO成功"); 
+			//SetCtrlVal(masgHandle,POWER_MSG,bibo.maskBo); 
+			SetCtrlVal(masgHandle,POWER_MSG,"\n"); 
 		}
 		
 		char getVal[20]={0};
 		float getValF=0;
-		float standardF=0;
+		//float standardF=0;
 		
-		int retryCnt = 10;
+		int retryCnt = 50;
 		while(retryCnt-- >=0 )
 		{
 			/*if(strcmp(item.itemName_,"120KW_电源模块1")==0 || strcmp(item.itemName_,"120KW_电源模块2")==0 || strcmp(item.itemName_,"120KW_电源模块3")==0 || strcmp(item.itemName_,"120KW_电源模块4")==0)
@@ -2894,26 +3098,28 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 			{
 				if(FALSE == ParamGetDependWithRetry(eut,"枪1电表电压",getVal,3))
 				{
-					APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					//APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					SetCtrlVal(masgHandle,POWER_MSG,"获取电表1电压失败"); 
 					goto DONE;		
 				}
 			}else  if(strcmp(item.inputValue_,"电表2")==0){
 				if(FALSE == ParamGetDependWithRetry(eut,"枪2电表电压",getVal,3))
 				{
-					APPEND_INFO(masgHandle,"获取枪1电压失败"); 
+					SetCtrlVal(masgHandle,POWER_MSG,"获取电表2电压失败");  
 					goto DONE;		
 				}
 			}
 			
 			getValF= atof(getVal);
 		
-			standardF=atof(item.standard_);
+			//standardF=atof(item.standard_);
 		
 		
 						
 		
-			if(getValF>standardF-3 && getValF<standardF+3)
+			if(getValF>=item.standard_value.minValue && getValF<=item.standard_value.maxValue)
 			{
+				SetCtrlVal(masgHandle,POWER_MSG,"测试结果合格！！"); 
 				result.pass=RESULT_PASS;
 				//break;
 			}else{
@@ -2921,9 +3127,13 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 			}
 			
 			memset(result.recvString,0,RESULT_RECEIVE_LEN);
-			sprintf(result.recvString,"%f",getValF);
+			sprintf(result.recvString,"%0.2f",getValF);
 			
-			APPEND_INFO_FORMAT(masgHandle,"电压值为:%f,测试结果为:%d",getValF,result.pass);
+			//APPEND_INFO_FORMAT(masgHandle,"电压值为:%f,测试结果为:%d",getValF,result.pass);
+			SetCtrlVal (masgHandle, POWER_VOLTAGE, getValF);
+			SetCtrlVal(masgHandle,POWER_MSG,result.recvString);
+			SetCtrlVal(masgHandle,POWER_MSG,"\n");
+			
 			if(result.pass == RESULT_PASS)
 			{
 			
@@ -2942,11 +3152,11 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 				break;
 			}
 
-			
-			if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",5))
+			Delay(1);
+			/*if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",5))
 			{
 				break;
-			}
+			}*/
 			
 		}
 		
@@ -2955,18 +3165,31 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 		sprintf(setVal,"%d",bibo.maskBi);
 		if(FALSE==ParamSetDependWithRetry(eut,"BO",setVal,3))
 		{
-			APPEND_INFO(masgHandle,"操作BO失败");
+			//APPEND_INFO(masgHandle,"操作BO失败");
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO失败\n"); 
 			goto DONE; 
 		}else{
-			APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBi);
+			//APPEND_INFO_FORMAT(masgHandle,"操作BO成功：%x",bibo.maskBi);
+			SetCtrlVal(masgHandle,POWER_MSG,"操作BO成功\n"); 
 		}		
 		saveResult(hashTable,&result);				
 	}
-	APPEND_INFO(masgHandle,"退出测试");
+	//APPEND_INFO(masgHandle,"退出测试");
+	SetCtrlVal(masgHandle,POWER_MSG,"退出测试\n"); 
 	return ret;
 DONE:	
-	APPEND_INFO(masgHandle,"退出测试");
+	//APPEND_INFO(masgHandle,"退出测试");
+	SetCtrlVal(masgHandle,POWER_MSG,"退出测试\n"); 
 	return ret;
+}
+
+int CreatePowerTestPanel(char *groupName)
+{
+	int panelHandle =  LoadPanel(0,"ParamPanel.uir",POWER);
+	SetPanelAttribute(panelHandle,ATTR_TITLE,groupName);
+	//SetCtrlVal(panelHandle,PANEL_TITLE,groupName);
+	//InstallPanelCallback(panelHandle,oTpsPanelCallBack,NULL);  
+	return panelHandle;
 }
 
 
@@ -2974,6 +3197,7 @@ TPS register120KWPowerModuleTestTps(void)
 {
 	TPS tps=newTps("PowerModule_120KW");
 	tps.testFunction=Power120KWModuleTest;
+	tps.createTpsPanel=CreatePowerTestPanel; 
 	//tps.protocolInit=BiboProtocolInit;
 	return tps;			
 }
@@ -3058,8 +3282,15 @@ BOOL parseCCID(char *src,char *dst)
 	{
 		temp[0]=src[2*i];
 		temp[1]=src[2*i+1];
-		//printf("%d,",htoi(temp)-48);	
-		dst[dstIndex++] = htoi(temp);
+		//printf("%d,",htoi(temp)-48);
+		if(temp[0] >='0' && temp[0] <= '9' && temp[1] >='0' && temp[1] <= '9' )
+		{
+			dst[dstIndex++] = htoi(temp); 	
+		}else{
+			sprintf(dst,"%s",src);
+			return FALSE;
+		}
+		
 	}
 	return TRUE;
 }
@@ -3076,7 +3307,7 @@ METHODRET CCIDTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 		ListGetItem(group.subItems,&item,i);
 		RESULT itemResult={0};
 		itemResult.index=item.itemId;		
-		itemResult.pass=RESULT_PASS;
+		
 		char tempORIGIN[100]={0};
 		//char tempCCID[100]={0};
 		
@@ -3089,11 +3320,15 @@ METHODRET CCIDTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 
 		}
 		
+		//sprintf(tempORIGIN,"%s","PB ERROR");
+		
 		if(FALSE == parseCCID(tempORIGIN,itemResult.recvString))
 		{
 			 APPEND_INFO(masgHandle,"CCID值异常");
+			 saveResult(hashTable,&itemResult);   
 			 goto DONE;
 		}
+		itemResult.pass=RESULT_PASS;
 		
 		APPEND_INFO_FORMAT(masgHandle,"CCID解析后为%s",itemResult.recvString); 
 		saveResult(hashTable,&itemResult);

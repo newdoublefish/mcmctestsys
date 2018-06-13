@@ -18,7 +18,8 @@
 #include "EutHelper.h"
 #include "ParamSetGet.h"  
 
-
+extern BOOL CheckChargingStartVoltage(EUT eut,int masgHandler);
+extern BOOL CheckChargingStopVoltage(EUT eut,int masgHandler);
 METHODRET ConditionTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
@@ -40,12 +41,21 @@ METHODRET ConditionTest(TestGroup group,EUT eut,HashTableType hashTable,int msgP
 		APPEND_INFO(msgPanel,"已成功发送启动充电命令");
 	}	
 #endif	
-	if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
+	
+	if(CheckChargingStartVoltage(eut,msgPanel) == FALSE)
 	{
+		APPEND_INFO(msgPanel,"转入手动模式！"); 
+		if(FALSE==AlertDialogWithRet(0,"waring","已启动充电流程，并且电压已经稳定","否","是"))
+		{
 			//getStubNetService(ip,port);
-		APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
-		return ret;
+			APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+			return ret;
+		}	
+	}else{
+		APPEND_INFO(msgPanel,"已启动充电！");
 	}		
+	
+	
 	
 	for(int i=1;i<=ListNumItems(group.subItems);i++)
 	{
@@ -121,7 +131,12 @@ DONE:
 		APPEND_INFO(msgPanel,"已成功发送停止充电命令");
 	}
 #endif	
-	WarnShow1(0,"请等待并确保充电流程已经停止"); 
+	if(CheckChargingStopVoltage(eut,msgPanel) == FALSE) 
+	{
+		WarnShow1(0,"请确保充电流程已经停止");  
+	}else{
+		APPEND_INFO(msgPanel,"不在充电状态！！");  
+	}		
 	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);		
 	return ret;
 }
