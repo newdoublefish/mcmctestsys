@@ -1265,7 +1265,9 @@ METHODRET CodeInput(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 			sprintf(temp,"%s%s",item.standard_,itemResult.recvString);
 			memset(itemResult.recvString,0,RESULT_RECEIVE_LEN);
 			sprintf(itemResult.recvString,"%s",temp);
-			saveResult(hashTable,&itemResult);
+			saveResultWithErrorCheck(hashTable,&itemResult);
+		}else{
+			saveResultWithErrorCheck(hashTable,&itemResult); 
 		}
 	}
 DONE:	

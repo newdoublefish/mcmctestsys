@@ -465,7 +465,7 @@ METHODRET ParamCheckTest(TestGroup group,EUT eut,HashTableType hashTable,int mas
 	
 	if(strcmp("硬件自检",group.groupName)==0)
 	{
-		if(FALSE==CommandSend(eut,"product self_test\r\n"))
+		if(FALSE==CommandSendWithRetry(eut,"product self_test\r\n",3))
 		{
 			APPEND_INFO(masgHandle,"自检命令发送失败");
 			return ret;				
@@ -2346,13 +2346,13 @@ METHODRET StubCmdTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHa
 																												
 			}			
 			
-			if(startCommand(servicePtr,"prd coeff ins\r\n")<0)
+			if(CommandSendWithRetry(eut,"prd coeff ins\r\n",3)<0)
 			{
 				WarnShow1(0,"参数校正失败");
 				itemResult.pass=RESULT_FAIL;
 			}
 		}else if(strcmp(item.itemName_,"看门狗检查")==0){ 
-			if(startCommand(servicePtr,"product watch_dog\r\n")<0)
+			if(CommandSendWithRetry(eut,"product watch_dog\r\n",3)<0)
 			{
 				WarnShow1(0,"看门狗检查");
 				itemResult.pass=RESULT_FAIL;

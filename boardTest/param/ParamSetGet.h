@@ -13,6 +13,7 @@ BOOL ParamGetDependWithRetry(EUT eut,char *paramName,char *paramValue,int retryC
 BOOL ParamSetDependWithRetry(EUT eut,char *paramName,char *paramValue,int retryCnt);
 BOOL ParamSetDepend(EUT eut,char *paramName,char *paramValue);
 BOOL CommandSend(EUT eut,char *command);
+BOOL CommandSendWithRetry(EUT eut,char *command,int retryCnt);
 #ifdef __cplusplus
     }
 #endif

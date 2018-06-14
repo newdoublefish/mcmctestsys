@@ -46,3 +46,25 @@ HRESULT saveResult(HashTableType table,RESULT *resPtr)
 
 }
 
+HRESULT saveResultWithErrorCheck(HashTableType table,RESULT *resPtr)
+{
+	int found; 
+	/*HashTableFindItem(table,indexPtr,&found); 
+	//printf("testItem.index=%d",testItem.index);
+	if(found==0)//没有则插入一个，不用释放内存
+	{
+	   groupResult.dataLen=4*ListNumItems(testItem.subItems);
+	   groupResult.data=(char *)malloc(groupResult.dataLen);
+	}else
+	{
+	   HashTableGetItem(device.resultHashTable,&(testItem.index),&groupResult,sizeof(result));
+	}*/
+	if(strlen(resPtr->recvString)==0)
+	{
+		resPtr->pass = 0;
+	}	
+	HashTableInsertItem(table,&(resPtr->index),resPtr);
+	return 0;
+
+}
+
