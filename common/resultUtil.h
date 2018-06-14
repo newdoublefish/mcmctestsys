@@ -24,6 +24,7 @@ typedef struct
 HRESULT createResultHashTable(HashTableType *table);
 
 HRESULT saveResult(HashTableType table,RESULT *resPtr);
+HRESULT saveResultWithErrorCheck(HashTableType table,RESULT *resPtr);  
 
 #ifdef __cplusplus
    }

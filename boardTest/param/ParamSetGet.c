@@ -232,3 +232,27 @@ BOOL CommandSend(EUT eut,char *command)
 }
 
 
+BOOL CommandSendWithRetry(EUT eut,char *command,int retryCnt)
+{
+	BOOL ret=TRUE; 
+	do
+	{
+		tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	    if(servicePtr==NULL)
+	    {
+		     return FALSE;
+	    }	
+		if(startCommand(servicePtr,command)<0)
+		{
+			onStubDisConnected(servicePtr);
+			//WarnShow1(0,"ÃüÁî·¢ËÍÊ§°Ü!");
+			ret=FALSE;
+		}else{
+			ret=TRUE;
+			break;
+		}
+	}while(retryCnt--);
+	return ret;	
+}
+
+
