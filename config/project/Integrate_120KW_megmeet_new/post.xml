@@ -33,7 +33,7 @@
 		</param>	
 		<param>
 			<param name="mtype" type="default">AirConditioner</param>	
-			<param name="sn" type="default">ac001</param>	
+			<param name="sn" type="result">203</param>	
 			<param name="vendor" type="default">依维柯</param>	
 		</param>
 		<param>
@@ -55,7 +55,12 @@
 			<param name="mtype" type="default">PowerSupplyModule</param>	
 			<param name="sn" type="result">202</param>	
 			<param name="vendor" type="default">麦格米特</param>	
-		</param>														
+		</param>	
+		<param>
+			<param name="mtype" type="default">Controller</param>	
+			<param name="sn" type="result">101</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>															
 	</array>											
 </post>
 <post name="PileBom" url="http://127.0.0.1:8000/mc/bom/" request="bom" upload="True">
@@ -92,7 +97,7 @@
 		</param>
 		<param>
 			<param name="parent" type="result">105</param>	
-			<param name="child" type="default">ac001</param>	
+			<param name="child" type="result">203</param>	
 			<param name="description" type="default">AirConditioner</param>	
 		</param>	
 		<param>
