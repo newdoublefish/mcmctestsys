@@ -28,7 +28,7 @@ static char *configFile="\\config\\Config.xml";
 static char *config="\\config\\project\\";
 static SUT project;
 
-static void XMLtoSut(CVIXMLElement currElem,SUTCONFIG *sutConfigPtr)
+static void ParseSutProject(CVIXMLElement currElem,SUTCONFIG *sutConfigPtr)
 {
 	int len,numChildElems,index ;
 	CVIXMLElement       currChildElem = 0;
@@ -43,15 +43,11 @@ static void XMLtoSut(CVIXMLElement currElem,SUTCONFIG *sutConfigPtr)
 	   CVIXMLGetElementValueLength (currChildElem, &len);
 	   elemValue = malloc (len + 1);
 	   CVIXMLGetElementValue (currChildElem, elemValue);
-	   if(strcmp(elemName,"Version")==0)
-	   {
-	       //PRINT("Version:%s",elemValue);
-		   strcpy(sutConfigPtr->version,elemValue); 
-		   //PRINT("Version:%s",sutConfigPtr->version);
-	   }else if(strcmp(elemName,"ProjectName")==0)
+	   if(strcmp(elemName,"ProjectName")==0)
 	   {
 		  memset(&project,0,sizeof(SUT));
 	      strcpy(project.systemName,elemValue);
+		  
 	   }else if(strcmp(elemName,"ConfigPath")==0)
 	   {
 		  GetProjectDir(project.configPath);
@@ -89,7 +85,51 @@ static void XMLtoSut(CVIXMLElement currElem,SUTCONFIG *sutConfigPtr)
 		  ListInsertItem(sutConfigPtr->sutList,&project,END_OF_LIST);
 		  
 	   }
-	   XMLtoSut(currChildElem,sutConfigPtr);
+	   
+	   free (elemName);
+       free (elemValue);
+	   
+	}  
+	CVIXMLDiscardElement (currElem);
+}
+
+static void XMLtoSut(CVIXMLElement currElem,SUTCONFIG *sutConfigPtr)
+{
+	int len,numChildElems,index ;
+	CVIXMLElement       currChildElem = 0;
+    char  *elemName = NULL, *elemValue = NULL;	
+	CVIXMLGetNumChildElements (currElem, &numChildElems);     
+	for(index=0;index<numChildElems;index++)
+	{
+	   CVIXMLGetChildElementByIndex (currElem, index, &currChildElem);
+	   CVIXMLGetElementTagLength (currChildElem, &len);
+	   elemName = malloc (len + 1);
+	   CVIXMLGetElementTag (currChildElem, elemName);
+	   CVIXMLGetElementValueLength (currChildElem, &len);
+	   elemValue = malloc (len + 1);
+	   CVIXMLGetElementValue (currChildElem, elemValue);
+	   if(strcmp(elemName,"Project")==0)
+	   {
+		    int numberAttributes=0;
+			CVIXMLGetNumAttributes (currChildElem,&numberAttributes);
+			for(int attributeIndex=0;attributeIndex<numberAttributes;attributeIndex++)
+			{
+				CVIXMLAttribute attribute;
+				char attrName[20]={0},attrValue[20]={0};
+				CVIXMLGetAttributeByIndex (currChildElem,attributeIndex,&attribute);
+				CVIXMLGetAttributeName (attribute,attrName);
+				if(strstr(attrName,"show")!=NULL)
+				{
+					CVIXMLGetAttributeValue(attribute,attrValue);
+					if(strstr(attrValue,"True")!=NULL)
+					{
+						ParseSutProject(currChildElem,sutConfigPtr);  
+					}
+				}
+				CVIXMLDiscardAttribute(attribute);
+
+			}
+	   }
 	   free (elemName);
        free (elemValue);
 	   
