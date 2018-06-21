@@ -1,5 +1,5 @@
 <postset>
-<post name="上传报告" url="http://127.0.0.1:8000/testing/report/" request="report" upload="True">
+<post name="上传报告" url="http://120.79.63.59:10015/testing/report/" request="report" upload="True">
 	<param name="sn" type="projectName">ZB00003</param>
 	<param name="eut" type="projectName">ZB00003</param>
 	<param name="type" type="default">safety</param>

@@ -51,7 +51,7 @@
     <PostPath>reliability_120KW_anbat\post.xml</PostPath>	 
     <ReportPath>reliability_120KW_anbat\reliabilityReport.xlsx</ReportPath>	
   </Project> 
-  <Project>
+  <Project show="True">
     <ProjectName>120KW_reliability</ProjectName>
     <NickName>120KW可靠性测试_金科</NickName>
     <ConfigPath>reliability_120KW_jinko\reliabilityConfig.xlsx</ConfigPath>
