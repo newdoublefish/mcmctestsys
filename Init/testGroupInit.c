@@ -412,30 +412,37 @@ HRESULT testGroupDeinit(void)
 HRESULT testGroupInit(char *filePath)
 {
 	HRESULT error = 0;
+	if(strstr(filePath,".xlsx")!=NULL)
+	{
+		slidePanelHandle=displaySlideProgressWithTextBox("正在分析测试条例表"); 
+		slideProgressShowWithTextBox(slidePanelHandle,-1,"开始分析测试条例表\n",1);
 	
-	slidePanelHandle=displaySlideProgressWithTextBox("正在分析测试条例表"); 
-	slideProgressShowWithTextBox(slidePanelHandle,-1,"开始分析测试条例表\n",1);
-	
-	EXCELTask task1=createExcelTask(filePath,"测试条例",TEST_CASE_RANGE,8); 
-	task1.onCellListener=(void *)callbackFortestCaseCount;
-	if(runExcelTask(task1)<0)  //获取到测试条例的数量
-	{	
-		return -1;
-	}	
+		EXCELTask task1=createExcelTask(filePath,"测试条例",TEST_CASE_RANGE,8); 
+		task1.onCellListener=(void *)callbackFortestCaseCount;
+		if(runExcelTask(task1)<0)  //获取到测试条例的数量
+		{	
+			return -1;
+		}	
 	
 
-	EXCELTask task2=createExcelTask(filePath,"测试条例",TEST_CASE_RANGE,8); 
-	task2.onExcelTaskStartListener=(void *)onExcelTaskStartListenerTestCase;
-	task2.onCellListener=(void *)onCellListenerTestCase;
-	//task2.onRowListener=(void *)onRowListenerTestCase;//进度显示
-	task2.onExcelTaskFinishListener=(void *)onFinishListenerTestCase; 
-	if(runExcelTask(task2)<0)  //获取到测试条例的数量	
+		EXCELTask task2=createExcelTask(filePath,"测试条例",TEST_CASE_RANGE,8); 
+		task2.onExcelTaskStartListener=(void *)onExcelTaskStartListenerTestCase;
+		task2.onCellListener=(void *)onCellListenerTestCase;
+		//task2.onRowListener=(void *)onRowListenerTestCase;//进度显示
+		task2.onExcelTaskFinishListener=(void *)onFinishListenerTestCase; 
+		if(runExcelTask(task2)<0)  //获取到测试条例的数量	
+		{
+	    	return -1;
+		}	
+		//printf("testCaseCount:%d\n",ListNumItems(tiaoliList));
+		//printf("testGroupCount:%d\n",ListNumItems(tiaoliGroup)); 
+    	return error;
+	}else if(strstr(filePath,".xml")!=NULL)
 	{
-	    return -1;
-	}	
-	//printf("testCaseCount:%d\n",ListNumItems(tiaoliList));
-	//printf("testGroupCount:%d\n",ListNumItems(tiaoliGroup)); 
-    return error;
+		
+	}
+	
+	return -1;
 }
 
 

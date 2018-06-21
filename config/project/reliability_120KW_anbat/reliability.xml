@@ -1,0 +1,70 @@
+<app>
+<case>
+	<group name="ABCN相连对PE绝缘电阻" type="resistance" tips="流程卡检查">
+		<item id="1" input="NA" standard="NA">ABCN相连对PE绝缘电阻</item>	
+	</group>
+	<group name="ABCN相连对PE工频耐压" type="resistance" tips="ABCN相连对PE工频耐压">
+		<item id="2" input="NA" standard="NA">ABCN相连对PE工频耐压</item>	
+	</group>
+	<group name="ABCN相连对DC12V绝缘电阻" type="resistance" tips="ABCN相连对DC12V绝缘电阻">
+		<item id="3" input="NA" standard="NA">ABCN相连对DC12V绝缘电阻</item>	
+	</group>
+	<group name="ABCN相连对DC12V工频耐压" type="resistance" tips="ABCN相连对DC12V工频耐压">
+		<item id="4" input="NA" standard="NA">ABCN相连对DC12V工频耐压</item>	
+	</group>	
+	<group name="ABCN相连对模块输出铜牌绝缘电阻" type="resistance" tips="ABCN相连对模块输出铜牌绝缘电阻">
+		<item id="5" input="NA" standard="NA">ABCN相连对模块输出铜牌绝缘电阻</item>	
+	</group>
+	<group name="DC12V对模块输出铜牌绝缘电阻" type="resistance" tips="DC12V对模块输出铜牌绝缘电阻">
+		<item id="6" input="NA" standard="NA">DC12V对模块输出铜牌绝缘电阻</item>	
+	</group>
+	<group name="DC12V输出对PE绝缘电阻" type="resistance" tips="DC12V输出对PE绝缘电阻">
+		<item id="7" input="NA" standard="NA">DC12V输出对PE绝缘电阻</item>	
+	</group>
+	<group name="DC12V输出对PE工频耐压" type="resistance" tips="DC12V输出对PE绝缘电阻">
+		<item id="8" input="NA" standard="NA">DC12V输出对PE工频耐压</item>	
+	</group>	
+	<group name="模块输出铜牌对PE工频耐压" type="resistance" tips="模块输出铜牌对PE工频耐压">
+		<item id="9" input="NA" standard="NA">模块输出铜牌对PE工频耐压</item>	
+	</group>
+	<group name="模块输出铜牌对PE工频耐压" type="resistance" tips="模块输出铜牌对PE工频耐压">
+		<item id="10" input="NA" standard="NA">模块输出铜牌对PE工频耐压</item>	
+	</group>
+	<group name="枪输出对PE绝缘电阻" type="resistance" tips="枪输出对PE绝缘电阻">
+		<item id="11" input="NA" standard="NA">枪输出对PE绝缘电阻</item>	
+	</group>
+	<group name="枪输出对PE频耐压" type="resistance" tips="枪输出对PE频耐压">
+		<item id="12" input="NA" standard="NA">枪输出对PE频耐压</item>	
+	</group>													
+</case>
+<protocol>
+	<resistance>
+		<param TYPE="IR" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">ABCN相连对PE绝缘电阻</param>
+		<param TYPE="DCW" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">ABCN相连对PE工频耐压</param>
+		<param TYPE="IR" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">ABCN相连对DC12V绝缘电阻</param>
+		<param TYPE="DCW" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">ABCN相连对DC12V工频耐压</param>
+		<param TYPE="IR" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">ABCN相连对模块输出铜牌绝缘电阻</param>
+		<param TYPE="IR" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">DC12V对模块输出铜牌绝缘电阻</param>
+		<param TYPE="IR" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">DC12V输出对PE绝缘电阻</param>
+		<param TYPE="DCW" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">DC12V输出对PE工频耐压</param>
+		<param TYPE="IR" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">模块输出铜牌对PE绝缘电阻</param>
+		<param TYPE="DCW" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">模块输出铜牌对PE工频耐压</param>
+		<param TYPE="IR" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">枪输出对PE绝缘电阻</param>
+		<param TYPE="DCW" VOLT="0.5" UPPER="0" LOWER="10" RTIM="0.5" FTIM="0.5" ARC="0" FREQ="50" WTIM="0" RAMP="0" RANGE="0">枪输出对PE工频耐压</param>				
+	</resistance>
+</protocol>	
+<relays>
+	<relay before="0x00004220" after="0x00000000" mask="0x0000FFFF">ABCN相连对PE绝缘电阻</relay>
+	<relay before="0x00004220" after="0x00000000" mask="0x0000FFFF">ABCN相连对PE工频耐压</relay>
+	<relay before="0x00004240" after="0x00000000" mask="0x0000FFFF">ABCN相连对DC12V绝缘电阻</relay>
+	<relay before="0x00004240" after="0x00000000" mask="0x0000FFFF">ABCN相连对DC12V工频耐压</relay>
+	<relay before="0x00004280" after="0x00000000" mask="0x0000FFFF">ABCN相连对模块输出铜牌绝缘电阻</relay>
+	<relay before="0x00004880" after="0x00000000" mask="0x0000FFFF">DC12V对模块输出铜牌绝缘电阻</relay>
+	<relay before="0x00004820" after="0x00000000" mask="0x0000FFFF">DC12V输出对PE绝缘电阻</relay>
+	<relay before="0x00004820" after="0x00000000" mask="0x0000FFFF">DC12V输出对PE工频耐压</relay>
+	<relay before="0x00005020" after="0x00000000" mask="0x0000FFFF">模块输出铜牌对PE绝缘电阻</relay>
+	<relay before="0x00005020" after="0x00000000" mask="0x0000FFFF">模块输出铜牌对PE工频耐压</relay>
+	<relay before="0x00006020" after="0x00000000" mask="0x0000FFFF">枪输出对PE绝缘电阻</relay>
+	<relay before="0x00006020" after="0x00000000" mask="0x0000FFFF">枪输出对PE工频耐压</relay>	
+</relays>	
+</app>
