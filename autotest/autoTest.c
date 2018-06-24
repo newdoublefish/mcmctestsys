@@ -65,7 +65,7 @@ static char *startTestImagePath="startTest.png";
 static char *stopImagePath="stop.png"; 
 #endif
 
-static TESTengine *gEngine;
+TESTengine *gEngine;
 static tTestProject *gTestProject;
 
 static void operateTimer(int on);

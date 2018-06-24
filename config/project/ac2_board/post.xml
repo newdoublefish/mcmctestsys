@@ -1,0 +1,223 @@
+<postset>
+<post name="BoardInfo" url="http://127.0.0.1:8000/mc/material/" request="material" upload="True">
+	<array name="materials" type="array">
+		<param>
+			<param name="mtype" type="default">Controller</param>	
+			<param name="sn" type="default">controller001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">DCD</param>	
+			<param name="sn" type="default">dcd001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">DCM</param>	
+			<param name="sn" type="default">dcm001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">PWR</param>	
+			<param name="sn" type="default">pwr001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">CPU</param>	
+			<param name="sn" type="default">cpu001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">4G</param>	
+			<param name="sn" type="default">4g001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">DDB</param>	
+			<param name="sn" type="default">ddb001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">DCR</param>	
+			<param name="sn" type="default">dcr001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">LED</param>	
+			<param name="sn" type="default">led001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>												
+	</array>											
+</post>
+<post name="BoardBom" url="http://127.0.0.1:8000/mc/bom/" request="bom" upload="True">
+	<array name="boms" type="array">
+		<param>
+			<param name="parent" type="default">controller001</param>	
+			<param name="child" type="default">dcd001</param>	
+			<param name="description" type="default">DCD</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">controller001</param>	
+			<param name="child" type="default">dcm001</param>	
+			<param name="description" type="default">DCM</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">controller001</param>	
+			<param name="child" type="default">pwr001</param>	
+			<param name="description" type="default">PWR</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">controller001</param>	
+			<param name="child" type="default">cpu001</param>	
+			<param name="description" type="default">CPU</param>	
+		</param>	
+		<param>
+			<param name="parent" type="default">controller001</param>	
+			<param name="child" type="default">4g001</param>	
+			<param name="description" type="default">4G</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">controller001</param>	
+			<param name="child" type="default">ddb001</param>	
+			<param name="description" type="default">DDB</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">controller001</param>	
+			<param name="child" type="default">dcr001</param>	
+			<param name="description" type="default">DCR</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">controller001</param>	
+			<param name="child" type="default">led001</param>	
+			<param name="description" type="default">LED</param>	
+		</param>							
+	</array>											
+</post>
+<post name="PileInfo" url="http://127.0.0.1:8000/mc/material/" request="material" upload="True">
+	<array name="materials" type="array">
+		<param>
+			<param name="mtype" type="default">ChargingPile</param>	
+			<param name="sn" type="default">pile001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">SIM</param>	
+			<param name="sn" type="default">sim001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">Ammeter</param>	
+			<param name="sn" type="default">ammeter001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">Ammeter</param>	
+			<param name="sn" type="default">ammeter002</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">ChargingGun</param>	
+			<param name="sn" type="default">cg001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">ChargingGun</param>	
+			<param name="sn" type="default">cg002</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">AirConditioner</param>	
+			<param name="sn" type="default">ac001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">PowerSupplyModule</param>	
+			<param name="sn" type="default">psm001</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">PowerSupplyModule</param>	
+			<param name="sn" type="default">psm002</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>
+		<param>
+			<param name="mtype" type="default">PowerSupplyModule</param>	
+			<param name="sn" type="default">psm003</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>	
+		<param>
+			<param name="mtype" type="default">PowerSupplyModule</param>	
+			<param name="sn" type="default">psm004</param>	
+			<param name="vendor" type="default">北京龙腾</param>	
+		</param>														
+	</array>											
+</post>
+<post name="PileBom" url="http://127.0.0.1:8000/mc/bom/" request="bom" upload="True">
+	<array name="boms" type="array">
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">controller001</param>	
+			<param name="description" type="default">Controller</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">sim001</param>	
+			<param name="description" type="default">SIM</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">ammeter001</param>	
+			<param name="description" type="default">Ammeter1</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">ammeter002</param>	
+			<param name="description" type="default">Ammeter2</param>	
+		</param>	
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">cg001</param>	
+			<param name="description" type="default">ChargingGun1</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">cg002</param>	
+			<param name="description" type="default">ChargingGun2</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">ac001</param>	
+			<param name="description" type="default">AirConditioner</param>	
+		</param>	
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">psm001</param>	
+			<param name="description" type="default">PowerSupplyModule1</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">psm002</param>	
+			<param name="description" type="default">PowerSupplyModule2</param>	
+		</param>	
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">psm003</param>	
+			<param name="description" type="default">PowerSupplyModule3</param>	
+		</param>
+		<param>
+			<param name="parent" type="default">pile001</param>	
+			<param name="child" type="default">psm004</param>	
+			<param name="description" type="default">PowerSupplyModule4</param>	
+		</param>								
+	</array>											
+</post>
+<post name="铭牌编号" url="http://127.0.0.1:8000/mc/attribute/" request="attribute" upload="True">
+	<param name="material" type="default">pile001</param>
+	<param name="attribute" type="default">NamePlate</param>
+	<param name="value" type="projectName">ZB00003</param> 					
+</post>
+<post name="装置编号" url="http://127.0.0.1:8000/mc/attribute/" request="attribute" upload="True">
+	<param name="material" type="default">pile001</param>
+	<param name="attribute" type="default">DeviceId</param>
+	<param name="value" type="projectName">0000081000081</param> 					
+</post>
+</postset>

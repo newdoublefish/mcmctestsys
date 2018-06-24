@@ -20,6 +20,10 @@
 #include "EutHelper.h"
 #include "meter.h"
 #include "ParamPanel.h"
+#include "testFramework.h"
+#include "testProject.h"
+#include "resultSave.h"
+extern TESTengine *gEngine; 
 
 
 METHODRET DemoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
@@ -162,8 +166,9 @@ METHODRET MeterTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel
 		
 		}
 	}
-	//APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);		
+	//APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);
 	return ret;
+
 }
 
 
@@ -184,5 +189,89 @@ TPS registerMeterTPS(void)
 	tps.testFunction=MeterTest;
 	tps.createTpsPanel=CreateMeterTpsPanel;
 	//tps.manualTestFunction=DemoTest;
+	return tps;
+}
+
+
+
+METHODRET ACTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	tTestProject *projectPtr = getCurrentProject();  
+	TESTobject obj = gEngine->objectArray[0];
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName);
+	APPEND_INFO_FORMAT(msgPanel,"测试次数:%d",gEngine->reTestCnt);
+	APPEND_INFO_FORMAT(msgPanel,"报告存放地址:%s",projectPtr->projectDir);
+	char prex[20]={0};
+	int startNum =0;
+	int totalCnt =0;
+	char gunPrex[20]={0};
+	
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item;
+		ListGetItem(group.subItems,&item,i);
+		if(i==1)
+		{
+			sprintf(prex,"%s",item.inputValue_);
+			sprintf(gunPrex,"%s",item.standard_);
+		}else if(i==2)
+		{
+			startNum = atoi(item.inputValue_);
+		}else if(i==3){
+		    totalCnt=atoi(item.inputValue_);
+		}
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		itemResult.pass = RESULT_PASS;
+		saveResult(hashTable,&itemResult);
+	}
+	
+	for(int i=0;i<totalCnt;i++)
+	{
+		RESULT re1={0};
+		re1.index=1;
+		RESULT re4={0};
+		re4.index=4;
+		RESULT re5={0};
+		re5.index=5;
+		RESULT re6={0};
+		re6.index=6;
+		RESULT re7={0};
+		re7.index=7;		
+		sprintf(re1.recvString,"%s%d",prex,startNum+i);
+		APPEND_INFO_FORMAT(msgPanel,"铭牌编号:%s",re1.recvString);
+		sprintf(re4.recvString,"%s%d%d",gunPrex,startNum+i,1);
+		sprintf(re5.recvString,"%s%d%d",gunPrex,startNum+i,2);  
+		sprintf(re6.recvString,"%s%d%d",gunPrex,startNum+i,3);  
+		sprintf(re7.recvString,"%s%d%d",gunPrex,startNum+i,4);
+		APPEND_INFO_FORMAT(msgPanel,"%s,%s,%s,%s",re4.recvString,re5.recvString,re6.recvString,re7.recvString); 
+		saveResult(hashTable,&re1); 
+		saveResult(hashTable,&re4); 
+		saveResult(hashTable,&re5); 
+		saveResult(hashTable,&re6); 
+		saveResult(hashTable,&re7); 
+		char fileName[256]={0};
+		sprintf(fileName,"%s\\%s-整机测试.xlsx",projectPtr->projectDir,re1.recvString);
+		saveResultToExcelFile(fileName,obj);
+		APPEND_INFO_FORMAT(msgPanel,"fileName:%s",fileName); 
+		
+	}
+
+	
+	APPEND_INFO_FORMAT(msgPanel,"%s,%s,%d,%d\n",prex,gunPrex,startNum,totalCnt);
+	APPEND_INFO_FORMAT(msgPanel,"结束测试:%s",group.groupName);
+	if(AlertDialogWithRet(0,"请选择","请确认结果是否正确","错误","正确")==TRUE)
+	{
+			
+	}	
+	return ret;		
+}
+
+
+TPS registerACTPS(void)
+{
+	TPS tps=newTps("ac");
+	tps.testFunction=ACTest;
 	return tps;
 }
