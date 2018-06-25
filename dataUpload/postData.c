@@ -15,6 +15,7 @@ ListType getPostDataSet(void)
 	return postDataSet;
 }
 
+
 BOOL loadParam(CVIXMLElement currElem,ListType paramList)
 {
 	CVIXMLElement  currChildElem = 0,childElem = 0;
@@ -247,8 +248,9 @@ BOOL loadPostDataFromXml(char *fileName,ListType postDataSet)
 	return TRUE;
 }
 
+extern BOOL getResultJson(char *name,cJSON *data);
 
-BOOL buildPostDataStr(tPostData postData,char *buffer,void *callbackFunc,void *callbackData)
+BOOL buildPostDataStr(tPostData postData,char **buffer,void *callbackFunc,void *callbackData)
 {
 	cJSON *root = NULL;                                                                                
 	cJSON *data =NULL;                                                                                 
@@ -264,8 +266,26 @@ BOOL buildPostDataStr(tPostData postData,char *buffer,void *callbackFunc,void *c
 		if(param.postParamList==0)
 		{
 			if(callbackFunc!=NULL)
-				(*(ON_FILL_DATA_PARAM)(callbackFunc))(&param,callbackData);
-			cJSON_AddStringToObject(data,param.name,param.value);
+			{
+				tPostItem pItem={0};
+				pItem.type = realloc(pItem.type,strlen(param.type)+1);
+				sprintf(pItem.type,"%s",param.type);
+				pItem.value = realloc(pItem.value,strlen(param.value)+1);
+				sprintf(pItem.value,"%s",param.value);
+				if(strcmp(pItem.type,"resultJson")==0)
+				{
+					getResultJson(param.name,data);
+				}else{
+					(*(ON_FILL_DATA_PARAM)(callbackFunc))(&pItem,callbackData);
+					cJSON_AddStringToObject(data,param.name,pItem.value);
+				}
+				if(pItem.type!=NULL)
+					free(pItem.type);
+				if(pItem.value!=NULL)
+					free(pItem.value);
+				 
+			}else
+				cJSON_AddStringToObject(data,param.name,param.value);
 		}else if(strcmp(param.type,"array")==0)
 		{
 			array = cJSON_CreateArray();
@@ -281,9 +301,26 @@ BOOL buildPostDataStr(tPostData postData,char *buffer,void *callbackFunc,void *c
 				{
 					tPostParam itemParam = {0};
 					ListGetItem(arrayParam.postParamList,&itemParam,itemIndex);
+					//if(callbackFunc!=NULL)
+					//	(*(ON_FILL_DATA_PARAM)(callbackFunc))(&itemParam,callbackData);
+					//cJSON_AddStringToObject(item,itemParam.name,itemParam.value); 
 					if(callbackFunc!=NULL)
-						(*(ON_FILL_DATA_PARAM)(callbackFunc))(&itemParam,callbackData);
-					cJSON_AddStringToObject(item,itemParam.name,itemParam.value); 
+					{
+						tPostItem pItem={0};
+						pItem.type = realloc(pItem.type,strlen(itemParam.type)+1);
+						sprintf(pItem.type,"%s",itemParam.type);
+						pItem.value = realloc(pItem.value,strlen(itemParam.value)+1);
+						sprintf(pItem.value,"%s",itemParam.value);
+						(*(ON_FILL_DATA_PARAM)(callbackFunc))(&pItem,callbackData);
+						cJSON_AddStringToObject(item,itemParam.name,pItem.value);
+						if(pItem.type!=NULL)
+							free(pItem.type);
+						if(pItem.value!=NULL)
+							free(pItem.value);
+							 
+					}else
+						cJSON_AddStringToObject(item,itemParam.name,itemParam.value);					
+					
 				}
 			}
 		}
@@ -291,8 +328,10 @@ BOOL buildPostDataStr(tPostData postData,char *buffer,void *callbackFunc,void *c
 	cJSON_AddItemToObject(root,"data",data);                                                           
 	                                                                                                   
 	//printf("%s\n",cJSON_Print(root));                                                                  
-	if(buffer!=NULL)
-		sprintf(buffer,"%s",cJSON_Print(root));                                                                                                   
+	/*if(buffer!=NULL)
+		sprintf(buffer,"%s",cJSON_Print(root));*/
+	*buffer = malloc(strlen(cJSON_Print(root))+1);
+	sprintf(*buffer,"%s",cJSON_Print(root));
 	//parseJson(cJSON_Print(root));                                                                      
 	cJSON_Delete(root);
 	return TRUE;                                                                                
@@ -330,11 +369,13 @@ void printPostDataJson(ListType postDataSet)
 {
 	for(int i=1;i<=ListNumItems(postDataSet);i++)
 	{
-		char buffer[1024]={0};
+		char *buffer=NULL;
 		tPostData data={0};
 		ListGetItem(postDataSet,&data,i);
-		buildPostDataStr(data,buffer,NULL,NULL);
+		buildPostDataStr(data,&buffer,NULL,NULL);
 		printf("%s",buffer);
+		if(buffer!=NULL)
+			free(buffer);
 	}
 }
 

@@ -76,12 +76,14 @@ METHODRET HttpPostTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPa
 		tPostData data;
 		if(TRUE==getPostData(&data,item.itemName_))
 		{
-			char buffer[512]={0};
-			buildPostDataStr(data,buffer,NULL,NULL);
+			char *buffer=NULL;
+			buildPostDataStr(data,&buffer,NULL,NULL);
 			if(1==httpPostJson(data.url,buffer))
 			{
 				itemResult.pass = RESULT_PASS;
 			}
+			if(buffer!=NULL)
+				free(buffer);
 		}
 		saveResult(hashTable,&itemResult);
 		

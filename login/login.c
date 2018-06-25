@@ -40,16 +40,17 @@ static unsigned int getSecret()
 	return ((year*3+13-7) + (month*342))*44;
 }
 
-BOOL onParseLoginPostData(tPostParam *paramPtr,void *callbackData)
+BOOL onParseLoginPostData(tPostItem *paramPtr,void *callbackData)
 {
 	tLoginConfig *configPtr=(tLoginConfig *)callbackData;
 	if(strcmp(paramPtr->type,"username")==0)
 	{
-		memset(paramPtr->value,0,POST_DATA_VALUE);
+		//memset(paramPtr->value,0,POST_DATA_VALUE);
+		paramPtr->value = realloc(paramPtr->value,strlen(configPtr->userName)+1);
 		sprintf(paramPtr->value,"%s",configPtr->userName);
 	}else if(strcmp(paramPtr->type,"password")==0)
 	{
-		memset(paramPtr->value,0,POST_DATA_VALUE);
+		paramPtr->value = realloc(paramPtr->value,strlen(configPtr->password)+1);
 		sprintf(paramPtr->value,"%s",configPtr->password);
 	}
 	return TRUE;	
@@ -119,9 +120,10 @@ BOOL Login(tLoginConfig config)
 	}*/
 	if(strstr(config.url,"http://")!=NULL)   //正则表达式判断是否进行远程登入
 	{
-		char buffer[512]={0};
+		char *buffer=NULL;
 		tPostData data = buildLoginPostData(config);
-		buildPostDataStr(data,buffer,onParseLoginPostData,&config);
+		buildPostDataStr(data,&buffer,onParseLoginPostData,&config);
+		//printf("%s\n",buffer);
 		ListDispose(data.postParamList);
 		char *fullName;
 		if(1==httpPostJsonWithResponseData(data.url,buffer,&fullName))
@@ -157,14 +159,20 @@ BOOL Login(tLoginConfig config)
 				free(fullName);
 			}
 			//WarnShow1(0,gConfig.fullName);
+			if(buffer!=NULL)
+				free(buffer);
 			return TRUE;
 		}else{
 			int pass = atoi(config.password);
 			if((pass == getSecret())&&strlen(config.userName)==0)  
 			{
+				if(buffer!=NULL)
+					free(buffer);
 				return TRUE;
 			}			
 		}
+		if(buffer!=NULL)
+			free(buffer);
 		return FALSE;		
 	}
 	

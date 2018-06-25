@@ -20,6 +20,11 @@
 
 #define POST_DATA_VALUE 256
 #define POST_DATA_BASE 50
+		
+typedef struct{
+	char *type;
+	char *value;
+}tPostItem;		
 
 typedef struct{
 	char name[POST_DATA_BASE];
@@ -35,9 +40,9 @@ typedef struct{
 	int upload;
 	ListType postParamList;
 }tPostData;
-typedef BOOL (*ON_FILL_DATA_PARAM)(tPostParam *,void *callbackData);
+typedef BOOL (*ON_FILL_DATA_PARAM)(tPostItem *,void *callbackData);
 
-BOOL buildPostDataStr(tPostData data,char *buffer,void *callbackFunc,void *callbackData);
+BOOL buildPostDataStr(tPostData data,char **buffer,void *callbackFunc,void *callbackData);
 BOOL importPostProtocol(void);
 BOOL getPostData(tPostData *postDataPtr,char *name);
 ListType getPostDataSet();

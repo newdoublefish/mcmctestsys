@@ -15,6 +15,7 @@
 #include "resultInfo.h"
 #include "login.h"
 #include "common.h"
+#include "cJSON.h"
 
 static int reportManagerPanel;
 static HashTableType resultHashTable=0;
@@ -65,25 +66,64 @@ static void refreshRecordTree()
 	ListDispose(list);
 }
 
-BOOL onParsePostData(tPostParam *paramPtr,void *callbackData)
+
+BOOL getResultJson(char *name,cJSON *data)
+{
+	cJSON *array = NULL;
+	cJSON *item = NULL;
+	array = cJSON_CreateArray();
+	
+	ListType testItemList = getTestCaseList();
+	int itemCnt = ListNumItems(testItemList);
+	
+	for(int i=1;i<=itemCnt;i++)
+	{
+		int found=0;
+		TestItem tItem = {0};
+		ListGetItem(testItemList,&tItem,i);
+		RESULT itemResult;
+		if(HashTableFindItem(resultHashTable,&i,&found)>=0)
+		{
+			if(found>0)
+			{
+				HashTableGetItem(resultHashTable,&i,&itemResult,sizeof(RESULT));
+				item = cJSON_CreateObject();
+		        cJSON_AddItemToArray(array,item);
+		        cJSON_AddNumberToObject(item,"id",itemResult.index);
+		        cJSON_AddStringToObject(item,"name",tItem.itemName_);  
+		        cJSON_AddStringToObject(item,"value",itemResult.recvString); 
+				if(itemResult.pass = RESULT_PASS)
+				{
+					cJSON_AddStringToObject(item,name,"合格"); 
+				}
+				
+			}
+		}
+	}	
+	cJSON_AddItemToObject(data,"results",array); 
+	return TRUE;
+}
+
+
+BOOL onParsePostData(tPostItem *paramPtr,void *callbackData)
 {
 	if(strcmp(paramPtr->type,"result")==0)
 	{
 		RESULT itemResult={0};
 		int index=atoi(paramPtr->value);
 		HashTableGetItem(resultHashTable,&index,&itemResult,sizeof(RESULT));
-		memset(paramPtr->value,0,POST_DATA_VALUE);
+		paramPtr->value = realloc(paramPtr->value,strlen(itemResult.recvString)+1);
 		sprintf(paramPtr->value,"%s",itemResult.recvString);
 	}else if(strcmp(paramPtr->type,"projectName")==0)
 	{
 		tAutoTestRecord *recordPtr=(tAutoTestRecord *)callbackData;
-		memset(paramPtr->value,0,POST_DATA_VALUE);
+		paramPtr->value = realloc(paramPtr->value,strlen(recordPtr->m_code)+1);
 		sprintf(paramPtr->value,"%s",recordPtr->m_code);
 		//sprintf(paramPtr->value,"%s",itemResult.recvString);
 	}else if(strcmp(paramPtr->type,"ftpPath")==0)
 	{
 		tAutoTestRecord *recordPtr=(tAutoTestRecord *)callbackData;
-		memset(paramPtr->value,0,POST_DATA_VALUE);
+		paramPtr->value = realloc(paramPtr->value,strlen(recordPtr->m_reportpath)+1); 
 		sprintf(paramPtr->value,"%s",recordPtr->m_reportpath);
 		//sprintf(paramPtr->value,"%s",itemResult.recvString);
 	}else if(strcmp(paramPtr->type,"username")==0)
@@ -91,19 +131,20 @@ BOOL onParsePostData(tPostParam *paramPtr,void *callbackData)
 		tLoginConfig config = getAccount(); 
 		if(strlen(config.userName)!=0)
 		{
-			memset(paramPtr->value,0,POST_DATA_VALUE);
+			paramPtr->value = realloc(paramPtr->value,strlen(config.userName)+1); 
 			sprintf(paramPtr->value,"%s",config.userName);
 		}
 	}else if(strcmp(paramPtr->type,"passpercent")==0)
 	{
 		tAutoTestRecord *recordPtr=(tAutoTestRecord *)callbackData; 
+		paramPtr->value = realloc(paramPtr->value,10);
 		sprintf(paramPtr->value,"%d",recordPtr->m_result);
 	}else if(strcmp(paramPtr->type,"pubdate")==0)
 	{
 		tAutoTestRecord *recordPtr=(tAutoTestRecord *)callbackData; 
+		paramPtr->value = realloc(paramPtr->value,strlen(recordPtr->m_createtime)+1);
 		sprintf(paramPtr->value,"%s",recordPtr->m_createtime);
 	}
-
 	return TRUE;	
 }
 
@@ -114,14 +155,15 @@ BOOL postData(int ftpPanel,tAutoTestRecord record)
 	for(int i=1;i<=ListNumItems(list);i++)
 	{
 		tPostData data={0};
-		char buffer[2048]={0}; 
+		//char buffer[512]={0}; 
 		ListGetItem(list,&data,i);
 		if(data.upload == 0 )
 			continue;
-		Fmt(buffer,"上传数据 %s ",data.name);
-		SetCtrlVal(ftpPanel,FTP_TEXTBOX,buffer);
-		memset(buffer,0,512);
-		buildPostDataStr(data,buffer,onParsePostData,&record);
+		SetCtrlVal(ftpPanel,FTP_TEXTBOX,"上传数据");
+		SetCtrlVal(ftpPanel,FTP_TEXTBOX,data.name);
+		//memset(buffer,0,512);
+		char *buffer=NULL;
+		buildPostDataStr(data,&buffer,onParsePostData,&record);
 		if(1!=httpPostJson(data.url,buffer))
 		{
 			//return FALSE;
@@ -130,6 +172,8 @@ BOOL postData(int ftpPanel,tAutoTestRecord record)
 		}else{
 		   	SetCtrlVal(ftpPanel,FTP_TEXTBOX,"上传成功\n");
 		}
+		if(buffer!=NULL)
+			free(buffer);
 	}
 	return ret;	
 }
