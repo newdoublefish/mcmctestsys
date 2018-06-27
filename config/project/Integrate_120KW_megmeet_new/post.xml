@@ -139,7 +139,8 @@
 	<param name="pass_percent" type="passpercent">100</param>		
 	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
 	<param name="user" type="username">陶斯君</param>
-	<param name="pub_date" type="pubdate">201404040404</param>							
+	<param name="pub_date" type="pubdate">201404040404</param>
+	<param name="result" type="resultJson">json</param>				
 </post>	
 <post name="上传产品" url="http://120.79.63.59:10015/product/product/" request="product" upload="True">
 	<param name="sn" type="result">105</param>

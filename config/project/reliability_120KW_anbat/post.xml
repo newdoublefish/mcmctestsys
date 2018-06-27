@@ -7,6 +7,6 @@
 	<param name="report" type="ftpPath">ftp://120.78.222.124/test.xlsx</param>
 	<param name="user" type="username">陶斯君</param>
 	<param name="pub_date" type="pubdate">201404040404</param>
-	<param name="result" type="resultJson">json</param>>				
+	<param name="result" type="resultJson">json</param>				
 </post>
 </postset>

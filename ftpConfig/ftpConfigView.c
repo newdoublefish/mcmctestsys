@@ -11,6 +11,7 @@
  // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
+#include "pwctrl.h"
 #include <ansi_c.h>
 #include <cvirte.h>		
 #include <userint.h>
@@ -34,12 +35,17 @@ static void showFtpConfigs()
 
 int DisplayFtpConfigView (int panel)
 {
+	int password_ctrl=0;
 	if ((panelHandle = LoadPanel (panel, "ftpConfigPanel.uir", PANEL)) < 0)
 		return -1;
 	if(initDb() == FALSE)
 	{
 		WarnShow1(0,"打开数据库失败");
-	}		
+	}	
+	password_ctrl = PasswordCtrl_ConvertFromString (panelHandle,
+				PANEL_PASSWORD);
+	PasswordCtrl_SetAttribute (panelHandle, password_ctrl,
+				ATTR_PASSWORD_MASK_CHARACTER, '*');		
 	showFtpConfigs();  
 	DisplayPanel (panelHandle);
 	return 0;
