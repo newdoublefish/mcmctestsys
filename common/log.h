@@ -62,7 +62,7 @@ int LOG_REC(char *logMsg);
 
 #define LOG_EVENT_FORMAT(level,format,...)   \
 		do{ 		 \
-		    char temp[2048]={0};          \
+		    char temp[20480]={0};          \
 			sprintf((char*)temp,"[%s]func:%s,(FILE:%s,LINE:%d):"format"\n",LOG_NAME[level],__FUNCTION__,__FILE__,__LINE__,##__VA_ARGS__);	   \
 			LOG_REC((char *)temp);							\
 	     }while(0)

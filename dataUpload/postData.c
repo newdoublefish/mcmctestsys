@@ -249,6 +249,7 @@ BOOL loadPostDataFromXml(char *fileName,ListType postDataSet)
 }
 
 extern BOOL getResultJson(char *name,cJSON *data);
+extern BOOL getGroupResultJson(char *name,cJSON *data);
 
 BOOL buildPostDataStr(tPostData postData,char **buffer,void *callbackFunc,void *callbackData)
 {
@@ -274,7 +275,7 @@ BOOL buildPostDataStr(tPostData postData,char **buffer,void *callbackFunc,void *
 				sprintf(pItem.value,"%s",param.value);
 				if(strcmp(pItem.type,"resultJson")==0)
 				{
-					getResultJson(param.name,data);
+					getGroupResultJson(param.name,data);
 				}else{
 					(*(ON_FILL_DATA_PARAM)(callbackFunc))(&pItem,callbackData);
 					cJSON_AddStringToObject(data,param.name,pItem.value);

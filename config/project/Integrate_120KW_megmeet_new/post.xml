@@ -1,5 +1,5 @@
 <postset>
-<post name="PileInfo" url="http://120.79.63.59:10015/mc/material/" request="material" upload="True">
+<post name="PileInfo" url="http://120.79.63.59:10015/mc/material/" request="material" upload="False">
 	<array name="materials" type="array">
 		<param>
 			<param name="mtype" type="default">ChargingPile</param>	
@@ -63,7 +63,7 @@
 		</param>															
 	</array>											
 </post>
-<post name="PileBom" url="http://120.79.63.59:10015/mc/bom/" request="bom" upload="True">
+<post name="PileBom" url="http://120.79.63.59:10015/mc/bom/" request="bom" upload="False">
 	<array name="boms" type="array">
 		<param>
 			<param name="parent" type="result">105</param>	
@@ -122,17 +122,17 @@
 		</param>								
 	</array>											
 </post>
-<post name="铭牌编号" url="http://120.79.63.59:10015/mc/attribute/" request="attribute" upload="True">
+<post name="铭牌编号" url="http://120.79.63.59:10015/mc/attribute/" request="attribute" upload="False">
 	<param name="material" type="result">105</param>
 	<param name="attribute" type="default">NamePlate</param>
 	<param name="value" type="result">105</param> 					
 </post>
-<post name="装置编号" url="http://120.79.63.59:10015/mc/attribute/" request="attribute" upload="True">
+<post name="装置编号" url="http://120.79.63.59:10015/mc/attribute/" request="attribute" upload="False">
 	<param name="material" type="result">105</param>
 	<param name="attribute" type="default">DeviceId</param>
 	<param name="value" type="result">23</param> 					
 </post>
-<post name="上传报告" url="http://120.79.63.59:10015/testing/report/" request="report" upload="True">
+<post name="上传报告" url="http://127.0.0.1:8000/testing/report/" request="report" upload="True">
 	<param name="sn" type="projectName">ZB00003</param>
 	<param name="eut" type="result">105</param>
 	<param name="type" type="default">integrat</param>
@@ -142,7 +142,7 @@
 	<param name="pub_date" type="pubdate">201404040404</param>
 	<param name="result" type="resultJson">json</param>				
 </post>	
-<post name="上传产品" url="http://120.79.63.59:10015/product/product/" request="product" upload="True">
+<post name="上传产品" url="http://120.79.63.59:10015/product/product/" request="product" upload="False">
 	<param name="sn" type="result">105</param>
 	<param name="material" type="result">105</param>
 	<param name="type" type="default">120KW-MEGMEET</param>

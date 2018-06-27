@@ -16,6 +16,7 @@
 #include "login.h"
 #include "common.h"
 #include "cJSON.h"
+#include "policyConfig.h"
 
 static int reportManagerPanel;
 static HashTableType resultHashTable=0;
@@ -98,6 +99,67 @@ BOOL getResultJson(char *name,cJSON *data)
 				}
 				
 			}
+		}
+	}	
+	cJSON_AddItemToObject(data,"results",array); 
+	return TRUE;
+}
+
+BOOL getGroupResultJson(char *name,cJSON *data)
+{
+	cJSON *array = NULL;
+	cJSON *group = NULL;
+	cJSON *groupItemArray = NULL; 
+	cJSON *item = NULL; 
+	array = cJSON_CreateArray();
+	
+	ListType collectList = GetCollectList();
+	ListType groupList = getItemList();
+	int itemCnt = ListNumItems(collectList);
+	
+	for(int i=1;i<=itemCnt;i++)
+	{
+		Collect collect = {0};
+		ListGetItem(collectList,&collect,i);
+		int groupNums = ListNumItems(collect.groups);
+		for(int j=1;j<=groupNums;j++)
+		{
+			TestGroup tg = {0};
+			int groupIndex=0;
+			ListGetItem(collect.groups,&groupIndex,j);
+		    ListGetItem(groupList,&tg,groupIndex);
+			
+			group = cJSON_CreateObject();
+			cJSON_AddItemToArray(array,group);
+			//printf("groupName %s\n",tg.groupName);
+			cJSON_AddStringToObject(group,"name",tg.groupName);
+			groupItemArray = cJSON_CreateArray();
+			int itemNums = ListNumItems(tg.subItems);
+			//printf("%d\n",itemNums);
+			for(int z=1;z<=itemNums;z++)
+			{
+				TestItem ti = {0};
+				RESULT itemResult={0}; 
+				ListGetItem(tg.subItems,&ti,z);
+				int found=0;
+				if(HashTableFindItem(resultHashTable,&ti.itemId,&found)>=0){
+					if(found>0)
+					{
+						//printf("itemName %s\n",ti.itemName_);
+						HashTableGetItem(resultHashTable,&ti.itemId,&itemResult,sizeof(RESULT));
+						item = cJSON_CreateObject();
+						cJSON_AddItemToArray(groupItemArray,item);
+		        		cJSON_AddNumberToObject(item,"id",ti.itemId);
+		        		cJSON_AddStringToObject(item,"name",ti.itemName_);  
+		        		cJSON_AddStringToObject(item,"value",itemResult.recvString); 
+						if(itemResult.pass = RESULT_PASS)
+						{
+							cJSON_AddStringToObject(item,name,"ºÏ¸ñ"); 
+						}	
+					}				
+				}
+			}
+			cJSON_AddItemToObject(group,"items",groupItemArray);  
 		}
 	}	
 	cJSON_AddItemToObject(data,"results",array); 
