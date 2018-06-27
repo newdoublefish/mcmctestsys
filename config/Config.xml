@@ -109,7 +109,7 @@
     <DBName>board</DBName>	   
     <ReportPath>board_90KW\BoardReport.xlsx</ReportPath>
   </Project> 
-  <Project>
+  <Project show="True">
     <ProjectName>Demo</ProjectName>
     <NickName>模板</NickName>
     <ConfigPath>demo\demo.xlsx</ConfigPath>
@@ -131,7 +131,7 @@
     <ConfigPath>ametar-xiamen\DLT645\ammeter</ConfigPath> 
     <ReportPath>exe</ReportPath>
   </Project>  
-  <Project show="True">  
+  <Project>  
     <ProjectName>ac2_integration</ProjectName>
     <NickName>2枪交流装整机测试</NickName>
     <ConfigPath>ac2_integrate\ac.xlsx</ConfigPath>
@@ -141,7 +141,7 @@
     <PostPath>ac2_integrate\post.xml</PostPath>
     <ReportPath>ac2_integrate\IntegrateReport.xlsx</ReportPath>
   </Project>
-  <Project show="True">  
+  <Project>  
     <ProjectName>ac4_integration</ProjectName>
     <NickName>4枪交流装整机测试</NickName>
     <ConfigPath>ac4_integrate\ac.xlsx</ConfigPath>

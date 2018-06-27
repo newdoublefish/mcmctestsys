@@ -248,9 +248,95 @@ BOOL CommandSendWithRetry(EUT eut,char *command,int retryCnt)
 			//WarnShow1(0,"ÃüÁî·¢ËÍÊ§°Ü!");
 			ret=FALSE;
 		}else{
+			//printf("%d\n",strlen(servicePtr->packet));
 			ret=TRUE;
 			break;
 		}
+		//
+	}while(retryCnt--);
+	return ret;	
+}
+
+BOOL CommandGetResultWithRetry(EUT eut,char *command,int retryCnt,char **resultBuffer)
+{
+	BOOL ret=TRUE; 
+	do
+	{
+		tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	    if(servicePtr==NULL)
+	    {
+		     return FALSE;
+	    }	
+		if(startCommand(servicePtr,command)<0)
+		{
+			onStubDisConnected(servicePtr);
+			//WarnShow1(0,"ÃüÁî·¢ËÍÊ§°Ü!");
+			ret=FALSE;
+		}else{
+			//printf("%d\n",strlen(servicePtr->packet));
+			if(*resultBuffer!=NULL)
+			{
+				*resultBuffer = servicePtr->packet;	
+			}
+			ret=TRUE;
+			break;
+		}
+		//
+	}while(retryCnt--);
+	return ret;	
+}
+
+void ParsePileErrorBuffer(char *buffer,ListType list)
+{
+	char	*tok;
+	tErrorMesg msg={0};
+	for (tok = strtok(buffer, "\n");tok;tok = strtok(NULL, "\n"))   //Ò»ÐÐÒ»ÐÐ¶Á
+	{
+		if(strstr(tok,"¿ªÊ¼Ê±¼ä")!=NULL)
+		{
+			char temp1[20]={0},temp2[20]={0},temp3[20]={0};
+			sscanf(tok,"%s %s %s",temp1,temp2,temp3);
+			sprintf(msg.errorTime,"%s %s",temp2,temp3);
+		}else if(strstr(tok,"¹ÊÕÏID")!=NULL)
+		{
+			char temp1[20]={0};
+			sscanf(tok,"%s %d %s",temp1,&msg.errorid,msg.errorString);
+		}else if(strstr(tok,"Ç¹ÐòºÅ")!=NULL)
+		{
+			char temp1[20]={0};
+			sscanf(tok,"%s %d",temp1,&msg.gunIndex);
+			if(list!=0)
+			{
+				ListInsertItem(list,&msg,END_OF_LIST);
+			}
+		}
+	}	
+
+}
+
+BOOL GetPileErrorList(EUT eut,char *command,int retryCnt,ListType list)
+{
+	BOOL ret=TRUE; 
+	do
+	{
+		tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	    if(servicePtr==NULL)
+	    {
+		     return FALSE;
+	    }	
+		if(startCommand(servicePtr,command)<0)
+		{
+			onStubDisConnected(servicePtr);
+			//WarnShow1(0,"ÃüÁî·¢ËÍÊ§°Ü!");
+			ret=FALSE;
+		}else{
+			//printf("%s\n",servicePtr->packet);   
+			ParsePileErrorBuffer(servicePtr->packet,list);
+			
+			ret=TRUE;
+			break;
+		}
+		//
 	}while(retryCnt--);
 	return ret;	
 }

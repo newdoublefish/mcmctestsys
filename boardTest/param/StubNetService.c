@@ -202,7 +202,6 @@ int sendTcpData(const char *buffer,tNET_SERVICE *servicePtr,float timeOutSec)
 			break;
 		}
 	}
-	
 	return ret;
 }
 
