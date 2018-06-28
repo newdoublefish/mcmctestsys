@@ -237,7 +237,7 @@ HRESULT ClearWorkingSheet(ExcelObj_Worksheet *ExcelWorkbookHandlePtr)
               return error;
            ClearObjHandler (&AppExcelWorkbookHandle);
 		   AppExcelWorkbookHandle=0;
-     }
+    }
 	ClearObjHandler (&AppExcelWorkbooksHandle);
 	AppExcelWorkbooksHandle=0;
 	CmtReleaseLock (excelLock); 
