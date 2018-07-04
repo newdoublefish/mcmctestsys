@@ -401,4 +401,61 @@ BOOL GetPileRecordList(EUT eut,char *command,int retryCnt,ListType list)
 	return ret;	
 }
 
+void ParseDataPoolGroupBuffer(char *buffer,ListType list)
+{
+	char	*tok;
+	tDataPoolItem msg={0};
+	//printf("%s\n",buffer);
+	for (tok = strtok(buffer, "\n");tok;tok = strtok(NULL, "\n"))   //一行一行读
+	{
+		if(strstr(tok,"begin")== NULL && strstr(tok,"当前序号")== NULL)
+		{
+		   //printf("%s\n",tok);
+		   char temp1[5]={0},temp2[5]={0},temp3[5]={0};
+		   sscanf(tok,"%s %s %s    %s %s",temp1,temp2,temp3,msg.name,msg.status); 
+		   //printf("%s %s\n",msg.name,msg.status);
+		   msg.gunIndex = atoi(temp1);
+		   ListInsertItem(list,&msg,END_OF_LIST);
+		}
+	}	
+
+}
+
+BOOL GetDataPoolGroupList(EUT eut,int group,int array,int retryCnt,ListType list)
+{
+	BOOL ret=TRUE; 
+	do
+	{
+		tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	    if(servicePtr==NULL)
+	    {
+		     return FALSE;
+	    }	
+		char cmd[50]={0};
+		sprintf(cmd,"g %d\r\n",group);
+		if(startCommand(servicePtr,cmd)<0)
+			ret = FALSE;
+		memset(cmd,0,50);
+		sprintf(cmd,"i %d\r\n",array);
+		if(startCommand(servicePtr,cmd)<0)
+			ret = FALSE;
+		memset(cmd,0,50);
+		sprintf(cmd,"%s","v\r\n"); 
+		if(startCommand(servicePtr,cmd)<0)
+		{
+			onStubDisConnected(servicePtr);
+			//WarnShow1(0,"命令发送失败!");
+			ret=FALSE;
+		}else{
+			//printf("%s\n",servicePtr->packet);   
+			ParseDataPoolGroupBuffer(servicePtr->packet,list);
+			
+			ret=TRUE;
+			break;
+		}
+		//
+	}while(retryCnt--);
+	return ret;	
+}
+
 

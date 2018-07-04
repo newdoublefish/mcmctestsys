@@ -28,6 +28,19 @@ extern TESTengine *gEngine;
 // 都数据池
 // g 2 2
 // g 7 2
+
+int CVICALLBACK MaintainPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			//if(checkScanResult(panelHandle)==TRUE) 
+			 QuitUserInterface(1);
+		     break;
+	}
+	return 0;
+}
+
 METHODRET MatainTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
@@ -51,7 +64,7 @@ METHODRET MatainTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 		}
 		ListDispose(list);
 #else
-		ListType list = ListCreate(sizeof(tRecordMesg));
+		/*ListType list = ListCreate(sizeof(tRecordMesg));
 		if(FALSE==GetPileRecordList(eut,"prd crec disp 1\r\n",3,list))
 		{
 			APPEND_INFO(msgPanel,"获取列表失败");
@@ -66,6 +79,27 @@ METHODRET MatainTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 			 ListGetItem(list,&msg,i);
 			 APPEND_INFO_FORMAT(msgPanel,"枪：%d,故障1:%d,故障2:%d\n",msg.gunIndex,msg.reseason1,msg.reseason2);
 		}
+		ListDispose(list);*/
+		ListType list = ListCreate(sizeof(tDataPoolItem));
+		GetDataPoolGroupList(eut,2,2,3,list); 
+		GetDataPoolGroupList(eut,7,2,3,list);
+		int panelHandle=LoadPanel(0,"ParamPanel.uir",MATAIN); 
+		InstallPanelCallback(panelHandle,MaintainPanelCallback,NULL);
+		InsertTableRows (panelHandle,MATAIN_TABLE,-1,ListNumItems(list),VAL_USE_MASTER_CELL_TYPE);
+		tDataPoolItem msg;
+		for(int i=1;i<=ListNumItems(list);i++)
+		{
+			 ListGetItem(list,&msg,i);
+			 APPEND_INFO_FORMAT(msgPanel,"%s %s",msg.name,msg.status);
+			 char temp[5]={0};
+			 sprintf(temp,"%d",msg.gunIndex);
+			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(1,i),temp);
+			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(2,i),msg.name);
+			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(3,i),msg.status);
+		}
+		DisplayPanel(panelHandle);
+		RunUserInterface();
+		DiscardPanel(panelHandle);
 		ListDispose(list);
 #endif
 	
