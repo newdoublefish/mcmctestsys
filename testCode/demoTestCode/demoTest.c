@@ -25,12 +25,14 @@
 #include "resultSave.h"
 #include "ParamSetGet.h"
 extern TESTengine *gEngine; 
-
+// 都数据池
+// g 2 2
+// g 7 2
 METHODRET MatainTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 {
 	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
 	METHODRET ret = TEST_RESULT_ALLPASS;
-	
+#if 0	
 		//TODO:STROK分解结果
 		ListType list = ListCreate(sizeof(tErrorMesg));
 		if(FALSE==GetPileErrorList(eut,"prd erec disp 20\r\n",3,list))
@@ -48,7 +50,24 @@ METHODRET MatainTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 			 APPEND_INFO_FORMAT(msgPanel,"枪：%d,故障内容:%d,故障时间:%s\n",msg.gunIndex,msg.errorString,msg.errorTime);
 		}
 		ListDispose(list);
-
+#else
+		ListType list = ListCreate(sizeof(tRecordMesg));
+		if(FALSE==GetPileRecordList(eut,"prd crec disp 1\r\n",3,list))
+		{
+			APPEND_INFO(msgPanel,"获取列表失败");
+			return ret;				
+		}else{
+			APPEND_INFO(msgPanel,"获取列表成功");
+		}
+		APPEND_INFO_FORMAT(msgPanel,"故障列表数量%d\n",ListNumItems(list));
+		tRecordMesg msg={0};
+		for(int i=1;i<=ListNumItems(list);i++)
+		{
+			 ListGetItem(list,&msg,i);
+			 APPEND_INFO_FORMAT(msgPanel,"枪：%d,故障1:%d,故障2:%d\n",msg.gunIndex,msg.reseason1,msg.reseason2);
+		}
+		ListDispose(list);
+#endif
 	
 	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);		
 	return ret;
@@ -59,10 +78,7 @@ METHODRET MatainTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 TPS registerMatainTPS(void)
 {
 	TPS tps=newTps("matain");
-	//tps.autoTestFunction=DemoTest;
 	tps.testFunction=MatainTest;
-	//tps.createTpsPanel=NULL;
-	//tps.manualTestFunction=DemoTest;
 	return tps;
 }
 

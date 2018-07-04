@@ -12,6 +12,12 @@ typedef struct{
 	int errorid;
 	char errorString[50];
 }tErrorMesg;
+
+typedef struct{
+	int gunIndex; 
+	int reseason1;
+	int reseason2;
+}tRecordMesg;
 		
 BOOL ParamSet(tNET_SERVICE *servicePtr,char *paramName,char *paramValue);
 BOOL ParamGet(tNET_SERVICE *servicePtr,char *paramName,char *paramValue); 
@@ -23,6 +29,7 @@ BOOL CommandSend(EUT eut,char *command);
 BOOL CommandSendWithRetry(EUT eut,char *command,int retryCnt);
 BOOL CommandGetResultWithRetry(EUT eut,char *command,int retryCnt,char **resultBuffer);
 BOOL GetPileErrorList(EUT eut,char *command,int retryCnt,ListType list);
+BOOL GetPileRecordList(EUT eut,char *command,int retryCnt,ListType list);
 #ifdef __cplusplus
     }
 #endif

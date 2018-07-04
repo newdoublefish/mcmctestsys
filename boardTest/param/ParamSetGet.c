@@ -286,6 +286,7 @@ BOOL CommandGetResultWithRetry(EUT eut,char *command,int retryCnt,char **resultB
 	return ret;	
 }
 
+
 void ParsePileErrorBuffer(char *buffer,ListType list)
 {
 	char	*tok;
@@ -332,6 +333,65 @@ BOOL GetPileErrorList(EUT eut,char *command,int retryCnt,ListType list)
 		}else{
 			//printf("%s\n",servicePtr->packet);   
 			ParsePileErrorBuffer(servicePtr->packet,list);
+			
+			ret=TRUE;
+			break;
+		}
+		//
+	}while(retryCnt--);
+	return ret;	
+}
+
+
+void ParsePileRecordBuffer(char *buffer,ListType list)
+{
+	char	*tok;
+	tRecordMesg msg={0};
+	for (tok = strtok(buffer, "\n");tok;tok = strtok(NULL, "\n"))   //一行一行读
+	{
+		if(strstr(tok,"枪号")!=NULL)
+		{
+			char temp1[20]={0},temp2[20]={0};
+			memset(&msg,0,sizeof(tRecordMesg));
+			sscanf(tok,"%s %s",temp1,temp2);
+			msg.gunIndex = atoi(temp2);
+		}else if(strstr(tok,"充电结束原因1")!=NULL)
+		{
+			char temp1[20]={0},temp2[20]={0};
+			sscanf(tok,"%s %s",temp1,temp2);
+			msg.reseason1 = atoi(temp2); 
+		}else if(strstr(tok,"充电结束原因2")!=NULL)
+		{
+			char temp1[20]={0},temp2[20]={0};
+			sscanf(tok,"%s %s",temp1,temp2);
+			msg.reseason2 = atoi(temp2);
+			if(list!=0)
+			{
+				ListInsertItem(list,&msg,END_OF_LIST);
+			}
+		}
+	}	
+
+}
+
+BOOL GetPileRecordList(EUT eut,char *command,int retryCnt,ListType list)
+{
+	BOOL ret=TRUE; 
+	do
+	{
+		tNET_SERVICE *servicePtr = getStubNetService(eut.chargingPile.ip,eut.chargingPile.port);
+	    if(servicePtr==NULL)
+	    {
+		     return FALSE;
+	    }	
+		if(startCommand(servicePtr,command)<0)
+		{
+			onStubDisConnected(servicePtr);
+			//WarnShow1(0,"命令发送失败!");
+			ret=FALSE;
+		}else{
+			//printf("%s\n",servicePtr->packet);   
+			ParsePileRecordBuffer(servicePtr->packet,list);
 			
 			ret=TRUE;
 			break;

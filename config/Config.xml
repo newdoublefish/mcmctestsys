@@ -119,7 +119,7 @@
     <DBName>board</DBName>	   
     <ReportPath>board_90KW\BoardReport.xlsx</ReportPath>
   </Project> 
-  <Project>
+  <Project show="True">
     <ProjectName>Demo</ProjectName>
     <NickName>模板</NickName>
     <ConfigPath>demo\demo.xlsx</ConfigPath>
