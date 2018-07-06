@@ -2981,10 +2981,26 @@ TPS registerPowerModuleTestTps(void)
 }
 
 
+int CVICALLBACK Power120KWModuleTestPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			//if(checkScanResult(panelHandle)==TRUE) 
+			 int *flag = (int *)callbackData;
+			 *flag = 1;
+		     break;
+	}
+	return 0;
+}
+
+
 METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandle)
 {
 	//APPEND_INFO(masgHandle,"进入测试"); 
+	int runFlag = 0;
 	SetCtrlVal(masgHandle,POWER_MSG,"进入测试\n");
+	InstallPanelCallback(masgHandle,Power120KWModuleTestPanelCallback, &runFlag);
 	METHODRET ret = TEST_RESULT_ALLPASS;
 	if(FALSE==ParamSetDependWithRetry(eut,"DO单一控制标志","0",3))
 	{
@@ -3149,6 +3165,11 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 				
 				
 
+				break;
+			}
+			
+			if(runFlag == 1)
+			{
 				break;
 			}
 

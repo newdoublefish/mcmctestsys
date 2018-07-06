@@ -160,5 +160,25 @@
     <DBName>integrate</DBName>	
     <PostPath>ac4_integrate\post.xml</PostPath>
     <ReportPath>ac4_integrate\IntegrateReport.xlsx</ReportPath>
-  </Project>                        
+  </Project>  
+  <Project show="True">  
+    <ProjectName>report_integrate</ProjectName>
+    <NickName>150套90KW功率分配整机测试</NickName>
+    <ConfigPath>report_integrate\ac.xlsx</ConfigPath>
+    <StrategyPath>report_integrate\Strategy.xml</StrategyPath>	
+    <DevicePath>report_integrate\Device.xml</DevicePath>	
+    <DBName>integrate</DBName>	
+    <PostPath>report_integrate\post.xml</PostPath>
+    <ReportPath>report_integrate\IntegrateReport.xlsx</ReportPath>
+  </Project>
+  <Project show="True">
+    <ProjectName>120KW_matain</ProjectName>
+    <NickName>120KW整机测试-麦格米特-维护</NickName>
+    <ConfigPath>matain\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>matain\Strategy.xml</StrategyPath>	
+    <DevicePath>matain\Device.xml</DevicePath>	
+    <DBName>megmeet</DBName>	
+    <PostPath>matain\post.xml</PostPath>	    
+    <ReportPath>matain\IntegrateReport.xlsx</ReportPath>
+  </Project>                          
 </Projects>

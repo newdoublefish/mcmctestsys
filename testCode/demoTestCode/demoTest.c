@@ -11,6 +11,8 @@
  // 修改标识：
  // 修改描述：
  //-------------------------------------------------------------------------*/
+#include <userint.h>
+#include "excelHelper.h" 
 #include "tpsHelper.h"
 #include "resultSave.h"
 #include "common.h"
@@ -64,38 +66,49 @@ METHODRET MatainTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 		}
 		ListDispose(list);
 #else
-		/*ListType list = ListCreate(sizeof(tRecordMesg));
-		if(FALSE==GetPileRecordList(eut,"prd crec disp 1\r\n",3,list))
+		int panelHandle=LoadPanel(0,"ParamPanel.uir",MATAIN); 
+		InstallPanelCallback(panelHandle,MaintainPanelCallback,NULL);
+		ListType recordList = ListCreate(sizeof(tRecordMesg));
+		if(FALSE==GetPileRecordList(eut,"prd crec disp 1\r\n",3,recordList))
 		{
 			APPEND_INFO(msgPanel,"获取列表失败");
 			return ret;				
 		}else{
 			APPEND_INFO(msgPanel,"获取列表成功");
 		}
-		APPEND_INFO_FORMAT(msgPanel,"故障列表数量%d\n",ListNumItems(list));
-		tRecordMesg msg={0};
-		for(int i=1;i<=ListNumItems(list);i++)
+		APPEND_INFO_FORMAT(msgPanel,"充电记录数量%d\n",ListNumItems(recordList));
+		SetCtrlVal(panelHandle,MATAIN_TEXTBOX,"获取充电记录成功");
+		tRecordMesg recordMsg={0};
+		for(int i=1;i<=ListNumItems(recordList);i++)
 		{
-			 ListGetItem(list,&msg,i);
-			 APPEND_INFO_FORMAT(msgPanel,"枪：%d,故障1:%d,故障2:%d\n",msg.gunIndex,msg.reseason1,msg.reseason2);
+			 ListGetItem(recordList,&recordMsg,i);
+			 APPEND_INFO_FORMAT(msgPanel,"枪：%d,故障原因1:%d,故障原因2:%d\n",recordMsg.gunIndex,recordMsg.reseason1,recordMsg.reseason2);
+			 char temp[100]={0};
+			 sprintf(temp,"枪：%d,故障原因1:%d,故障原因2:%d\n",recordMsg.gunIndex,recordMsg.reseason1,recordMsg.reseason2);
+			 SetCtrlVal(panelHandle,MATAIN_TEXTBOX,temp); 
 		}
-		ListDispose(list);*/
+		ListDispose(recordList);
+		
+		
 		ListType list = ListCreate(sizeof(tDataPoolItem));
 		GetDataPoolGroupList(eut,2,2,3,list); 
 		GetDataPoolGroupList(eut,7,2,3,list);
-		int panelHandle=LoadPanel(0,"ParamPanel.uir",MATAIN); 
-		InstallPanelCallback(panelHandle,MaintainPanelCallback,NULL);
+
 		InsertTableRows (panelHandle,MATAIN_TABLE,-1,ListNumItems(list),VAL_USE_MASTER_CELL_TYPE);
 		tDataPoolItem msg;
+		int showCnt = 1;
 		for(int i=1;i<=ListNumItems(list);i++)
 		{
 			 ListGetItem(list,&msg,i);
 			 APPEND_INFO_FORMAT(msgPanel,"%s %s",msg.name,msg.status);
 			 char temp[5]={0};
 			 sprintf(temp,"%d",msg.gunIndex);
-			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(1,i),temp);
-			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(2,i),msg.name);
-			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(3,i),msg.status);
+			 if(strstr(msg.status,"true")==NULL)
+				 continue;
+			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(1,showCnt),temp);
+			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(2,showCnt),msg.name);
+			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(3,showCnt),msg.status);
+			 showCnt++;
 		}
 		DisplayPanel(panelHandle);
 		RunUserInterface();
@@ -348,10 +361,7 @@ METHODRET ACTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
 		sprintf(fileName,"%s\\%s-整机测试.xlsx",projectPtr->projectDir,re1.recvString);
 		saveResultToExcelFile(fileName,obj);
 		APPEND_INFO_FORMAT(msgPanel,"fileName:%s",fileName); 
-		
 	}
-
-	
 	APPEND_INFO_FORMAT(msgPanel,"%s,%s,%d,%d\n",prex,gunPrex,startNum,totalCnt);
 	APPEND_INFO_FORMAT(msgPanel,"结束测试:%s",group.groupName);
 	if(AlertDialogWithRet(0,"请选择","请确认结果是否正确","错误","正确")==TRUE)
@@ -366,5 +376,186 @@ TPS registerACTPS(void)
 {
 	TPS tps=newTps("ac");
 	tps.testFunction=ACTest;
+	return tps;
+}
+
+#define SHEET_RANGE_TIPS "B1:J1" 
+ListType reportList=0;
+
+typedef struct{
+	char nameplate[30];
+	char sim[100];
+	char controller[30];
+	char ammeter1[30];
+	char ammeter2[30];
+	char gunIndex1[30];
+	char gunIndex2[30];
+	char vendor[30];
+}tReport;
+
+
+static HRESULT onCellListenerGetReports(VARIANT *MyVariant,int row,int column)    
+{
+	char *temp;
+	//static char key[50]={0}; 
+	static tReport param;
+	if(column==0)
+	{
+		 if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			//memcpy(tempInstruction.name,temp,strlen(temp)+1);
+			memset(&param,0,sizeof(tReport));
+			sprintf(param.nameplate,"%s",temp);
+			//printf("%s,",temp);
+			CA_FreeMemory(temp);
+		 }else
+		 {
+			return EXCEL_TASK_QUIT;
+		 }
+	}else if(column==2)
+	{
+		 if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			sprintf(param.sim,"%s",temp);
+			CA_FreeMemory(temp);
+		 }
+	}else if(column==3)
+	{	 
+		if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			sprintf(param.controller,"%s",temp);
+			CA_FreeMemory(temp);
+		 }
+	}else if(column==4)
+	{
+		 if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			sprintf(param.ammeter1,"%s",temp);
+			CA_FreeMemory(temp);
+		 }
+	}else if(column==5)
+	{
+		if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			sprintf(param.ammeter2,"%s",temp);
+			CA_FreeMemory(temp);
+		 }
+	}else if(column==6)
+	{
+		if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			sprintf(param.gunIndex1,"%s",temp);
+			CA_FreeMemory(temp);
+		 }
+	}else if(column==7)
+	{
+		if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			sprintf(param.gunIndex2,"%s",temp);
+			CA_FreeMemory(temp);
+		 }
+	}else if(column==8)
+	{
+		 if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			sprintf(param.vendor,"%s",temp);
+			CA_FreeMemory(temp);
+		 }
+		 if(reportList!=0)
+		 {
+			 //printfParam(param);
+			 ListInsertItem(reportList,&param,END_OF_LIST);
+		 }
+	}
+	return EXCEL_TASK_OK;
+}
+
+
+static HRESULT onStartGetReports(VARIANT *MyVariant,int row,int column)				
+{
+	//istList=ListCreate(sizeof(INSTRUCTION));
+	reportList = ListCreate(sizeof(tReport)); 
+    return 0;	
+}
+
+
+BOOL ReportProtocolInit(char *sheetName)
+{
+	if(reportList!=0)
+		return TRUE;
+	SUT sut=GetSeletedSut();
+	EXCELTask task=createExcelTask(sut.configPath,sheetName,SHEET_RANGE_TIPS,9);
+	task.onExcelTaskStartListener=(void *)onStartGetReports;
+	task.onCellListener=(void *)onCellListenerGetReports;
+	runExcelTask(task);
+	return TRUE;	
+}
+
+METHODRET ReportTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	tReport report = {0};
+	TESTobject obj = gEngine->objectArray[0];
+	tTestProject *projectPtr = getCurrentProject(); 
+	//printf("%d\n",ListNumItems(reportList));
+	for(int i=1;i<=ListNumItems(reportList);i++)
+	{
+		ListGetItem(reportList,&report,i);
+				RESULT result1={0};
+		result1.index = 1;
+		sprintf(result1.recvString,"%s", report.nameplate);
+		saveResult(hashTable,&result1);
+				RESULT result2={0};
+		result2.index = 2;
+		sprintf(result2.recvString,"%s", report.sim);
+		saveResult(hashTable,&result2);
+				RESULT result3={0};
+		result3.index = 3;
+		sprintf(result3.recvString,"%s", report.ammeter1);
+		saveResult(hashTable,&result3);
+				RESULT result4={0};
+		result4.index = 4;
+		sprintf(result4.recvString,"%s", report.ammeter2);
+		saveResult(hashTable,&result4);
+				RESULT result5={0};
+		result5.index = 5;
+		sprintf(result5.recvString,"%s", report.gunIndex1);
+		saveResult(hashTable,&result5);
+				RESULT result6={0};
+		result6.index = 6;
+		sprintf(result6.recvString,"%s", report.gunIndex2);
+		saveResult(hashTable,&result6);
+				RESULT result7={0};
+		result7.index = 7;
+		sprintf(result7.recvString,"%s", report.vendor);
+		saveResult(hashTable,&result7);
+				RESULT result8={0};
+		result8.index = 8;
+		sprintf(result8.recvString,"%s", report.controller);
+		saveResult(hashTable,&result8);		
+		
+		char fileName[256]={0};
+		sprintf(fileName,"%s\\%s-整机测试.xlsx",projectPtr->projectDir,report.nameplate);
+		saveResultToExcelFile(fileName,obj);
+		APPEND_INFO_FORMAT(msgPanel,"fileName:%s",fileName);
+		break;
+	}
+	return ret;
+}
+
+
+TPS registerReportTPS(void)
+{
+	TPS tps=newTps("report");
+	tps.testFunction=ReportTest;
+	tps.protocolInit = ReportProtocolInit;
 	return tps;
 }

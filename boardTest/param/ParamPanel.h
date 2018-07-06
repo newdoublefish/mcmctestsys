@@ -26,6 +26,8 @@
 
 #define  MATAIN                           3
 #define  MATAIN_TABLE                     2       /* control type: table, callback function: (none) */
+#define  MATAIN_TEXTBOX                   3       /* control type: textBox, callback function: (none) */
+#define  MATAIN_BUTTON                    4       /* control type: command, callback function: (none) */
 
 #define  METER                            4
 #define  METER_CURRENT                    2       /* control type: scale, callback function: (none) */

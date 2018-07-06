@@ -67,6 +67,7 @@ extern TPS registerCCIDTestTps(void);
 extern TPS registerMeterTPS(void); //µç±íÄ£Äâ²âÊÔ
 extern TPS registerACTPS(void);
 extern TPS registerMatainTPS(void);
+extern TPS registerReportTPS(void);
 
 
 
@@ -121,6 +122,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerMeterTPS,
 	
 	registerACTPS,
+	registerReportTPS,
 	
 	registerMatainTPS,
 };
