@@ -171,6 +171,16 @@
     <PostPath>report_integrate\post.xml</PostPath>
     <ReportPath>report_integrate\IntegrateReport.xlsx</ReportPath>
   </Project>
+   <Project show="True">  
+    <ProjectName>report_integrate50</ProjectName>
+    <NickName>50套90KW不带功率分配整机测试</NickName>
+    <ConfigPath>report_integrate50\ac.xlsx</ConfigPath>
+    <StrategyPath>report_integrate50\Strategy.xml</StrategyPath>	
+    <DevicePath>report_integrate50\Device.xml</DevicePath>	
+    <DBName>integrate</DBName>	
+    <PostPath>report_integrate50\post.xml</PostPath>
+    <ReportPath>report_integrate50\IntegrateReport.xlsx</ReportPath>
+  </Project> 
   <Project show="True">
     <ProjectName>120KW_matain</ProjectName>
     <NickName>120KW整机测试-麦格米特-维护</NickName>

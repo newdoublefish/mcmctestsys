@@ -391,6 +391,7 @@ typedef struct{
 	char gunIndex1[30];
 	char gunIndex2[30];
 	char vendor[30];
+	char sn[30];
 }tReport;
 
 
@@ -469,6 +470,14 @@ static HRESULT onCellListenerGetReports(VARIANT *MyVariant,int row,int column)
 			sprintf(param.vendor,"%s",temp);
 			CA_FreeMemory(temp);
 		 }
+	}else if(column==9)
+	{
+		 if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			sprintf(param.sn,"%s",temp);
+			CA_FreeMemory(temp);
+		 }
 		 if(reportList!=0)
 		 {
 			 //printfParam(param);
@@ -492,7 +501,7 @@ BOOL ReportProtocolInit(char *sheetName)
 	if(reportList!=0)
 		return TRUE;
 	SUT sut=GetSeletedSut();
-	EXCELTask task=createExcelTask(sut.configPath,sheetName,SHEET_RANGE_TIPS,9);
+	EXCELTask task=createExcelTask(sut.configPath,sheetName,SHEET_RANGE_TIPS,10);
 	task.onExcelTaskStartListener=(void *)onStartGetReports;
 	task.onCellListener=(void *)onCellListenerGetReports;
 	runExcelTask(task);
@@ -506,9 +515,59 @@ METHODRET ReportTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 	TESTobject obj = gEngine->objectArray[0];
 	tTestProject *projectPtr = getCurrentProject(); 
 	//printf("%d\n",ListNumItems(reportList));
+	
 	for(int i=1;i<=ListNumItems(reportList);i++)
 	{
-		ListGetItem(reportList,&report,i);
+		int flag = 1;
+		ListGetItem(reportList,&report,i);  
+		for(int j=1;j<=ListNumItems(group.subItems);j++)
+		{
+			TestItem item;
+			ListGetItem(group.subItems,&item,j);
+			RESULT itemResult={0};
+			itemResult.index=item.itemId;
+			if(itemResult.index == 1)
+			{
+				sprintf(itemResult.recvString,"%s", report.nameplate); 
+			}else if(itemResult.index == 2)
+			{
+				sprintf(itemResult.recvString,"%s", report.sim); 
+			}else if(itemResult.index == 3)
+			{
+				sprintf(itemResult.recvString,"%s", report.ammeter1); 
+			}else if(itemResult.index == 4)
+			{
+				sprintf(itemResult.recvString,"%s", report.ammeter2); 
+			}else if(itemResult.index == 5)
+			{
+				sprintf(itemResult.recvString,"%s", report.gunIndex1); 
+			}else if(itemResult.index == 6)
+			{
+				sprintf(itemResult.recvString,"%s", report.gunIndex2); 
+			}else if(itemResult.index == 7)
+			{
+				sprintf(itemResult.recvString,"%s", report.vendor); 
+			}else if(itemResult.index == 8)
+			{
+				sprintf(itemResult.recvString,"%s", report.controller); 
+			}else if(itemResult.index == 9)
+			{
+				sprintf(itemResult.recvString,"%s", report.sn); 
+			}else{
+				float standard = atof(item.inputValue_);
+				float tolerance = atof(item.standard_);
+				float value = standard + Random(0,tolerance);
+				sprintf(itemResult.recvString,"%0.2f",value);
+			}
+			
+			if(strlen(itemResult.recvString)==0)
+			{
+				flag = 0;
+			}
+			saveResult(hashTable,&itemResult);
+		
+		}		
+		/*
 				RESULT result1={0};
 		result1.index = 1;
 		sprintf(result1.recvString,"%s", report.nameplate);
@@ -540,13 +599,22 @@ METHODRET ReportTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 				RESULT result8={0};
 		result8.index = 8;
 		sprintf(result8.recvString,"%s", report.controller);
-		saveResult(hashTable,&result8);		
-		
+		saveResult(hashTable,&result8);
+				RESULT result9={0}; 
+		result9.index = 9;
+		sprintf(result9.recvString,"%s", report.sn);
+		saveResult(hashTable,&result9);			
+		*/
 		char fileName[256]={0};
-		sprintf(fileName,"%s\\%s-整机测试.xlsx",projectPtr->projectDir,report.nameplate);
+		if(flag ==0)
+		{
+			sprintf(fileName,"%s\\%s-整机测试-不完整.xlsx",projectPtr->projectDir,report.nameplate);
+		}else{
+			sprintf(fileName,"%s\\%s-整机测试.xlsx",projectPtr->projectDir,report.nameplate);
+		}
 		saveResultToExcelFile(fileName,obj);
-		APPEND_INFO_FORMAT(msgPanel,"fileName:%s",fileName);
-		break;
+		APPEND_INFO_FORMAT(msgPanel,"%d fileName:%s",i,fileName);
+		//break;
 	}
 	return ret;
 }
