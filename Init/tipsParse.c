@@ -17,7 +17,7 @@
 #include "convertTool.h"
 #include "eutConfig.h"
 
-static HashTableType tipsHashTable=0;
+HashTableType tipsHashTable=0;
 #define SHEET_RANGE_TIPS "A2:C2" 
 
 

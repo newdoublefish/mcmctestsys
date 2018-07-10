@@ -25,14 +25,17 @@
 #include "configPath.h"
 #include "log.h"
 #include "debug.h"
+#include "testGroupParseXml.h"
 
 
 static TestGroup group;
 static TestItem item;
 
+
 static ListType typeList=0;   
 static ListType tiaoliGroup=0;	   //条例组
 static ListType tiaoliList=0;	   //条例
+static ListType protocolList=0;  
 
 static int groupIdCount=0;
 
@@ -45,7 +48,7 @@ static int testCaseCount=0;
 #define TEST_CASE_RANGE "A2:I2"
 
 
-static HRESULT ParseStandardValue(char *expression,VALUE_STANDARD *standard)
+HRESULT ParseStandardValue(char *expression,VALUE_STANDARD *standard)
 {
    HRESULT error = 0; 
    int start=-1,middle1=-1,middle2=-1,end=-1;	
@@ -324,15 +327,15 @@ void printGroupList()
 	 for(int i=1;i<=ListNumItems(tiaoliGroup);i++)
 	 {
 	     ListGetItem(tiaoliGroup,&group,i);
-		 //printf("<<<<<<<<<<<<<<<<<集合ID：%d,集合名称：%s,测试类型:%s\n",group.groupId,group.groupName,group.type);   //LOG_FORMAT
+		 printf("<<<<<<<<<<<<<<<<<集合ID：%d,集合名称：%s,测试类型:%s\n",group.groupId,group.groupName,group.type);   //LOG_FORMAT
 		 LOG_FORMAT("<<<<<<<<<<<<<<<<<集合ID：%d,集合名称：%s,测试类型:%s\n",group.groupId,group.groupName,group.type);
 		 for(int j=1;j<=ListNumItems(group.subItems);j++)
 		 {
 		     ListGetItem(group.subItems,&item,j);
-			 //printf("-----------------------\n参数名称：%s\n",item.itemName_);  
-			 //printf("序号:%d\n",item.itemId);
-			 //printf("输入值：%f\n",item.input_Value); 
-			 //printf("最大值：%f，最小值：%f\n",item.standard_value.maxValue,item.standard_value.minValue);  
+			 printf("-----------------------\n参数名称：%s\n",item.itemName_);  
+			 printf("序号:%d\n",item.itemId);
+			 printf("输入值：%f\n",item.input_Value); 
+			 printf("最大值：%f，最小值：%f\n",item.standard_value.maxValue,item.standard_value.minValue);  
 			 LOG_FORMAT("-----------------------\n参数名称：%s\n",item.itemName_);  
 			 LOG_FORMAT("序号:%d\n",item.itemId);
 			 LOG_FORMAT("输入值：%f\n",item.input_Value);
@@ -409,6 +412,36 @@ HRESULT testGroupDeinit(void)
 	return TRUE;
 }
 
+void printProtocolList()
+{
+	tProtocol t;
+		int                 error       = 0; 
+	HashTableIterator iter;	
+	for(int i=1;i<=ListNumItems(protocolList);i++)
+	{
+		ListGetItem(protocolList,&t,i);
+		printf("----------------%s",t.protocolName);
+		for(int j=1;j<=ListNumItems(t.protocolItems);j++)
+		{
+			tProtocolItem item={0};
+			ListGetItem(t.protocolItems,&item,j);
+			printf("%s\n",item.itemName);
+			for (error = HashTableIteratorCreate(item.attributeHash, &iter), i = 1;
+                 error >= 0 && error != HASH_TABLE_END;
+                 error = HashTableIteratorAdvance(item.attributeHash, iter), ++i)
+    		{
+				
+				char key[256]={0};
+				char value[256]={0};
+				HashTableIteratorGetItem(item.attributeHash,iter,key,256,value,256);
+				printf("key:%s,value:%s\n",key,value);
+			
+			}
+		}
+		
+	}
+}
+
 HRESULT testGroupInit(char *filePath)
 {
 	HRESULT error = 0;
@@ -439,7 +472,26 @@ HRESULT testGroupInit(char *filePath)
     	return error;
 	}else if(strstr(filePath,".xml")!=NULL)
 	{
+		slidePanelHandle=displaySlideProgressWithTextBox("正在分析测试条例表"); 
+		slideProgressShowWithTextBox(slidePanelHandle,-1,"开始分析测试条例表\n",1);		
+		if(tiaoliGroup!=0)
+			ListDispose(tiaoliGroup);
+		tiaoliGroup = ListCreate (sizeof(TestGroup));
+	
+		if(tiaoliList!=0)
+			ListDispose(tiaoliList);
+		tiaoliList = ListCreate (sizeof(TestItem));
 		
+		
+		if(protocolList!=0)
+			ListDispose(protocolList);
+		protocolList = ListCreate(sizeof(tProtocol));
+		
+		LoadTestGroupFromXml(tiaoliGroup,tiaoliList,protocolList,filePath);
+		slideProgressShowWithTextBox(slidePanelHandle,-1,"分析测试条例表完成\n",1);   
+		printGroupList();		
+		printProtocolList();
+					
 	}
 	
 	return -1;
@@ -502,14 +554,10 @@ int getTestCaseId(char *itemName,double intputValue,char *valueString)
 {
 	int count=ListNumItems(tiaoliList);
 	int retId=-1;
-	//printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,count:%d\n",count);
 	for(int i=1;i<=count;i++)
 	{
 	   TestItem item;
 	   ListGetItem(tiaoliList,&item,i);
-	  // printf("---count---%d",i);
-	  // printf("itemName:%s,valueString:%s\n",itemName,valueString);
-	  // printf("item.itemName:%s,item.valueString:%s\n",item.itemName_,item.inputValue_); 
 	   if((strcmp(itemName,item.itemName_)==0) && (strcmp(item.standard_,valueString)==0))
 	   {
 	   	   retId=i;

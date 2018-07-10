@@ -13,10 +13,10 @@ Number of Projects = 1
 Active Project = 1
 Project 0001 = "MainPanel.prj"
 Drag Bar Left = 287
-Window Top = 157
-Window Left = 245
-Window Bottom = 939
-Window Right = 1677
+Window Top = 201
+Window Left = 703
+Window Bottom = 983
+Window Right = 2135
 Maximized = True
 Maximized Children = True
 Max32 Number Of Errors = 20
@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 1
+Number of Opened Files = 4
 Window Confinement Region Enabled = True
 MainColumnWidth = 270
 FileDateColumnWidth = 70
@@ -114,7 +114,7 @@ Disk Date = 3613089942
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Source Window State = "1,240,240,240,47,63,47,0,0,113,0,0,0,0,0,25,451,0,111,65,323,715,1,0,"
+Source Window State = "1,240,240,240,47,63,47,0,0,113,0,0,0,0,0,25,83,0,95,4,323,715,1,0,"
 
 [File 0011]
 Path = "/d/workspace/mcmctest/platDemo/ftpHelper/ftpHelper.c"
@@ -306,7 +306,7 @@ Disk Date = 3607296491
 In Projects = "1,"
 Window Top = 62
 Window Left = 26
-Source Window State = "1,36,36,36,4,19,19,0,3,0,0,0,0,0,0,0,16,0,36,4,323,605,1,0,"
+Source Window State = "1,36,36,36,4,19,19,0,0,95,0,0,0,0,0,25,25,0,37,10,323,605,1,0,"
 
 [File 0033]
 Path = "/d/workspace/mcmctest/platDemo/Init/application.c"
@@ -324,7 +324,8 @@ Disk Date = 3612734520
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,194,194,194,37,51,51,0,0,0,0,0,0,0,0,0,394,0,203,104,275,517,1,52,"
+Window Z-Order = 2
+Source Window State = "1,111,111,111,8,32,32,0,3,80,0,0,0,0,0,21,75,0,111,8,275,517,1,52,"
 
 [File 0035]
 Path = "/d/workspace/mcmctest/platDemo/eut/BasicInfoConfig.c"
@@ -418,7 +419,7 @@ Disk Date = 3522103256
 In Projects = "1,"
 Window Top = 124
 Window Left = 61
-Source Window State = "1,1912,1912,1912,21,43,43,0,0,0,0,0,0,0,0,0,1918,0,1929,4,287,605,0,0,"
+Source Window State = "1,1986,1986,1986,21,44,44,0,0,95,0,0,0,0,0,22,1975,0,1990,65,287,605,1,0,"
 
 [File 0046]
 Path = "/d/workspace/mcmctest/platDemo/testCode/demoTestCode/demoTest.c"
@@ -632,7 +633,7 @@ Disk Date = 3613089942
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,237,237,237,12,29,29,0,0,0,0,0,0,0,0,0,302,0,77,4,263,541,1,0,"
+Source Window State = "1,144,162,162,0,19,19,0,0,84,0,0,0,0,0,20,292,0,133,95,263,541,1,0,"
 
 [File 0071]
 Path = "/d/workspace/mcmctest/platDemo/http/postdll.c"
@@ -650,7 +651,7 @@ Disk Date = 3597111927
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Source Window State = "1,39,39,39,4,16,16,0,0,0,0,0,0,0,0,0,31,0,46,92,323,517,1,0,"
+Source Window State = "1,70,70,70,4,19,19,0,3,80,0,0,0,0,0,25,56,0,70,4,323,517,1,0,"
 
 [File 0073]
 Path = "/d/workspace/mcmctest/platDemo/relayHelper/relayHelper.c"
@@ -668,7 +669,7 @@ Disk Date = 3599642985
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,140,140,140,5,23,23,0,0,0,0,0,0,0,0,0,79,0,94,173,323,715,1,0,"
+Source Window State = "1,8,8,8,21,35,35,0,0,113,0,0,0,0,0,25,0,0,14,128,323,715,1,0,"
 
 [File 0075]
 Path = "/d/workspace/mcmctest/platDemo/relayHelper/relayTest.c"
@@ -695,8 +696,7 @@ Disk Date = 3614038892
 In Projects = "1,"
 Window Top = 156
 Window Left = 74
-Window Z-Order = 1
-Source Window State = "1,293,293,293,38,50,50,0,0,266,0,0,0,0,0,53,278,0,314,123,239,517,1,0,"
+Source Window State = "1,293,293,293,38,50,50,0,0,80,0,0,0,0,0,18,209,0,314,123,239,517,1,0,"
 
 [File 0078]
 Path = "/d/workspace/mcmctest/platDemo/boardTest/resistenTest/resistentTest.c"
@@ -712,7 +712,8 @@ Disk Date = 3608258484
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,181,208,208,0,8,8,0,0,0,0,0,0,0,0,0,67,0,206,13,215,517,1,0,"
+Window Z-Order = 4
+Source Window State = "1,181,208,208,0,8,8,0,0,80,0,0,0,0,0,16,109,0,139,39,215,517,1,0,"
 
 [File 0080]
 Path = "/d/workspace/mcmctest/platDemo/resultSave/resultSave.c"
@@ -791,7 +792,8 @@ Disk Date = 3607636183
 In Projects = "1,"
 Window Top = 92
 Window Left = 42
-Source Window State = "1,163,163,163,47,54,54,0,3,0,0,0,0,0,0,0,114,0,163,47,251,605,1,0,"
+Window Z-Order = 3
+Source Window State = "1,134,159,159,0,40,40,0,0,95,0,0,0,0,0,19,120,0,155,146,251,605,1,0,"
 
 [File 0089]
 Path = "/d/workspace/mcmctest/platDemo/sutConfig/sutEntity.c"
@@ -814,11 +816,12 @@ Source Window State = "1,265,266,265,14,58,14,0,0,0,0,0,0,0,0,0,222,0,268,95,251
 [File 0091]
 Path = "/d/workspace/mcmctest/platDemo/Init/testGroupInit.c"
 File Type = "CSource"
-Disk Date = 3612411337
+Disk Date = 3614059536
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Source Window State = "1,469,469,469,36,44,44,0,0,0,0,0,0,0,0,0,48,0,20,57,299,541,1,0,"
+Window Z-Order = 1
+Source Window State = "1,556,556,556,0,77,77,0,0,266,0,381,0,0,0,53,523,0,551,150,299,541,1,15,"
 
 [File 0092]
 Path = "/d/workspace/mcmctest/platDemo/Init/testInit.c"
@@ -827,7 +830,7 @@ Disk Date = 3598528553
 In Projects = "1,"
 Window Top = 95
 Window Left = 90
-Source Window State = "1,72,72,72,7,20,20,0,3,0,0,0,0,0,0,0,50,0,72,7,311,521,1,20,"
+Source Window State = "1,72,72,72,7,20,20,0,3,81,0,0,0,0,0,24,50,0,72,7,311,521,1,20,"
 
 [File 0093]
 Path = "/d/workspace/mcmctest/platDemo/frameworks/testProject.c"
@@ -850,20 +853,20 @@ Source Window State = "1,160,160,160,16,48,48,0,0,0,0,0,0,0,0,0,115,0,127,9,323,
 [File 0095]
 Path = "/d/workspace/mcmctest/platDemo/Init/tipsParse.c"
 File Type = "CSource"
-Disk Date = 3606258567
+Disk Date = 3614056185
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,68,68,68,5,21,21,0,0,0,0,0,0,0,0,0,44,0,61,90,323,715,1,0,"
+Source Window State = "1,87,88,88,12,54,54,0,0,113,0,0,0,0,0,25,41,0,89,38,323,715,1,0,"
 
 [File 0096]
 Path = "/d/workspace/mcmctest/platDemo/frameworks/tpsHelper.c"
 File Type = "CSource"
-Disk Date = 3613537962
+Disk Date = 3614055717
 In Projects = "1,"
 Window Top = 95
 Window Left = 58
-Source Window State = "1,124,124,124,4,21,21,0,3,0,0,38,0,0,0,0,102,0,124,4,323,665,1,29,"
+Source Window State = "1,130,130,130,4,11,11,0,3,105,0,38,0,0,0,25,104,0,130,4,323,665,1,29,"
 
 [File 0097]
 Path = "/d/workspace/mcmctest/platDemo/util/UartUtil.c"
@@ -1004,7 +1007,9 @@ Path = "/d/workspace/mcmctest/platDemo/xmltool/cvixml.h"
 File Type = "Include"
 Disk Date = 3522103256
 In Projects = "1,"
-Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+Window Top = 157
+Window Left = 74
+Source Window State = "1,0,0,0,0,0,0,0,0,113,0,0,0,0,0,25,54,0,66,0,323,715,1,0,"
 
 [File 0114]
 Path = "/d/workspace/mcmctest/platDemo/common/debug.h"
@@ -1426,7 +1431,7 @@ Disk Date = 3522103252
 In Projects = "1,"
 Window Top = 182
 Window Left = 90
-Source Window State = "1,9,9,9,0,23,0,2,3,0,0,0,0,0,0,0,0,0,9,23,323,605,1,0,"
+Source Window State = "1,9,9,9,4,17,17,0,3,95,0,0,0,0,0,25,0,0,9,4,323,605,1,0,"
 
 [File 0164]
 Path = "/d/workspace/mcmctest/platDemo/sutConfig/sutEntity.h"
@@ -1462,7 +1467,7 @@ Disk Date = 3597961146
 In Projects = "1,"
 Window Top = 32
 Window Left = 10
-Source Window State = "1,44,44,44,19,28,28,0,0,0,0,0,0,0,0,0,22,0,31,106,323,707,1,0,"
+Source Window State = "1,43,43,43,12,23,23,0,0,112,0,0,0,0,0,25,22,0,47,154,323,707,1,0,"
 
 [File 0168]
 Path = "/d/workspace/mcmctest/platDemo/Init/testInit.h"
@@ -1516,7 +1521,7 @@ Disk Date = 3599223524
 In Projects = "1,"
 Window Top = 95
 Window Left = 74
-Source Window State = "1,38,38,38,8,26,26,0,0,0,0,0,0,0,0,0,27,0,46,81,323,665,1,0,"
+Source Window State = "1,38,38,38,8,26,26,0,0,105,0,0,0,0,0,25,62,0,76,5,323,665,1,0,"
 
 [File 0174]
 Path = "/d/workspace/mcmctest/platDemo/util/UartUtil.h"
@@ -1734,8 +1739,29 @@ File Type = "Unknown"
 Disk Date = 3600953720
 In Projects = "1,"
 
+[File 0209]
+Path = "/d/workspace/mcmctest/platDemo/Init/testGroupParseXml.c"
+File Type = "CSource"
+Disk Date = 3614058790
+In Projects = "1,"
+Window Top = 95
+Window Left = 42
+Source Window State = "1,147,147,147,8,21,21,0,3,113,0,154,0,203,0,25,141,0,147,8,323,715,1,15,"
+
+[File 0210]
+Path = "/d/workspace/mcmctest/platDemo/Init/testGroupParseXml.h"
+File Type = "Include"
+Disk Date = 3614057349
+In Projects = "1,"
+Window Top = 126
+Window Left = 58
+Source Window State = "1,3,3,3,1,14,14,0,0,113,0,0,0,0,0,25,0,0,10,94,323,715,1,0,"
+
 [Tab Order]
-Tab 0001 = "/d/workspace/mcmctest/platDemo/reportManager/reportManagerPanel.c"
+Tab 0001 = "/d/workspace/mcmctest/platDemo/Init/testGroupInit.c"
+Tab 0002 = "/d/workspace/mcmctest/platDemo/autotest/autoTest.c"
+Tab 0003 = "/d/workspace/mcmctest/platDemo/resultSave/resultInfo.c"
+Tab 0004 = "/d/workspace/mcmctest/platDemo/sutConfig/sutConfig.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

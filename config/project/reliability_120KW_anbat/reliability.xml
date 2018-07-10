@@ -1,7 +1,7 @@
 <app>
 <case>
 	<group name="ABCN相连对PE绝缘电阻" type="resistance" tips="流程卡检查">
-		<item id="1" input="NA" standard="NA">ABCN相连对PE绝缘电阻</item>	
+		<item id="1" input="14.5" standard="(350±0.5)V">ABCN相连对PE绝缘电阻</item>	
 	</group>
 	<group name="ABCN相连对PE工频耐压" type="resistance" tips="ABCN相连对PE工频耐压">
 		<item id="2" input="NA" standard="NA">ABCN相连对PE工频耐压</item>	
