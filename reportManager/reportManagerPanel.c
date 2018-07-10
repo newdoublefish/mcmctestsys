@@ -285,6 +285,12 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 	   				}					 
 				}
 				
+				if(FileExists(record.m_reportpath,NULL)!=1)
+				{
+					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"测试报告未生成！！！\n");
+					break;
+				}
+				
 				if(ftpSendFile(record.m_reportpath,remotePath)>=0)
 				{	
 					char type[50]={0};
@@ -304,6 +310,15 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 					//httpPost(record.m_code,type,remotePath,"锐速","阿豪",1);
 					if(FileExists(record.m_projectpath,NULL)==1)
 					{
+						if(ftpSendFile(record.m_projectpath,remotePath)>=0)  //上传XML文件
+						{
+							SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.m_projectpath);	
+							SetCtrlVal(ftpPanel,FTP_TEXTBOX,"上传成功\n");  
+						}else{
+							SetCtrlVal(ftpPanel,FTP_TEXTBOX,"Ftp上传出错\n");
+							break;
+						}
+						
 						if(resultHashTable!=0)
 						{
 							HashTableDispose(resultHashTable);
@@ -333,7 +348,6 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 					SetCtrlVal(ftpPanel,FTP_TEXTBOX,"Ftp上传出错\n");
 					break;
 				}
-				
 			}
 		}
 		SetCtrlAttribute(ftpPanel,FTP_COMMANDBUTTON,ATTR_DIMMED,0);

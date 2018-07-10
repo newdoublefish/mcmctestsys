@@ -20,6 +20,7 @@
 #endif
 int httpPost(char *recordName,char *type,char *fileName,char *location,char *person,int pass);	
 int httpPostJson(char *url,char *jsonData);
+int httpPostJsonWithResponseUserName(char *url,char *jsonData,char **data);
 int httpPostJsonWithResponseData(char *url,char *jsonData,char **data);
 #ifdef __cplusplus
     }

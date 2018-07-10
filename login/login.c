@@ -126,7 +126,7 @@ BOOL Login(tLoginConfig config)
 		//printf("%s\n",buffer);
 		ListDispose(data.postParamList);
 		char *fullName;
-		if(1==httpPostJsonWithResponseData(data.url,buffer,&fullName))
+		if(1==httpPostJsonWithResponseUserName(data.url,buffer,&fullName))
 		{
 			if(fullName!=NULL)
 			{
