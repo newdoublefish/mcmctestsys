@@ -21,7 +21,7 @@
     <PostPath>Integrate_120KW_megmeet_new\post.xml</PostPath>	    
     <ReportPath>Integrate_120KW_megmeet_new\IntegrateReport.xlsx</ReportPath>
   </Project>
-  <Project>
+  <Project show="True">
     <ProjectName>120KW_integration</ProjectName>
     <NickName>120KW整机测试-华为-15kw模块</NickName>
     <ConfigPath>Integrate_120KW_huawei_15KW\IntegrateConfig.xlsx</ConfigPath>
@@ -54,7 +54,7 @@
   <Project show="True">
     <ProjectName>120KW_reliability</ProjectName>
     <NickName>120KW可靠性测试_安柏</NickName>
-    <ConfigPath>reliability_120KW_anbat\reliability.xml</ConfigPath>
+    <ConfigPath>reliability_120KW_anbat\reliabilityConfig.xlsx</ConfigPath>
     <StrategyPath>reliability_120KW_anbat\Strategy.xml</StrategyPath>	
     <DevicePath>reliability_120KW_anbat\Device.xml</DevicePath>
     <DBName>reliability</DBName>  
@@ -119,7 +119,7 @@
     <DBName>board</DBName>	   
     <ReportPath>board_90KW\BoardReport.xlsx</ReportPath>
   </Project> 
-  <Project show="True">
+  <Project>
     <ProjectName>Demo</ProjectName>
     <NickName>模板</NickName>
     <ConfigPath>demo\demo.xlsx</ConfigPath>
@@ -161,7 +161,7 @@
     <PostPath>ac4_integrate\post.xml</PostPath>
     <ReportPath>ac4_integrate\IntegrateReport.xlsx</ReportPath>
   </Project>  
-  <Project show="True">  
+  <Project>  
     <ProjectName>report_integrate</ProjectName>
     <NickName>150套90KW功率分配整机测试</NickName>
     <ConfigPath>report_integrate\ac.xlsx</ConfigPath>
@@ -171,7 +171,7 @@
     <PostPath>report_integrate\post.xml</PostPath>
     <ReportPath>report_integrate\IntegrateReport.xlsx</ReportPath>
   </Project>
-   <Project show="True">  
+   <Project>  
     <ProjectName>report_integrate50</ProjectName>
     <NickName>50套90KW不带功率分配整机测试</NickName>
     <ConfigPath>report_integrate50\ac.xlsx</ConfigPath>
@@ -181,7 +181,7 @@
     <PostPath>report_integrate50\post.xml</PostPath>
     <ReportPath>report_integrate50\IntegrateReport.xlsx</ReportPath>
   </Project> 
-  <Project show="True">
+  <Project>
     <ProjectName>120KW_matain</ProjectName>
     <NickName>120KW整机测试-麦格米特-维护</NickName>
     <ConfigPath>matain\IntegrateConfig.xlsx</ConfigPath>

@@ -1978,7 +1978,14 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 	}*/
 
 	//WarnShow1(0,"按下确定开始读数");
-	WarnAlert(0,"准备读取数值",5); 
+	TestItem itemPower={0};
+	ListGetItem(group.subItems,&itemPower,4);
+	if(strstr(itemPower.inputValue_,"NA")==NULL)
+	{
+		WarnAlert(0,"准备读取数值",atoi(itemPower.inputValue_));
+	}else{
+		WarnAlert(0,"准备读取数值",120);
+	}
 	APPEND_INFO(msgHandler,"开始读数"); 
 
 
@@ -2045,6 +2052,18 @@ METHODRET ChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHa
 				{
 					itemResult.pass=RESULT_PASS;
 				}
+			}
+		}else if(i==4)
+		{
+			if(strstr(item.standard_,"NA")==NULL)
+			{
+				if(strValue<=item.standard_value.maxValue && strValue>=item.standard_value.minValue)
+				{
+					itemResult.pass=RESULT_PASS;
+				}
+			}else{
+
+				itemResult.pass=RESULT_PASS;
 			}
 		}else{
 			itemResult.pass=RESULT_PASS; 
