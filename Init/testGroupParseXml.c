@@ -1,6 +1,6 @@
 #include "cvixml.h"
 #include "cJSON.h" 
-
+#include "common.h"
 #include "testGroupInit.h"
 #include "testGroupParseXml.h"
 #include "tipsParse.h"
@@ -11,6 +11,11 @@
 #define CASE_ELEM "case"
 #define PROTOCOL_ELEM "protocol"
 #define RELAY_ELEM "relays"
+
+ 
+#ifndef xmlChk
+#define xmlChk(f) if (xmlErr = (f), FAILED (xmlErr)) goto Error; else
+#endif
 
 extern ParseStandardValue(char *expression,VALUE_STANDARD *standard);
 
@@ -325,12 +330,13 @@ BOOL LoadRelayFromXml(CVIXMLElement currElem)
 
 BOOL LoadTestGroupFromXml(ListType groupList,ListType itemList,ListType protocolList,char *filePath)
 {
+	CVIXMLStatus		xmlErr = S_OK;
 	CVIXMLDocument      document = 0;
 	CVIXMLElement       currElem = 0 ,currChildElem = 0;
 	int                 len,numChildElems;
 	char                *elemName = NULL, *elemValue = NULL;
 	/* Load document and process it */
-	CVIXMLLoadDocument (filePath, &document);
+	xmlChk(CVIXMLLoadDocument (filePath, &document));
 	CVIXMLGetRootElement (document, &currElem);
 	CVIXMLGetElementTagLength (currElem, &len);
 	elemName = malloc (len + 1);
@@ -364,9 +370,17 @@ BOOL LoadTestGroupFromXml(ListType groupList,ListType itemList,ListType protocol
 			CVIXMLDiscardElement(currChildElem);
 		}
 	}
+Error: 
 	free (elemName);
 	free (elemValue);
 	CVIXMLDiscardElement (currElem);
 	CVIXMLDiscardDocument (document);
+	if (FAILED (xmlErr)) {
+		char	errBuf[512];
+		CVIXMLGetErrorString (xmlErr, errBuf, sizeof (errBuf));
+		//MessagePopup ("XML Error", errBuf);
+		WarnShow1(0,errBuf);
+		return FALSE;
+	}	
 	return TRUE;
 }

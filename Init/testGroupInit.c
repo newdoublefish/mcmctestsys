@@ -489,11 +489,14 @@ HRESULT testGroupInit(char *filePath)
 			ListDispose(protocolList);
 		protocolList = ListCreate(sizeof(tProtocol));
 		
-		LoadTestGroupFromXml(tiaoliGroup,tiaoliList,protocolList,filePath);
+		if(LoadTestGroupFromXml(tiaoliGroup,tiaoliList,protocolList,filePath)==FALSE)
+		{
+			error = -1;
+		}
 		slideProgressShowWithTextBox(slidePanelHandle,-1,"分析测试条例表完成\n",1);   
-		printGroupList();		
-		printProtocolList();
-		printfRelayHashTable();
+		//printGroupList();		
+		//printProtocolList();
+		//printfRelayHashTable();
 		slideProgressShowWithTextBox(slidePanelHandle,-1,"分析测试条例表完成\n",1);
 	  	disposeSlideProgress(slidePanelHandle);
 		return error;
