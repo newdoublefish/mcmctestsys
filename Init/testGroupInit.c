@@ -26,6 +26,7 @@
 #include "log.h"
 #include "debug.h"
 #include "testGroupParseXml.h"
+#include "relayProtocol.h"
 
 
 static TestGroup group;
@@ -426,9 +427,10 @@ void printProtocolList()
 			tProtocolItem item={0};
 			ListGetItem(t.protocolItems,&item,j);
 			printf("%s\n",item.itemName);
-			for (error = HashTableIteratorCreate(item.attributeHash, &iter), i = 1;
+			int z=1;
+			for (error = HashTableIteratorCreate(item.attributeHash, &iter), z = 1;
                  error >= 0 && error != HASH_TABLE_END;
-                 error = HashTableIteratorAdvance(item.attributeHash, iter), ++i)
+                 error = HashTableIteratorAdvance(item.attributeHash, iter), ++z)
     		{
 				
 				char key[256]={0};
@@ -472,7 +474,7 @@ HRESULT testGroupInit(char *filePath)
     	return error;
 	}else if(strstr(filePath,".xml")!=NULL)
 	{
-		slidePanelHandle=displaySlideProgressWithTextBox("正在分析测试条例表"); 
+		int slidePanelHandle=displaySlideProgressWithTextBox("正在分析测试条例表"); 
 		slideProgressShowWithTextBox(slidePanelHandle,-1,"开始分析测试条例表\n",1);		
 		if(tiaoliGroup!=0)
 			ListDispose(tiaoliGroup);
@@ -491,6 +493,10 @@ HRESULT testGroupInit(char *filePath)
 		slideProgressShowWithTextBox(slidePanelHandle,-1,"分析测试条例表完成\n",1);   
 		printGroupList();		
 		printProtocolList();
+		printfRelayHashTable();
+		slideProgressShowWithTextBox(slidePanelHandle,-1,"分析测试条例表完成\n",1);
+	  	disposeSlideProgress(slidePanelHandle);
+		return error;
 					
 	}
 	

@@ -7,6 +7,7 @@
 
 HRESULT getTip(char *key,char *value);
 void getTipsFromExcel(void);
+HashTableType getTipsHashTable();
 
 #ifdef __cplusplus
     }

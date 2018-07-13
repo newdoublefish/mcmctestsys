@@ -65,6 +65,15 @@ static HRESULT onStartGetTips(VARIANT *MyVariant,int row,int column)
 }
 
 
+HashTableType getTipsHashTable()
+{
+	if(tipsHashTable ==0)
+		 HashTableCreate(10,C_STRING_KEY,0,256,&tipsHashTable);
+	return tipsHashTable;
+}
+
+
+
 
 void getTipsFromExcel()   
 {

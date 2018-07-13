@@ -81,22 +81,26 @@ HRESULT testInit(SUT selectedsut)
 	
 	initTps();
 	
-	getTipsFromExcel();
 	
-	parseRelayProtocol();					//继电器协议解析	
+	if(strstr(selectedsut.configPath,".xml")==NULL)
+	{
+		getTipsFromExcel();
+	
+		parseRelayProtocol();					//继电器协议解析	
 	
 #if 1	
-	if(protocolInit()<0)                   //解析协议
-	{
-		LOG_EVENT(LOG_ERROR,"protocol analyse error"); 
-	    return -1;
-	}	
+		if(protocolInit()<0)                   //解析协议
+		{
+			LOG_EVENT(LOG_ERROR,"protocol analyse error"); 
+	    	return -1;
+		}	
 #endif
-	//ManualItemLen = ManualItemInit(project.configPath,ManuItem);	
-	//StatusPanelInit (LRUstatus); 	
+		//ManualItemLen = ManualItemInit(project.configPath,ManuItem);	
+		//StatusPanelInit (LRUstatus); 	
 	
-	LOG_EVENT(LOG_INFO,"TEST init success!");
-	
+		
+	}
+	LOG_EVENT(LOG_INFO,"TEST init success!"); 
 	return TRUE;
 }
 

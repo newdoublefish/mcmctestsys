@@ -14,6 +14,8 @@ typedef struct{
 }RelayOperate;
 int getRelayMask(char *key,RelayOperate *relayOperate);
 void parseRelayProtocol(void);
+HashTableType getRelayHashTable();
+void printfRelayHashTable();
 #ifdef __cplusplus
     }
 #endif

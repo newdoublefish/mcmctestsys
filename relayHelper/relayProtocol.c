@@ -6,6 +6,7 @@
 #include "relayProtocol.h"
 #include "debug.h"
 
+
 static HashTableType relayHashTable=0;
 #define SHEET_RANGE_TIPS "A2:D2" 
 
@@ -147,4 +148,27 @@ void parseRelayProtocol(void){
 	   task.onCellListener=(void *)onCellListenerGetRelay;
 	   runExcelTask(task);
 	}
+}
+
+HashTableType getRelayHashTable()
+{
+	if(relayHashTable==0)
+		HashTableCreate(10,C_STRING_KEY,0,sizeof(RelayOperate),&relayHashTable);
+	return relayHashTable;
+}
+
+
+void printfRelayHashTable()
+{
+	RelayOperate t;
+		int                 error       = 0; 
+	HashTableIterator iter;	
+	int i=1;
+			for (error = HashTableIteratorCreate(relayHashTable, &iter), i = 1;
+                 error >= 0 && error != HASH_TABLE_END;
+                 error = HashTableIteratorAdvance(relayHashTable, iter), ++i)
+    		{
+				HashTableIteratorGetItem(relayHashTable,iter,t.key,sizeof(t.key),&t,sizeof(RelayOperate));
+				printf("%s,%x,%x,%x\n",t.key,t.beforeTestMask,t.afterTestMask,t.mask);
+			}	
 }
