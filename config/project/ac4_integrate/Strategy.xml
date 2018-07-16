@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Strategy>
-	<StrategyName>策略1</StrategyName>
-	<StrategyTestType>Serial</StrategyTestType>
-	<Collects>
-		<Collect><CollectName>11</CollectName><Type>0</Type><TestType>0</TestType><MaxTestDevice>1</MaxTestDevice><RetryCount>1</RetryCount><TipsFlag>1</TipsFlag><TipsCloseTime>0</TipsCloseTime><Groups><GroupId>1</GroupId></Groups></Collect></Collects>
-</Strategy>

@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Devices>
-	<Device><Basic Id="1" name="120KW" enable="1">基本配置</Basic><Serial port="10" rate="19200" parity="0" data="8" stopb="1">k60串口</Serial><Serial port="9" rate="9600" parity="0" data="8" stopb="1">RS485串口</Serial><Serial port="11" rate="19200" parity="0" data="8" stopb="1">k64串口</Serial><Net ip="192.168.10.250" port="6111">充电桩网络</Net><Serial port="8" rate="9600" parity="0" data="8" stopb="1">继电器</Serial></Device></Devices>

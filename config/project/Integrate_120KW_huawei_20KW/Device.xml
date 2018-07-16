@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Devices>
-	<Device><Basic Id="1" name="120KW" enable="1">基本配置</Basic><Serial port="7" rate="9600" parity="0" data="8" stopb="1">继电器</Serial><Serial port="6" rate="9600" parity="0" data="8" stopb="1">BMS模拟器</Serial><Serial port="1" rate="9600" parity="0" data="8" stopb="1">空调</Serial><Net ip="192.168.10.250" port="6111">充电桩网络</Net><Serial port="1" rate="2400" parity="2" data="8" stopb="1">电表</Serial></Device></Devices>

@@ -68,6 +68,7 @@ extern TPS registerMeterTPS(void); //µç±íÄ£Äâ²âÊÔ
 extern TPS registerACTPS(void);
 extern TPS registerMatainTPS(void);
 extern TPS registerReportTPS(void);
+extern TPS registerMatainChargingTestTps(void);
 
 
 
@@ -125,6 +126,7 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerReportTPS,
 	
 	registerMatainTPS,
+	registerMatainChargingTestTps,
 };
 
 

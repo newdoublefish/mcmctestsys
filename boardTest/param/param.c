@@ -2601,16 +2601,26 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 				goto DONE;
 			}
 			 
-			unsigned int valueUi= atoi(result.recvString);
+			unsigned int valueBi= atoi(result.recvString);
 			//valueUi = 24;
 			//bibo.maskBi = 8;
-			unsigned int standard = bibo.maskBi&valueUi;
-			APPEND_INFO_FORMAT(masgHandle,"获取数据池BI成功:%x,%x",valueUi,standard);
-			if(standard == bibo.maskBi)
+			unsigned int bi = bibo.maskBi&valueBi;
+			APPEND_INFO_FORMAT(masgHandle,"获取数据池BI成功:%x,%x",valueBi,bi);
+			if(strstr(item.standard_,"NA")!=NULL)
 			{
-				result.pass = RESULT_PASS;
-				break;
-			} 
+				if(bi == bibo.maskBi)
+				{
+					result.pass = RESULT_PASS;
+					break;
+				}
+			}else{
+				unsigned standard = atoi(item.standard_);
+				if(standard == bi)
+				{
+					result.pass = RESULT_PASS;
+					break;
+				}
+			}
 		}
 		saveResult(hashTable,&result);
 	}
@@ -2857,7 +2867,7 @@ METHODRET PowerModuleTest(TestGroup group,EUT eut,HashTableType hashTable,int ma
 		APPEND_INFO(masgHandle,"DO单一控制标志 成功"); 
 	}
 	
-	if(strcmp(group.groupName,"断开交流接触器")==0 || strcmp(group.groupName,"枪1泄放")==0 || strcmp(group.groupName,"枪2泄放")==0)
+	if(strcmp(group.groupName,"断开交流接触器")==0 || strcmp(group.groupName,"枪1泄放")==0 || strcmp(group.groupName,"枪2泄放")==0 || strcmp(group.groupName,"打开交流接触器")==0)
 	{
 		TestItem item={0};
 		ListGetItem(group.subItems,&item,1);
