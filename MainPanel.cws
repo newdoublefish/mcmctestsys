@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 9
+Number of Opened Files = 0
 Window Confinement Region Enabled = True
 MainColumnWidth = 270
 FileDateColumnWidth = 70
@@ -105,7 +105,6 @@ Disk Date = 3614568182
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 2
 Source Window State = "1,1089,1089,1089,4,15,15,0,3,80,0,3233,0,753,0,18,1070,0,1089,4,239,517,1,0,"
 
 [File 0010]
@@ -213,7 +212,6 @@ Window Top = 64
 Window Left = 26
 Window Height = 263
 Window Width = 517
-Window Z-Order = 7
 
 [File 0021]
 Path = "/d/workspace/mcmctest/platDemo/policyConfig/policyPanel.uir"
@@ -389,7 +387,7 @@ Disk Date = 3522103256
 In Projects = "1,"
 Window Top = 124
 Window Left = 61
-Source Window State = "1,1986,1986,1986,21,44,44,0,0,0,0,0,0,0,0,0,1975,0,1990,65,287,605,1,0,"
+Source Window State = "1,1986,1986,1986,21,44,44,0,0,95,0,0,0,0,0,22,1148,0,1159,4,287,605,1,0,"
 
 [File 0042]
 Path = "/d/workspace/mcmctest/platDemo/testCode/demoTestCode/demoTest.c"
@@ -398,7 +396,6 @@ Disk Date = 3614569804
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 3
 Source Window State = "1,33,43,43,0,3,3,0,0,84,0,0,0,0,0,13,220,0,234,6,179,541,1,0,"
 
 [File 0043]
@@ -579,7 +576,6 @@ Disk Date = 3611641334
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 8
 Source Window State = "1,67,67,67,5,27,27,0,0,84,0,129,0,129,0,23,95,0,75,84,299,541,1,0,"
 
 [File 0064]
@@ -715,7 +711,6 @@ Disk Date = 3614298199
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 4
 Source Window State = "1,265,270,270,0,11,11,0,0,113,0,0,0,0,0,25,241,0,263,25,323,715,1,0,"
 
 [File 0079]
@@ -885,7 +880,6 @@ Disk Date = 3614572729
 In Projects = "1,"
 Window Top = 95
 Window Left = 58
-Window Z-Order = 9
 Source Window State = "1,70,70,70,11,40,40,0,0,105,0,38,0,0,0,25,104,0,128,34,323,665,1,29,"
 
 [File 0098]
@@ -1777,8 +1771,7 @@ Disk Date = 3614573986
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 1
-Source Window State = "1,130,130,130,8,32,32,0,0,266,0,149,0,149,0,29,111,0,135,32,227,715,1,0,"
+Source Window State = "1,128,128,128,12,20,20,0,0,266,0,149,0,149,0,45,112,0,126,42,227,715,1,0,"
 
 [File 0212]
 Path = "/d/workspace/mcmctest/platDemo/boardTest/matain/matain.h"
@@ -1796,7 +1789,6 @@ Disk Date = 3614573733
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 6
 Source Window State = "1,17,17,17,9,22,22,0,0,113,0,0,0,0,0,17,0,0,6,60,227,715,1,0,"
 
 [File 0214]
@@ -1808,18 +1800,6 @@ Window Top = 64
 Window Left = 26
 Window Height = 227
 Window Width = 715
-Window Z-Order = 5
-
-[Tab Order]
-Tab 0001 = "/d/workspace/mcmctest/platDemo/boardTest/matain/matain.c"
-Tab 0002 = "/d/workspace/mcmctest/platDemo/boardTest/resistenTest/resistentTest.c"
-Tab 0003 = "/d/workspace/mcmctest/platDemo/boardTest/matain/MatainPanel.uir"
-Tab 0004 = "/d/workspace/mcmctest/platDemo/testCode/demoTestCode/demoTest.c"
-Tab 0005 = "/d/workspace/mcmctest/platDemo/frameworks/tpsHelper.c"
-Tab 0006 = "/d/workspace/mcmctest/platDemo/boardTest/param/param.c"
-Tab 0007 = "/d/workspace/mcmctest/platDemo/boardTest/param/meter.c"
-Tab 0008 = "/d/workspace/mcmctest/platDemo/boardTest/param/ParamPanel.uir"
-Tab 0009 = "/d/workspace/mcmctest/platDemo/boardTest/matain/MatainPanel.h"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
