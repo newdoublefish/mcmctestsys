@@ -2605,7 +2605,8 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 			//valueUi = 24;
 			//bibo.maskBi = 8;
 			unsigned int bi = bibo.maskBi&valueBi;
-			APPEND_INFO_FORMAT(masgHandle,"获取数据池BI成功:%x,%x",valueBi,bi);
+			APPEND_INFO_FORMAT(masgHandle,"获取数据池BI成功:%x,%x\n",valueBi,bi);
+			//printf("获取数据池BI成功:%x,%x",valueBi,bi); 
 			if(strstr(item.standard_,"NA")!=NULL)
 			{
 				if(bi == bibo.maskBi)
@@ -2614,7 +2615,8 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 					break;
 				}
 			}else{
-				unsigned standard = atoi(item.standard_);
+				unsigned standard = HexStrToUnsignedInt(item.standard_);
+				printf("standard:%x,bi:%x\n",standard,bi);
 				if(standard == bi)
 				{
 					result.pass = RESULT_PASS;

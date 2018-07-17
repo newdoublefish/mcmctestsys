@@ -48,6 +48,7 @@ int CVICALLBACK MaintainPanelStopButtonCallback (int panel, int control, int eve
 	return 0;  
 }
 
+extern BOOL CheckGunPlugined(EUT eut,int gunIndex,int *result);
 
 METHODRET MatainChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHandler)
 {
@@ -57,6 +58,7 @@ METHODRET MatainChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int
 	int panelHandle = 0;
 	char startChargeCmd[20]={0};
 	char stopChargeCMD[20]={0};
+	int gunIndex=0;
 	
 	
 	panelHandle = LoadPanel(0,"MatainPanel.uir",PANEL);
@@ -70,9 +72,28 @@ METHODRET MatainChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int
 	{
 		sprintf(startChargeCmd,"%s","1Ç¹µ÷ÊÔÆô¶¯³äµç");		
 		sprintf(stopChargeCMD,"%s","1Ç¹µ÷ÊÔÍ£Ö¹³äµç");
+		gunIndex = 1;
 	}else if(strcmp(group.groupName,"Ç¹2³äµç¹¦ÄÜ")==0){
 		sprintf(startChargeCmd,"%s","2Ç¹µ÷ÊÔÆô¶¯³äµç");		
-		sprintf(stopChargeCMD,"%s","2Ç¹µ÷ÊÔÍ£Ö¹³äµç");	
+		sprintf(stopChargeCMD,"%s","2Ç¹µ÷ÊÔÍ£Ö¹³äµç");
+		gunIndex = 2;
+	}
+	
+	if(gunIndex ==0)
+	{																												 
+		SetCtrlVal(panelHandle,PANEL_MSG,"Ç¹ÐòºÅ´íÎó"); 
+		goto DONE;
+	}
+	
+	int result = 0;
+	
+	CheckGunPlugined(eut,gunIndex,&result);
+	
+	if(result == TRUE)
+	{
+		SetCtrlVal(panelHandle,PANEL_GUNSTATUS,"ÒÑ²åÇ¹");
+	}else{
+		goto DONE;
 	}
 	
 	if(FALSE==ParamSetDepend(eut,startChargeCmd,"1"))
@@ -113,21 +134,24 @@ METHODRET MatainChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int
 			if(i ==1)
 			{
 				//SetCtrlVal (panelHandle, PANEL_VOLTAGE, atof(itemResult.recvString));  
-				PlotStripChartPoint (panelHandle, PANEL_VOLTAGE, atof(itemResult.recvString));
+				PlotStripChartPoint (panelHandle, PANEL_CURRENT, atof(itemResult.recvString));
 			
 			}else if(i==2){
 				//SetCtrlVal (panelHandle, PANEL_CURRENT, atof(itemResult.recvString));
-				PlotStripChartPoint (panelHandle, PANEL_CURRENT, atof(itemResult.recvString));   
+				PlotStripChartPoint (panelHandle, PANEL_VOLTAGE, atof(itemResult.recvString));   
+			}else if(i==3)
+			{
+				PlotStripChartPoint (panelHandle, PANEL_POWER, atof(itemResult.recvString));
 			}
 			
 			saveResult(hashTable,&itemResult);
 			
 		}
 		Delay(0.5);
-		if(currentTime-outTime > elapsed)
+		/*if(currentTime-outTime > elapsed)
 		{
 			quitFlag = FALSE;
-		}
+		}*/
 		ProcessSystemEvents (); 	
 	}
 	
@@ -208,5 +232,13 @@ TPS registerMatainChargingTestTps(void)
 {
 	TPS tps=newTps("matain_charging");
 	tps.testFunction=MatainChargingTest;
+	return tps;	
+}
+
+METHODRET InsulationTest2(TestGroup group,EUT eut,HashTableType hashTable,int msgHander);
+TPS registerMatainInsulationTestTps(void)
+{
+	TPS tps=newTps("matain_insulation");
+	tps.testFunction=InsulationTest2;
 	return tps;	
 }
