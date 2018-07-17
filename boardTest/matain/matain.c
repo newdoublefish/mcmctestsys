@@ -17,6 +17,8 @@
 #include "StubNetService.h"
 #include "MatainPanel.h"
 
+HashTableType erroMsgHashTable=0;  
+
 int CVICALLBACK MaintainChargingPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
 	
 	switch (event)
@@ -241,4 +243,183 @@ TPS registerMatainInsulationTestTps(void)
 	TPS tps=newTps("matain_insulation");
 	tps.testFunction=InsulationTest2;
 	return tps;	
+}
+
+
+// g 2 2
+// g 7 2
+
+int CVICALLBACK MaintainPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			//if(checkScanResult(panelHandle)==TRUE) 
+			 QuitUserInterface(1);
+		     break;
+	}
+	return 0;
+}
+
+
+HRESULT getErrorMessage(int key,char *value)
+{
+   int found=0; 
+   HashTableFindItem(erroMsgHashTable,&key,&found);
+   if(found==1)
+   {
+   	   HashTableGetItem(erroMsgHashTable,&key,value,256);
+   }
+   return found;
+}
+
+
+METHODRET MatainTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+#if 0	
+		//TODO:STROK分解结果
+		ListType list = ListCreate(sizeof(tErrorMesg));
+		if(FALSE==GetPileErrorList(eut,"prd erec disp 20\r\n",3,list))
+		{
+			APPEND_INFO(msgPanel,"获取列表失败");
+			return ret;				
+		}else{
+			APPEND_INFO(msgPanel,"获取列表成功");
+		}
+		APPEND_INFO_FORMAT(msgPanel,"故障列表数量%d\n",ListNumItems(list));
+		tErrorMesg msg={0};
+		for(int i=1;i<=ListNumItems(list);i++)
+		{
+			 ListGetItem(list,&msg,i);
+			 APPEND_INFO_FORMAT(msgPanel,"枪：%d,故障内容:%d,故障时间:%s\n",msg.gunIndex,msg.errorString,msg.errorTime);
+		}
+		ListDispose(list);
+#else
+		int panelHandle=LoadPanel(0,"ParamPanel.uir",MATAIN); 
+		InstallPanelCallback(panelHandle,MaintainPanelCallback,NULL);
+		ListType recordList = ListCreate(sizeof(tRecordMesg));
+		if(FALSE==GetPileRecordList(eut,"prd crec disp 1\r\n",3,recordList))
+		{
+			APPEND_INFO(msgPanel,"获取列表失败");
+			return ret;				
+		}else{
+			APPEND_INFO(msgPanel,"获取列表成功");
+		}
+		APPEND_INFO_FORMAT(msgPanel,"充电记录数量%d\n",ListNumItems(recordList));
+		SetCtrlVal(panelHandle,MATAIN_TEXTBOX,"获取充电记录成功");
+		tRecordMesg recordMsg={0};
+		for(int i=1;i<=ListNumItems(recordList);i++)
+		{
+			 ListGetItem(recordList,&recordMsg,i);
+			 APPEND_INFO_FORMAT(msgPanel,"枪：%d,故障原因1:%d,故障原因2:%d\n",recordMsg.gunIndex,recordMsg.reseason1,recordMsg.reseason2);
+			 char temp[1024]={0};
+			 char resean1[256]={0};
+			 char resean2[256]={0};
+			 getErrorMessage(recordMsg.reseason1,resean1);
+			 getErrorMessage(recordMsg.reseason2,resean2);
+			 sprintf(temp,"枪：%d\n故障码1:%d,故障原因1:%s\n故障码2:%d,故障原因2:%s\n",recordMsg.gunIndex,recordMsg.reseason1,resean1,recordMsg.reseason2,resean2);
+			 SetCtrlVal(panelHandle,MATAIN_TEXTBOX,temp); 
+		}
+		ListDispose(recordList);
+		
+		
+		ListType list = ListCreate(sizeof(tDataPoolItem));
+		GetDataPoolGroupList(eut,2,2,3,list); 
+		GetDataPoolGroupList(eut,7,2,3,list);
+
+		InsertTableRows (panelHandle,MATAIN_TABLE,-1,ListNumItems(list),VAL_USE_MASTER_CELL_TYPE);
+		tDataPoolItem msg;
+		int showCnt = 1;
+		for(int i=1;i<=ListNumItems(list);i++)
+		{
+			 ListGetItem(list,&msg,i);
+			 APPEND_INFO_FORMAT(msgPanel,"%s %s",msg.name,msg.status);
+			 char temp[5]={0};
+			 sprintf(temp,"%d",msg.gunIndex);
+			 if(strstr(msg.status,"true")==NULL)
+				 continue;
+			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(1,showCnt),temp);
+			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(2,showCnt),msg.name);
+			 SetTableCellVal(panelHandle,MATAIN_TABLE,MakePoint(3,showCnt),msg.status);
+			 showCnt++;
+		}
+		DisplayPanel(panelHandle);
+		RunUserInterface();
+		DiscardPanel(panelHandle);
+		ListDispose(list);
+#endif
+	
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);		
+	return ret;
+}
+
+static HRESULT onStartErrorMessage(VARIANT *MyVariant,int row,int column)				
+{
+	//istList=ListCreate(sizeof(INSTRUCTION));
+	HashTableCreate(10,FIXED_SIZE_KEY,sizeof(int),256,&erroMsgHashTable);
+    return 0;	
+}
+
+static HRESULT onCellListenerErrorMessage(VARIANT *MyVariant,int row,int column)    
+{
+	char *temp;
+	static int key; 
+	if(column==0)
+	{
+		 if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+			//memcpy(tempInstruction.name,temp,strlen(temp)+1);
+			char keystr[50]={0};;
+			memcpy(keystr,temp,strlen(temp)+1);
+			key = atoi(keystr);
+			//printf("%s,",temp);
+			CA_FreeMemory(temp);
+		 }else
+		 {
+			return EXCEL_TASK_QUIT;
+		 }
+	}else if(column==1)
+	{
+		 if(CA_VariantHasCString(MyVariant))
+	     {
+		    CA_VariantGetCString(MyVariant, &temp); 
+		    //tempInstruction.operation.testType=(unsigned char)StrToUnsignedLong(temp);   
+			if(erroMsgHashTable!=0)
+			{
+			   HashTableInsertItem(erroMsgHashTable,&key,temp);
+			}
+			//printf("%s\n",temp); 
+			CA_FreeMemory(temp);
+		 }
+	}
+	return EXCEL_TASK_OK;
+}
+
+
+#define SHEET_RANGE_TIPS "A2:B2"
+BOOL MatainErrorMsgProtocolInit(char *sheetName)
+{
+	if(erroMsgHashTable!=0)
+		return TRUE;
+	SUT sut=GetSeletedSut();
+	EXCELTask task=createExcelTask(sut.configPath,sheetName,SHEET_RANGE_TIPS,2);
+	task.onExcelTaskStartListener=(void *)onStartErrorMessage;
+	task.onCellListener=(void *)onCellListenerErrorMessage;
+	runExcelTask(task);
+	return TRUE;	
+}
+
+
+
+
+
+TPS registerMatainTPS(void)
+{
+	TPS tps=newTps("matain");
+	tps.testFunction=MatainTest;
+	tps.protocolInit = MatainErrorMsgProtocolInit;
+	return tps;
 }
