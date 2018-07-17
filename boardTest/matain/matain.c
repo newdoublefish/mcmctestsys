@@ -130,7 +130,70 @@ METHODRET MatainChargingTest(TestGroup group,EUT eut,HashTableType hashTable,int
 		}
 		ProcessSystemEvents (); 	
 	}
-DONE:	
+	
+	SetCtrlVal(panelHandle,PANEL_MSG,"停止中........"); 
+	
+	if(FALSE==ParamSetDepend(eut,stopChargeCMD,"1"))
+	{
+		WarnShow1(0,"无法停止充电");
+		APPEND_INFO(msgHandler,"无法停止充电");
+		APPEND_INFO_FORMAT(msgHandler,"离开%s",group.groupName);
+		SetCtrlVal(panelHandle,PANEL_MSG,"停止失败");
+		WarnShow1(0,"请确保充电流程已经停止");
+	}
+	
+	while(TRUE)
+	{
+		for(int i=1;i<=ListNumItems(group.subItems);i++)
+		{
+			TestItem item;
+			ListGetItem(group.subItems,&item,i);
+
+			PARAMETER param={0};
+			sprintf(param.paramName,"%s",item.itemName_);
+			RESULT itemResult={0};
+			itemResult.index=item.itemId;
+			itemResult.pass=RESULT_PASS;
+					//sprintf(itemResult.recvString,"%s",param.value);
+			if(ParamGetDepend(eut,item.itemName_,itemResult.recvString)==FALSE)
+			{
+				 APPEND_INFO_FORMAT(msgHandler,"%s获取失败功",item.itemName_);
+			 	itemResult.pass=RESULT_FAIL;
+			 	saveResult(hashTable,&itemResult);
+			 	goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(msgHandler,"%s获取成功，值为%s",item.itemName_,itemResult.recvString); 	
+			}
+			if(i ==1)
+			{
+				PlotStripChartPoint (panelHandle, PANEL_VOLTAGE, atof(itemResult.recvString));
+				if(atof(itemResult.recvString)<5)
+				{
+					//itemResult.recvString
+					goto DONE;
+				}else if(quitFlag==FALSE){
+					if(AlertDialogWithRet(0,"警告","充电未停止是否继续退出","不退出","退出")==TRUE)
+	  				{
+		   				goto DONE;
+	   				}else{
+		
+	   				}
+				}
+			
+			}else if(i==2){
+				//SetCtrlVal (panelHandle, PANEL_CURRENT, atof(itemResult.recvString));
+				PlotStripChartPoint (panelHandle, PANEL_CURRENT, atof(itemResult.recvString));
+			}
+		}		
+	
+	}
+	
+	
+	
+	
+	
+DONE:
+	SetCtrlVal(panelHandle,PANEL_MSG,"已经停止"); 
 	while(quitFlag == TRUE)
 	{
 		ProcessSystemEvents (); 	

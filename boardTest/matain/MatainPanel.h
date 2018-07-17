@@ -15,8 +15,8 @@
 
 #define  PANEL                            1
 #define  PANEL_MSG                        2       /* control type: textMsg, callback function: (none) */
-#define  PANEL_VOLTAGE                    3       /* control type: strip, callback function: (none) */
-#define  PANEL_STOP                       4       /* control type: command, callback function: (none) */
+#define  PANEL_STOP                       3       /* control type: command, callback function: (none) */
+#define  PANEL_VOLTAGE                    4       /* control type: strip, callback function: (none) */
 #define  PANEL_CURRENT                    5       /* control type: strip, callback function: (none) */
 
 

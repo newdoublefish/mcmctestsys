@@ -13,10 +13,10 @@ Number of Projects = 1
 Active Project = 1
 Project 0001 = "MainPanel.prj"
 Drag Bar Left = 287
-Window Top = 216
-Window Left = 259
-Window Bottom = 998
-Window Right = 1279
+Window Top = 32
+Window Left = 10
+Window Bottom = 719
+Window Right = 1016
 Maximized = True
 Maximized Children = True
 Max32 Number Of Errors = 20
@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 0
+Number of Opened Files = 3
 Window Confinement Region Enabled = True
 MainColumnWidth = 270
 FileDateColumnWidth = 70
@@ -105,7 +105,8 @@ Disk Date = 3614568182
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,1089,1089,1089,4,15,15,0,3,80,0,3233,0,753,0,18,1070,0,1089,4,239,517,1,0,"
+Window Z-Order = 2
+Source Window State = "1,2137,2144,2144,0,10,10,0,3,80,0,3233,0,753,0,18,2115,0,2137,0,239,517,1,0,"
 
 [File 0010]
 Path = "/d/workspace/mcmctest/platDemo/Init/AppInitSplash.uir"
@@ -292,7 +293,7 @@ Disk Date = 3612734520
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,111,111,111,60,66,66,0,3,0,0,0,0,0,0,0,92,0,111,60,275,517,1,52,"
+Source Window State = "1,111,111,111,60,66,66,0,3,80,0,0,0,0,0,21,440,0,111,60,275,517,1,52,"
 
 [File 0031]
 Path = "/d/workspace/mcmctest/platDemo/eut/BasicInfoConfig.c"
@@ -457,7 +458,8 @@ Disk Date = 3613089942
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Source Window State = "1,240,240,240,47,63,47,0,0,0,0,0,0,0,0,0,83,0,95,4,323,715,1,0,"
+Window Z-Order = 3
+Source Window State = "1,240,240,240,47,63,47,0,0,113,0,0,0,0,0,25,170,0,99,83,323,715,1,0,"
 
 [File 0050]
 Path = "/d/workspace/mcmctest/platDemo/common/expressHelper.c"
@@ -498,8 +500,8 @@ Path = "/d/workspace/mcmctest/platDemo/http/httpPost.c"
 File Type = "CSource"
 Disk Date = 3614039416
 In Projects = "1,"
-Window Top = 33
-Window Left = 10
+Window Top = 34
+Window Left = 12
 Source Window State = "1,143,143,143,0,71,71,0,3,84,0,0,0,0,0,15,118,0,143,0,203,541,0,0,"
 
 [File 0055]
@@ -646,8 +648,8 @@ Path = "/d/workspace/mcmctest/platDemo/http/postdll.c"
 File Type = "CSource"
 Disk Date = 3603943759
 In Projects = "1,"
-Window Top = 85
-Window Left = 28
+Window Top = 86
+Window Left = 31
 Source Window State = "1,28,28,28,17,36,36,0,3,80,0,0,0,0,0,14,12,0,28,17,191,517,0,0,"
 
 [File 0072]
@@ -880,7 +882,7 @@ Disk Date = 3614572729
 In Projects = "1,"
 Window Top = 95
 Window Left = 58
-Source Window State = "1,70,70,70,11,40,40,0,0,105,0,38,0,0,0,25,104,0,128,34,323,665,1,29,"
+Source Window State = "1,90,90,90,4,31,31,0,3,105,0,38,0,0,0,25,77,0,90,4,323,665,1,29,"
 
 [File 0098]
 Path = "/d/workspace/mcmctest/platDemo/util/UartUtil.c"
@@ -1767,11 +1769,12 @@ In Projects = "1,"
 [File 0211]
 Path = "/d/workspace/mcmctest/platDemo/boardTest/matain/matain.c"
 File Type = "CSource"
-Disk Date = 3614573986
+Disk Date = 3614586859
 In Projects = "1,"
-Window Top = 33
-Window Left = 10
-Source Window State = "1,128,128,128,12,20,20,0,0,266,0,149,0,149,0,45,112,0,126,42,227,715,1,0,"
+Window Top = 126
+Window Left = 58
+Window Z-Order = 1
+Source Window State = "1,168,168,168,0,96,96,0,0,266,0,116,0,0,0,44,137,0,167,13,323,715,1,18,"
 
 [File 0212]
 Path = "/d/workspace/mcmctest/platDemo/boardTest/matain/matain.h"
@@ -1785,7 +1788,7 @@ Source Window State = "1,0,0,0,0,0,0,0,0,113,0,0,0,0,0,17,0,0,0,60,227,715,1,0,"
 [File 0213]
 Path = "/d/workspace/mcmctest/platDemo/boardTest/matain/MatainPanel.h"
 File Type = "Include"
-Disk Date = 3614573733
+Disk Date = 3614578960
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
@@ -1794,12 +1797,17 @@ Source Window State = "1,17,17,17,9,22,22,0,0,113,0,0,0,0,0,17,0,0,6,60,227,715,
 [File 0214]
 Path = "/d/workspace/mcmctest/platDemo/boardTest/matain/MatainPanel.uir"
 File Type = "User Interface Resource"
-Disk Date = 3614573733
+Disk Date = 3614579130
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
 Window Height = 227
 Window Width = 715
+
+[Tab Order]
+Tab 0001 = "/d/workspace/mcmctest/platDemo/boardTest/matain/matain.c"
+Tab 0002 = "/d/workspace/mcmctest/platDemo/boardTest/param/param.c"
+Tab 0003 = "/d/workspace/mcmctest/platDemo/excelHelper/excelHelper.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
