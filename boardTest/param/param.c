@@ -2616,7 +2616,7 @@ METHODRET BIBOTest(TestGroup group,EUT eut,HashTableType hashTable,int masgHandl
 				}
 			}else{
 				unsigned standard = HexStrToUnsignedInt(item.standard_);
-				printf("standard:%x,bi:%x\n",standard,bi);
+				//printf("standard:%x,bi:%x\n",standard,bi);
 				if(standard == bi)
 				{
 					result.pass = RESULT_PASS;
@@ -3183,6 +3183,7 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 			
 			if(result.pass == RESULT_PASS)
 			{
+#if 0				
 			
 				if(FALSE==AlertDialogWithRetAutoClose(0,"waring","请观察风扇转动情况","取消","跳过",15))
 				{
@@ -3193,7 +3194,7 @@ METHODRET Power120KWModuleTest(TestGroup group,EUT eut,HashTableType hashTable,i
 				{
 					result.pass =  RESULT_FAIL;
 				}
-				
+#endif				
 				
 
 				break;

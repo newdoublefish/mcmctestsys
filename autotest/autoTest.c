@@ -403,7 +403,10 @@ static void CVICALLBACK onMenuSingleItemTestCB(int panel, int controlID, int Men
 			if(ret != TEST_RESULT_QUIT)
 				objectResultShow(_obj,group,testGroupIndex,&testItemIndex);
 		}
+	}else{
+		WarnShow1(0,"未选中组");
 	}
+	
 	gEngine->testState=TEST_IDLE;
 	//printf("-------tag:%d,numDescendents:%d,numParents:%d\n",getNumFromTag(tag),numDescendents,numParents); 
 }
@@ -459,12 +462,78 @@ static void CVICALLBACK onMenuSingleObjectTestCB(int panel, int controlID, int M
 		if(_obj!=NULL)
 		{
 			_obj->seq.beginCollect = collectId;
-			_obj->seq.beginGroup = testGroupIndex;	
+			_obj->seq.beginGroup = testGroupIndex;
+			_obj->seq.collectCountToTest = -1;
 			setButtonState(1); 
 			SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0时0分0秒"); 
 			//operateTimer(1); 			
 			runSingleObject(gEngine,_obj);
 		}
+	}else{
+		WarnShow1(0,"未选中组");
+	}
+	//printf("-------tag:%d,numDescendents:%d,numParents:%d\n",getNumFromTag(tag),numDescendents,numParents); 
+}
+
+
+static void CVICALLBACK onMenuSingleCollectTestCB(int panel, int controlID, int MenuItemID, 
+									void *callbackData)
+{
+	
+	char groupTag[32]={0}; 
+	int selected=0;
+	int numDescendents=0;
+	int parent=0;
+	GetActiveTreeItem(panel,P_ITEMSHOW_TREE,&selected);
+	GetTreeItemNumDescendents(panel,P_ITEMSHOW_TREE,selected,&numDescendents);
+	GetTreeItemParent(panel,P_ITEMSHOW_TREE,selected,&parent);
+	GetTreeItemTag(panel,P_ITEMSHOW_TREE,selected,groupTag); 
+	//printf("selected:%d,numDescendents:%d,parent:%d\n",selected,numDescendents,parent);
+	if(parent!=-1 && numDescendents!=0)
+	{
+		int collectSelected=0;
+		int testGroupIndex=0; 
+		char collectTag[32]={0};
+		GetTreeItemTag(panel,P_ITEMSHOW_TREE,parent,collectTag);
+		//printf("selected:%d,collectSelected:%d\n",selected,parent);
+		//printf("collect:%d,group:%d\n",getNumFromTag(collectTag),getNumFromTag(groupTag));
+		int numberOfChildren;
+		GetTreeItemNumChildren(panel,controlID,parent,&numberOfChildren);
+		int childStart=parent+1;
+		if(childStart==selected)
+		{
+			testGroupIndex=1;	
+		}else{
+			for(int i=1;i<=numberOfChildren-1;i++)
+			{
+				GetTreeItem(panel,controlID,VAL_SIBLING,childStart,childStart,VAL_NEXT,0,&childStart);
+				//printf("%d\n",childStart);
+				testGroupIndex=i+1;
+				if(childStart==selected)
+					break;
+			}
+		}
+		//printf("testGroupIndex:%d\n",testGroupIndex);
+		int collectId = getNumFromTag(collectTag);
+		int groupId = getNumFromTag(groupTag);
+		TestGroup group={0}; 
+		ListGetItem(gEngine->itemList,&group,groupId);
+		//printf("groupName:%s\n",group.groupName);
+		//测试单项
+		TESTobject *_obj=getTestObjectByPanelHandle(panel,gEngine);
+
+		if(_obj!=NULL)
+		{
+			_obj->seq.beginCollect = collectId;
+			_obj->seq.beginGroup = testGroupIndex;
+			_obj->seq.collectCountToTest = 1;
+			setButtonState(1); 
+			SetCtrlVal (autoPanelHandle, PANEL_AUTO_TEXTMSG_3,"0时0分0秒"); 
+			//operateTimer(1); 			
+			runSingleObject(gEngine,_obj);
+		}
+	}else{
+		WarnShow1(0,"未选中组");
 	}
 	//printf("-------tag:%d,numDescendents:%d,numParents:%d\n",getNumFromTag(tag),numDescendents,numParents); 
 }
@@ -481,8 +550,10 @@ static void objectPanelCreate(int *panel)
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_EXPAND_ALL);
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_COLLAPSE_ALL);
 	NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "单项测试", -1, onMenuSingleItemTestCB, 0);
+	NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "集合测试", -1, onMenuSingleCollectTestCB, 0);
 	if(gTestFlag==ENUM_TEST_PANEL_AUTO)
 		NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "从此项开始测试", -1, onMenuSingleObjectTestCB, 0);
+	 
 
 	int i=0;
 }
