@@ -2,13 +2,53 @@
 <Projects>
   <Version>20180411</Version>   
   <Project show="True">
-    <ProjectName>120KW_matain</ProjectName>
-    <NickName>120KW整机测试-麦格米特-维护</NickName>
-    <ConfigPath>matain\IntegrateConfig.xlsx</ConfigPath>
-    <StrategyPath>matain\Strategy.xml</StrategyPath>	
-    <DevicePath>matain\Device.xml</DevicePath>	
-    <DBName>megmeet</DBName>	
-    <PostPath>matain\post.xml</PostPath>	    
-    <ReportPath>matain\IntegrateReport.xlsx</ReportPath>
-  </Project>                          
+    <ProjectName>matain_mgmeet_120kw</ProjectName>
+    <NickName>120KW整机维护-麦格米特-维护</NickName>
+    <ConfigPath>matain_mgmeet_120kw\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>matain_mgmeet_120kw\Strategy.xml</StrategyPath>	
+    <DevicePath>matain_mgmeet_120kw\Device.xml</DevicePath>	
+    <DBName>matain_mgmeet_120kw</DBName>	
+    <PostPath>matain_mgmeet_120kw\post.xml</PostPath>	    
+    <ReportPath>matain_mgmeet_120kw\IntegrateReport.xlsx</ReportPath>
+  </Project>
+    <Project show="True">
+    <ProjectName>matain_increase_120kw</ProjectName>
+    <NickName>120KW整机维护-英可瑞-维护</NickName>
+    <ConfigPath>matain_increase_120kw\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>matain_increase_120kw\Strategy.xml</StrategyPath>	
+    <DevicePath>matain_increase_120kw\Device.xml</DevicePath>	
+    <DBName>matain_increase_120kw</DBName>	
+    <PostPath>matain_increase_120kw\post.xml</PostPath>	    
+    <ReportPath>matain_increase_120kw\IntegrateReport.xlsx</ReportPath>
+  </Project> 
+    <Project show="True">
+    <ProjectName>matain_huawei15kw_120kw</ProjectName>
+    <NickName>120KW整机维护-华为15KW-维护</NickName>
+    <ConfigPath>matain_huawei15kw_120kw\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>matain_huawei15kw_120kw\Strategy.xml</StrategyPath>	
+    <DevicePath>matain_huawei15kw_120kw\Device.xml</DevicePath>	
+    <DBName>matain_huawei15kw_120kw</DBName>	
+    <PostPath>matain_huawei15kw_120kw\post.xml</PostPath>	    
+    <ReportPath>matain_huawei15kw_120kw\IntegrateReport.xlsx</ReportPath>
+  </Project> 
+    <Project show="True">
+    <ProjectName>matain_huawei20kw_120kw</ProjectName>
+    <NickName>120KW整机维护-华为20KW-维护</NickName>
+    <ConfigPath>matain_huawei20kw_120kw\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>matain_huawei20kw_120kw\Strategy.xml</StrategyPath>	
+    <DevicePath>matain_huawei20kw_120kw\Device.xml</DevicePath>	
+    <DBName>matain_huawei20kw_120kw</DBName>	
+    <PostPath>matain_huawei20kw_120kw\post.xml</PostPath>	    
+    <ReportPath>matain_huawei20kw_120kw\IntegrateReport.xlsx</ReportPath>
+  </Project>
+    <Project show="True">
+    <ProjectName>matain_huawei_90kw</ProjectName>
+    <NickName>90KW整机维护-华为-维护</NickName>
+    <ConfigPath>matain_huawei_90kw\IntegrateConfig.xlsx</ConfigPath>
+    <StrategyPath>matain_huawei_90kw\Strategy.xml</StrategyPath>	
+    <DevicePath>matain_huawei_90kw\Device.xml</DevicePath>	
+    <DBName>matain_huawei_90kw</DBName>	
+    <PostPath>matain_huawei_90kw\post.xml</PostPath>	    
+    <ReportPath>matain_huawei_90kw\IntegrateReport.xlsx</ReportPath>
+  </Project>                                
 </Projects>

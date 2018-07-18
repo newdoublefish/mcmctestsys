@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 7
+Number of Opened Files = 3
 Window Confinement Region Enabled = True
 MainColumnWidth = 270
 FileDateColumnWidth = 70
@@ -320,8 +320,8 @@ Disk Date = 3614724148
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 1
-Source Window State = "1,529,531,529,5,6,5,0,0,266,0,0,0,0,0,44,382,0,407,5,275,517,1,52,"
+Window Z-Order = 3
+Source Window State = "1,551,551,551,4,19,19,0,0,80,0,0,0,0,0,21,533,0,561,94,275,517,1,52,"
 
 [File 0034]
 Path = "/d/workspace/mcmctest/platDemo/eut/BasicInfoConfig.c"
@@ -375,7 +375,6 @@ Disk Date = 3604436111
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 2
 Source Window State = "1,86,86,86,5,14,14,0,0,84,0,0,0,0,0,13,73,0,83,57,179,541,1,0,"
 
 [File 0040]
@@ -576,10 +575,11 @@ Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 [File 0063]
 Path = "/d/workspace/mcmctest/platDemo/MainPanel.c"
 File Type = "CSource"
-Disk Date = 3607464011
+Disk Date = 3614725362
 In Projects = "1,"
 Window Top = 31
-Source Window State = "1,383,383,383,41,54,54,0,3,0,0,0,0,0,0,0,375,0,383,41,400,600,1,0,"
+Window Z-Order = 2
+Source Window State = "1,383,383,383,41,54,54,0,0,94,0,0,0,0,0,31,207,0,230,6,400,600,1,0,"
 
 [File 0064]
 Path = "/d/workspace/mcmctest/platDemo/autotest/manualTest.c"
@@ -624,7 +624,6 @@ Disk Date = 3614721365
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 5
 Source Window State = "1,1737,1737,1737,0,89,89,0,0,80,0,3233,0,753,0,18,69,0,3201,150,239,517,1,0,"
 
 [File 0069]
@@ -742,7 +741,6 @@ Disk Date = 3614038892
 In Projects = "1,"
 Window Top = 156
 Window Left = 74
-Window Z-Order = 7
 Source Window State = "1,419,419,419,4,19,19,0,0,80,0,0,0,0,0,18,397,0,407,131,239,517,1,0,"
 
 [File 0082]
@@ -822,7 +820,8 @@ Disk Date = 3607468785
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,175,0,172,145,251,541,1,0,"
+Window Z-Order = 1
+Source Window State = "1,0,0,0,0,0,0,0,0,266,0,0,0,0,0,44,135,0,172,145,251,541,1,0,"
 
 [File 0091]
 Path = "/d/workspace/mcmctest/platDemo/sutConfig/sutConfig.c"
@@ -849,7 +848,6 @@ Disk Date = 3614723769
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 3
 Source Window State = "1,444,444,444,8,24,24,0,0,84,0,0,0,0,0,19,359,0,455,35,251,541,1,0,"
 
 [File 0094]
@@ -1516,7 +1514,6 @@ Disk Date = 3614722359
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 4
 Source Window State = "1,54,54,54,8,18,18,0,0,113,0,0,0,0,0,24,49,0,55,102,311,715,1,0,"
 
 [File 0172]
@@ -1807,24 +1804,10 @@ File Type = "Unknown"
 Disk Date = 3600953720
 In Projects = "1,"
 
-[File 0215]
-Path = "/c/Program Files (x86)/National Instruments/CVI2017/include/userint.h"
-File Type = "Include"
-Disk Date = 3573565200
-In Projects = ""
-Window Top = 33
-Window Left = 10
-Window Z-Order = 6
-Source Window State = "1,2888,2888,2888,16,31,31,0,0,113,0,0,0,0,0,25,2876,0,2885,148,323,715,1,0,"
-
 [Tab Order]
-Tab 0001 = "/d/workspace/mcmctest/platDemo/boardTest/param/param.c"
-Tab 0002 = "/d/workspace/mcmctest/platDemo/autotest/autoTest.c"
-Tab 0003 = "/d/workspace/mcmctest/platDemo/frameworks/testFramework.h"
-Tab 0004 = "/d/workspace/mcmctest/platDemo/frameworks/testFramework.c"
-Tab 0005 = "/d/workspace/mcmctest/platDemo/reportManager/reportManagerPanel.c"
-Tab 0006 = "/c/Program Files (x86)/National Instruments/CVI2017/include/userint.h"
-Tab 0007 = "/d/workspace/mcmctest/platDemo/common/common.c"
+Tab 0001 = "/d/workspace/mcmctest/platDemo/autotest/autoTest.c"
+Tab 0002 = "/d/workspace/mcmctest/platDemo/MainPanel.c"
+Tab 0003 = "/d/workspace/mcmctest/platDemo/setting/settingEntity.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

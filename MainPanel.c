@@ -228,7 +228,7 @@ int main (int argc, char *argv[])
 		
 	//µ«»ÎΩÁ√Ê
 	//DisplayLoginPanel();
-	if(DisplayLoginPanel()==TRUE)
+	//if(DisplayLoginPanel()==TRUE)
 	{
 		DisplaySutConfigPanel();
 		RunUserInterface ();
