@@ -24,26 +24,21 @@
 #define  GUNPANEL_COMMANDBUTTON           3       /* control type: command, callback function: (none) */
 #define  GUNPANEL_RING                    4       /* control type: ring, callback function: (none) */
 
-#define  MATAIN                           3
-#define  MATAIN_TABLE                     2       /* control type: table, callback function: (none) */
-#define  MATAIN_TEXTBOX                   3       /* control type: textBox, callback function: (none) */
-#define  MATAIN_BUTTON                    4       /* control type: command, callback function: (none) */
-
-#define  METER                            4
+#define  METER                            3
 #define  METER_CURRENT                    2       /* control type: scale, callback function: (none) */
 #define  METER_VOLTAGE                    3       /* control type: scale, callback function: (none) */
 #define  METER_MSG                        4       /* control type: textBox, callback function: (none) */
 #define  METER_VOLTAGESTRIP               5       /* control type: strip, callback function: (none) */
 
-#define  PANEL                            5
+#define  PANEL                            4
 #define  PANEL_TABLE                      2       /* control type: table, callback function: (none) */
 #define  PANEL_COMMANDBUTTON              3       /* control type: command, callback function: (none) */
 
-#define  POWER                            6
+#define  POWER                            5
 #define  POWER_VOLTAGE                    2       /* control type: scale, callback function: (none) */
 #define  POWER_MSG                        3       /* control type: textBox, callback function: (none) */
 
-#define  SCANPANEL                        7
+#define  SCANPANEL                        6
 #define  SCANPANEL_SCAN4                  2       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN3                  3       /* control type: string, callback function: (none) */
 #define  SCANPANEL_SCAN2                  4       /* control type: string, callback function: (none) */

@@ -70,6 +70,8 @@ extern TPS registerMatainTPS(void);
 extern TPS registerReportTPS(void);
 extern TPS registerMatainChargingTestTps(void);
 extern TPS registerMatainInsulationTestTps(void);
+extern TPS registerMatainWatchChargingTestTps(void);
+extern TPS registerMatainCodeInputTestTPS(void);
 
 
 
@@ -129,6 +131,8 @@ static REGISTER_TPS_FUNCTION registerTpsFunctionGroup[]=
 	registerMatainTPS,
 	registerMatainChargingTestTps,
 	registerMatainInsulationTestTps,
+	registerMatainWatchChargingTestTps,
+	registerMatainCodeInputTestTPS,
 };
 
 

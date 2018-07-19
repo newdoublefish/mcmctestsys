@@ -297,7 +297,7 @@ METHODRET MatainTest(TestGroup group,EUT eut,HashTableType hashTable,int msgPane
 		}
 		ListDispose(list);
 #else
-		int panelHandle=LoadPanel(0,"ParamPanel.uir",MATAIN); 
+		int panelHandle=LoadPanel(0,"MatainPanel.uir",MATAIN); 
 		InstallPanelCallback(panelHandle,MaintainPanelCallback,NULL);
 		ListType recordList = ListCreate(sizeof(tRecordMesg));
 		if(FALSE==GetPileRecordList(eut,"prd crec disp 1\r\n",3,recordList))
@@ -421,5 +421,190 @@ TPS registerMatainTPS(void)
 	TPS tps=newTps("matain");
 	tps.testFunction=MatainTest;
 	tps.protocolInit = MatainErrorMsgProtocolInit;
+	return tps;
+}
+
+
+METHODRET MatainWatchChargingInfoTest(TestGroup group,EUT eut,HashTableType hashTable,int msgHandler)
+{
+	METHODRET ret = TEST_RESULT_ALLPASS; 
+	BOOL quitFlag = TRUE;
+	int panelHandle = 0;
+
+
+	
+	
+	panelHandle = LoadPanel(0,"MatainPanel.uir",WATCH);
+	if(strcmp(group.groupName,"枪1充电功能")==0)
+	{
+		WarnAlert(0,"请用APP启动枪1充电,如果已经启动，按确定跳过",30);
+		
+	}else if(strcmp(group.groupName,"枪2充电功能")==0){
+		WarnAlert(0,"请用APP启动枪2充电,如果已经启动，按确定跳过",30);
+	}
+	SetPanelAttribute(panelHandle,ATTR_TITLE,group.groupName);   
+	InstallPanelCallback(panelHandle,MaintainChargingPanelCallback,&quitFlag);
+	DisplayPanel(panelHandle);
+	float current=0;
+	float voltage=0;
+	while(quitFlag)
+	{
+		double currentTime = Timer();
+		for(int i=1;i<=ListNumItems(group.subItems);i++)
+		{
+			TestItem item;
+			ListGetItem(group.subItems,&item,i);
+
+			PARAMETER param={0};
+			sprintf(param.paramName,"%s",item.itemName_);
+			RESULT itemResult={0};
+			itemResult.index=item.itemId;
+			itemResult.pass=RESULT_PASS;
+					//sprintf(itemResult.recvString,"%s",param.value);
+			if(ParamGetDependWithRetry(eut,item.itemName_,itemResult.recvString,3)==FALSE)
+			{
+				 APPEND_INFO_FORMAT(msgHandler,"%s获取失败功",item.itemName_);
+			 	itemResult.pass=RESULT_FAIL;
+			 	saveResult(hashTable,&itemResult);
+			 	goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(msgHandler,"%s获取成功，值为%s",item.itemName_,itemResult.recvString); 	
+			}
+			
+			if(i ==1)
+			{
+				//SetCtrlVal (panelHandle, PANEL_VOLTAGE, atof(itemResult.recvString));  
+				current =  atof(itemResult.recvString);
+				PlotStripChartPoint (panelHandle, WATCH_CURRENT, current);
+				SetCtrlVal(panelHandle,WATCH_CURRENT_TX,itemResult.recvString);
+			
+			}else if(i==2){
+				voltage = atof(itemResult.recvString);
+				//SetCtrlVal (panelHandle, PANEL_CURRENT, atof(itemResult.recvString));
+				PlotStripChartPoint (panelHandle, WATCH_VOLTAGE, voltage);
+				SetCtrlVal(panelHandle,WATCH_VOLTAGE_TX,itemResult.recvString);
+			}else if(i==3)
+			{
+				char temp[20]={0};
+				sprintf(temp,"%0.2f",current*voltage);
+				PlotStripChartPoint (panelHandle, WATCH_POWER, current*voltage);
+				SetCtrlVal(panelHandle,WATCH_POWER_TX,temp);
+			}
+			
+			saveResult(hashTable,&itemResult);
+			
+		}
+		Delay(0.5);
+		/*if(currentTime-outTime > elapsed)
+		{
+			quitFlag = FALSE;
+		}*/
+		ProcessSystemEvents (); 	
+	}
+DONE:
+	DiscardPanel(panelHandle);
+	
+	APPEND_INFO(msgHandler,"离开测试");
+	return ret;
+}
+
+TPS registerMatainWatchChargingTestTps(void)
+{
+	TPS tps=newTps("matain_watch");
+	tps.testFunction=MatainWatchChargingInfoTest;
+	return tps;	
+}
+
+
+
+int CVICALLBACK MatainCodeInputPanelCallback (int panelHandle, int event, void *callbackData, int eventData1, int eventData2){
+	
+	switch (event)
+	{
+		case EVENT_CLOSE:
+			//if(checkScanResult(panelHandle)==TRUE) 
+			 //QuitUserInterface(1);
+			 int *runFlag = (int*)callbackData;
+			 *runFlag = FALSE;
+			 QuitUserInterface(0);
+		     break;
+	}
+	return 0;
+}
+
+int CVICALLBACK MatainCodeInputButtonCallback (int panel, int control, int event,
+		void *callbackData, int eventData1, int eventData2)
+{
+	
+	switch (event)
+	{
+		case EVENT_COMMIT:
+			 QuitUserInterface(0); 
+			 break;
+	}
+	return 0;  
+}
+
+
+METHODRET MatainCodeInput(TestGroup group,EUT eut,HashTableType hashTable,int msgPanel)
+{
+	APPEND_INFO_FORMAT(msgPanel,"开始测试:%s",group.groupName); 
+	METHODRET ret = TEST_RESULT_ALLPASS;
+	int quitFlag = TRUE;
+	for(int i=1;i<=ListNumItems(group.subItems);i++)
+	{
+		TestItem item={0};
+		ListGetItem(group.subItems,&item,i);
+		RESULT itemResult={0};
+		itemResult.index=item.itemId;
+		//HashTableGetItem(hashTable,&item.itemId,&itemResult,sizeof(RESULT)); 
+		int panelHandle = LoadPanel(0,"MatainPanel.uir",PANEL_CODE);
+		SetPanelAttribute(panelHandle,ATTR_TITLE,item.itemName_);
+		InstallPanelCallback(panelHandle,MatainCodeInputPanelCallback,&quitFlag);
+		InstallCtrlCallback(panelHandle,PANEL_CODE_COMMANDBUTTON,MatainCodeInputButtonCallback,NULL);
+		DisplayPanel(panelHandle);
+		RunUserInterface();
+		char setValue[50]={0};
+		GetCtrlVal(panelHandle,PANEL_CODE_STRING,setValue);
+		DiscardPanel(panelHandle);
+		if(quitFlag == TRUE)
+		{
+
+			if(FALSE==ParamSetDependWithRetry(eut,item.itemName_,setValue,3))
+			{
+				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(msgPanel,"%s 设置成功，值为%s",item.itemName_,setValue);
+			}
+			APPEND_INFO(msgPanel,"延时2s"); 
+			Delay(2);
+			if(FALSE == ParamGetDependWithRetry(eut,item.itemName_,itemResult.recvString,3))
+			{
+				APPEND_INFO_FORMAT(msgPanel,"%s 获取失败",item.itemName_);
+				goto DONE;
+			}else{
+				APPEND_INFO_FORMAT(msgPanel,"%s 获取成功，值为%s",item.itemName_,itemResult.recvString);	
+			}
+			if(strcmp(itemResult.recvString,setValue)==0)
+			{
+				itemResult.pass=RESULT_PASS;
+			}else{
+				itemResult.pass=RESULT_FAIL;
+			}						
+			
+		}
+DONE:		
+		
+		saveResult(hashTable,&itemResult);  
+	}
+	APPEND_INFO_FORMAT(msgPanel,"%s测试完毕",group.groupName);	
+
+	return ret;
+}
+
+TPS registerMatainCodeInputTestTPS(void)
+{
+	TPS tps=newTps("matain_codeinput");
+	tps.testFunction=MatainCodeInput;
 	return tps;
 }
