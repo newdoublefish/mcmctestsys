@@ -53,6 +53,7 @@ typedef enum
 typedef struct{
 	int beginCollect;
 	int beginGroup;
+	int collectCountToTest;//需要被测试的集合数量 如果为 -1,从当前选中的集合组一直测试到最后一个集合。
 }TESTObjectSeq;
 
 

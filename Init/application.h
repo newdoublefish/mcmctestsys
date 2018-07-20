@@ -11,6 +11,7 @@ typedef struct{
 	char *version;
 	char *copyRight;
 	char *logo;
+	int configEnable;
 }tAppBasic;		
 		
 typedef struct{

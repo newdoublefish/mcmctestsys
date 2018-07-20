@@ -137,6 +137,14 @@ int onBasicLoad(IniText iniText,char *sectionName,char *itemName,void *data)
 			app->basic.logo = (char *)malloc(strlen(stringValue)+1);
 			sprintf(app->basic.logo,"%s",stringValue);
 		}		
+	}else if(strcmp(itemName,"Config")==0)
+	{
+        if (Ini_GetBoolean (iniText,sectionName, itemName, &app->basic.configEnable)>0)
+		{
+			
+		}else{
+			app->basic.configEnable = 0;
+		}		
 	}
 	return 1;
 }

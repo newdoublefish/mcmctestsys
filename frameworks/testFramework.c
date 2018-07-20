@@ -439,9 +439,24 @@ void runSingleObject(TESTengine *t,TESTobject *testObject){
 	}
 	t->testState=TEST_RUN;
 	Collect currentCollet;
+	int collectNumToTest=0;
+	if(testObject->seq.collectCountToTest<=0)
+	{
+		collectNumToTest = ListNumItems(t->collectList);
+	}/*else if(testObject->seq.collectCountToTest > ListNumItems(t->collectList))
+	{
+		collectNumToTest = ListNumItems(t->collectList);
+	}*/else {
+		collectNumToTest = testObject->seq.collectCountToTest;
+	}
+	
 	for(int collectNum=testObject->seq.beginCollect;collectNum<=ListNumItems(t->collectList);collectNum++)
 	{
 		//currentCollectNum=collectNum;
+		if(collectNumToTest-- ==0)
+		{
+			break;
+		}
 		Collect currentCollect;
         if(!JudgeTestProcess(t))  //如果为完成，或者是重置，则跳出   
 	    {

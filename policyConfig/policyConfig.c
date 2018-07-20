@@ -25,6 +25,7 @@
 #include "common.h"
 #include "policyPanel.h"
 #include "debug.h"
+#include "application.h"
 
 static int needToSave=0;//默认不需要保存
 
@@ -152,9 +153,30 @@ static void showStrategyOnPanelByTree(void)
 	}	
 }
 
+void ShowStrategyPanelDimmed()
+{
+	tApplication t = getApplication();
+	if(t.basic.configEnable == 0)
+	{
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_ITEMTREE,ATTR_DIMMED,1);
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_SAVESTRATEGY,ATTR_DIMMED,1);  
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_COLLECT_MOVE_DOWN,ATTR_DIMMED,1);  
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_COLLECT_MOVE_UP,ATTR_DIMMED,1);  
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_ADDCOLLECT,ATTR_DIMMED,1);  
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_COLLECTTREE,ATTR_DIMMED,1);  
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_ADDTOCOLLECT,ATTR_DIMMED,1);  
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_DELETE,ATTR_DIMMED,1);  
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_BTN_BELOW,ATTR_DIMMED,1);
+		SetCtrlAttribute(stategyPanel,PLCYPANEL_BTN_ABOVE ,ATTR_DIMMED,1);  
+	
+	}
+
+}
+
 void DisplayStrategyPanelAsTabPanel(int panelHandle)
 {
 	 stategyPanel = LoadPanel (panelHandle, "policyPanel.uir", PLCYPANEL); 
+	 ShowStrategyPanelDimmed();
 	 DisplayPanel(stategyPanel);
 	 groupList=getItemList();
 	 showTestItemOnPanelByTree();//显示测试条例组
