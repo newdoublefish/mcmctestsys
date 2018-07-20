@@ -8,7 +8,7 @@
     extern "C" {
 #endif
 
-#define SYSTEM_NAME_LEN 30
+#define SYSTEM_NAME_LEN 50
 #define CONFIG_PATH_LEN 30	
 #define VERSION_LEN 30
 		

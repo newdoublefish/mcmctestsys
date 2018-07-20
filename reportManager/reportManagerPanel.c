@@ -417,7 +417,7 @@ static void configTreeAttribute(int panel,int tree)
 	HideBuiltInCtrlMenuItem(panel, tree, VAL_COLLAPSE_SUBTREE);
 	HideBuiltInCtrlMenuItem(panel, tree, VAL_EXPAND_ALL);
 	HideBuiltInCtrlMenuItem(panel, tree, VAL_COLLAPSE_ALL);
-	NewCtrlMenuItem(panel, tree, "上传", -1, ReportMenuItemCB, 0);
+	NewCtrlMenuItem(panel, tree, "上传", -1, NULL, 0);
 	NewCtrlMenuItem(panel, tree, "删除", -1, ReportMenuItemCB, 0);
 	NewCtrlMenuItem(panel, tree, "打开测试", -1, ReportMenuItemCB, 0);
 }
