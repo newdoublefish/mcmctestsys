@@ -486,8 +486,8 @@ METHODRET MatainWatchChargingInfoTest(TestGroup group,EUT eut,HashTableType hash
 			}else if(i==3)
 			{
 				char temp[20]={0};
-				sprintf(temp,"%0.2f",current*voltage);
-				PlotStripChartPoint (panelHandle, WATCH_POWER, current*voltage);
+				sprintf(temp,"%0.2f",current*voltage/1000);
+				PlotStripChartPoint (panelHandle, WATCH_POWER, current*voltage/1000);
 				SetCtrlVal(panelHandle,WATCH_POWER_TX,temp);
 			}
 			
@@ -539,6 +539,24 @@ int CVICALLBACK MatainCodeInputButtonCallback (int panel, int control, int event
 	switch (event)
 	{
 		case EVENT_COMMIT:
+			 char name[128]={0};
+			 GetPanelAttribute(panel,ATTR_TITLE,name);
+			 if(strstr(name,"装置编号")!=NULL)
+			 {
+				char setValue[50]={0};
+				GetCtrlVal(panel,PANEL_CODE_STRING,setValue);
+			 	if(strlen(setValue)!=16)
+				{
+					WarnShow1(0,"长度不正确"); 
+					return 0;
+				}
+				if(strstr(setValue,"00000")==NULL)
+				{
+					WarnShow1(0,"开头必须为5个0");
+					return 0;
+				}
+					
+			 }
 			 QuitUserInterface(0); 
 			 break;
 	}
