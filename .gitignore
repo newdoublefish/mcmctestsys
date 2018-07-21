@@ -10,3 +10,6 @@ cvidistkit.*/
 MainPanel.exe
 *.mdb
 .ZJS/
+autotest.ldb
+autotest.mdb
+MainPanel_dbg.exe
