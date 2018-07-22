@@ -30,7 +30,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 2
+Number of Opened Files = 3
 Window Confinement Region Enabled = True
 MainColumnWidth = 287
 FileDateColumnWidth = 70
@@ -40,7 +40,7 @@ FileSizeColumnWidth = 70
 Version = 1700
 Don't Update DistKit = False
 Platform Code = 4
-Build Configuration = "Debug"
+Build Configuration = "Release"
 Warn User If Debugging Release = 0
 Batch Build Release = False
 Batch Build Debug = False
@@ -70,13 +70,13 @@ Disk Date = 3603943759
 In Projects = "1,"
 
 [File 0005]
-Path = "/c/Program Files (x86)/National Instruments/CVI2017/toolslib/custctrl/pwctrl.fp"
+Path = "/c/program files (x86)/national instruments/cvi2017/toolslib/custctrl/pwctrl.fp"
 File Type = "Function Panel"
 Disk Date = 3573565200
 In Projects = "1,"
 
 [File 0006]
-Path Line0001 = "/c/Program Files (x86)/National Instruments/CVI2017/toolslib/custctrl/radioGroup"
+Path Line0001 = "/c/program files (x86)/national instruments/cvi2017/toolslib/custctrl/radioGroup"
 Path Line0002 = ".fp"
 File Type = "Function Panel"
 Disk Date = 3573565200
@@ -105,7 +105,7 @@ Disk Date = 3613089942
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 2
+Window Z-Order = 3
 Source Window State = "1,240,240,240,47,63,47,0,0,109,0,0,0,0,0,25,83,0,91,94,323,715,1,0,"
 
 [File 0010]
@@ -115,8 +115,8 @@ Disk Date = 3614299201
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 1
-Source Window State = "1,380,381,381,46,46,46,0,0,153,0,281,0,330,0,20,87,0,94,82,323,715,1,15,"
+Window Z-Order = 2
+Source Window State = "1,380,381,381,46,46,46,0,0,109,0,281,0,330,0,25,87,0,98,92,323,715,1,15,"
 
 [File 0011]
 Path = "/c/workspace/mcmc/platDemo/platDemo/Init/AppInitSplash.uir"
@@ -596,7 +596,8 @@ Disk Date = 3615009950
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,446,446,446,21,38,38,0,0,0,0,3233,0,753,0,0,57,0,622,8,239,517,1,0,"
+Window Z-Order = 1
+Source Window State = "1,452,452,452,10,24,24,0,3,153,0,3233,0,753,0,26,520,0,452,10,239,517,1,0,"
 
 [File 0066]
 Path = "/c/workspace/mcmc/platDemo/platDemo/boardTest/param/ParamExcelParse.c"
@@ -659,7 +660,7 @@ Disk Date = 3603943759
 In Projects = "1,"
 Window Top = 85
 Window Left = 28
-Source Window State = "1,28,28,28,17,36,36,0,3,76,0,0,0,0,0,14,12,0,28,17,191,517,0,0,"
+Source Window State = "1,28,28,28,17,36,36,0,3,0,0,0,0,0,0,0,12,0,28,17,191,517,0,0,"
 
 [File 0073]
 Path = "/c/workspace/mcmc/platDemo/platDemo/frameworks/protocolHelper.c"
@@ -1725,7 +1726,7 @@ In Projects = "1,"
 [File 0204]
 Path = "/c/workspace/mcmc/platDemo/platDemo/config/setting.ini"
 File Type = "Unknown"
-Disk Date = 3615009950
+Disk Date = 3615033084
 In Projects = "1,"
 
 [File 0205]
@@ -1767,6 +1768,7 @@ In Projects = "1,"
 [Tab Order]
 Tab 0001 = "/c/workspace/mcmc/platDemo/platDemo/excelHelper/excelHelper.c"
 Tab 0002 = "/c/workspace/mcmc/platDemo/platDemo/Init/testGroupParseXml.c"
+Tab 0003 = "/c/workspace/mcmc/platDemo/platDemo/boardTest/param/param.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
