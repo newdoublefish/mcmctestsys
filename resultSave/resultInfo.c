@@ -179,15 +179,20 @@ void saveResultToXml(CVIXMLElement currElem,HashTableType hashTable)
 	
 	ListType testItemList = getTestCaseList();
 	int itemCnt = ListNumItems(testItemList);
+	TestItem item={0}; 
+	RESULT itemResult={0};   
 	for(int i=1;i<=itemCnt;i++)
 	{
 		int found=0;
-		RESULT itemResult;
-		if(HashTableFindItem(hashTable,&i,&found)>=0)
+		
+		ListGetItem(testItemList,&item,i);
+		
+		
+		if(HashTableFindItem(hashTable,&item.itemId,&found)>=0)
 		{
 			if(found>0)
 			{
-				HashTableGetItem(hashTable,&i,&itemResult,sizeof(RESULT));
+				HashTableGetItem(hashTable,&item.itemId,&itemResult,sizeof(RESULT));
 				CVIXMLElement currChildElem = 0;
 				CVIXMLNewElement(currElem,-1,"Result", &currChildElem);
 				char temp[10]={0};
