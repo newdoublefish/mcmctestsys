@@ -19,6 +19,7 @@
 #include"ftpConfigBiz.h"
 #include "reportDb.h"
 #include "common.h"
+#include "application.h"  
 
 static int panelHandle;
 tFtpConfig gFtpConfig;
@@ -31,6 +32,22 @@ static void showFtpConfigs()
 	SetCtrlVal(panelHandle,PANEL_PASSWORD,gFtpConfig.password);
 	SetCtrlVal(panelHandle,PANEL_CHECKBOX_MODE,gFtpConfig.mode);
 	SetCtrlVal(panelHandle,PANEL_REMOTEDIR,gFtpConfig.remoteDir);
+}
+
+
+void ShowPolicyPanelDimmed(int panelHandle)
+{
+	tApplication t = getApplication();
+	if(t.basic.configEnable == 0)
+	{
+		SetCtrlAttribute(panelHandle,PANEL_REMOTEDIR,ATTR_DIMMED,1);
+		SetCtrlAttribute(panelHandle,PANEL_SERVER,ATTR_DIMMED,1);  
+		SetCtrlAttribute(panelHandle,PANEL_PASSWORD,ATTR_DIMMED,1);  
+		SetCtrlAttribute(panelHandle,PANEL_USERNAME,ATTR_DIMMED,1);  
+		SetCtrlAttribute(panelHandle,PANEL_CHECKBOX_MODE,ATTR_DIMMED,1);  
+		SetCtrlAttribute(panelHandle,PANEL_BUTTON,ATTR_DIMMED,1);  
+	}
+
 }
 
 int DisplayFtpConfigView (int panel)
@@ -47,6 +64,9 @@ int DisplayFtpConfigView (int panel)
 	PasswordCtrl_SetAttribute (panelHandle, password_ctrl,
 				ATTR_PASSWORD_MASK_CHARACTER, '*');		
 	showFtpConfigs();  
+	
+	ShowPolicyPanelDimmed(panelHandle);
+	
 	DisplayPanel (panelHandle);
 	return 0;
 }

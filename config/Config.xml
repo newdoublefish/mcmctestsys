@@ -21,7 +21,7 @@
     <PostPath>Integrate_120KW_megmeet_new\post.xml</PostPath>	    
     <ReportPath>Integrate_120KW_megmeet_new\IntegrateReport.xlsx</ReportPath>
   </Project>
-  <Project show="True">
+  <Project>
     <ProjectName>120KW_integration</ProjectName>
     <NickName>120KW整机测试-华为-15kw模块</NickName>
     <ConfigPath>Integrate_120KW_huawei_15KW\IntegrateConfig.xlsx</ConfigPath>

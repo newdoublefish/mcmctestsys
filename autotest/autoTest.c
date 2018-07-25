@@ -549,8 +549,8 @@ static void objectPanelCreate(int *panel)
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_COLLAPSE_SUBTREE);
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_EXPAND_ALL);
 	HideBuiltInCtrlMenuItem(*panel, P_ITEMSHOW_TREE, VAL_COLLAPSE_ALL);
-	NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "单项测试", -1, onMenuSingleItemTestCB, 0);
-	NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "集合测试", -1, onMenuSingleCollectTestCB, 0);
+	NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "单组测试", -1, onMenuSingleItemTestCB, 0);
+	NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "单集合测试", -1, onMenuSingleCollectTestCB, 0);
 	if(gTestFlag==ENUM_TEST_PANEL_AUTO)
 		NewCtrlMenuItem(*panel, P_ITEMSHOW_TREE, "从此项开始测试", -1, onMenuSingleObjectTestCB, 0);
 	 

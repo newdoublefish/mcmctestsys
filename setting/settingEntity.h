@@ -36,6 +36,7 @@ typedef struct
 	int frontSize;
 	int saveToDb; //保存到数据库
 	int showProcess;//显示测试过程信息
+	int uploadXml; //上传xml
 }SETTING;
  
 

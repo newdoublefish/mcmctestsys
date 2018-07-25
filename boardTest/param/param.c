@@ -1655,7 +1655,7 @@ METHODRET InsulationTest(TestGroup group,EUT eut,HashTableType hashTable,int msg
 	}	
 #endif	
 	
-	if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",15))
+	if(FALSE==AlertDialogWithRetAutoClose(0,"waring","点击确定跳过等待，按下取消退出本次测试","取消","跳过",30))
 	{
 		
 	}

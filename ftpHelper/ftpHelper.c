@@ -50,7 +50,10 @@ int ftpSendFile(char *pathName,char *remotePath)
 				return -1;
 	}
 	if(NULL!=remotePath)
-		sprintf(remotePath,"ftp://%s/%s",config.server,temp);
+	{
+		tFtpConfig config1=GetFtpConfig(); 
+		sprintf(remotePath,"ftp://%s/%s",config1.server,temp);
+	}
 	
 	if (ftp_handle >= 0)
 		if ((error = InetFTPClose (ftp_handle)) < 0)

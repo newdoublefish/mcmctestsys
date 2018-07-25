@@ -17,6 +17,7 @@
 #include "common.h"
 #include "cJSON.h"
 #include "policyConfig.h"
+#include "settingConfig.h"
 
 static int reportManagerPanel;
 static HashTableType resultHashTable=0;
@@ -310,13 +311,19 @@ static void CVICALLBACK ReportMenuItemCB(int panel, int controlID, int MenuItemI
 					//httpPost(record.m_code,type,remotePath,"锐速","阿豪",1);
 					if(FileExists(record.m_projectpath,NULL)==1)
 					{
-						if(ftpSendFile(record.m_projectpath,remotePath)>=0)  //上传XML文件
+						SETTING s = GetSetting();
+						
+						if(s.uploadXml)
 						{
-							SetCtrlVal(ftpPanel,FTP_TEXTBOX,record.m_projectpath);	
-							SetCtrlVal(ftpPanel,FTP_TEXTBOX,"上传成功\n");  
-						}else{
-							SetCtrlVal(ftpPanel,FTP_TEXTBOX,"Ftp上传出错\n");
-							break;
+								
+							if(ftpSendFile(record.m_projectpath,remotePath)>=0)  //上传XML文件
+							{
+								SetCtrlVal(ftpPanel,FTP_TEXTBOX,remotePath);	
+								SetCtrlVal(ftpPanel,FTP_TEXTBOX,"上传成功\n");  
+							}else{
+								SetCtrlVal(ftpPanel,FTP_TEXTBOX,"Ftp上传出错\n");
+								break;
+							}
 						}
 						
 						if(resultHashTable!=0)
